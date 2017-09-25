@@ -1,0 +1,2557 @@
+2016-11-05~25	'earthquake'
+
+
+
+added docs 10044
+not added docs 28178
+pre vocabulary 7595
+mid vocabulary 991
+vocabulary 734
+common word {'looks', 'always', 'via', 'video', 'probably', 'time', 'thought', 'show', 'sure', 'pretty', 'bring', 'hate', 'think', 'thank', 'yet', 'well', 'media', 'good', 'november', 'ok', 'would', 'liked', 'person', 'looking', 'day', 'http', 'money', 'president', 'told', 'dead', 'everything', 'head', 'place', 'whole', 'also', 'full', 'friends', 'family', 'true', 'chance', 'night', 'old', 'start', 'soon', 'making', 'year', 'cause', 'say', 'many', 'years', 'school', 'long', 'wish', 'far', 'black', 'may', 'says', 'people', 'bc', 'im', 'listen', 'left', 'photo', 'country', 'top', 'yeah', 'sad', 'enough', 'lot', 'needs', 'like', 'tomorrow', 'thanks', 'past', 'found', 'literally', 'trump', 'election', 'away', 'support', 'gonna', 'went', 'man', 'even', 'sorry', 'stay', 'team', 'fun', 'else', 'break', 'seen', 'tweets', 'news', 'getting', 'though', 'beautiful', 'shit', 'put', 'fuck', 'lmao', 'yes', 'see', 'must', 'retweet', 'vote', 'high', 'get', 'never', 'take', 'amazing', 'check', 'live', 'going', 'case', 'every', 'someone', 'things', 'come', 'feeling', 'following', 'want', 'maybe', 'still', 'moment', 'read', 'last', 'damn', 'change', 'latest', 'call', 'part', 'open', 'next', 'nothing', 'hope', 'might', 'help', 'really', 'wow', 'back', 'minutes', 'first', 'actually', 'please', 'share', 'fucking', 'hard', 'followed', 'done', 'make', 'heart', 'already', 'feel', 'rest', 'side', 'nice', 'anyone', 'one', 'use', 'hey', 'dog', 'story', 'big', 'special', 'called', 'morning', 'ago', 'line', 'hours', 'behind', 'close', 'house', 'social', 'using', 'wait', 'today', 'anything', 'care', 'tonight', 'work', 'new', 'friend', 'guys', 'least', 'since', 'believe', 'https', 'need', 'ass', 'us', 'life', 'food', 'find', 'started', 'could', 'around', 'cannot', 'made', 'hear', 'home', 'bad', 'woman', 'love', 'taking', 'tweet', 'something', 'free', 'world', 'okay', 'keep', 'know', 'follow', 'ur', 'week', 'goes', 'another', 'coming', 'little', 'go', 'great', 'way', 'stop', 'god', 'much', 'makes', 'sleep', 'watching', 'got', 'right', 'hi', 'watch', 'real', 'give', 'rt', 'everyone', 'days', 'post', 'thing', 'times', 'hit', 'saying', 'let', 'power', 'crazy', 'gets', 'number', 'tell', 'look', 'ever', 'two', 'set', 'oh', 'best', 'guy', 'said', 'win', 'remember'}
+
+
+1 . 6 magnitude #earthquake . 6 km from Cloverdale #CA United States
+magnitude 		 1.51217460701 		 1.51217
+#earthquake 		 1.66039589655 		 1.6604
+km 		 3.56224154001 		 3.56224
+#ca 		 6.44214199804 		 6.44214
+states 		 6.50668051918 		 0.0
+
+
+#earthquake Magnitude 2 . 05 occurred 5km S of Pahala Hawaii 2016 11 04T23 36 05 . 560Z UTC #didyoufeelit
+#earthquake 		 1.66039589655 		 1.6604
+magnitude 		 1.51217460701 		 1.51217
+occurred 		 3.75089891525 		 3.7509
+utc 		 3.32862668883 		 3.32863
+#didyoufeelit 		 5.40806823051 		 5.40807
+
+
+Washington Gov . Inslee issues directive on earthquake tsunami response
+issues 		 4.79589011248 		 4.79589
+earthquake 		 0.359780403777 		 0.35978
+tsunami 		 1.80438362246 		 1.80438
+response 		 5.8825262101 		 5.88253
+
+
+#Drone footage shows the total devastation of an Italian town by Sunday earthquake via
+footage 		 5.13719327637 		 5.13719
+shows 		 4.9952230151 		 4.99522
+devastation 		 6.64978136282 		 6.64978
+italian 		 5.71822315881 		 0.0
+town 		 5.45353060458 		 0.0
+sunday 		 5.36458311857 		 5.36458
+earthquake 		 0.359780403777 		 0.35978
+
+
+2 . 55 earthquake occurred near Gisborne Gisborne New Zealand at 07 10 UTC . #earthquake #Gisborne
+earthquake 		 0.359780403777 		 0.35978
+occurred 		 3.75089891525 		 3.7509
+near 		 2.68094188234 		 2.68094
+utc 		 3.32862668883 		 3.32863
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Did you give to #Haiti earthquake relief . Your went to #Hillarys pocket
+earthquake 		 0.359780403777 		 0.35978
+relief 		 5.78074351579 		 5.78074
+
+
+76 . felt an earthquake
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+Earthquake strikes Davao no major harm reported #Funding #Startup #VC #Funds #Startupchats
+earthquake 		 0.359780403777 		 0.35978
+strikes 		 2.32717814861 		 2.32718
+major 		 4.15213568725 		 4.15214
+reported 		 4.58000173205 		 4.58
+
+
+1 . 2 #Earthquake in 10Km Nw Of Big Bear Lake Ca #iPhone users download the Earthquake application for more information
+#earthquake 		 1.66039589655 		 1.6604
+10km 		 4.46114052917 		 4.46114
+nw 		 5.68837019566 		 5.68837
+ca 		 5.17167945244 		 5.17168
+#iphone 		 5.24443880673 		 5.24444
+users 		 5.22574667371 		 5.22575
+download 		 5.17167945244 		 5.17168
+earthquake 		 0.359780403777 		 0.35978
+application 		 5.1038568561 		 5.10386
+information 		 4.69294214323 		 4.69294
+
+
+USGS reports a M1 . 06 #earthquake 5km ESE of The Geysers California on 11 5 16  8 34 36 UTC #quake
+usgs 		 4.18429279889 		 0.0
+reports 		 4.23799697786 		 4.238
+m1 		 6.27029174111 		 6.27029
+#earthquake 		 1.66039589655 		 1.6604
+ese 		 5.43054108636 		 5.43054
+utc 		 3.32862668883 		 3.32863
+#quake 		 4.45255678548 		 4.45256
+
+
+#Earthquake #terremoto M2 . 5 strikes 5 km SE of #Norcia #Italy 13 min ago . More info
+#earthquake 		 1.66039589655 		 1.6604
+#terremoto 		 5.30270771485 		 5.30271
+m2 		 5.78074351579 		 5.78074
+strikes 		 2.32717814861 		 2.32718
+km 		 3.56224154001 		 3.56224
+se 		 5.12038615806 		 5.12039
+#italy 		 5.95663418226 		 5.95663
+min 		 4.48734290157 		 4.48734
+info 		 4.85802189359 		 4.85802
+
+
+Prosciutto Norcia #truffles #oliveoil are your favorite #Italy . Give a hand to the people in the #earthquake area
+#italy 		 5.95663418226 		 5.95663
+hand 		 6.32435896238 		 6.32436
+#earthquake 		 1.66039589655 		 1.6604
+area 		 5.22574667371 		 5.22575
+
+
+#RememberWhenTrump stole BILLIONS from #Haiti after 220 000 ppl died in the earthquake . Me neither that was BI
+#rememberwhentrump 		 6.81683544748 		 6.81684
+ppl 		 6.50668051918 		 6.50668
+died 		 5.99585489541 		 5.99585
+earthquake 		 0.359780403777 		 0.35978
+
+
+Phivolcs urges youth Prepare for earthquakes tsunamis via
+prepare 		 6.64978136282 		 6.64978
+earthquakes 		 2.56315884669 		 2.56316
+tsunamis 		 5.63121178182 		 5.63121
+
+
+#Temblor M 2 . 9 7km NW of Conway Springs Kansas #Temblor #EarthQuake
+#temblor 		 5.95663418226 		 5.95663
+7km 		 6.64978136282 		 6.64978
+nw 		 5.68837019566 		 5.68837
+#temblor 		 5.95663418226 		 5.95663
+#earthquake 		 1.66039589655 		 1.6604
+
+
+#Earthquake ML 2 . 6 CENTRAL ITALY EMSC CSEM
+#earthquake 		 1.66039589655 		 1.6604
+ml 		 5.68837019566 		 5.68837
+central 		 4.30207583454 		 4.30208
+emsc 		 5.38608932379 		 5.38609
+csem 		 6.27029174111 		 6.27029
+
+
+#RememberWhenTrump embezzled millions from Haiti after their earthquake and allowed his brother to steal their gold . #ohwai
+#rememberwhentrump 		 6.81683544748 		 6.81684
+millions 		 6.91214562728 		 6.91215
+earthquake 		 0.359780403777 		 0.35978
+
+
+am I the only one that did not feel the earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+#earthquake USGS M 3 . 7 13km ESE of Pawnee #PastHour #Magnitude3 #us #us FORECAST
+#earthquake 		 1.66039589655 		 1.6604
+usgs 		 4.18429279889 		 4.18429
+ese 		 5.43054108636 		 5.43054
+#us 		 6.17020828255 		 6.17021
+#us 		 6.17020828255 		 6.17021
+forecast 		 5.78074351579 		 5.78074
+
+
+Everything is destroyed quake leaves #Norcia's prosciutto makers fighting for survival #earthquake
+destroyed 		 6.44214199804 		 6.44214
+quake 		 4.17777811786 		 4.17778
+leaves 		 5.99585489541 		 5.99585
+'s 		 5.50115865357 		 5.50116
+#earthquake 		 1.66039589655 		 1.6604
+
+
+#Italy #Catholic #Radio Maria priest suspended over comments that recent #earthquake s are God punishment for civil unions
+#italy 		 5.95663418226 		 5.95663
+priest 		 6.17020828255 		 0.0
+recent 		 5.52585126616 		 5.52585
+#earthquake 		 1.66039589655 		 1.6604
+punishment 		 6.81683544748 		 6.81684
+civil 		 5.63121178182 		 5.63121
+unions 		 6.21899844672 		 6.219
+
+
+#RememberWhenTrump robbed Haiti earthquake victims
+#rememberwhentrump 		 6.81683544748 		 6.81684
+earthquake 		 0.359780403777 		 0.35978
+victims 		 5.18937902954 		 5.18938
+
+
+#earthquake USGS M 2 . 9 7km NW of Conway #PastDay #Magnitude2 #us #us FORECAST
+#earthquake 		 1.66039589655 		 1.6604
+usgs 		 4.18429279889 		 4.18429
+7km 		 6.64978136282 		 6.64978
+nw 		 5.68837019566 		 5.68837
+#pastday 		 6.27029174111 		 6.27029
+#us 		 6.17020828255 		 6.17021
+#us 		 6.17020828255 		 6.17021
+forecast 		 5.78074351579 		 5.78074
+
+
+I added a video to a playlist Sun Fires at Earth Big Earthquake Hit S0 News Nov . 5 . 2016
+earth 		 4.78391392143 		 0.0
+earthquake 		 0.359780403777 		 0.0
+nov 		 4.31689092033 		 4.31689
+
+
+2 . 4 earthquake occurred near Island Of Hawaii Hawaii at 11 59 UTC . #earthquake #IslandOfHawaii
+earthquake 		 0.359780403777 		 0.35978
+occurred 		 3.75089891525 		 3.7509
+near 		 2.68094188234 		 2.68094
+island 		 3.78100871672 		 0.0
+utc 		 3.32862668883 		 3.32863
+#earthquake 		 1.66039589655 		 1.6604
+
+
+See how fast they can react if they want to #Vatican condemns radio station over anti gay comments on earthquake htt
+fast 		 6.91214562728 		 6.91215
+gay 		 5.78074351579 		 5.78074
+earthquake 		 0.359780403777 		 0.35978
+htt 		 6.21899844672 		 6.219
+
+
+Every monday night SMAP host their show SMAP SMAP and ask for donation for earthquake victims since 2011 . #SMAPrightsM
+monday 		 5.78074351579 		 5.78074
+earthquake 		 0.359780403777 		 0.35978
+victims 		 5.18937902954 		 5.18938
+
+
+#Earthquake Update #Japan east coast of #Honshu should expect a 5 . 8 6 . 0 EQ over today and tomorrow . Last 4 days been s
+#earthquake 		 1.66039589655 		 1.6604
+update 		 4.37844881333 		 4.37845
+#japan 		 3.6695532758 		 3.66955
+east 		 4.66085382868 		 4.66085
+coast 		 3.08133267728 		 3.08133
+expect 		 5.95663418226 		 5.95663
+
+
+What does an #earthquake sound like . Listen here then catch the show at NYC Hayden Planetarium on Nov . 19
+#earthquake 		 1.66039589655 		 1.6604
+sound 		 5.40806823051 		 5.40807
+nov 		 4.31689092033 		 4.31689
+
+
+#earthquake GFZ M 5 . 2 Pacific Antarctic Ridge FORECAST
+#earthquake 		 1.66039589655 		 1.6604
+pacific 		 6.72982407049 		 6.72982
+forecast 		 5.78074351579 		 5.78074
+
+
+5 . 3 earthquake Pacific Antarctic Ridge . 2016 11 05 04 18 15 at epicenter 22m ago depth 10km
+earthquake 		 0.359780403777 		 0.35978
+pacific 		 6.72982407049 		 0.0
+epicenter 		 4.33953339708 		 4.33953
+22m 		 6.32435896238 		 6.32436
+depth 		 3.77665141135 		 3.77665
+10km 		 4.46114052917 		 4.46114
+
+
+#SpiritCooking Clinton . #pedophilia ring . #PodestaEmails31 #NovemberSurprise #earthquake #hillarysemail
+#spiritcooking 		 6.57567339066 		 6.57567
+ring 		 6.72982407049 		 6.72982
+#novembersurprise 		 6.72982407049 		 6.72982
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Amazing what are the Italian firefighters after the earthquake . Applause for them
+italian 		 5.71822315881 		 5.71822
+earthquake 		 0.359780403777 		 0.35978
+
+
+Italian priest blames earthquakes on gay unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 0.0
+unions 		 6.21899844672 		 0.0
+
+
+Italian priest blames earthquakes on gay unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 0.0
+unions 		 6.21899844672 		 0.0
+
+
+Amazing what are the Italian firefighters after the earthquake . Applause for them
+italian 		 5.71822315881 		 5.71822
+earthquake 		 0.359780403777 		 0.35978
+
+
+So bad with excuses fever cough  cold Dev gave ideas for Tsunami  Earthquake as well
+gave 		 5.28290508755 		 5.28291
+tsunami 		 1.80438362246 		 0.0
+earthquake 		 0.359780403777 		 0.0
+
+
+#Earthquake M 4 . 1 CENTRAL ITALY EMSC CSEM
+#earthquake 		 1.66039589655 		 1.6604
+central 		 4.30207583454 		 4.30208
+emsc 		 5.38608932379 		 5.38609
+csem 		 6.27029174111 		 6.27029
+
+
+There will b earthquakes tsunamis cyclones . etc if janata ka reporter black out govt to have a emergency contingen
+earthquakes 		 2.56315884669 		 2.56316
+tsunamis 		 5.63121178182 		 5.63121
+emergency 		 5.78074351579 		 5.78074
+
+
+6 . 4 Magnitude Earthquake MAULE CHILE
+magnitude 		 1.51217460701 		 1.51217
+earthquake 		 0.359780403777 		 0.35978
+
+
+New post 6 . 4 Magnitude Earthquake MAULE CHILE
+magnitude 		 1.51217460701 		 1.51217
+earthquake 		 0.359780403777 		 0.35978
+
+
+An Italian priest said the recent earthquakes that have shaken Italy were divine punishment for gay civil unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+recent 		 5.52585126616 		 5.52585
+earthquakes 		 2.56315884669 		 2.56316
+shaken 		 5.99585489541 		 5.99585
+punishment 		 6.81683544748 		 6.81684
+gay 		 5.78074351579 		 5.78074
+civil 		 5.63121178182 		 5.63121
+unions 		 6.21899844672 		 6.219
+
+
+#RememberWhenTrump robbed Haiti earthquake victims
+#rememberwhentrump 		 6.81683544748 		 6.81684
+earthquake 		 0.359780403777 		 0.35978
+victims 		 5.18937902954 		 5.18938
+
+
+The Vatican Condemns Catholic Radio Station For Blaming Earthquakes On Same Sex Civil Unions
+earthquakes 		 2.56315884669 		 2.56316
+civil 		 5.63121178182 		 5.63121
+unions 		 6.21899844672 		 6.219
+
+
+#SpiritCooking Clinton . #pedophilia ring . #PodestaEmails31 #NovemberSurprise #earthquake #hillarysemail
+#spiritcooking 		 6.57567339066 		 6.57567
+ring 		 6.72982407049 		 6.72982
+#novembersurprise 		 6.72982407049 		 6.72982
+#earthquake 		 1.66039589655 		 1.6604
+
+
+#RememberWhenTrump stole billions from #Haiti earthquake relief donations . Me neither . That was #Hillary again
+#rememberwhentrump 		 6.81683544748 		 6.81684
+earthquake 		 0.359780403777 		 0.35978
+relief 		 5.78074351579 		 5.78074
+
+
+You miserable slug . You think you can talk your way out of this . You betrayed me .  . There was an earthquake . It was not my fault
+earthquake 		 0.359780403777 		 0.35978
+fault 		 4.8327040856 		 4.8327
+
+
+Amazing what are the Italian firefighters after the earthquake . Applause for them
+italian 		 5.71822315881 		 5.71822
+earthquake 		 0.359780403777 		 0.35978
+
+
+Italian priest blames earthquakes on gay unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 0.0
+unions 		 6.21899844672 		 0.0
+
+
+#Blast from the #Past #Quake #Cereal #Quaker #FreeInside #Boxtops #EarthquakePower #Earthquake #MatchboxCars
+#quake 		 4.45255678548 		 4.45256
+#earthquake 		 1.66039589655 		 1.6604
+
+
+The work continues in Nepal over one year after the earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+#USGS #Breaking #earthquake M 0 . 4 7km W of Cobb California #alert #tsunami #prayfromjapan
+#usgs 		 6.32435896238 		 6.32436
+#breaking 		 4.01623368901 		 4.01623
+#earthquake 		 1.66039589655 		 1.6604
+7km 		 6.64978136282 		 6.64978
+#alert 		 6.91214562728 		 0.0
+#tsunami 		 3.35394449681 		 3.35394
+
+
+Italy earthquakes divine punishment for gay unions Priest .  . via
+earthquakes 		 2.56315884669 		 2.56316
+punishment 		 6.81683544748 		 6.81684
+gay 		 5.78074351579 		 5.78074
+unions 		 6.21899844672 		 6.219
+priest 		 6.17020828255 		 6.17021
+
+
+Kinkyu #Jishin Sokuho #earthquake #Japan 10 33 27 Acceleation change of underground Hiroshima
+#jishin 		 6.17020828255 		 6.17021
+#earthquake 		 1.66039589655 		 1.6604
+#japan 		 3.6695532758 		 3.66955
+
+
+Live on Nationwide News Network is Ms Karleen Black Scientific Officer Earthquake Unit express the severity of
+earthquake 		 0.359780403777 		 0.0
+
+
+#earthquake #Bhaktapur . Finally bhaktapur earthquake victims are getting their money from state after 19 months
+#earthquake 		 1.66039589655 		 1.6604
+earthquake 		 0.359780403777 		 0.35978
+victims 		 5.18937902954 		 5.18938
+state 		 5.78074351579 		 5.78074
+months 		 6.17020828255 		 6.17021
+
+
+#NewMusic  Shawn B Earthquake prod . by Shawn B click
+earthquake 		 0.359780403777 		 0.0
+
+
+Vatican Denounces Right Wing Catholic Radio Host for Blaming Italian Earthquakes on Gay Sin
+italian 		 5.71822315881 		 0.0
+earthquakes 		 2.56315884669 		 0.0
+gay 		 5.78074351579 		 0.0
+
+
+Bake sales are not the way to stock earthquake supplies . We need govt that invests before a crisis #b
+stock 		 6.72982407049 		 6.72982
+earthquake 		 0.359780403777 		 0.35978
+
+
+Italian priest blames earthquakes on gay civil unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 5.78074
+civil 		 5.63121178182 		 5.63121
+unions 		 6.21899844672 		 6.219
+
+
+Join #Anonymous . MILLION MASK MARCH . Nov 5 . #MMM2016 #NovemberSurprise #earthquake #hillarysemail
+million 		 6.44214199804 		 6.44214
+nov 		 4.31689092033 		 4.31689
+#novembersurprise 		 6.72982407049 		 6.72982
+#earthquake 		 1.66039589655 		 1.6604
+
+
+The latest Earthquakes daily . Thanks to #quake
+earthquakes 		 2.56315884669 		 2.56316
+daily 		 6.91214562728 		 6.91215
+#quake 		 4.45255678548 		 4.45256
+
+
+New mud volcano forms in Italy after recent earthquakes #MudVolcano #Italy
+recent 		 5.52585126616 		 5.52585
+earthquakes 		 2.56315884669 		 2.56316
+#italy 		 5.95663418226 		 5.95663
+
+
+#RememberWhenTrump raped the Haitian people of their money after the earthquake in Haiti .  . Oh yeah that was Hilla
+#rememberwhentrump 		 6.81683544748 		 6.81684
+raped 		 6.21899844672 		 6.219
+earthquake 		 0.359780403777 		 0.35978
+
+
+#RememberWhenTrump raped the Haitian people of their money after the earthquake in Haiti .  . Oh yeah that was Hilla
+#rememberwhentrump 		 6.81683544748 		 6.81684
+raped 		 6.21899844672 		 6.219
+earthquake 		 0.359780403777 		 0.35978
+
+
+#RememberWhenTrump raped the Haitian people of their money after the earthquake in Haiti .  . Oh yeah
+#rememberwhentrump 		 6.81683544748 		 6.81684
+raped 		 6.21899844672 		 6.219
+earthquake 		 0.359780403777 		 0.35978
+
+
+I survived the earthquake in Chile today . Maybe it was not an earthquake maybe I am still drunk from all the pisco sours
+survived 		 6.12368826692 		 6.12369
+earthquake 		 0.359780403777 		 0.35978
+earthquake 		 0.359780403777 		 0.35978
+
+
+Italian priest blames earthquakes on gay civil unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 5.78074
+civil 		 5.63121178182 		 5.63121
+unions 		 6.21899844672 		 6.219
+
+
+rt1shawnster There was an earthquake in 7km W of Volcano Hawaii of magnitude 2 . 9 on Today at 1 23 PM ET . Source
+earthquake 		 0.359780403777 		 0.35978
+7km 		 6.64978136282 		 6.64978
+magnitude 		 1.51217460701 		 1.51217
+pm 		 4.89724260674 		 4.89724
+
+
+Priest blames Italy earthquakes on gay marriage
+priest 		 6.17020828255 		 0.0
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 0.0
+
+
+Italy earthquakes divine retribution for voting against Israel Likud lawmaker says
+earthquakes 		 2.56315884669 		 2.56316
+
+
+Italy earthquakes are punishment for gay unions claims priest via
+earthquakes 		 2.56315884669 		 2.56316
+punishment 		 6.81683544748 		 6.81684
+gay 		 5.78074351579 		 5.78074
+unions 		 6.21899844672 		 6.219
+priest 		 6.17020828255 		 6.17021
+
+
+Homeless spend the night on a special train #Perugia #earthquake Italy
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Homeless spend the night on a special train #Perugia #earthquake Italy
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Italian priest claims deadly earthquakes are divine punishment for gay unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+deadly 		 4.84528286781 		 4.84528
+earthquakes 		 2.56315884669 		 2.56316
+punishment 		 6.81683544748 		 6.81684
+gay 		 5.78074351579 		 5.78074
+unions 		 6.21899844672 		 6.219
+
+
+Where is Eric Braverman . TOMORROW . #Anonymous #NovemberSurprise . #earthquake . #PodestaEmails30
+#novembersurprise 		 6.72982407049 		 6.72982
+#earthquake 		 1.66039589655 		 1.6604
+
+
+#RememberWhenTrump stole billions from #Haiti earthquake relief donations . Me neither . That was #Hillary again
+#rememberwhentrump 		 6.81683544748 		 6.81684
+earthquake 		 0.359780403777 		 0.35978
+relief 		 5.78074351579 		 5.78074
+
+
+USGS reports a M0 . 54 #earthquake 7km W of Cobb California on 11 5 16  18 54 10 UTC #quake
+usgs 		 4.18429279889 		 0.0
+reports 		 4.23799697786 		 4.238
+#earthquake 		 1.66039589655 		 1.6604
+7km 		 6.64978136282 		 6.64978
+utc 		 3.32862668883 		 3.32863
+#quake 		 4.45255678548 		 4.45256
+
+
+Fukushima nuclear accident is not over . Large earthquake will occur in Tokyo . Please do not use the Olympic Games in Japan
+fukushima 		 3.88685455149 		 3.88685
+nuclear 		 5.36458311857 		 5.36458
+large 		 4.33192879769 		 4.33193
+earthquake 		 0.359780403777 		 0.35978
+tokyo 		 6.81683544748 		 0.0
+
+
+#HaitiHurricaneRelief #earthquake made MILLIONS #HillarysHealth #hillarycorruption
+#earthquake 		 1.66039589655 		 1.6604
+millions 		 6.91214562728 		 6.91215
+
+
+Terrifying tragedy waiting to happen . Also preventable . #seismic #earthquake #school #bced #bcpoli
+terrifying 		 6.12368826692 		 6.12369
+happen 		 5.60381280763 		 5.60381
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Terrifying tragedy waiting to happen . Also preventable . #seismic #earthquake #school #bced #bcpoli
+terrifying 		 6.12368826692 		 6.12369
+happen 		 5.60381280763 		 5.60381
+#earthquake 		 1.66039589655 		 1.6604
+
+
+1 . 38 earthquake occurred near Tangoio Hawke Bay New Zealand at 19 36 UTC . #earthquake #Tangoio
+earthquake 		 0.359780403777 		 0.35978
+occurred 		 3.75089891525 		 3.7509
+near 		 2.68094188234 		 2.68094
+utc 		 3.32862668883 		 3.32863
+#earthquake 		 1.66039589655 		 1.6604
+
+
+#Earthquake #terremoto M2 . 5 strikes 23 km SW of #Tolentino #Italy 15 min ago . More info
+#earthquake 		 1.66039589655 		 1.6604
+#terremoto 		 5.30270771485 		 5.30271
+m2 		 5.78074351579 		 5.78074
+strikes 		 2.32717814861 		 2.32718
+km 		 3.56224154001 		 3.56224
+sw 		 5.32291042217 		 5.32291
+#italy 		 5.95663418226 		 5.95663
+min 		 4.48734290157 		 4.48734
+info 		 4.85802189359 		 4.85802
+
+
+Amazing what are the Italian firefighters after the earthquake . Applause for them
+italian 		 5.71822315881 		 5.71822
+earthquake 		 0.359780403777 		 0.35978
+
+
+Italian priest blames earthquakes on gay civil unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 5.78074
+civil 		 5.63121178182 		 5.63121
+unions 		 6.21899844672 		 6.219
+
+
+Earthquakes caused by homosexuality . I believe it . God does not like that stuff
+earthquakes 		 2.56315884669 		 0.0
+caused 		 4.47853227188 		 4.47853
+stuff 		 6.81683544748 		 6.81684
+
+
+#np Labrinth Earthquake ft . Busta Rhymes on
+earthquake 		 0.359780403777 		 0.35978
+ft 		 6.72982407049 		 6.72982
+
+
+3 Gorges Dam triggered 3 000 earthquakes #Renewables take more lives than #nuclear
+triggered 		 4.65038252881 		 4.65038
+earthquakes 		 2.56315884669 		 2.56316
+lives 		 6.44214199804 		 6.44214
+
+
+#earthquake Magnitude 0 . 2 occurred 70km E of Beatty Nevada 2016 11 05T14 54 09 . 102Z UTC #didyoufeelit
+#earthquake 		 1.66039589655 		 1.6604
+magnitude 		 1.51217460701 		 1.51217
+occurred 		 3.75089891525 		 3.7509
+utc 		 3.32862668883 		 3.32863
+#didyoufeelit 		 5.40806823051 		 5.40807
+
+
+#SpiritCooking Clinton . #pedophilia ring . #PodestaEmails31 #NovemberSurprise #earthquake #hillarysemail
+#spiritcooking 		 6.57567339066 		 6.57567
+ring 		 6.72982407049 		 6.72982
+#novembersurprise 		 6.72982407049 		 6.72982
+#earthquake 		 1.66039589655 		 1.6604
+
+
+jumping stones confirm almost 1 g PGA #ItalyEarthquake
+confirm 		 5.36458311857 		 5.36458
+
+
+I survived the earthquake in Chile today . Maybe it was not an earthquake maybe I am still drunk from all the pisco sours
+survived 		 6.12368826692 		 6.12369
+earthquake 		 0.359780403777 		 0.35978
+earthquake 		 0.359780403777 		 0.35978
+
+
+1 . 23 earthquake occurred 6km WNW of The Geysers California at 22 07 UTC . #earthquake #TheGeysers
+earthquake 		 0.359780403777 		 0.35978
+occurred 		 3.75089891525 		 3.7509
+wnw 		 5.71822315881 		 5.71822
+utc 		 3.32862668883 		 3.32863
+#earthquake 		 1.66039589655 		 1.6604
+
+
+#SpiritCooking Clinton . #pedophilia ring . #PodestaEmails31 #NovemberSurprise #earthquake #hillarysemail
+#spiritcooking 		 6.57567339066 		 6.57567
+ring 		 6.72982407049 		 6.72982
+#novembersurprise 		 6.72982407049 		 6.72982
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Italy recent spate of devastating earthquakes is punishment for gay marriage claims priest
+recent 		 5.52585126616 		 5.52585
+devastating 		 6.07923650435 		 6.07924
+earthquakes 		 2.56315884669 		 2.56316
+punishment 		 6.81683544748 		 6.81684
+gay 		 5.78074351579 		 5.78074
+priest 		 6.17020828255 		 6.17021
+
+
+Earthquake #terremoto M3 . 2 strikes 32 km W of Ascoli Piceno Italy 14 min ago . More info
+earthquake 		 0.359780403777 		 0.35978
+#terremoto 		 5.30270771485 		 5.30271
+m3 		 6.32435896238 		 6.32436
+strikes 		 2.32717814861 		 2.32718
+km 		 3.56224154001 		 3.56224
+min 		 4.48734290157 		 4.48734
+info 		 4.85802189359 		 4.85802
+
+
+DAILY REAL TIME EARTHQUAKE USGS GLOBAL
+daily 		 6.91214562728 		 0.0
+earthquake 		 0.359780403777 		 0.35978
+usgs 		 4.18429279889 		 4.18429
+
+
+#NZ #Earthquake Magnitude 2 . 4 Sun Nov 6 2016 at 11 48 38 am NZDT 10 km north of Te Araroa Public ID
+#nz 		 4.91066562707 		 4.91067
+#earthquake 		 1.66039589655 		 1.6604
+magnitude 		 1.51217460701 		 1.51217
+nov 		 4.31689092033 		 4.31689
+nzdt 		 5.65938265879 		 5.65938
+km 		 3.56224154001 		 3.56224
+north 		 4.9952230151 		 4.99522
+public 		 5.84743489029 		 5.84743
+id 		 6.07923650435 		 6.07924
+
+
+#earthquake #Animals #Dogs # . Fathers have to set
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Earthquakes Triggered by Dams #renewables far more dangerous than #nuclear #ClimateChange
+earthquakes 		 2.56315884669 		 0.0
+triggered 		 4.65038252881 		 4.65038
+
+
+Italian priest blames earthquakes on gay unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 0.0
+unions 		 6.21899844672 		 0.0
+
+
+Italian priest blames earthquakes on gay unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 0.0
+unions 		 6.21899844672 		 0.0
+
+
+#Earthquake #sismo M4 . 3 strikes 138 km S of Salina Cruz #Mexico 16 min ago . More info
+#earthquake 		 1.66039589655 		 1.6604
+#sismo 		 5.24443880673 		 5.24444
+m4 		 5.95663418226 		 5.95663
+strikes 		 2.32717814861 		 2.32718
+km 		 3.56224154001 		 3.56224
+min 		 4.48734290157 		 4.48734
+info 		 4.85802189359 		 4.85802
+
+
+Alert America Is Preparing For Tsunami  Earthquake Dollar Collapse Mar . via
+alert 		 4.87092529842 		 0.0
+tsunami 		 1.80438362246 		 1.80438
+earthquake 		 0.359780403777 		 0.35978
+dollar 		 6.91214562728 		 6.91215
+
+
+When you leave a castle and travel to a palace know that even the grandest palace is not immune to an Earthquake . #expectations
+travel 		 6.64978136282 		 6.64978
+earthquake 		 0.359780403777 		 0.35978
+
+
+Haha I so will be . There will be reports of earthquakes all around because of one crazy fan girl
+reports 		 4.23799697786 		 4.238
+earthquakes 		 2.56315884669 		 2.56316
+
+
+Italy recent spate of devastating earthquakes is punishment for gay marriage claims priest
+recent 		 5.52585126616 		 5.52585
+devastating 		 6.07923650435 		 6.07924
+earthquakes 		 2.56315884669 		 2.56316
+punishment 		 6.81683544748 		 6.81684
+gay 		 5.78074351579 		 5.78074
+priest 		 6.17020828255 		 6.17021
+
+
+2 . 27 earthquake occurred near Hicks Bay Gisborne New Zealand at 01 04 UTC . #earthquake #HicksBay
+earthquake 		 0.359780403777 		 0.35978
+occurred 		 3.75089891525 		 3.7509
+near 		 2.68094188234 		 2.68094
+utc 		 3.32862668883 		 3.32863
+#earthquake 		 1.66039589655 		 1.6604
+
+
+The latest Earth Cataclysm A . M . P . M . Paper . Thanks to #tsunami #earthquake
+earth 		 4.78391392143 		 4.78391
+#tsunami 		 3.35394449681 		 3.35394
+#earthquake 		 1.66039589655 		 1.6604
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+Then we need charge them for the earthquakes that occurred directly afterwords
+earthquakes 		 2.56315884669 		 2.56316
+occurred 		 3.75089891525 		 3.7509
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+4 . 1 earthquake close to Marche Italy at 03 19 UTC . #earthquake #Marche
+earthquake 		 0.359780403777 		 0.35978
+utc 		 3.32862668883 		 3.32863
+#earthquake 		 1.66039589655 		 1.6604
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+USGS reports a M4 . 7 #earthquake 114km WNW of Esso Russia on 11 6 16  2 37 36 UTC #quake
+usgs 		 4.18429279889 		 0.0
+reports 		 4.23799697786 		 4.238
+m4 		 5.95663418226 		 5.95663
+#earthquake 		 1.66039589655 		 1.6604
+wnw 		 5.71822315881 		 5.71822
+utc 		 3.32862668883 		 3.32863
+#quake 		 4.45255678548 		 4.45256
+
+
+Was that an earthquake . Oh it just the wind blowing so hard it shaking the entire house . #JustWellingtonThings
+earthquake 		 0.359780403777 		 0.35978
+wind 		 6.72982407049 		 6.72982
+shaking 		 5.55116907415 		 5.55117
+entire 		 6.57567339066 		 6.57567
+
+
+rt emergency global Light mag . 4 . 7 earthquake KAMCHATKA PENINSULA RUSSIA on Sunday 6
+emergency 		 5.78074351579 		 5.78074
+light 		 6.07923650435 		 6.07924
+mag 		 5.12038615806 		 5.12039
+earthquake 		 0.359780403777 		 0.35978
+sunday 		 5.36458311857 		 5.36458
+
+
+EARTHQUAKE M 3 . 6 6km SE of Perry Oklahoma per USGS #okquake
+earthquake 		 0.359780403777 		 0.35978
+se 		 5.12038615806 		 5.12039
+per 		 6.91214562728 		 6.91215
+usgs 		 4.18429279889 		 4.18429
+#okquake 		 6.21899844672 		 6.219
+
+
+mining clearing desecration pollution nuclear tests wars radioactive oceans tsunamis earthquakes drilling let loose evil spirits
+nuclear 		 5.36458311857 		 5.36458
+tsunamis 		 5.63121178182 		 5.63121
+earthquakes 		 2.56315884669 		 2.56316
+
+
+Hi we detected an earthquake 55m ago in Perry . If you felt it can you fill this form
+detected 		 5.71822315881 		 5.71822
+earthquake 		 0.359780403777 		 0.35978
+felt 		 3.59432985456 		 3.59433
+fill 		 6.72982407049 		 6.72982
+form 		 6.50668051918 		 6.50668
+
+
+Earthquake standards are on shaky ground
+earthquake 		 0.359780403777 		 0.35978
+ground 		 4.59961020344 		 4.59961
+
+
+Watching a documentary on the tohoku earthquake and tsunami and it heartbreaking . Everyone they talk to lost someone de
+earthquake 		 0.359780403777 		 0.35978
+tsunami 		 1.80438362246 		 1.80438
+
+
+#Earthquake #terremoto M3 . 1 strikes 4 km E of #Norcia #Italy 13 min ago . More info
+#earthquake 		 1.66039589655 		 1.6604
+#terremoto 		 5.30270771485 		 5.30271
+m3 		 6.32435896238 		 6.32436
+strikes 		 2.32717814861 		 2.32718
+km 		 3.56224154001 		 3.56224
+#italy 		 5.95663418226 		 5.95663
+min 		 4.48734290157 		 4.48734
+info 		 4.85802189359 		 4.85802
+
+
+Italian priest blames earthquakes on gay civil unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 5.78074
+civil 		 5.63121178182 		 5.63121
+unions 		 6.21899844672 		 6.219
+
+
+USGS reports a M2 . 19 #earthquake 4km SW of Volcano Hawaii on 11 6 16  5 03 14 UTC #quake
+usgs 		 4.18429279889 		 0.0
+reports 		 4.23799697786 		 4.238
+m2 		 5.78074351579 		 5.78074
+#earthquake 		 1.66039589655 		 1.6604
+4km 		 6.44214199804 		 6.44214
+sw 		 5.32291042217 		 5.32291
+utc 		 3.32862668883 		 3.32863
+#quake 		 4.45255678548 		 4.45256
+
+
+Catholic friar says civil partnerships responsible for deadly Italian earthquake #Gay News # FollowEm
+civil 		 5.63121178182 		 5.63121
+deadly 		 4.84528286781 		 4.84528
+italian 		 5.71822315881 		 5.71822
+earthquake 		 0.359780403777 		 0.35978
+
+
+4 . 6 #Earthquake in 232Km Nw Of Saumlaki Indonesia #iPhone users download the Earthquake application for more information
+#earthquake 		 1.66039589655 		 1.6604
+nw 		 5.68837019566 		 5.68837
+#iphone 		 5.24443880673 		 5.24444
+users 		 5.22574667371 		 5.22575
+download 		 5.17167945244 		 5.17168
+earthquake 		 0.359780403777 		 0.35978
+application 		 5.1038568561 		 5.10386
+information 		 4.69294214323 		 4.69294
+
+
+DAILY REAL TIME EARTHQUAKE USGS GLOBAL
+daily 		 6.91214562728 		 0.0
+earthquake 		 0.359780403777 		 0.35978
+usgs 		 4.18429279889 		 4.18429
+
+
+I am born n brought up in Gujarat as well n eye witness to cyclone when n thn earthquake
+brought 		 6.64978136282 		 6.64978
+earthquake 		 0.359780403777 		 0.35978
+
+
+It ridiculous to suggest gay civil unions cause earthquakes . We are all too busy causing floods . And fencing
+gay 		 5.78074351579 		 5.78074
+civil 		 5.63121178182 		 5.63121
+unions 		 6.21899844672 		 6.219
+earthquakes 		 2.56315884669 		 2.56316
+causing 		 5.38608932379 		 5.38609
+floods 		 6.50668051918 		 6.50668
+
+
+You make me feel invincible . Earthquake powerful
+earthquake 		 0.359780403777 		 0.35978
+powerful 		 2.92316158072 		 2.92316
+
+
+#Earthquake #terremoto M2 . 6 strikes 30 km S of #Tolentino #Italy 13 min ago . More info
+#earthquake 		 1.66039589655 		 1.6604
+#terremoto 		 5.30270771485 		 5.30271
+m2 		 5.78074351579 		 5.78074
+strikes 		 2.32717814861 		 2.32718
+km 		 3.56224154001 		 3.56224
+#italy 		 5.95663418226 		 5.95663
+min 		 4.48734290157 		 4.48734
+info 		 4.85802189359 		 4.85802
+
+
+Italian priest blames earthquakes on gay civil unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 5.78074
+civil 		 5.63121178182 		 5.63121
+unions 		 6.21899844672 		 6.219
+
+
+#earthquake M 2 . 3 4km SW of Volcano Hawaii
+#earthquake 		 1.66039589655 		 1.6604
+4km 		 6.44214199804 		 6.44214
+sw 		 5.32291042217 		 5.32291
+
+
+Italian priest blames earthquakes on gay civil unions . https
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 5.78074
+civil 		 5.63121178182 		 5.63121
+unions 		 6.21899844672 		 6.219
+
+
+EARTHQUAKES 4 TODAY TWO IN TENNESSEE BOTH CLOSE 2 NUKE PLANTS . wheepingwillow2
+earthquakes 		 2.56315884669 		 0.0
+
+
+Italy faces more earthquakes in near future scientists warn
+earthquakes 		 2.56315884669 		 2.56316
+near 		 2.68094188234 		 2.68094
+scientists 		 5.52585126616 		 5.52585
+
+
+Priest blames Italy earthquakes on gay marriage
+priest 		 6.17020828255 		 0.0
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 0.0
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+#Sismo #Earthquake M4 . 8 95km SSE of Halls Creek Australia
+#sismo 		 5.24443880673 		 5.24444
+#earthquake 		 1.66039589655 		 1.6604
+m4 		 5.95663418226 		 5.95663
+sse 		 5.95663418226 		 5.95663
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+#Earthquake M 4 . 8 95km SSE of Halls Creek Australia
+#earthquake 		 1.66039589655 		 1.6604
+sse 		 5.95663418226 		 5.95663
+
+
+USGS reports a M2 . 01 #earthquake 13km N of Borrego Springs CA on 11 6 16  11 22 16 UTC #quake
+usgs 		 4.18429279889 		 0.0
+reports 		 4.23799697786 		 4.238
+m2 		 5.78074351579 		 5.78074
+#earthquake 		 1.66039589655 		 1.6604
+ca 		 5.17167945244 		 5.17168
+utc 		 3.32862668883 		 3.32863
+#quake 		 4.45255678548 		 4.45256
+
+
+#Earthquake #terremoto M2 . 2 strikes 21 km NW of #Catania #Italy 27 min ago . More info
+#earthquake 		 1.66039589655 		 1.6604
+#terremoto 		 5.30270771485 		 5.30271
+m2 		 5.78074351579 		 5.78074
+strikes 		 2.32717814861 		 2.32718
+km 		 3.56224154001 		 3.56224
+nw 		 5.68837019566 		 5.68837
+#italy 		 5.95663418226 		 5.95663
+min 		 4.48734290157 		 4.48734
+info 		 4.85802189359 		 4.85802
+
+
+Italy was hit by an earthquake again with 4 . 8 magnitude just a few hours ago . Let pray for Kath and DJ safety also fo
+earthquake 		 0.359780403777 		 0.35978
+magnitude 		 1.51217460701 		 1.51217
+pray 		 4.7373939058 		 4.73739
+safety 		 4.52338283805 		 4.52338
+
+
+Italy was hit by an earthquake again with 4 . 8 magnitude just a few h
+earthquake 		 0.359780403777 		 0.35978
+magnitude 		 1.51217460701 		 1.51217
+
+
+Italy was hit by an earthquake again with 4 . 8 magnitude just a few h
+earthquake 		 0.359780403777 		 0.35978
+magnitude 		 1.51217460701 		 1.51217
+
+
+Italy was hit by an earthquake again with 4 . 8 magnitude just a few hours ago . Let pray for Kath and DJ safety also fo
+earthquake 		 0.359780403777 		 0.35978
+magnitude 		 1.51217460701 		 1.51217
+pray 		 4.7373939058 		 4.73739
+safety 		 4.52338283805 		 4.52338
+
+
+The Clintons raped Haiti after the small island nation was hit by an earthquake
+clintons 		 6.12368826692 		 6.12369
+raped 		 6.21899844672 		 6.219
+small 		 5.05584763692 		 5.05585
+island 		 3.78100871672 		 3.78101
+nation 		 6.07923650435 		 6.07924
+earthquake 		 0.359780403777 		 0.35978
+
+
+Italy has had nearly 250 earthquakes since Aug . why it can expect more
+earthquakes 		 2.56315884669 		 2.56316
+expect 		 5.95663418226 		 5.95663
+
+
+The END of Rome Colosseum . Historic building is CRACKING after worst earthquake in years
+building 		 6.50668051918 		 6.50668
+worst 		 6.64978136282 		 6.64978
+earthquake 		 0.359780403777 		 0.35978
+
+
+4 1 Earthquake M 4 . 1 06 11 05 00 depth 0 Km NORTHERN CALIFORNIA #earthquake
+earthquake 		 0.359780403777 		 0.35978
+depth 		 3.77665141135 		 3.77665
+km 		 3.56224154001 		 3.56224
+northern 		 6.91214562728 		 0.0
+#earthquake 		 1.66039589655 		 1.6604
+
+
+1 . 56 earthquake occurred near Hicks Bay Gisborne New Zealand at 13 38 UTC . #earthquake #HicksBay
+earthquake 		 0.359780403777 		 0.35978
+occurred 		 3.75089891525 		 3.7509
+near 		 2.68094188234 		 2.68094
+utc 		 3.32862668883 		 3.32863
+#earthquake 		 1.66039589655 		 1.6604
+
+
+USGS reports a M4 . 06 #earthquake 13km WSW of Laytonville California on 11 6 16  13 00 46 UTC #quake
+usgs 		 4.18429279889 		 0.0
+reports 		 4.23799697786 		 4.238
+m4 		 5.95663418226 		 5.95663
+#earthquake 		 1.66039589655 		 1.6604
+wsw 		 6.17020828255 		 6.17021
+utc 		 3.32862668883 		 3.32863
+#quake 		 4.45255678548 		 4.45256
+
+
+2 . 4 magnitude #earthquake . 7 km from Yountville CA ##UnitedStates
+magnitude 		 1.51217460701 		 1.51217
+#earthquake 		 1.66039589655 		 1.6604
+km 		 3.56224154001 		 3.56224
+ca 		 5.17167945244 		 0.0
+
+
+earthquake M 4 . 9 Northern Sumatra Indonesia 2016 11 06 14 03 39 0 . 55 98 . 47 51 km A
+earthquake 		 0.359780403777 		 0.35978
+northern 		 6.91214562728 		 0.0
+km 		 3.56224154001 		 3.56224
+
+
+So my dog does not like earthquakes at all
+earthquakes 		 2.56315884669 		 2.56316
+
+
+#Earthquake #terremoto M3 . 1 strikes 29 km E of #Foligno #Italy 15 min ago . More info
+#earthquake 		 1.66039589655 		 1.6604
+#terremoto 		 5.30270771485 		 5.30271
+m3 		 6.32435896238 		 6.32436
+strikes 		 2.32717814861 		 2.32718
+km 		 3.56224154001 		 3.56224
+#italy 		 5.95663418226 		 5.95663
+min 		 4.48734290157 		 4.48734
+info 		 4.85802189359 		 4.85802
+
+
+The SJ Earthquakes account and SmashMouth account have been going at it for weeks
+earthquakes 		 2.56315884669 		 0.0
+
+
+Priest blames #gay #unions for #killer earthquakes
+priest 		 6.17020828255 		 0.0
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+
+
+3 . 3 #Earthquake in Colombia #iPhone users download the Earthquake application for more information
+#earthquake 		 1.66039589655 		 1.6604
+#iphone 		 5.24443880673 		 5.24444
+users 		 5.22574667371 		 5.22575
+download 		 5.17167945244 		 5.17168
+earthquake 		 0.359780403777 		 0.35978
+application 		 5.1038568561 		 5.10386
+information 		 4.69294214323 		 4.69294
+
+
+A very tiny earthquake just buzzed the bed . I thought it was the effect of some silent heavy truck passing by my house . #Imphal
+tiny 		 4.84528286781 		 4.84528
+earthquake 		 0.359780403777 		 0.35978
+bed 		 5.78074351579 		 5.78074
+effect 		 4.23112409857 		 4.23112
+heavy 		 6.81683544748 		 6.81684
+
+
+With volunteers working in the rain for #earthquakeitaly San Severino #Marche #cisiamocisom
+rain 		 6.57567339066 		 6.57567
+
+
+#NepalEarthquake 53 search rescue teams from 23 countries rescued only 16 people . Watch
+rescue 		 5.78074351579 		 5.78074
+rescued 		 4.82028156561 		 4.82028
+
+
+My son seen this asked Is that an earthquake I told him no he asked What Happened I tell him about another ch
+son 		 6.91214562728 		 6.91215
+earthquake 		 0.359780403777 		 0.35978
+happened 		 5.18937902954 		 5.18938
+
+
+it all the earthquakes you now have free geothermal heating . And also lava
+earthquakes 		 2.56315884669 		 2.56316
+
+
+Priest blames gay unions for killer earthquakes
+priest 		 6.17020828255 		 0.0
+blames 		 5.65938265879 		 5.65938
+gay 		 5.78074351579 		 5.78074
+unions 		 6.21899844672 		 6.219
+earthquakes 		 2.56315884669 		 2.56316
+
+
+U know just how to make my heart beat faster . Emotional earthquake bring on disaster
+emotional 		 6.81683544748 		 6.81684
+earthquake 		 0.359780403777 		 0.35978
+disaster 		 5.50115865357 		 5.50116
+
+
+#MSGHelpEarthquakeVictims I pray to God to bless the earthquake victims n give them strength to bear the disaster http
+pray 		 4.7373939058 		 4.73739
+bless 		 6.50668051918 		 6.50668
+earthquake 		 0.359780403777 		 0.35978
+victims 		 5.18937902954 		 5.18938
+strength 		 6.72982407049 		 6.72982
+disaster 		 5.50115865357 		 5.50116
+
+
+Priest blames #gay #unions for #killer earthquakes
+priest 		 6.17020828255 		 0.0
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+
+
+did anyone else just feel a mini earthquake or is and I crazy
+earthquake 		 0.359780403777 		 0.35978
+
+
+i am answering a homework question on earthquakes and I had to stop myself from subconsciously writing which leaves the earth shook
+earthquakes 		 2.56315884669 		 2.56316
+leaves 		 5.99585489541 		 5.99585
+earth 		 4.78391392143 		 4.78391
+shook 		 5.30270771485 		 5.30271
+
+
+We do have earthquakes admittedly little ones but they create damage
+earthquakes 		 2.56315884669 		 2.56316
+create 		 6.64978136282 		 6.64978
+damage 		 3.84409269215 		 3.84409
+
+
+An earthquake in #Chile of 6 . 4 magnitude has struck near the capital of #Santiago no reports of damage
+earthquake 		 0.359780403777 		 0.35978
+magnitude 		 1.51217460701 		 1.51217
+struck 		 3.66565463538 		 3.66565
+near 		 2.68094188234 		 2.68094
+reports 		 4.23799697786 		 4.238
+damage 		 3.84409269215 		 3.84409
+
+
+My sister just said Greeley had an earthquake wtf
+earthquake 		 0.359780403777 		 0.35978
+
+
+Priest blames #gay #unions for #killer earthquakes
+priest 		 6.17020828255 		 0.0
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+
+
+Earthquake Booms Seneca Guns and Other Sounds
+earthquake 		 0.359780403777 		 0.0
+
+
+Impressive video of 2011 Japan earthquake disruption on the oceans . #earthquake #Tsunamis
+earthquake 		 0.359780403777 		 0.0
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Antithetic fault ruptured the surface 2 cm during M6 . 5 Norcia #earthquake more than 6 km west off the main Mte V
+fault 		 4.8327040856 		 4.8327
+cm 		 6.27029174111 		 6.27029
+m6 		 6.07923650435 		 0.0
+#earthquake 		 1.66039589655 		 1.6604
+km 		 3.56224154001 		 3.56224
+west 		 5.2634870017 		 5.26349
+
+
+Algeria 4 . 7 Magnitude Earthquake in M'sila
+magnitude 		 1.51217460701 		 1.51217
+earthquake 		 0.359780403777 		 0.35978
+
+
+Are we to understand  believe this building is going to last through an earthquake or heavy rain tornado flood
+building 		 6.50668051918 		 6.50668
+earthquake 		 0.359780403777 		 0.35978
+heavy 		 6.81683544748 		 6.81684
+rain 		 6.57567339066 		 6.57567
+
+
+Italian priest blames earthquakes on gay civil unions
+italian 		 5.71822315881 		 5.71822
+priest 		 6.17020828255 		 6.17021
+blames 		 5.65938265879 		 5.65938
+earthquakes 		 2.56315884669 		 2.56316
+gay 		 5.78074351579 		 5.78074
+civil 		 5.63121178182 		 5.63121
+unions 		 6.21899844672 		 6.219
+
+
+Absolutely correct . the demographic earthquake has happened . and no one paid any attention . Now or never indeed
+earthquake 		 0.359780403777 		 0.35978
+happened 		 5.18937902954 		 5.18938
+
+
+SCREW those earthquake victims in Haiti . We have a wedding and lavish lifestyle to fund for Chelsea . CRIMINALS . #Podes
+earthquake 		 0.359780403777 		 0.35978
+victims 		 5.18937902954 		 5.18938
+
+
+USGS reports a M0 . 65 #earthquake 9km WNW of Cobb California on 11 6 16  17 50 27 UTC #quake
+usgs 		 4.18429279889 		 0.0
+reports 		 4.23799697786 		 4.238
+#earthquake 		 1.66039589655 		 1.6604
+9km 		 6.91214562728 		 6.91215
+wnw 		 5.71822315881 		 5.71822
+utc 		 3.32862668883 		 3.32863
+#quake 		 4.45255678548 		 4.45256
+
+
+i am praying for everyone affected by the recent earthquake in Italy . The LORD is with you
+praying 		 5.34352970937 		 5.34353
+affected 		 4.33953339708 		 4.33953
+recent 		 5.52585126616 		 5.52585
+earthquake 		 0.359780403777 		 0.35978
+
+
+2 . 01 earthquake occurred near Fiordland National Park Southland New Zealand at 19 12 UTC . #earthquake
+earthquake 		 0.359780403777 		 0.35978
+occurred 		 3.75089891525 		 3.7509
+near 		 2.68094188234 		 2.68094
+national 		 6.81683544748 		 0.0
+utc 		 3.32862668883 		 3.32863
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Antithetic fault ruptured the surface 2 cm during M6 . 5 Norcia #earthquake more than 6 km west off the main Mte V
+fault 		 4.8327040856 		 4.8327
+cm 		 6.27029174111 		 6.27029
+m6 		 6.07923650435 		 0.0
+#earthquake 		 1.66039589655 		 1.6604
+km 		 3.56224154001 		 3.56224
+west 		 5.2634870017 		 5.26349
+
+
+i am sure Haiti earthquake victims do not begrudge Chelsea a humble modest wedding at their expense
+earthquake 		 0.359780403777 		 0.35978
+victims 		 5.18937902954 		 5.18938
+
+
+JUST IN A 3 . 1 magnitude earthquake struck at 9 57 a . m . east of Greeley http
+magnitude 		 1.51217460701 		 1.51217
+earthquake 		 0.359780403777 		 0.35978
+struck 		 3.66565463538 		 3.66565
+east 		 4.66085382868 		 0.0
+
+
+3 . 1 magnitude #earthquake . 19 km from Perry OK #UnitedStates
+magnitude 		 1.51217460701 		 1.51217
+#earthquake 		 1.66039589655 		 1.6604
+km 		 3.56224154001 		 3.56224
+#unitedstates 		 6.21899844672 		 6.219
+
+
+O twas a din to fright a monster ear To make an earthquake . sure it was the roar Of a whole herd of lions
+earthquake 		 0.359780403777 		 0.35978
+
+
+4 5 Earthquake M 4 . 5 07 11 00 18 depth 104 Km EASTERN HONSHU JAPAN #earthquake
+earthquake 		 0.359780403777 		 0.35978
+depth 		 3.77665141135 		 3.77665
+km 		 3.56224154001 		 3.56224
+eastern 		 5.55116907415 		 5.55117
+honshu 		 5.02507597825 		 5.02508
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Prosciutto Norcia #truffles #oliveoil are your favorite #Italy . Give a hand to the people in the #earthquake area
+#italy 		 5.95663418226 		 5.95663
+hand 		 6.32435896238 		 6.32436
+#earthquake 		 1.66039589655 		 1.6604
+area 		 5.22574667371 		 5.22575
+
+
+stop Yulin . you are culture known to be inhumane around the world . Skinning dogs alive I hope earthquake destroys your country
+alive 		 6.72982407049 		 6.72982
+earthquake 		 0.359780403777 		 0.35978
+
+
+#Earthquake #sismo M3 . 0 strikes 60 km NW of La Ligua #Chile 16 min ago . More info
+#earthquake 		 1.66039589655 		 1.6604
+#sismo 		 5.24443880673 		 5.24444
+m3 		 6.32435896238 		 6.32436
+strikes 		 2.32717814861 		 2.32718
+km 		 3.56224154001 		 3.56224
+nw 		 5.68837019566 		 5.68837
+min 		 4.48734290157 		 4.48734
+info 		 4.85802189359 		 4.85802
+
+
+Earthquake in Nepal causes Everest Avalanche in 2015
+earthquake 		 0.359780403777 		 0.35978
+causes 		 5.28290508755 		 5.28291
+
+
+Did you know that the song Starving was written about the 2016 2017 New York Islanders . Emotional earthquake bring on d
+emotional 		 6.81683544748 		 6.81684
+earthquake 		 0.359780403777 		 0.35978
+
+
+Earthquake 5 . 0 71km ESE of Nago Japan Earthquake Severe
+earthquake 		 0.359780403777 		 0.35978
+ese 		 5.43054108636 		 5.43054
+earthquake 		 0.359780403777 		 0.35978
+severe 		 5.28290508755 		 5.28291
+
+
+After the earthquake why the brain gives phantom quakes
+earthquake 		 0.359780403777 		 0.35978
+gives 		 6.50668051918 		 6.50668
+quakes 		 6.17020828255 		 6.17021
+
+
+Climate change is a scam Only earthquakes are increasing at a dramatic rate and also the nuclear exchange treats
+earthquakes 		 2.56315884669 		 2.56316
+nuclear 		 5.36458311857 		 5.36458
+
+
+I Would Be Lying if I Said There Were Not Times That I Am An Earthquake Contained Inside This Skin . Tyler Knot
+earthquake 		 0.359780403777 		 0.35978
+inside 		 5.65938265879 		 5.65938
+
+
+ok earthquake again nice
+earthquake 		 0.359780403777 		 0.35978
+
+
+Earthquakes in the world on November 07 2016 M2 . 9 or more via Earthquake Report
+earthquakes 		 2.56315884669 		 2.56316
+m2 		 5.78074351579 		 5.78074
+earthquake 		 0.359780403777 		 0.35978
+report 		 5.2634870017 		 5.26349
+
+
+#Earthquake Forecast #Japan should stay prepared for an EQ as high as 6 . 9 following deep 117km 4 . 9 . Please RT
+#earthquake 		 1.66039589655 		 1.6604
+forecast 		 5.78074351579 		 5.78074
+#japan 		 3.6695532758 		 3.66955
+prepared 		 6.32435896238 		 6.32436
+
+
+USGS reports a M0 . 88 #earthquake 2km NW of The Geysers California on 11 6 16  23 23 29 UTC #quake
+usgs 		 4.18429279889 		 0.0
+reports 		 4.23799697786 		 4.238
+#earthquake 		 1.66039589655 		 1.6604
+2km 		 6.72982407049 		 6.72982
+nw 		 5.68837019566 		 5.68837
+utc 		 3.32862668883 		 3.32863
+#quake 		 4.45255678548 		 4.45256
+
+
+Bill the drunk lost a diesel truck and then forgot what happend before waking up to an earthquake
+waking 		 6.38151737622 		 6.38152
+earthquake 		 0.359780403777 		 0.35978
+
+
+Bernie is . He does not support fracking which Los Angles banned because of earthquakes . He is very vocal about climate change
+fracking 		 4.31689092033 		 4.31689
+earthquakes 		 2.56315884669 		 2.56316
+
+
+3 . 1 magnitude #earthquake . 19 km from Perry OK #UnitedStates
+magnitude 		 1.51217460701 		 1.51217
+#earthquake 		 1.66039589655 		 1.6604
+km 		 3.56224154001 		 3.56224
+#unitedstates 		 6.21899844672 		 6.219
+
+
+3 . 1 magnitude #earthquake . 2 km from Kersey CO #UnitedStates
+magnitude 		 1.51217460701 		 1.51217
+#earthquake 		 1.66039589655 		 1.6604
+km 		 3.56224154001 		 3.56224
+#unitedstates 		 6.21899844672 		 6.219
+
+
+Well Adjusted Tectonic Plate Was that an Earthquake . Overly Defensive Tectonic Plate IT WAS not MY FAULT . #swaptweet
+tectonic 		 6.57567339066 		 6.57567
+earthquake 		 0.359780403777 		 0.35978
+tectonic 		 6.57567339066 		 6.57567
+fault 		 4.8327040856 		 4.8327
+
+
+Did you give to #Haiti earthquake relief . #ClintonFoundation kept it
+earthquake 		 0.359780403777 		 0.35978
+relief 		 5.78074351579 		 5.78074
+
+
+Earthquakes are just God doing the Cupid Shuffle
+earthquakes 		 2.56315884669 		 2.56316
+
+
+am a teacher and we teach about Nepal earthquakes . Would u be able to # Skype into a lesson about Nepal earthquakes
+earthquakes 		 2.56315884669 		 2.56316
+earthquakes 		 2.56315884669 		 2.56316
+
+
+What is an earthquake for everybody else is a jailbreak for Paul  Silas . God often uses catastrophe to set us free
+earthquake 		 0.359780403777 		 0.35978
+everybody 		 6.57567339066 		 6.57567
+
+
+Pet Earthquake Emergency Bag Kit Dog cat catastrophe rescue carry bag
+earthquake 		 0.359780403777 		 0.35978
+emergency 		 5.78074351579 		 5.78074
+rescue 		 5.78074351579 		 5.78074
+
+
+3 . 2 #Earthquake in Southern Alaska #iPhone users download the Earthquake application for more information
+#earthquake 		 1.66039589655 		 1.6604
+#iphone 		 5.24443880673 		 5.24444
+users 		 5.22574667371 		 5.22575
+download 		 5.17167945244 		 5.17168
+earthquake 		 0.359780403777 		 0.35978
+application 		 5.1038568561 		 5.10386
+information 		 4.69294214323 		 4.69294
+
+
+Did you feel that #earthquake . The Alaska Earthquake Center initial estimate is a 4 . 4 magnitude
+#earthquake 		 1.66039589655 		 1.6604
+earthquake 		 0.359780403777 		 0.0
+center 		 6.72982407049 		 0.0
+magnitude 		 1.51217460701 		 1.51217
+
+
+Beavis the animal sold a cow and then got in a fight before waking up to an earthquake
+cow 		 6.32435896238 		 6.32436
+waking 		 6.38151737622 		 6.38152
+earthquake 		 0.359780403777 		 0.35978
+
+
+Amazing what are the Italian firefighters after the earthquake . Applause for them
+italian 		 5.71822315881 		 5.71822
+earthquake 		 0.359780403777 		 0.35978
+
+
+1 . 5 earthquake occurred 32km SE of North Nenana Alaska at 01 12 UTC . #earthquake #NorthNenana
+earthquake 		 0.359780403777 		 0.35978
+occurred 		 3.75089891525 		 3.7509
+se 		 5.12038615806 		 5.12039
+north 		 4.9952230151 		 0.0
+utc 		 3.32862668883 		 3.32863
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Earthquake In America NBC Caught In The Biggest Scam In American TV History
+earthquake 		 0.359780403777 		 0.35978
+caught 		 5.71822315881 		 5.71822
+biggest 		 6.27029174111 		 6.27029
+tv 		 6.64978136282 		 0.0
+
+
+Large earthquake just hit Chandler Oklahoma please report where you have felt it at
+large 		 4.33192879769 		 4.33193
+earthquake 		 0.359780403777 		 0.35978
+report 		 5.2634870017 		 5.26349
+felt 		 3.59432985456 		 3.59433
+
+
+That was a big earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+I think I felt an earthquake
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+oh my god . That was a big earthquake . Wow
+earthquake 		 0.359780403777 		 0.35978
+
+
+Anyone feel that earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+the only way I know if the earthquake I felt is real is by checking twitter . tbh
+earthquake 		 0.359780403777 		 0.35978
+felt 		 3.59432985456 		 3.59433
+checking 		 6.72982407049 		 6.72982
+
+
+Was there just an earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+That earthquake was hella long
+earthquake 		 0.359780403777 		 0.35978
+
+
+earthquakes r a daily thing in oklahoma
+earthquakes 		 2.56315884669 		 2.56316
+daily 		 6.91214562728 		 6.91215
+
+
+So we having earthquakes now Oklahoma really
+earthquakes 		 2.56315884669 		 2.56316
+
+
+HO ly crap hello earthquake . That one literally felt like someone had punched me in the chest . The couch is still shaking
+earthquake 		 0.359780403777 		 0.35978
+felt 		 3.59432985456 		 3.59433
+shaking 		 5.55116907415 		 5.55117
+
+
+Damn an earthquake just happened
+earthquake 		 0.359780403777 		 0.35978
+happened 		 5.18937902954 		 5.18938
+
+
+Do not even get me started with these earthquake tweets boi
+earthquake 		 0.359780403777 		 0.35978
+
+
+why tf do we keep having earthquakes
+earthquakes 		 2.56315884669 		 2.56316
+
+
+I think I just experienced an earthquake
+experienced 		 6.38151737622 		 6.38152
+earthquake 		 0.359780403777 		 0.35978
+
+
+Earthquake . Jinx everyone owes me a coke
+earthquake 		 0.359780403777 		 0.35978
+
+
+that was not an earthquake you guys I just backed into something with my Tahoe again
+earthquake 		 0.359780403777 		 0.35978
+
+
+Wow that was a long earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+Was that an earthquake . I ask myself before checking Twitter to make sure it was
+earthquake 		 0.359780403777 		 0.35978
+checking 		 6.72982407049 		 6.72982
+
+
+Should I tweet about this earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+Who felt that earthquake
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+Here come the here come the earthquake tweets
+earthquake 		 0.359780403777 		 0.35978
+
+
+Tired of these earthquakes scaring the shit outta me
+earthquakes 		 2.56315884669 		 2.56316
+
+
+Earthquakes during the intense part of a movie are a cool thing
+earthquakes 		 2.56315884669 		 2.56316
+intense 		 6.91214562728 		 6.91215
+cool 		 6.91214562728 		 6.91215
+
+
+I will be the first to tweet about the earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+There was an earthquake how lit
+earthquake 		 0.359780403777 		 0.35978
+
+
+Just got rattled by another #fracking #earthquake in #Kansas . Second one in a week
+rattled 		 6.44214199804 		 6.44214
+#fracking 		 5.22574667371 		 5.22575
+#earthquake 		 1.66039589655 		 1.6604
+second 		 6.07923650435 		 6.07924
+
+
+Earthquake tweets in 3 . 2 . 1 . go
+earthquake 		 0.359780403777 		 0.35978
+
+
+i am sorry my sister fell and caused that earthquake
+fell 		 6.81683544748 		 6.81684
+caused 		 4.47853227188 		 4.47853
+earthquake 		 0.359780403777 		 0.35978
+
+
+Just felt an earthquake
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+Sweet sassy molassy . #earthquake
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Earthquake tweets in 3 . 2 . 1
+earthquake 		 0.359780403777 		 0.35978
+
+
+1 . 6 earthquake occurred 23km SE of Austin Nevada at 01 23 UTC . #earthquake #Austin
+earthquake 		 0.359780403777 		 0.35978
+occurred 		 3.75089891525 		 3.7509
+se 		 5.12038615806 		 5.12039
+utc 		 3.32862668883 		 3.32863
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Another earthquake in the Tulsa area
+earthquake 		 0.359780403777 		 0.35978
+area 		 5.22574667371 		 5.22575
+
+
+Earthquake in Oklahoma pt3
+earthquake 		 0.359780403777 		 0.35978
+
+
+Who else just felt that earthquake
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+Earthquake at the Mace Place . Anyone else feel it
+earthquake 		 0.359780403777 		 0.35978
+
+
+Here come the earthquake tweets
+earthquake 		 0.359780403777 		 0.35978
+
+
+Who just felt that earthquake
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+If Donald Trump had felt that he would have said that earthquake was HUGE
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+huge 		 5.05584763692 		 5.05585
+
+
+felt earthquake by downtown
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+downtown 		 6.91214562728 		 6.91215
+
+
+Like the old man on Freaky Friday says . EARTHQUAKE . Ha
+earthquake 		 0.359780403777 		 0.35978
+
+
+checks Twitter to see who else felt the earthquake
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+RT if you felt the earthquake
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+Feeling an earthquake in the movie theater is freaky
+earthquake 		 0.359780403777 		 0.35978
+
+
+i am gonna jump on the earthquake band wagon BECAUSE I ACTUALLY FELT THAT
+earthquake 		 0.359780403777 		 0.35978
+felt 		 3.59432985456 		 3.59433
+
+
+Large #earthquake just now in Oklahoma City #okc #oklahoma
+large 		 4.33192879769 		 4.33193
+#earthquake 		 1.66039589655 		 1.6604
+city 		 5.45353060458 		 0.0
+#oklahoma 		 5.45353060458 		 5.45353
+
+
+Did anybody else feel that earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+FINALLY FELT AN EARTHQUAKE
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+Ohh Myy .  . Did you guys just feel the earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+Did we just have another earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+There was an earthquake so i am tweeting about it #Earthquake
+earthquake 		 0.359780403777 		 0.35978
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Who felt that one . #quake #earthquake #kforalert
+felt 		 3.59432985456 		 3.59433
+#quake 		 4.45255678548 		 4.45256
+#earthquake 		 1.66039589655 		 1.6604
+
+
+now all i see on my TL is earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+That earthquake was interesting from the second floor of the WSU library . Does not seem like anyone else noticed
+earthquake 		 0.359780403777 		 0.35978
+second 		 6.07923650435 		 6.07924
+floor 		 5.63121178182 		 5.63121
+
+
+Mild earthquake Norman Oklahoma 7 45pm CT
+earthquake 		 0.359780403777 		 0.35978
+
+
+Just me or was there and earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+I think we just had another earthquake felt here in Tulsa Ok
+earthquake 		 0.359780403777 		 0.35978
+felt 		 3.59432985456 		 3.59433
+
+
+Nahh not with this Malik that was an earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+I felt a nice #earthquake just now in Oklahoma City 50th  Council
+felt 		 3.59432985456 		 3.59433
+#earthquake 		 1.66039589655 		 1.6604
+city 		 5.45353060458 		 0.0
+
+
+Apparently back in Oklahoma an earthquake
+apparently 		 6.44214199804 		 6.44214
+earthquake 		 0.359780403777 		 0.35978
+
+
+was that a tremble or a earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+Just felt earthquake in Delaware County . Aftershocks vibrated thru our cove . Thought tree had fell on our house . Whew
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+aftershocks 		 4.18429279889 		 4.18429
+fell 		 6.81683544748 		 6.81684
+
+
+checks twitter to make sure I actually felt an earthquake
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+earthquake . Things shaking here in Bella Vista
+earthquake 		 0.359780403777 		 0.35978
+shaking 		 5.55116907415 		 5.55117
+
+
+So how bout that Roman tornado today eh . After the earthquakes that shook Vatican City maybe a hint will be h
+earthquakes 		 2.56315884669 		 2.56316
+shook 		 5.30270771485 		 5.30271
+city 		 5.45353060458 		 0.0
+
+
+HOLY MOLY that was a big one . #earthquake #Wichita
+holy 		 5.99585489541 		 5.99585
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Why did not I feel the earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+#RaiderNation causing my whole house to shake . 3 and out . I fucking thought my jumping up and down did it . #OkEarthquake
+causing 		 5.38608932379 		 5.38609
+shake 		 5.50115865357 		 5.50116
+
+
+all these earthquakes and you still cannot rock my world
+earthquakes 		 2.56315884669 		 2.56316
+
+
+Was there just an earthquake in fayetteville or am I tripping tf out
+earthquake 		 0.359780403777 		 0.35978
+
+
+Well that was a big one . #Earthquake
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Being on the 10th floor of the hospital during an earthquake is literally the worst we were swaying I was about to lose it
+floor 		 5.63121178182 		 5.63121
+hospital 		 6.44214199804 		 6.44214
+earthquake 		 0.359780403777 		 0.35978
+worst 		 6.64978136282 		 6.64978
+
+
+I felt the earth move under my feet .  . #Earthquake #Norman
+felt 		 3.59432985456 		 3.59433
+earth 		 4.78391392143 		 4.78391
+move 		 5.91889385427 		 5.91889
+feet 		 5.84743489029 		 5.84743
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Never been in an earthquake before in my life and I just experienced my third one since coming to college . U of A got me shook
+earthquake 		 0.359780403777 		 0.35978
+experienced 		 6.38151737622 		 6.38152
+shook 		 5.30270771485 		 5.30271
+
+
+EITHER MY NEIGHBORS ARE GETTING LIT OR I JUST FELT AN EARTHQUAKE
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+Can y'all tweet earthquake 12 more times so I know what happened
+earthquake 		 0.359780403777 		 0.35978
+happened 		 5.18937902954 		 5.18938
+
+
+That was a LONG earthquake . Read you cant get ins . until 6 mo after one . I will never get eq ins . #motherfracker #oklahoma #earthquake
+earthquake 		 0.359780403777 		 0.35978
+#oklahoma 		 5.45353060458 		 5.45353
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Lauren I think we had an earthquake . lemme check Twitter . yup
+earthquake 		 0.359780403777 		 0.35978
+
+
+Another earthquake in Oklahoma . Wtf are they the new California
+earthquake 		 0.359780403777 		 0.35978
+
+
+Ok that earthquake was . way too long
+earthquake 		 0.359780403777 		 0.35978
+
+
+theres been so many earthquakes lately . damn u fracking
+earthquakes 		 2.56315884669 		 2.56316
+fracking 		 4.31689092033 		 4.31689
+
+
+not after this earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+how is it that the earthquake just happened like 2 seconds ago and my whole tl is about earthquakes
+earthquake 		 0.359780403777 		 0.35978
+happened 		 5.18937902954 		 5.18938
+seconds 		 6.12368826692 		 6.12369
+earthquakes 		 2.56315884669 		 2.56316
+
+
+I felt the earth move under my feet .  . #Earthquake #Norman
+felt 		 3.59432985456 		 3.59433
+earth 		 4.78391392143 		 4.78391
+move 		 5.91889385427 		 5.91889
+feet 		 5.84743489029 		 5.84743
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Finally felt my first earthquake
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+A strong #earthquake has been felt from Central Oklahoma into Kansas . Awaiting magnitude from
+strong 		 3.79863031807 		 3.79863
+#earthquake 		 1.66039589655 		 1.6604
+felt 		 3.59432985456 		 3.59433
+central 		 4.30207583454 		 0.0
+magnitude 		 1.51217460701 		 1.51217
+
+
+Did we just have an earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+Just had earthquake 2nd one in two months
+earthquake 		 0.359780403777 		 0.35978
+months 		 6.17020828255 		 6.17021
+
+
+Pretty good Earthquake in OKC just now . #okwx #earthquake
+earthquake 		 0.359780403777 		 0.35978
+#okwx 		 6.07923650435 		 6.07924
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Earthquake OKC 7 45pm 44 seconds long
+earthquake 		 0.359780403777 		 0.0
+seconds 		 6.12368826692 		 6.12369
+
+
+Pretty strong earthquake felt in OKC Oklahoma . #okquake #chemtrails #allnatural #cheapoil
+strong 		 3.79863031807 		 3.79863
+earthquake 		 0.359780403777 		 0.35978
+felt 		 3.59432985456 		 3.59433
+#okquake 		 6.21899844672 		 6.219
+
+
+Why do I never feel the earthquakes that everyone else in the state feels
+earthquakes 		 2.56315884669 		 2.56316
+state 		 5.78074351579 		 5.78074
+
+
+Another #earthquake in #KansasCity . I knew we are pretty cool but did not know we are California cool
+#earthquake 		 1.66039589655 		 1.6604
+cool 		 6.91214562728 		 6.91215
+cool 		 6.91214562728 		 6.91215
+
+
+Is it bad I did not feel the earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+#BREAKING Earthquake felt in Wichita . Did you feel it . Details soon on #kwch12
+#breaking 		 4.01623368901 		 4.01623
+earthquake 		 0.359780403777 		 0.35978
+felt 		 3.59432985456 		 3.59433
+details 		 5.65938265879 		 5.65938
+
+
+We felt it too remember to report it to the #okquake #earthquake #okwx
+felt 		 3.59432985456 		 3.59433
+report 		 5.2634870017 		 5.26349
+#okquake 		 6.21899844672 		 6.219
+#earthquake 		 1.66039589655 		 1.6604
+#okwx 		 6.07923650435 		 6.07924
+
+
+Y'all so quick to tweet about earthquakes oml
+earthquakes 		 2.56315884669 		 2.56316
+
+
+Forever checking Twitter to confirm earthquakes
+checking 		 6.72982407049 		 6.72982
+confirm 		 5.36458311857 		 5.36458
+earthquakes 		 2.56315884669 		 2.56316
+
+
+I think we just had another #earthquake and it lasted 10 15 seconds . #Moore #Oklahoma
+#earthquake 		 1.66039589655 		 1.6604
+seconds 		 6.12368826692 		 6.12369
+#oklahoma 		 5.45353060458 		 5.45353
+
+
+fracturing does not cause earthquakes . Do you research
+earthquakes 		 2.56315884669 		 2.56316
+research 		 6.81683544748 		 6.81684
+
+
+I just felt a earthquake big one
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+
+
+Enes with the clarification . Was not an earthquake Okies . Just Russ practicing
+earthquake 		 0.359780403777 		 0.35978
+
+
+What yall think 4 . 6 or . #earthquake
+#earthquake 		 1.66039589655 		 1.6604
+
+
+I have now felt three earthquakes living in Lincoln . Fracking needs to end
+felt 		 3.59432985456 		 3.59433
+three 		 4.53259949315 		 4.5326
+earthquakes 		 2.56315884669 		 2.56316
+living 		 5.99585489541 		 5.99585
+fracking 		 4.31689092033 		 4.31689
+
+
+This detection is linked to the strong #earthquake which shook Oklahoma 7 min ago
+linked 		 6.57567339066 		 6.57567
+strong 		 3.79863031807 		 3.79863
+#earthquake 		 1.66039589655 		 1.6604
+shook 		 5.30270771485 		 5.30271
+min 		 4.48734290157 		 4.48734
+
+
+We just out here tryna ply 2k then the tv and walls and what not start shaking . cmon Oklahoma #Earthquake
+tv 		 6.64978136282 		 6.64978
+shaking 		 5.55116907415 		 5.55117
+#earthquake 		 1.66039589655 		 1.6604
+
+
+2nd strong #earthquake from OK felt in in less than a week . At what point do we start thinking precursor to something bigger
+strong 		 3.79863031807 		 3.79863
+#earthquake 		 1.66039589655 		 1.6604
+felt 		 3.59432985456 		 3.59433
+thinking 		 5.84743489029 		 5.84743
+bigger 		 6.72982407049 		 6.72982
+
+
+I was taking a shower when the earthquake hit and I slipped and fell
+earthquake 		 0.359780403777 		 0.35978
+fell 		 6.81683544748 		 6.81684
+
+
+Large #earthquake shakes central #Oklahoma for more than 30 seconds
+large 		 4.33192879769 		 4.33193
+#earthquake 		 1.66039589655 		 1.6604
+shakes 		 4.43560722717 		 4.43561
+central 		 4.30207583454 		 4.30208
+#oklahoma 		 5.45353060458 		 5.45353
+seconds 		 6.12368826692 		 6.12369
+
+
+i am positive I just felt a large long earthquake in Sand Springs . anyone else
+felt 		 3.59432985456 		 3.59433
+large 		 4.33192879769 		 4.33193
+earthquake 		 0.359780403777 		 0.35978
+
+
+That earthquake had me shook . Literally
+earthquake 		 0.359780403777 		 0.35978
+shook 		 5.30270771485 		 5.30271
+
+
+Well that earthquake lasted a while
+earthquake 		 0.359780403777 		 0.35978
+
+
+Good ol Oklahoma earthquakes
+earthquakes 		 2.56315884669 		 2.56316
+
+
+Multiple earthquakes rock Oklahoma . #fracking
+multiple 		 5.8825262101 		 5.88253
+earthquakes 		 2.56315884669 		 2.56316
+#fracking 		 5.22574667371 		 5.22575
+
+
+Nice earthquake I just felt
+earthquake 		 0.359780403777 		 0.35978
+felt 		 3.59432985456 		 3.59433
+
+
+your anon news #FRacking is causing more earthquakes in #Oklahoma
+#fracking 		 5.22574667371 		 5.22575
+causing 		 5.38608932379 		 5.38609
+earthquakes 		 2.56315884669 		 2.56316
+#oklahoma 		 5.45353060458 		 5.45353
+
+
+Did not feel the quake but heard the windows rattling like they usually do when one happens . #OklahomaEarthquake #CentralOK
+quake 		 4.17777811786 		 4.17778
+heard 		 5.50115865357 		 5.50116
+happens 		 6.72982407049 		 6.72982
+
+
+#earthquake Magnitude 1 . 38 occurred 16km NE of Borrego Springs CA 2016 11 06T17 54 14 . 970Z UTC #didyoufeelit
+#earthquake 		 1.66039589655 		 1.6604
+magnitude 		 1.51217460701 		 1.51217
+occurred 		 3.75089891525 		 3.7509
+ne 		 5.40806823051 		 5.40807
+ca 		 5.17167945244 		 5.17168
+utc 		 3.32862668883 		 3.32863
+#didyoufeelit 		 5.40806823051 		 5.40807
+
+
+I never feel earthquakes
+earthquakes 		 2.56315884669 		 2.56316
+
+
+here come the earthquake tweets
+earthquake 		 0.359780403777 		 0.35978
+
+
+californians during an earthquake vs Kansans #earthquake
+earthquake 		 0.359780403777 		 0.35978
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Go home Oklahoma you are drunk . #earthquake
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Me when I start seeing the earthquake tweets
+seeing 		 6.91214562728 		 6.91215
+earthquake 		 0.359780403777 		 0.35978
+
+
+how I was walking to bathroom during that earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+I blame the presidential election for all these earthquakes the US is trying to run away from itself
+blame 		 6.17020828255 		 6.17021
+earthquakes 		 2.56315884669 		 2.56316
+
+
+Thank the Lord for Facebook I needed clarification as to why my house started shaking due to what I would assume to be an earthquake
+shaking 		 5.55116907415 		 5.55117
+due 		 5.71822315881 		 5.71822
+earthquake 		 0.359780403777 		 0.35978
+
+
+CAROLE KING Live I Feel The Earth Move #earthquake
+earth 		 4.78391392143 		 4.78391
+move 		 5.91889385427 		 5.91889
+#earthquake 		 1.66039589655 		 1.6604
+
+
+If you think you felt an earthquake report it here
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+report 		 5.2634870017 		 5.26349
+
+
+Shaking reported across Oklahoma and in parts of Kansas and Arkansas after earthquake
+shaking 		 5.55116907415 		 5.55117
+reported 		 4.58000173205 		 4.58
+across 		 5.01003810089 		 5.01004
+parts 		 5.84743489029 		 5.84743
+earthquake 		 0.359780403777 		 0.35978
+
+
+Shaking reported across Oklahoma and in parts of Kansas and Arkansas after earthquake
+shaking 		 5.55116907415 		 5.55117
+reported 		 4.58000173205 		 4.58
+across 		 5.01003810089 		 5.01004
+parts 		 5.84743489029 		 5.84743
+earthquake 		 0.359780403777 		 0.35978
+
+
+Big earthquake here at #2windowsokc as we discuss creation . #irony
+earthquake 		 0.359780403777 		 0.35978
+
+
+Heard there was an earthquake around your area . Everything ok
+heard 		 5.50115865357 		 5.50116
+earthquake 		 0.359780403777 		 0.35978
+area 		 5.22574667371 		 5.22575
+
+
+there goes another earthquake I did not feel
+earthquake 		 0.359780403777 		 0.35978
+
+
+Anyone else feel an earthquake in Kansas City just now
+earthquake 		 0.359780403777 		 0.35978
+city 		 5.45353060458 		 0.0
+
+
+Strong earthquake in Tulsa OK minutes ago
+strong 		 3.79863031807 		 3.79863
+earthquake 		 0.359780403777 		 0.35978
+
+
+Breaking 5 . 1 Central OK more info soon . #okwx #earthquakes
+breaking 		 3.4526793375 		 3.45268
+central 		 4.30207583454 		 4.30208
+info 		 4.85802189359 		 4.85802
+#okwx 		 6.07923650435 		 6.07924
+#earthquakes 		 4.9952230151 		 4.99522
+
+
+I have been through more earthquakes in the past 3 months in Tulsa than the total 6 months I have spent in California . #yo
+earthquakes 		 2.56315884669 		 2.56316
+months 		 6.17020828255 		 6.17021
+months 		 6.17020828255 		 6.17021
+
+
+Actually motivated to get in a doorway during that #earthquake
+#earthquake 		 1.66039589655 		 1.6604
+
+
+#earthquake #okquake some dmg cant be undone
+#earthquake 		 1.66039589655 		 1.6604
+#okquake 		 6.21899844672 		 6.219
+
+
+Am I the only one that did not feel that earthquake
+earthquake 		 0.359780403777 		 0.35978
+
+
+If fracking is causing earthquakes and poisoning the water supply why do they keep doing it
+fracking 		 4.31689092033 		 4.31689
+causing 		 5.38608932379 		 5.38609
+earthquakes 		 2.56315884669 		 2.56316
+water 		 5.65938265879 		 5.65938
+
+
+Earthquake just felt in NW Arkansas . Second one in a month . #earthquake #earthquakearkansas
+earthquake 		 0.359780403777 		 0.35978
+felt 		 3.59432985456 		 3.59433
+nw 		 5.68837019566 		 0.0
+second 		 6.07923650435 		 6.07924
+#earthquake 		 1.66039589655 		 1.6604
+
+
+I never feel the earthquakes
+earthquakes 		 2.56315884669 		 2.56316
+
+
+remember when I peed all over your toilet because of that earthquake like 4 years ago
+earthquake 		 0.359780403777 		 0.35978
+
+
+thats the first earthquake ive ever felt
+earthquake 		 0.359780403777 		 0.35978
+felt 		 3.59432985456 		 3.59433
+
+
+A magnitude 5 . 3 #earthquake occurred at 07 44 PM 1 . 9 miles W of Cushing Oklahoma . Details
+magnitude 		 1.51217460701 		 1.51217
+#earthquake 		 1.66039589655 		 1.6604
+occurred 		 3.75089891525 		 3.7509
+pm 		 4.89724260674 		 4.89724
+miles 		 5.68837019566 		 5.68837
+cushing 		 5.45353060458 		 0.0
+details 		 5.65938265879 		 5.65938
+
+
+Multiple earthquakes rock Oklahoma . #fracking
+multiple 		 5.8825262101 		 5.88253
+earthquakes 		 2.56315884669 		 2.56316
+#fracking 		 5.22574667371 		 5.22575
+
+
+News reporting an earthquake I did not feel a thing in Springhill
+reporting 		 6.81683544748 		 6.81684
+earthquake 		 0.359780403777 		 0.35978
+
+
+I have not felt an Oklahoma earthquake in Kansas City since the one that happened on September 3 2016
+felt 		 3.59432985456 		 3.59433
+earthquake 		 0.359780403777 		 0.35978
+city 		 5.45353060458 		 0.0
+happened 		 5.18937902954 		 5.18938
+
+
+Earthquakes . Piracy . Border control issues . These were the obstacles faced by the four man team behind the Tamil
+earthquakes 		 2.56315884669 		 2.56316
+issues 		 4.79589011248 		 4.79589
+
+
+Well that was a big one . #Earthquake
+#earthquake 		 1.66039589655 		 1.6604
+
+
+5 . 3 magnitude #earthquake . 3 km from Cushing OK #UnitedStates
+magnitude 		 1.51217460701 		 1.51217
+#earthquake 		 1.66039589655 		 1.6604
+km 		 3.56224154001 		 3.56224
+cushing 		 5.45353060458 		 0.0
+#unitedstates 		 6.21899844672 		 0.0
+
+
+Idc who did or did not feel that earthquake now shut up about it
+earthquake 		 0.359780403777 		 0.35978
+
+
+Getting tons of notifications from family and friends in #Oklahoma on another big #earthquake just now . Everyone okay
+#oklahoma 		 5.45353060458 		 5.45353
+#earthquake 		 1.66039589655 		 1.6604
+
+
+UPDATE Mag . 5 . 3 earthquake centered near Cushing OK . Depth 3 . 8 mi
+update 		 4.37844881333 		 4.37845
+mag 		 5.12038615806 		 5.12039
+earthquake 		 0.359780403777 		 0.35978
+centered 		 6.07923650435 		 6.07924
+near 		 2.68094188234 		 2.68094
+cushing 		 5.45353060458 		 0.0
+depth 		 3.77665141135 		 3.77665
+mi 		 5.65938265879 		 5.65938
+
+
+BREAKING NEWS 5 . 3 magnitude earthquake rattles Oklahoma
+breaking 		 3.4526793375 		 3.45268
+magnitude 		 1.51217460701 		 1.51217
+earthquake 		 0.359780403777 		 0.35978
+rattles 		 4.85802189359 		 4.85802
+
+
+5 . 3 #earthquake near Cushing Oklahoma
+#earthquake 		 1.66039589655 		 1.6604
+near 		 2.68094188234 		 2.68094
+cushing 		 5.45353060458 		 0.0
+
+
+Called it . What did I win . #oklahomaearthquake
+
+
+I thought my ghost was shaking my bed so I ignored it but ig there was an earthquake
+shaking 		 5.55116907415 		 5.55117
+bed 		 5.78074351579 		 5.78074
+earthquake 		 0.359780403777 		 0.35978
+
+
+Jason Midkiff Earthquake survivor and Supt at Purcell #oklaed
+earthquake 		 0.359780403777 		 0.0
+
+
+5 . 3 earthquake 3km W of Cushing Oklahoma . 2016 11 06 19 44 24 at epicenter 17m ago depth 6 . 1km
+earthquake 		 0.359780403777 		 0.35978
+3km 		 6.81683544748 		 6.81684
+cushing 		 5.45353060458 		 0.0
+epicenter 		 4.33953339708 		 4.33953
+17m 		 6.72982407049 		 6.72982
+depth 		 3.77665141135 		 3.77665
+
+
+A magnitude 5 . 3 #earthquake occurred at 07 44 PM 1 . 9 miles W of Cushing Oklahoma . Details
+magnitude 		 1.51217460701 		 1.51217
+#earthquake 		 1.66039589655 		 1.6604
+occurred 		 3.75089891525 		 3.7509
+pm 		 4.89724260674 		 4.89724
+miles 		 5.68837019566 		 5.68837
+cushing 		 5.45353060458 		 0.0
+details 		 5.65938265879 		 5.65938
+
+
+USGS reporting 5 . 3 magnitude earthquake originating in Oklahoma . #Huge #KansasEarthquake
+usgs 		 4.18429279889 		 4.18429
+reporting 		 6.81683544748 		 6.81684
+magnitude 		 1.51217460701 		 1.51217
+earthquake 		 0.359780403777 		 0.35978
+
+
+fracturing does not cause earthquakes . That proven and scientifically accepted
+earthquakes 		 2.56315884669 		 2.56316
+
+
+#earthquake THAT WAS THE MUSLIMS GETTING OFF THE BUS . IF YOU VOTE HILLARY GET A FREE BURKA
+#earthquake 		 1.66039589655 		 1.6604
+
+
+#earthquake THAT WAS THE MUSLIMS GETTING OFF THE BUS . IF YOU VOTE HILLARY GET A FREE BURKA
+#earthquake 		 1.66039589655 		 1.6604
+
+
+Another strong earthquake being reported in the central US around 7 45pm . Felt from Oklahoma to Little Rock AR . Detai
+strong 		 3.79863031807 		 3.79863
+earthquake 		 0.359780403777 		 0.35978
+reported 		 4.58000173205 		 4.58
+central 		 4.30207583454 		 4.30208
+felt 		 3.59432985456 		 3.59433
+

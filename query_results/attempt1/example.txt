@@ -1,0 +1,4174 @@
+2016-11-05~25	'terror', 'attack'
+
+
+
+added docs 2498
+not added docs 28229
+pre vocabulary 3848
+mid vocabulary 1885
+vocabulary 1584
+common word {'call', 'talk', 'november', 'tweet', 'racist', 'save', 'head', 'lost', 'via', 'well', 'life', 'woman', 'goes', 'hours', 'tonight', 'real', 'anything', 'less', 'place', 'wrong', 'care', '#electionnight', 'called', 'see', 'mind', 'could', 'since', 'last', 'actually', 'yo', 'better', 'says', 'looks', 'going', 'came', 'votes', 'sad', 'soon', 'realize', 'time', 'good', 'set', 'voted', 'story', 'black', 'week', 'try', 'latest', 'lead', 'day', 'wins', 'must', 'un', 'around', 'nov', 'work', 'go', 'pretty', 'cannot', 'though', 'cause', 'oh', 'post', 'code', 'im', 'watch', 'music', 'season', 'friday', 'make', 'keep', 'believe', 'amazing', 'need', 'group', 'point', 'away', 'high', 'nice', 'gone', 'order', 'back', 'party', 'crazy', 'show', 'half', 'take', 'free', 'guy', 'needs', 'happy', 'instead', 'times', 'white', 'application', 'family', 'stay', 'like', 'shit', 'learn', 'thought', 'seen', 'would', 'part', 'rt', 'took', 'may', 'tweets', 'two', 'winning', 'car', 'date', 'son', 'days', 'much', 'news', 'year', 'years', 'stand', 'tomorrow', 'home', 'enough', 'top', 'vote', 'world', 'hell', 'ago', 'things', 'self', 'hope', 'great', 'love', 'big', 'money', 'dont', 'president', 'job', 'election', 'night', 'give', 'forever', 'video', 'little', 'trying', 'morning', 'people', 'trump', 'house', 'always', 'business', 'update', 'followed', 'working', "y'all", 'maybe', 'end', 'whole', 'name', 'voting', 'bad', 'behind', 'started', 'fight', 'wanted', 'get', 'today', 'happen', 'let', 'men', 'dead', 'team', 'together', 'wish', 'another', 'https', 'person', 'left', 'perfect', 'moment', 'said', 'share', 'full', 'live', 'ready', 'past', 'right', 'something', 'hate', 'best', 'ever', 'every', 'gonna', 'next', 'school', 'still', 'feeling', 'done', 'gets', 'anyone', 'face', 'change', 'find', 'thing', 'yeah', 'one', 'read', 'many', 'win', 'told', 'might', 'please', 'come', 'hold', 'forget', 'sorry', 'baby', 'yes', 'remember', 'us', 'thanksgiving', 'someone', 'say', 'want', 'movie', 'found', 'wants', 'long', 'enter', 'mean', 'think', 'making', 'yet', 'photos', 'coming', 'even', 'million', 'sure', 'already', 'bring', 'stop', 'join', 'makes', 'matter', 'support', 'reason', 'power', 'wait', 'country', 'everyone', 'new', 'thanks', 'american', 'way', 'man', 'close', 'also', 'future', 'start', 'waiting', 'break', 'fans', 'knew', 'women', 'first', 'watching', 'far', 'feel', 'probably', 'fuck', 'check', 'mad', 'put', 'nothing', 'vs', 'media', 'history', 'saying', 'really', 'friends', 'special', 'without', 'used', 'taking', 'never', 'following', 'know', 'friend', 'heart', 'important', 'god', 'weekend', 'hear', 'ok', 'single', 'look', 'open', 'went', 'tell', 'use', 'made', 'help'}
+
+
+New National Poll . Which of these terrorist pairs do u think BJP RSS helped the most so they can attack India
+national 		 5.05065696845 		 5.05066
+terrorist 		 0.977365815421 		 0.977366
+helped 		 6.72463340202 		 6.72463
+attack 		 0.58259599643 		 0.582596
+
+
+OK govt now confirms that after 1 day ban on NDTV there will be no further terrorist attacks on Indian people
+govt 		 5.11519548958 		 5.1152
+ban 		 5.3383390409 		 5.33834
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+indian 		 6.43695132957 		 0.0
+
+
+#QuettaAttack #prayforquetta . #KulbhushanYadav s terrorist activities continue to cost #Pakistan heavil
+#quettaattack 		 5.42535041789 		 5.42535
+#prayforquetta 		 5.42535041789 		 5.42535
+#kulbhushanyadav 		 5.42535041789 		 5.42535
+terrorist 		 0.977365815421 		 0.977366
+activities 		 5.3383390409 		 5.33834
+continue 		 5.05065696845 		 5.05066
+cost 		 5.25829633322 		 5.2583
+#pakistan 		 5.18418836107 		 5.18419
+heavil 		 5.42535041789 		 5.42535
+
+
+US airstrike kills top Al Qaeda leader in Afghanistan FBI warns of possible pre election terror attack
+airstrike 		 6.03148622146 		 6.03149
+kills 		 4.87880671152 		 4.87881
+al 		 3.466536864 		 0.0
+qaeda 		 3.56056581364 		 0.0
+leader 		 5.25829633322 		 5.2583
+fbi 		 4.49104118051 		 4.49104
+warns 		 4.18565953096 		 4.18566
+possible 		 4.10967362398 		 4.10967
+pre 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+Obama defends Islam after the Nice France Muslim terrorist attack killing 84 #USA #US https
+obama 		 4.93287393279 		 0.0
+defends 		 6.72463340202 		 6.72463
+islam 		 6.21380777825 		 0.0
+france 		 5.74380414901 		 0.0
+muslim 		 3.42879653601 		 0.0
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+killing 		 5.62602111335 		 5.62602
+#usa 		 4.99003234663 		 4.99003
+#us 		 6.21380777825 		 6.21381
+
+
+yeah right . HILLARY SENT EMAIL TO CHELSEA SAYING it was a terrorist attack while she said it was a video to public . LYING SHIT
+hillary 		 6.03148622146 		 0.0
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+public 		 6.03148622146 		 6.03149
+lying 		 4.2678976292 		 4.2679
+
+
+US airstrike kills top Al Qaeda leader in Afghanistan FBI warns of possible pre election terror attack #Breaking
+airstrike 		 6.03148622146 		 6.03149
+kills 		 4.87880671152 		 4.87881
+al 		 3.466536864 		 0.0
+qaeda 		 3.56056581364 		 0.0
+leader 		 5.25829633322 		 5.2583
+fbi 		 4.49104118051 		 4.49104
+warns 		 4.18565953096 		 4.18566
+possible 		 4.10967362398 		 4.10967
+pre 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+#breaking 		 5.11519548958 		 5.1152
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+FoE in India . Chanting Bharat Tere Tukde Honge . Violating broadcast norms while reporting on Terror Attack . If Govt tak
+foe 		 6.21380777825 		 6.21381
+chanting 		 6.43695132957 		 6.43695
+bharat 		 6.43695132957 		 6.43695
+tere 		 6.43695132957 		 6.43695
+tukde 		 6.43695132957 		 6.43695
+honge 		 6.43695132957 		 6.43695
+violating 		 6.43695132957 		 6.43695
+broadcast 		 6.21380777825 		 6.21381
+norms 		 6.43695132957 		 6.43695
+reporting 		 5.74380414901 		 5.7438
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+govt 		 5.11519548958 		 5.1152
+tak 		 6.43695132957 		 6.43695
+
+
+Few journalists were taken inside #Pathankot Air Force base hours after terror attack ended . Only then reportage of loca
+journalists 		 6.43695132957 		 6.43695
+taken 		 5.74380414901 		 5.7438
+inside 		 5.62602111335 		 5.62602
+#pathankot 		 5.3383390409 		 5.33834
+air 		 6.21380777825 		 0.0
+force 		 5.87733554163 		 0.0
+base 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+ended 		 6.43695132957 		 6.43695
+reportage 		 5.18418836107 		 5.18419
+loca 		 6.43695132957 		 6.43695
+
+
+FoE in India . Chanting Bharat Tere Tukde Honge . Violating broadcast norms while reporting on Terror Attack . If Govt tak
+foe 		 6.21380777825 		 6.21381
+chanting 		 6.43695132957 		 6.43695
+bharat 		 6.43695132957 		 6.43695
+tere 		 6.43695132957 		 6.43695
+tukde 		 6.43695132957 		 6.43695
+honge 		 6.43695132957 		 6.43695
+violating 		 6.43695132957 		 6.43695
+broadcast 		 6.21380777825 		 6.21381
+norms 		 6.43695132957 		 6.43695
+reporting 		 5.74380414901 		 5.7438
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+govt 		 5.11519548958 		 5.1152
+tak 		 6.43695132957 		 6.43695
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+FBI warns of possible terror attack on US Election Day eve .  
+fbi 		 4.49104118051 		 0.0
+warns 		 4.18565953096 		 4.18566
+possible 		 4.10967362398 		 4.10967
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+eve 		 6.72463340202 		 6.72463
+
+
+There were allegations against NDTV coverage of Kargil war . There must be some restraint in covering crime and terror attacks
+coverage 		 6.43695132957 		 6.43695
+war 		 4.52740882468 		 4.52741
+crime 		 6.21380777825 		 6.21381
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+
+
+US airstrike kills top Al Qaeda leader in Afghanistan FBI warns of possible pre election terror attack #fox news
+airstrike 		 6.03148622146 		 6.03149
+kills 		 4.87880671152 		 4.87881
+al 		 3.466536864 		 0.0
+qaeda 		 3.56056581364 		 0.0
+leader 		 5.25829633322 		 5.2583
+fbi 		 4.49104118051 		 4.49104
+warns 		 4.18565953096 		 4.18566
+possible 		 4.10967362398 		 4.10967
+pre 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Expert Attack on ship carrying LNG from Qatar was likely terrorism
+expert 		 6.72463340202 		 6.72463
+attack 		 0.58259599643 		 0.582596
+likely 		 4.82751341713 		 4.82751
+terrorism 		 2.99493195338 		 2.99493
+
+
+Awash In Refugees And Terror Attacks French President Now Sitting At Stunning 4 Percent Approval
+refugees 		 6.03148622146 		 0.0
+terror 		 0.856278552072 		 0.0
+attacks 		 1.03540070838 		 0.0
+french 		 3.72890112846 		 0.0
+percent 		 6.43695132957 		 6.43695
+approval 		 6.72463340202 		 6.72463
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+Few journalists were taken inside #Pathankot Air Force base hours after terror attack ended . Only then reportage of loca
+journalists 		 6.43695132957 		 6.43695
+taken 		 5.74380414901 		 5.7438
+inside 		 5.62602111335 		 5.62602
+#pathankot 		 5.3383390409 		 5.33834
+air 		 6.21380777825 		 0.0
+force 		 5.87733554163 		 0.0
+base 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+ended 		 6.43695132957 		 6.43695
+reportage 		 5.18418836107 		 5.18419
+loca 		 6.43695132957 		 6.43695
+
+
+Modi Govt has rightfully banned #NDTV becz during Pathankot Attack it served as a informer to Pak jihadi terrorist
+modi 		 5.52066059769 		 0.0
+govt 		 5.11519548958 		 0.0
+#ndtv 		 5.62602111335 		 5.62602
+pathankot 		 5.42535041789 		 5.42535
+attack 		 0.58259599643 		 0.582596
+pak 		 4.82751341713 		 0.0
+jihadi 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+
+
+Turning terrorists into victims Media manipulation of news of terrorists attack . My article for Mail Today
+turning 		 6.21380777825 		 6.21381
+terrorists 		 2.37650831902 		 2.37651
+victims 		 3.32343602036 		 3.32344
+terrorists 		 2.37650831902 		 2.37651
+attack 		 0.58259599643 		 0.582596
+article 		 6.72463340202 		 6.72463
+
+
+Few journalists were taken inside #Pathankot Air Force base hours after terror attack ended . Only then reportage of loca
+journalists 		 6.43695132957 		 6.43695
+taken 		 5.74380414901 		 5.7438
+inside 		 5.62602111335 		 5.62602
+#pathankot 		 5.3383390409 		 5.33834
+air 		 6.21380777825 		 0.0
+force 		 5.87733554163 		 0.0
+base 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+ended 		 6.43695132957 		 6.43695
+reportage 		 5.18418836107 		 5.18419
+loca 		 6.43695132957 		 6.43695
+
+
+Not about footage . While terror attack was on crucial details of inside Pathankot Airforce base shared by a report
+footage 		 6.21380777825 		 6.21381
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+crucial 		 6.43695132957 		 6.43695
+details 		 5.87733554163 		 5.87734
+inside 		 5.62602111335 		 5.62602
+pathankot 		 5.42535041789 		 0.0
+base 		 5.42535041789 		 0.0
+shared 		 6.43695132957 		 6.43695
+report 		 4.68775147476 		 4.68775
+
+
+Not about footage . While terror attack was on crucial details of inside Pathankot Airforce base shared by a report
+footage 		 6.21380777825 		 6.21381
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+crucial 		 6.43695132957 		 6.43695
+details 		 5.87733554163 		 5.87734
+inside 		 5.62602111335 		 5.62602
+pathankot 		 5.42535041789 		 0.0
+base 		 5.42535041789 		 0.0
+shared 		 6.43695132957 		 6.43695
+report 		 4.68775147476 		 4.68775
+
+
+Freedom of press to reveal national security assets on live reportage amidst a cowardly terror attack . Really . Is t
+freedom 		 5.74380414901 		 5.7438
+press 		 5.87733554163 		 5.87734
+reveal 		 5.87733554163 		 5.87734
+national 		 5.05065696845 		 5.05066
+security 		 4.99003234663 		 4.99003
+assets 		 6.21380777825 		 6.21381
+reportage 		 5.18418836107 		 5.18419
+amidst 		 6.43695132957 		 6.43695
+cowardly 		 4.93287393279 		 4.93287
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+Terror attacks and condemnations Is it all just a PR exercise
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+exercise 		 6.72463340202 		 6.72463
+
+
+The house believes that the media reporting on terrorist attacks does more harm than good . Kingwood vs China
+reporting 		 5.74380414901 		 5.7438
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+
+
+The iranian regime pay for terror attacks on other muslims #Makkah #Expel Iran From OIC #Yemen #saudi
+iranian 		 5.52066059769 		 5.52066
+regime 		 5.25829633322 		 5.2583
+pay 		 4.82751341713 		 4.82751
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+muslims 		 4.21232777804 		 4.21233
+#makkah 		 5.74380414901 		 5.7438
+#expel 		 5.74380414901 		 5.7438
+oic 		 5.74380414901 		 5.7438
+#yemen 		 4.82751341713 		 4.82751
+#saudi 		 4.87880671152 		 4.87881
+
+
+A group of suspected PKK terrorists attack Turkish cafe in Germany Essen city amid Turkey terrorism concerns
+suspected 		 4.56514915266 		 4.56515
+pkk 		 5.62602111335 		 5.62602
+terrorists 		 2.37650831902 		 2.37651
+attack 		 0.58259599643 		 0.582596
+turkish 		 5.87733554163 		 5.87734
+cafe 		 6.43695132957 		 6.43695
+city 		 4.4559498607 		 4.45595
+amid 		 6.21380777825 		 6.21381
+terrorism 		 2.99493195338 		 2.99493
+concerns 		 6.72463340202 		 6.72463
+
+
+5 terrorists 1 soldier dead in another failed suicide attack photos
+terrorists 		 2.37650831902 		 2.37651
+soldier 		 5.42535041789 		 5.42535
+failed 		 5.25829633322 		 5.2583
+suicide 		 4.68775147476 		 4.68775
+attack 		 0.58259599643 		 0.582596
+
+
+Freedom of press to reveal national security assets on live reportage amidst a cowardly terror attack . Really . Is t
+freedom 		 5.74380414901 		 5.7438
+press 		 5.87733554163 		 5.87734
+reveal 		 5.87733554163 		 5.87734
+national 		 5.05065696845 		 5.05066
+security 		 4.99003234663 		 4.99003
+assets 		 6.21380777825 		 6.21381
+reportage 		 5.18418836107 		 5.18419
+amidst 		 6.43695132957 		 6.43695
+cowardly 		 4.93287393279 		 4.93287
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+US airstrike kills top Al Qaeda leader in Afghanistan FBI warns of possible pre election terror attack
+airstrike 		 6.03148622146 		 6.03149
+kills 		 4.87880671152 		 4.87881
+al 		 3.466536864 		 0.0
+qaeda 		 3.56056581364 		 0.0
+leader 		 5.25829633322 		 5.2583
+fbi 		 4.49104118051 		 4.49104
+warns 		 4.18565953096 		 4.18566
+possible 		 4.10967362398 		 4.10967
+pre 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+#RememberWhenTrump left Americans to die in the Benghazi terror attack . Oh no wait that was Clinton
+#rememberwhentrump 		 5.18418836107 		 5.18419
+americans 		 4.93287393279 		 4.93287
+die 		 5.74380414901 		 5.7438
+benghazi 		 6.72463340202 		 0.0
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+ROJAVA Jihadist terrorists uses such monster suicide trucks loaded W 10 tons explosives attacks on Kurds Captured http
+jihadist 		 5.18418836107 		 0.0
+terrorists 		 2.37650831902 		 2.37651
+uses 		 6.72463340202 		 6.72463
+suicide 		 4.68775147476 		 4.68775
+trucks 		 5.87733554163 		 5.87734
+loaded 		 6.72463340202 		 6.72463
+explosives 		 6.43695132957 		 6.43695
+attacks 		 1.03540070838 		 1.0354
+http 		 4.4559498607 		 4.45595
+
+
+Not about footage . While terror attack was on crucial details of inside Pathankot Airforce base shared by a report
+footage 		 6.21380777825 		 6.21381
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+crucial 		 6.43695132957 		 6.43695
+details 		 5.87733554163 		 5.87734
+inside 		 5.62602111335 		 5.62602
+pathankot 		 5.42535041789 		 0.0
+base 		 5.42535041789 		 0.0
+shared 		 6.43695132957 		 6.43695
+report 		 4.68775147476 		 4.68775
+
+
+Three States Are Being Warned of a Serious Terrorist Attack Before Election Day
+three 		 5.87733554163 		 5.87734
+states 		 5.52066059769 		 5.52066
+warned 		 5.42535041789 		 5.42535
+serious 		 6.03148622146 		 6.03149
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+US Texas governor warns of possible terror attack
+governor 		 6.21380777825 		 6.21381
+warns 		 4.18565953096 		 4.18566
+possible 		 4.10967362398 		 4.10967
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+Three States Are Being Warned of a Serious Terrorist Attack Before Election Day
+three 		 5.87733554163 		 5.87734
+states 		 5.52066059769 		 5.52066
+warned 		 5.42535041789 		 5.42535
+serious 		 6.03148622146 		 6.03149
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Three States Are Being Warned of a Serious Terrorist Attack Before Election Day
+three 		 5.87733554163 		 5.87734
+states 		 5.52066059769 		 5.52066
+warned 		 5.42535041789 		 5.42535
+serious 		 6.03148622146 		 6.03149
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Boko Haram Terrorists Attack Military Location In Northern Borno #ChannelsAt21
+boko 		 5.87733554163 		 0.0
+haram 		 5.87733554163 		 0.0
+terrorists 		 2.37650831902 		 2.37651
+attack 		 0.58259599643 		 0.582596
+military 		 4.29688516607 		 4.29689
+location 		 5.87733554163 		 5.87734
+
+
+Boko Haram Terrorists Attack Military Location In Borno Kills Top Military Officer . Graphic Photos
+boko 		 5.87733554163 		 0.0
+haram 		 5.87733554163 		 0.0
+terrorists 		 2.37650831902 		 2.37651
+attack 		 0.58259599643 		 0.582596
+military 		 4.29688516607 		 4.29689
+location 		 5.87733554163 		 5.87734
+kills 		 4.87880671152 		 4.87881
+military 		 4.29688516607 		 4.29689
+officer 		 5.62602111335 		 5.62602
+graphic 		 6.72463340202 		 6.72463
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+If we did not let terrorist in the threat of al Qaeda attacks in Virginia Texas NYC would be MUCH lower VOTE TRUMP ht
+terrorist 		 0.977365815421 		 0.977366
+threat 		 5.25829633322 		 5.2583
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+attacks 		 1.03540070838 		 1.0354
+nyc 		 6.72463340202 		 6.72463
+lower 		 6.21380777825 		 6.21381
+ht 		 4.68775147476 		 4.68775
+
+
+They are happy they survived gruesome terror attacks she happier unmarried
+survived 		 6.43695132957 		 6.43695
+gruesome 		 6.21380777825 		 6.21381
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+
+
+will re open The Bataclan with a gig the day before the anniversary of the terrorist attack
+bataclan 		 4.18565953096 		 0.0
+gig 		 5.87733554163 		 5.87734
+anniversary 		 4.01658320092 		 4.01658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Freedom of press to reveal national security assets on live reportage amidst a cowardly terror attack . Really . Is t
+freedom 		 5.74380414901 		 5.7438
+press 		 5.87733554163 		 5.87734
+reveal 		 5.87733554163 		 5.87734
+national 		 5.05065696845 		 5.05066
+security 		 4.99003234663 		 4.99003
+assets 		 6.21380777825 		 6.21381
+reportage 		 5.18418836107 		 5.18419
+amidst 		 6.43695132957 		 6.43695
+cowardly 		 4.93287393279 		 4.93287
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+If we did not let terrorist in the threat of al Qaeda attacks in Virginia Texas NYC would be MUCH lower VOTE TRUMP ht
+terrorist 		 0.977365815421 		 0.977366
+threat 		 5.25829633322 		 5.2583
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+attacks 		 1.03540070838 		 1.0354
+nyc 		 6.72463340202 		 6.72463
+lower 		 6.21380777825 		 6.21381
+ht 		 4.68775147476 		 4.68775
+
+
+Potential U . S . terror attack prompts authorities to ramp up police presence ahead of presidential election
+potential 		 4.77872325296 		 4.77872
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+prompts 		 6.43695132957 		 6.43695
+authorities 		 5.3383390409 		 5.33834
+ramp 		 6.43695132957 		 6.43695
+police 		 3.0357539479 		 3.03575
+presence 		 6.43695132957 		 6.43695
+ahead 		 6.21380777825 		 6.21381
+presidential 		 6.43695132957 		 6.43695
+
+
+Potential U . S . terror attack prompts authorities to ramp up police presence ahead of presidential election
+potential 		 4.77872325296 		 4.77872
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+prompts 		 6.43695132957 		 6.43695
+authorities 		 5.3383390409 		 5.33834
+ramp 		 6.43695132957 		 6.43695
+police 		 3.0357539479 		 3.03575
+presence 		 6.43695132957 		 6.43695
+ahead 		 6.21380777825 		 6.21381
+presidential 		 6.43695132957 		 6.43695
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+5 terrorists 1 soldier dead in another failed suicide attack photos
+terrorists 		 2.37650831902 		 2.37651
+soldier 		 5.42535041789 		 5.42535
+failed 		 5.25829633322 		 5.2583
+suicide 		 4.68775147476 		 4.68775
+attack 		 0.58259599643 		 0.582596
+
+
+5 terrorists 1 soldier dead in another failed suicide attack photos
+terrorists 		 2.37650831902 		 2.37651
+soldier 		 5.42535041789 		 5.42535
+failed 		 5.25829633322 		 5.2583
+suicide 		 4.68775147476 		 4.68775
+attack 		 0.58259599643 		 0.582596
+
+
+terror attack on election day U . S authorities
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+authorities 		 5.3383390409 		 5.33834
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Our list of Islamist terrorist attacks and plots against the U . S . homeland since 9 11 has risen to 92
+list 		 5.3383390409 		 5.33834
+islamist 		 5.87733554163 		 5.87734
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+plots 		 6.43695132957 		 6.43695
+homeland 		 6.03148622146 		 6.03149
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Kargil War Mumbai 26 11 Pathankot terror attack . Guess who has been consistently questioned . No lessons learnt . Manufa
+war 		 4.52740882468 		 0.0
+mumbai 		 5.87733554163 		 0.0
+pathankot 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+guess 		 5.3383390409 		 5.33834
+consistently 		 6.72463340202 		 6.72463
+questioned 		 6.43695132957 		 6.43695
+lessons 		 6.43695132957 		 6.43695
+learnt 		 6.72463340202 		 6.72463
+manufa 		 6.72463340202 		 6.72463
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+FoE in India . Chanting Bharat Tere Tukde Honge . Violating broadcast norms while reporting on Terror Attack . If Govt tak
+foe 		 6.21380777825 		 6.21381
+chanting 		 6.43695132957 		 6.43695
+bharat 		 6.43695132957 		 6.43695
+tere 		 6.43695132957 		 6.43695
+tukde 		 6.43695132957 		 6.43695
+honge 		 6.43695132957 		 6.43695
+violating 		 6.43695132957 		 6.43695
+broadcast 		 6.21380777825 		 6.21381
+norms 		 6.43695132957 		 6.43695
+reporting 		 5.74380414901 		 5.7438
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+govt 		 5.11519548958 		 5.1152
+tak 		 6.43695132957 		 6.43695
+
+
+Terrorists are attacking after changing their names . Federation is being weakened . But they do not care
+terrorists 		 2.37650831902 		 2.37651
+attacking 		 3.9946042942 		 3.9946
+changing 		 6.72463340202 		 6.72463
+names 		 6.72463340202 		 6.72463
+federation 		 6.72463340202 		 6.72463
+weakened 		 6.72463340202 		 6.72463
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Suspected Boko Haram terrorists have attacked a 119 Battalion Nigerian Army . by #channelstv via
+suspected 		 4.56514915266 		 4.56515
+boko 		 5.87733554163 		 5.87734
+haram 		 5.87733554163 		 5.87734
+terrorists 		 2.37650831902 		 2.37651
+attacked 		 3.61855307129 		 3.61855
+battalion 		 6.43695132957 		 6.43695
+nigerian 		 6.21380777825 		 6.21381
+army 		 4.82751341713 		 4.82751
+#channelstv 		 6.43695132957 		 6.43695
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+#PodestaEmails #PodestaEmails31 #SpiritCooking Lots more in common than just terrorist attacks in San Bernardino an
+#podestaemails31 		 5.05065696845 		 5.05066
+common 		 6.43695132957 		 6.43695
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+san 		 6.72463340202 		 0.0
+
+
+US Muslim Invasion Horror U . S Officials Warn Of Muslim Terrorist Attack On Monday . #SaturdayM
+muslim 		 3.42879653601 		 3.4288
+invasion 		 6.43695132957 		 6.43695
+horror 		 5.74380414901 		 5.7438
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+#saturdaym 		 6.43695132957 		 6.43695
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+Report U . S . Intel Warning of Possible Terror Attacks on Monday via
+report 		 4.68775147476 		 4.68775
+intel 		 6.43695132957 		 6.43695
+warning 		 4.4559498607 		 4.45595
+possible 		 4.10967362398 		 4.10967
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+monday 		 3.47944026883 		 3.47944
+
+
+In 1998 terrorists attacked two US embassies . No one blamed the secretary of state . via
+terrorists 		 2.37650831902 		 2.37651
+attacked 		 3.61855307129 		 3.61855
+blamed 		 6.43695132957 		 6.43695
+state 		 4.77872325296 		 4.77872
+
+
+Welcome to Victor Eke blog Boko Haram Terrorists Attack Military Location In Northern Borno . Graphic Photos
+welcome 		 6.43695132957 		 6.43695
+boko 		 5.87733554163 		 0.0
+haram 		 5.87733554163 		 0.0
+terrorists 		 2.37650831902 		 2.37651
+attack 		 0.58259599643 		 0.582596
+military 		 4.29688516607 		 4.29689
+location 		 5.87733554163 		 5.87734
+graphic 		 6.72463340202 		 6.72463
+
+
+FBI warns of possible pre Election Day terror attacks Fox News #NY #TX #VA
+fbi 		 4.49104118051 		 0.0
+warns 		 4.18565953096 		 4.18566
+possible 		 4.10967362398 		 4.10967
+pre 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+Terrorists are attacking after changing their names . Federation is being weakened . But they do not care
+terrorists 		 2.37650831902 		 2.37651
+attacking 		 3.9946042942 		 3.9946
+changing 		 6.72463340202 		 6.72463
+names 		 6.72463340202 		 6.72463
+federation 		 6.72463340202 		 6.72463
+weakened 		 6.72463340202 		 6.72463
+
+
+A group of suspected PKK terrorists attack Turkish cafe in Germany Essen city amid Turkey terrorism concerns
+suspected 		 4.56514915266 		 4.56515
+pkk 		 5.62602111335 		 5.62602
+terrorists 		 2.37650831902 		 2.37651
+attack 		 0.58259599643 		 0.582596
+turkish 		 5.87733554163 		 5.87734
+cafe 		 6.43695132957 		 6.43695
+city 		 4.4559498607 		 4.45595
+amid 		 6.21380777825 		 6.21381
+terrorism 		 2.99493195338 		 2.99493
+concerns 		 6.72463340202 		 6.72463
+
+
+Jihadis Back on UK Streets As Spy Boss Warns of New Attack . Hundreds of terrorists were released in the UK after
+uk 		 5.74380414901 		 0.0
+streets 		 5.52066059769 		 5.52066
+boss 		 6.21380777825 		 6.21381
+warns 		 4.18565953096 		 4.18566
+attack 		 0.58259599643 		 0.582596
+hundreds 		 6.03148622146 		 6.03149
+terrorists 		 2.37650831902 		 2.37651
+released 		 5.74380414901 		 5.7438
+uk 		 5.74380414901 		 0.0
+
+
+US Muslim Invasion Horror U . S Officials Warn Of Muslim Terrorist Attack On Monday . #SaturdayM
+muslim 		 3.42879653601 		 3.4288
+invasion 		 6.43695132957 		 6.43695
+horror 		 5.74380414901 		 5.7438
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+#saturdaym 		 6.43695132957 		 6.43695
+
+
+US Muslim Invasion Horror U . S Officials Warn Of Muslim Terrorist Attack On Monday . #SaturdayM
+muslim 		 3.42879653601 		 3.4288
+invasion 		 6.43695132957 		 6.43695
+horror 		 5.74380414901 		 5.7438
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+#saturdaym 		 6.43695132957 		 6.43695
+
+
+Terrorist Squatters savagely attacked  assaulted Saber Abu Fajadh his brother Hassan  his cousin Mohammed in J
+terrorist 		 0.977365815421 		 0.0
+savagely 		 6.72463340202 		 6.72463
+attacked 		 3.61855307129 		 3.61855
+assaulted 		 6.72463340202 		 6.72463
+brother 		 6.43695132957 		 6.43695
+
+
+Eureka . No terrorists involved . Modi Govt staged Pathankot attack with a plan to trap NDTV doing irresponsible cove
+terrorists 		 2.37650831902 		 2.37651
+involved 		 5.3383390409 		 5.33834
+modi 		 5.52066059769 		 0.0
+govt 		 5.11519548958 		 0.0
+staged 		 5.42535041789 		 5.42535
+pathankot 		 5.42535041789 		 5.42535
+attack 		 0.58259599643 		 0.582596
+plan 		 5.18418836107 		 5.18419
+trap 		 5.87733554163 		 5.87734
+irresponsible 		 5.87733554163 		 5.87734
+cove 		 5.87733554163 		 5.87734
+
+
+Suspected Boko Haram terrorists have attacked a 119 Battalion Nigerian Army . by #channelstv via
+suspected 		 4.56514915266 		 4.56515
+boko 		 5.87733554163 		 5.87734
+haram 		 5.87733554163 		 5.87734
+terrorists 		 2.37650831902 		 2.37651
+attacked 		 3.61855307129 		 3.61855
+battalion 		 6.43695132957 		 6.43695
+nigerian 		 6.21380777825 		 6.21381
+army 		 4.82751341713 		 4.82751
+#channelstv 		 6.43695132957 		 6.43695
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+roll of some tv news channels been always dubious during terror attacks
+tv 		 6.03148622146 		 6.03149
+channels 		 6.72463340202 		 6.72463
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+
+
+Despite Severe Gun Controls UK Warns Of Terrorist Gun Attacks
+despite 		 6.03148622146 		 6.03149
+severe 		 5.18418836107 		 5.18419
+gun 		 5.74380414901 		 5.7438
+controls 		 6.72463340202 		 6.72463
+uk 		 5.74380414901 		 5.7438
+warns 		 4.18565953096 		 4.18566
+terrorist 		 0.977365815421 		 0.977366
+gun 		 5.74380414901 		 5.7438
+attacks 		 1.03540070838 		 1.0354
+
+
+Election Day is coming  we thought the craziness would end . Threats of #Hackers #terroristattacks #voterfraud
+threats 		 6.72463340202 		 6.72463
+#terroristattacks 		 6.72463340202 		 6.72463
+
+
+Al Quaeda alert TERROR ATTACK MONDAY US cities FOOLISH HILLARY VOTERS . We tried to warn you Hillary sold the US . Not Trump
+al 		 3.466536864 		 3.46654
+alert 		 4.64519186034 		 4.64519
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+cities 		 5.87733554163 		 5.87734
+hillary 		 6.03148622146 		 6.03149
+voters 		 6.03148622146 		 6.03149
+tried 		 5.87733554163 		 5.87734
+warn 		 3.42879653601 		 3.4288
+hillary 		 6.03148622146 		 6.03149
+
+
+US airstrike kills top Al Qaeda leader in Afghanistan FBI warns of possible preelection terror attack #D5
+airstrike 		 6.03148622146 		 6.03149
+kills 		 4.87880671152 		 4.87881
+al 		 3.466536864 		 0.0
+qaeda 		 3.56056581364 		 0.0
+leader 		 5.25829633322 		 5.2583
+fbi 		 4.49104118051 		 4.49104
+warns 		 4.18565953096 		 4.18566
+possible 		 4.10967362398 		 4.10967
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+The most positive outcome of NDTV ban is that there cannot be any terrorist attack on 9th November
+outcome 		 6.72463340202 		 6.72463
+ban 		 5.3383390409 		 5.33834
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Foreign study scholarship honors Berkeley student slain in Nice terror attack . 
+foreign 		 5.62602111335 		 5.62602
+study 		 6.43695132957 		 6.43695
+student 		 5.87733554163 		 5.87734
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+#QuettaTerrorAttackNational action plan #NAP No action plan what to say for govt military and law enforcement agencies
+action 		 5.74380414901 		 5.7438
+plan 		 5.18418836107 		 5.18419
+#nap 		 6.72463340202 		 6.72463
+action 		 5.74380414901 		 5.7438
+plan 		 5.18418836107 		 5.18419
+govt 		 5.11519548958 		 5.1152
+military 		 4.29688516607 		 4.29689
+law 		 5.3383390409 		 5.33834
+enforcement 		 5.74380414901 		 5.7438
+agencies 		 6.43695132957 		 6.43695
+
+
+Potential U . S . Terror Attack Prompts Authorities To Ramp Up Police Presence via
+potential 		 4.77872325296 		 4.77872
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+prompts 		 6.43695132957 		 6.43695
+authorities 		 5.3383390409 		 5.33834
+ramp 		 6.43695132957 		 6.43695
+police 		 3.0357539479 		 3.03575
+presence 		 6.43695132957 		 6.43695
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+Only in Britain would we dedicate a day to commemorate a failed terrorist attack
+failed 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Strongly condemn the barbaric terrorist attack in #Quetta in the strongest terms . Thoughts  Prayers remain with the
+strongly 		 3.81591250545 		 3.81591
+condemn 		 3.79789399995 		 3.79789
+barbaric 		 6.43695132957 		 6.43695
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+#quetta 		 6.43695132957 		 6.43695
+strongest 		 6.43695132957 		 6.43695
+terms 		 6.21380777825 		 6.21381
+thoughts 		 4.77872325296 		 4.77872
+prayers 		 4.64519186034 		 4.64519
+remain 		 6.72463340202 		 6.72463
+
+
+#Amed police bombing . Onder #Terrorist Attacks against #Turkish police headquarter has been made when we were stil
+#amed 		 6.43695132957 		 6.43695
+police 		 3.0357539479 		 3.03575
+bombing 		 6.21380777825 		 6.21381
+onder 		 6.43695132957 		 6.43695
+#terrorist 		 4.77872325296 		 4.77872
+attacks 		 1.03540070838 		 1.0354
+#turkish 		 6.03148622146 		 6.03149
+police 		 3.0357539479 		 3.03575
+headquarter 		 6.43695132957 		 6.43695
+stil 		 6.43695132957 		 6.43695
+
+
+Suspected Boko Haram terrorists have attacked a 119 Battalion Nigerian Army . by #channelstv via
+suspected 		 4.56514915266 		 4.56515
+boko 		 5.87733554163 		 5.87734
+haram 		 5.87733554163 		 5.87734
+terrorists 		 2.37650831902 		 2.37651
+attacked 		 3.61855307129 		 3.61855
+battalion 		 6.43695132957 		 6.43695
+nigerian 		 6.21380777825 		 6.21381
+army 		 4.82751341713 		 4.82751
+#channelstv 		 6.43695132957 		 6.43695
+
+
+If there was ever a reason for a terrorist attack then this is it . Isis pack your bags and get yourselves to Whitb
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+isis 		 4.4559498607 		 4.45595
+
+
+Eureka . No terrorists involved . Modi Govt staged Pathankot attack with a plan to trap NDTV doing irresponsible cove
+terrorists 		 2.37650831902 		 2.37651
+involved 		 5.3383390409 		 5.33834
+modi 		 5.52066059769 		 0.0
+govt 		 5.11519548958 		 0.0
+staged 		 5.42535041789 		 5.42535
+pathankot 		 5.42535041789 		 5.42535
+attack 		 0.58259599643 		 0.582596
+plan 		 5.18418836107 		 5.18419
+trap 		 5.87733554163 		 5.87734
+irresponsible 		 5.87733554163 		 5.87734
+cove 		 5.87733554163 		 5.87734
+
+
+1 day broadcast ban of a channel for giving sensitive info during terrorist attack is not emergency
+broadcast 		 6.21380777825 		 6.21381
+ban 		 5.3383390409 		 5.33834
+giving 		 5.74380414901 		 5.7438
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+emergency 		 4.4559498607 		 4.45595
+
+
+Strikes Target ISIL Terrorists in Syria Iraq U . S . and coalition military forces continued to attack Islamic
+strikes 		 6.43695132957 		 6.43695
+target 		 5.87733554163 		 5.87734
+isil 		 6.72463340202 		 0.0
+terrorists 		 2.37650831902 		 0.0
+syria 		 6.72463340202 		 0.0
+coalition 		 6.43695132957 		 6.43695
+military 		 4.29688516607 		 4.29689
+forces 		 5.52066059769 		 5.52066
+continued 		 6.43695132957 		 6.43695
+attack 		 0.58259599643 		 0.582596
+islamic 		 3.54657957167 		 3.54658
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+horrific terrorist attack kills 84 injures many more in nice azfamily . com 3tv
+horrific 		 5.3383390409 		 5.33834
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+kills 		 4.87880671152 		 4.87881
+com 		 5.42535041789 		 5.42535
+
+
+Eureka . No terrorists involved . Modi Govt staged Pathankot attack with a plan to trap NDTV doing irresponsible cove
+terrorists 		 2.37650831902 		 2.37651
+involved 		 5.3383390409 		 5.33834
+modi 		 5.52066059769 		 0.0
+govt 		 5.11519548958 		 0.0
+staged 		 5.42535041789 		 5.42535
+pathankot 		 5.42535041789 		 5.42535
+attack 		 0.58259599643 		 0.582596
+plan 		 5.18418836107 		 5.18419
+trap 		 5.87733554163 		 5.87734
+irresponsible 		 5.87733554163 		 5.87734
+cove 		 5.87733554163 		 5.87734
+
+
+New suicide death squad has emerged executing terrorist attacks across FARC Territory
+suicide 		 4.68775147476 		 4.68775
+death 		 6.03148622146 		 6.03149
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+across 		 5.05065696845 		 5.05066
+
+
+Khi Terrorist of #ASWJ attack on car near New Rizvia Shia Muslim Kamran kazmi martyred and 4 injured . #ShiaGenocide https
+khi 		 6.72463340202 		 6.72463
+terrorist 		 0.977365815421 		 0.977366
+#aswj 		 6.72463340202 		 6.72463
+attack 		 0.58259599643 		 0.582596
+near 		 5.05065696845 		 5.05066
+shia 		 4.18565953096 		 0.0
+muslim 		 3.42879653601 		 0.0
+martyred 		 6.21380777825 		 6.21381
+injured 		 4.29688516607 		 4.29689
+
+
+Hillary is about to be behind the next huge terrorist attack too
+hillary 		 6.03148622146 		 0.0
+huge 		 5.52066059769 		 5.52066
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Eureka . No terrorists involved . Modi Govt staged Pathankot attack with a plan to trap NDTV doing irresponsible cove
+terrorists 		 2.37650831902 		 2.37651
+involved 		 5.3383390409 		 5.33834
+modi 		 5.52066059769 		 0.0
+govt 		 5.11519548958 		 0.0
+staged 		 5.42535041789 		 5.42535
+pathankot 		 5.42535041789 		 5.42535
+attack 		 0.58259599643 		 0.582596
+plan 		 5.18418836107 		 5.18419
+trap 		 5.87733554163 		 5.87734
+irresponsible 		 5.87733554163 		 5.87734
+cove 		 5.87733554163 		 5.87734
+
+
+Authorities take action in wake of warning of potential terror attack
+authorities 		 5.3383390409 		 5.33834
+action 		 5.74380414901 		 5.7438
+wake 		 5.87733554163 		 5.87734
+warning 		 4.4559498607 		 4.45595
+potential 		 4.77872325296 		 4.77872
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+He not calling Catholics terrorists he mocking them for condemning the huge Paris terrorist attacks on the stadium
+calling 		 4.73220323733 		 4.7322
+terrorists 		 2.37650831902 		 2.37651
+mocking 		 6.72463340202 		 6.72463
+condemning 		 6.43695132957 		 6.43695
+huge 		 5.52066059769 		 5.52066
+paris 		 5.25829633322 		 0.0
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+IBD Lying About #Benghazi Libya Terrorist Attack Sole Hillary accomplishment
+ibd 		 4.29688516607 		 4.29689
+lying 		 4.2678976292 		 4.2679
+#benghazi 		 3.97309808898 		 3.9731
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+sole 		 4.29688516607 		 4.29689
+hillary 		 6.03148622146 		 0.0
+accomplishment 		 4.29688516607 		 4.29689
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+Terrorist attacks on #Aleppo as seen at Razi hospital . At least 16 civilians 4 children killed over 200 injured
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+#aleppo 		 5.87733554163 		 5.87734
+hospital 		 6.21380777825 		 6.21381
+least 		 4.99003234663 		 4.99003
+civilians 		 4.68775147476 		 4.68775
+children 		 5.42535041789 		 5.42535
+killed 		 3.33460932095 		 3.33461
+injured 		 4.29688516607 		 4.29689
+
+
+Alexi dies in a terrorist attack and i swoop in to replace him .  .  .  .  . 
+dies 		 6.03148622146 		 6.03149
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+swoop 		 6.21380777825 		 6.21381
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+Nigerian troops foil Boko Haram terrorists suicide attack on Gubio Borno state
+nigerian 		 6.21380777825 		 0.0
+troops 		 6.03148622146 		 6.03149
+foil 		 4.3892584862 		 4.38926
+boko 		 5.87733554163 		 0.0
+haram 		 5.87733554163 		 0.0
+terrorists 		 2.37650831902 		 2.37651
+suicide 		 4.68775147476 		 4.68775
+attack 		 0.58259599643 		 0.582596
+state 		 4.77872325296 		 4.77872
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+NOTICE . At the moment the only reason we have no terror attacks in U . S . is because every time we had attack
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+attack 		 0.58259599643 		 0.582596
+
+
+Calling the November 2015 Paris attacks A little Terrorism . #PodestaEmails31
+calling 		 4.73220323733 		 4.7322
+paris 		 5.25829633322 		 0.0
+attacks 		 1.03540070838 		 1.0354
+terrorism 		 2.99493195338 		 2.99493
+#podestaemails31 		 5.05065696845 		 5.05066
+
+
+Alert US Muslim Horror US Officials Warn Of Hillary lovely Muslims planning Terrorist Attack On Mon
+alert 		 4.64519186034 		 4.64519
+muslim 		 3.42879653601 		 3.4288
+horror 		 5.74380414901 		 5.7438
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+hillary 		 6.03148622146 		 0.0
+lovely 		 6.72463340202 		 6.72463
+muslims 		 4.21232777804 		 4.21233
+planning 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+mon 		 6.43695132957 		 6.43695
+
+
+French try to get hold of their own firearms new figures reveal after Muslim terror attack ht
+french 		 3.72890112846 		 3.7289
+firearms 		 6.43695132957 		 6.43695
+reveal 		 5.87733554163 		 5.87734
+muslim 		 3.42879653601 		 3.4288
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+ht 		 4.68775147476 		 4.68775
+
+
+French rush to arm themselves after Muslim terror attack . #USA #Florida #Ohio
+french 		 3.72890112846 		 3.7289
+rush 		 6.72463340202 		 6.72463
+arm 		 6.03148622146 		 6.03149
+muslim 		 3.42879653601 		 3.4288
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+#usa 		 4.99003234663 		 4.99003
+
+
+Mad how we celebrate a terrorist attack #Fireworksnight
+celebrate 		 6.21380777825 		 6.21381
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+False Flag . US intelligence Warns Of Likely Al Qaeda Terror Attack Day Before Election
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+intelligence 		 5.18418836107 		 5.18419
+warns 		 4.18565953096 		 4.18566
+likely 		 4.82751341713 		 4.82751
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+#Amed police bombing . Onder #Terrorist Attacks against #Turkish police headquarter has been made when we were stil
+#amed 		 6.43695132957 		 6.43695
+police 		 3.0357539479 		 3.03575
+bombing 		 6.21380777825 		 6.21381
+onder 		 6.43695132957 		 6.43695
+#terrorist 		 4.77872325296 		 4.77872
+attacks 		 1.03540070838 		 1.0354
+#turkish 		 6.03148622146 		 6.03149
+police 		 3.0357539479 		 3.03575
+headquarter 		 6.43695132957 		 6.43695
+stil 		 6.43695132957 		 6.43695
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Kargil War Mumbai 26 11 Pathankot terror attack . Guess who has been consistently questioned . No lessons learnt . Manufa
+war 		 4.52740882468 		 0.0
+mumbai 		 5.87733554163 		 0.0
+pathankot 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+guess 		 5.3383390409 		 5.33834
+consistently 		 6.72463340202 		 6.72463
+questioned 		 6.43695132957 		 6.43695
+lessons 		 6.43695132957 		 6.43695
+learnt 		 6.72463340202 		 6.72463
+manufa 		 6.72463340202 		 6.72463
+
+
+I reported live from #Pathankot terror attack in January for . Doubly verified operational details which never
+reported 		 6.03148622146 		 6.03149
+#pathankot 		 5.3383390409 		 5.33834
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+january 		 6.43695132957 		 6.43695
+operational 		 6.72463340202 		 6.72463
+details 		 5.87733554163 		 5.87734
+
+
+False Flag . US intelligence Warns Of Likely Al Qaeda Terror Attack Day Before Election
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+intelligence 		 5.18418836107 		 5.18419
+warns 		 4.18565953096 		 4.18566
+likely 		 4.82751341713 		 4.82751
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+US intelligence OFFICER EVERY SINGLE TERRORIST ATTACK IN US WAS A FALSE FLAG ATTACK
+intelligence 		 5.18418836107 		 5.18419
+officer 		 5.62602111335 		 5.62602
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+attack 		 0.58259599643 		 0.582596
+
+
+FBI warns pre Election terror attacks by US Muslims as Hillary promises flooding US with 1000 more
+fbi 		 4.49104118051 		 0.0
+warns 		 4.18565953096 		 4.18566
+pre 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+muslims 		 4.21232777804 		 0.0
+hillary 		 6.03148622146 		 0.0
+promises 		 6.72463340202 		 6.72463
+
+
+#RememberWhenTrump responded to the Pulse nightclub shooting by congratulating himself on predicting a terrorist attack
+#rememberwhentrump 		 5.18418836107 		 5.18419
+responded 		 5.18418836107 		 5.18419
+nightclub 		 5.25829633322 		 5.2583
+shooting 		 4.82751341713 		 4.82751
+congratulating 		 5.25829633322 		 5.2583
+predicting 		 5.25829633322 		 5.2583
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Belgium response to terror attacks led to abusive policing of Muslims
+response 		 5.3383390409 		 5.33834
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+led 		 6.03148622146 		 6.03149
+muslims 		 4.21232777804 		 4.21233
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+Prayers Today We Remember FortHood . 7 Years Ago 13 lives lost  32 wounded in a Tragic Muslim Terrorist Attack
+prayers 		 4.64519186034 		 4.64519
+forthood 		 5.62602111335 		 5.62602
+lives 		 3.47944026883 		 3.47944
+wounded 		 5.18418836107 		 5.18419
+tragic 		 5.62602111335 		 5.62602
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+FBI warns of possible pre Election Day terror attacks via the application
+fbi 		 4.49104118051 		 0.0
+warns 		 4.18565953096 		 4.18566
+possible 		 4.10967362398 		 4.10967
+pre 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+
+
+Prayers Today We Remember FortHood . 7 Years Ago 13 lives lost  32 wounded in a Tragic Muslim Terrorist Attack
+prayers 		 4.64519186034 		 4.64519
+forthood 		 5.62602111335 		 5.62602
+lives 		 3.47944026883 		 3.47944
+wounded 		 5.18418836107 		 5.18419
+tragic 		 5.62602111335 		 5.62602
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+Eureka . No terrorists involved . Modi Govt staged Pathankot attack with a plan to trap NDTV doing irresponsible cove
+terrorists 		 2.37650831902 		 2.37651
+involved 		 5.3383390409 		 5.33834
+modi 		 5.52066059769 		 0.0
+govt 		 5.11519548958 		 0.0
+staged 		 5.42535041789 		 5.42535
+pathankot 		 5.42535041789 		 5.42535
+attack 		 0.58259599643 		 0.582596
+plan 		 5.18418836107 		 5.18419
+trap 		 5.87733554163 		 5.87734
+irresponsible 		 5.87733554163 		 5.87734
+cove 		 5.87733554163 		 5.87734
+
+
+And 3 Trump supporters were arrested this week for plotting a terrorist attack . Why is not Trump controlling h
+supporters 		 6.03148622146 		 6.03149
+arrested 		 3.11371548937 		 3.11372
+plotting 		 3.69611130564 		 3.69611
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+New York authorities say they have been made aware of threat of terror attack around time of US election
+authorities 		 5.3383390409 		 5.33834
+threat 		 5.25829633322 		 5.2583
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+YOU BLOODY FUCKING TERRORIST TINA . it you clinton scum that have attacked us . IT TIME WE KILL YOU BRUTALLY . FUCKING TRAITOR
+terrorist 		 0.977365815421 		 0.977366
+attacked 		 3.61855307129 		 3.61855
+kill 		 6.21380777825 		 6.21381
+
+
+Article covers the reopened Clinton investigation warns of false flag terrorist attack to divert attention
+article 		 6.72463340202 		 6.72463
+investigation 		 6.43695132957 		 6.43695
+warns 		 4.18565953096 		 4.18566
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+divert 		 6.72463340202 		 6.72463
+attention 		 6.43695132957 		 6.43695
+
+
+Prayers Today We Remember FortHood . 7 Years Ago 13 lives lost  32 wounded in a Tragic Muslim Terrorist Attack
+prayers 		 4.64519186034 		 4.64519
+forthood 		 5.62602111335 		 5.62602
+lives 		 3.47944026883 		 3.47944
+wounded 		 5.18418836107 		 5.18419
+tragic 		 5.62602111335 		 5.62602
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+Prayers Today We Remember FortHood . 7 Years Ago 13 lives lost  32 wounded in a Tragic Muslim Terrorist Attack
+prayers 		 4.64519186034 		 4.64519
+forthood 		 5.62602111335 		 5.62602
+lives 		 3.47944026883 		 3.47944
+wounded 		 5.18418836107 		 5.18419
+tragic 		 5.62602111335 		 5.62602
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Eureka . No terrorists involved . Modi Govt staged Pathankot attack with a plan to trap NDTV doing irresponsible cove
+terrorists 		 2.37650831902 		 2.37651
+involved 		 5.3383390409 		 5.33834
+modi 		 5.52066059769 		 0.0
+govt 		 5.11519548958 		 0.0
+staged 		 5.42535041789 		 5.42535
+pathankot 		 5.42535041789 		 5.42535
+attack 		 0.58259599643 		 0.582596
+plan 		 5.18418836107 		 5.18419
+trap 		 5.87733554163 		 5.87734
+irresponsible 		 5.87733554163 		 5.87734
+cove 		 5.87733554163 		 5.87734
+
+
+ISIS calls for Terrorist Attacks on Election Day
+isis 		 4.4559498607 		 4.45595
+calls 		 4.64519186034 		 4.64519
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+
+
+ISIS calls for Terrorist Attacks on Election Day
+isis 		 4.4559498607 		 4.45595
+calls 		 4.64519186034 		 4.64519
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+
+
+Govt to punish those who attacked Hindus just like its policy against war criminals  terrorists Info Minister
+govt 		 5.11519548958 		 5.1152
+punish 		 6.72463340202 		 6.72463
+attacked 		 3.61855307129 		 3.61855
+hindus 		 6.43695132957 		 6.43695
+policy 		 6.21380777825 		 6.21381
+war 		 4.52740882468 		 4.52741
+criminals 		 5.87733554163 		 5.87734
+terrorists 		 2.37650831902 		 0.0
+minister 		 5.05065696845 		 0.0
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+#QuettaAttack #prayforquetta . #KulbhushanYadav s terrorist activities continue to cost #Pakistan heavil
+#quettaattack 		 5.42535041789 		 5.42535
+#prayforquetta 		 5.42535041789 		 5.42535
+#kulbhushanyadav 		 5.42535041789 		 5.42535
+terrorist 		 0.977365815421 		 0.977366
+activities 		 5.3383390409 		 5.33834
+continue 		 5.05065696845 		 5.05066
+cost 		 5.25829633322 		 5.2583
+#pakistan 		 5.18418836107 		 5.18419
+heavil 		 5.42535041789 		 5.42535
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday Salid
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+Muslim released from Gitmo in plan to rehabilitate terror detainees threatens jihad attacks on U . S . cities
+muslim 		 3.42879653601 		 3.4288
+released 		 5.74380414901 		 5.7438
+plan 		 5.18418836107 		 5.18419
+rehabilitate 		 6.72463340202 		 6.72463
+terror 		 0.856278552072 		 0.856279
+detainees 		 6.72463340202 		 6.72463
+threatens 		 6.43695132957 		 6.43695
+jihad 		 5.05065696845 		 5.05066
+attacks 		 1.03540070838 		 1.0354
+cities 		 5.87733554163 		 5.87734
+
+
+Boko Haram Terrorists attack Troops Kill Commanding Officer PHOTOS
+boko 		 5.87733554163 		 0.0
+haram 		 5.87733554163 		 0.0
+terrorists 		 2.37650831902 		 2.37651
+attack 		 0.58259599643 		 0.582596
+troops 		 6.03148622146 		 6.03149
+kill 		 6.21380777825 		 6.21381
+officer 		 5.62602111335 		 5.62602
+
+
+Since the day it was conceived the #Iranian regime has carried out terror attacks  slaughtered its own people re
+conceived 		 6.72463340202 		 6.72463
+#iranian 		 6.21380777825 		 6.21381
+regime 		 5.25829633322 		 5.2583
+carried 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+slaughtered 		 6.03148622146 		 6.03149
+
+
+5 terrorists 1 soldier dead in another failed suicide attack photos
+terrorists 		 2.37650831902 		 2.37651
+soldier 		 5.42535041789 		 5.42535
+failed 		 5.25829633322 		 5.2583
+suicide 		 4.68775147476 		 4.68775
+attack 		 0.58259599643 		 0.582596
+
+
+Since the day it was conceived the #Iranian regime has carried out terror attacks  slaughtered its own people re
+conceived 		 6.72463340202 		 6.72463
+#iranian 		 6.21380777825 		 6.21381
+regime 		 5.25829633322 		 5.2583
+carried 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+slaughtered 		 6.03148622146 		 6.03149
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+Fall of #ISIS n #Iraq will damage it n #Syria regardless future spectacular terrorist or military attacks by d group
+fall 		 6.21380777825 		 6.21381
+#isis 		 4.21232777804 		 4.21233
+#iraq 		 4.93287393279 		 4.93287
+damage 		 6.72463340202 		 6.72463
+#syria 		 5.52066059769 		 5.52066
+regardless 		 6.72463340202 		 6.72463
+spectacular 		 5.3383390409 		 5.33834
+terrorist 		 0.977365815421 		 0.977366
+military 		 4.29688516607 		 4.29689
+attacks 		 1.03540070838 		 1.0354
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+#Diyarbak r terror attack which killed 12 injured 100 on Friday was carried out by Emrah Dayan a #PKK terrorist c
+#diyarbak 		 6.43695132957 		 6.43695
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+killed 		 3.33460932095 		 3.33461
+injured 		 4.29688516607 		 4.29689
+carried 		 5.42535041789 		 5.42535
+#pkk 		 5.52066059769 		 5.52066
+terrorist 		 0.977365815421 		 0.977366
+
+
+Why all terrorist attacks explosions in Turkey r always targeting Mr Erdogan s political opponents . coincidences yea
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+targeting 		 5.18418836107 		 5.18419
+political 		 6.21380777825 		 6.21381
+
+
+you dont have any right to talk about this . Secondly they were terrorists involved in Train Attack . Thirdly funded by India
+terrorists 		 2.37650831902 		 2.37651
+involved 		 5.3383390409 		 5.33834
+train 		 6.03148622146 		 6.03149
+attack 		 0.58259599643 		 0.582596
+funded 		 5.42535041789 		 5.42535
+
+
+yep look at all those terror attacks he responsible for #retard
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+responsible 		 5.74380414901 		 5.7438
+
+
+Another bomb attack at a truce meet by Hindu Terrorists . Why is every RSS shakha and member house not being searched ye
+bomb 		 5.62602111335 		 5.62602
+attack 		 0.58259599643 		 0.582596
+hindu 		 6.72463340202 		 0.0
+terrorists 		 2.37650831902 		 0.0
+member 		 6.72463340202 		 6.72463
+
+
+My 2005 interview w Irish jihadi Khalid Kelly shows he was already v radical praised OBL attacks on West terror h
+jihadi 		 5.25829633322 		 5.2583
+shows 		 5.52066059769 		 5.52066
+radical 		 4.13436623657 		 4.13437
+attacks 		 1.03540070838 		 1.0354
+west 		 6.72463340202 		 6.72463
+terror 		 0.856278552072 		 0.856279
+
+
+German terror police foiled second #IslamicState airport attack plot in under a month
+german 		 6.72463340202 		 0.0
+terror 		 0.856278552072 		 0.856279
+police 		 3.0357539479 		 3.03575
+foiled 		 4.32673812922 		 4.32674
+#islamicstate 		 5.18418836107 		 5.18419
+airport 		 5.62602111335 		 5.62602
+attack 		 0.58259599643 		 0.582596
+plot 		 5.52066059769 		 5.52066
+month 		 6.03148622146 		 6.03149
+
+
+# At least 10 Iranians killed in terror attack in Iraq
+least 		 4.99003234663 		 4.99003
+killed 		 3.33460932095 		 3.33461
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+Sting to perform at Paris venue closed by deadly terror attacks
+sting 		 4.49104118051 		 4.49104
+paris 		 5.25829633322 		 0.0
+venue 		 5.87733554163 		 5.87734
+deadly 		 5.05065696845 		 5.05066
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+#Amed police bombing . Onder #Terrorist Attacks against #Turkish police headquarter has been made when we were stil
+#amed 		 6.43695132957 		 6.43695
+police 		 3.0357539479 		 3.03575
+bombing 		 6.21380777825 		 6.21381
+onder 		 6.43695132957 		 6.43695
+#terrorist 		 4.77872325296 		 4.77872
+attacks 		 1.03540070838 		 1.0354
+#turkish 		 6.03148622146 		 6.03149
+police 		 3.0357539479 		 3.03575
+headquarter 		 6.43695132957 		 6.43695
+stil 		 6.43695132957 		 6.43695
+
+
+you stopped bothering with Catholics because of a terrorist attack you bigoted cockwomble
+stopped 		 6.21380777825 		 6.21381
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Govt to punish those who attacked Hindus just like its policy against war criminals  terrorists Info Minister
+govt 		 5.11519548958 		 5.1152
+punish 		 6.72463340202 		 6.72463
+attacked 		 3.61855307129 		 3.61855
+hindus 		 6.43695132957 		 6.43695
+policy 		 6.21380777825 		 6.21381
+war 		 4.52740882468 		 4.52741
+criminals 		 5.87733554163 		 5.87734
+terrorists 		 2.37650831902 		 0.0
+minister 		 5.05065696845 		 0.0
+
+
+Isis calls for terror attacks on election day . All the more reason to go vote for Trump on election day . #WeArentAfraid FU
+isis 		 4.4559498607 		 4.45595
+calls 		 4.64519186034 		 4.64519
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+
+
+Obama has terrorists attacking America now everyday . Look at his Fed sticking massive debt on every American . #tcot #news #p2
+obama 		 4.93287393279 		 0.0
+terrorists 		 2.37650831902 		 2.37651
+attacking 		 3.9946042942 		 3.9946
+fed 		 6.21380777825 		 6.21381
+massive 		 4.18565953096 		 4.18566
+debt 		 6.72463340202 		 6.72463
+#tcot 		 5.62602111335 		 5.62602
+#news 		 4.82751341713 		 4.82751
+
+
+5 terrorists 1 soldier dead in another failed suicide attack photos
+terrorists 		 2.37650831902 		 2.37651
+soldier 		 5.42535041789 		 5.42535
+failed 		 5.25829633322 		 5.2583
+suicide 		 4.68775147476 		 4.68775
+attack 		 0.58259599643 		 0.582596
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+Terrorist Zionist Squatters guy in beige shirt is a notorious villare nothat attacked family near the Ibrahimi Mosq
+terrorist 		 0.977365815421 		 0.977366
+notorious 		 6.72463340202 		 6.72463
+attacked 		 3.61855307129 		 3.61855
+near 		 5.05065696845 		 5.05066
+
+
+Germany has a terrorist attack every month due to their dumbasses opening borders but yeah were the laughing stock
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+month 		 6.03148622146 		 6.03149
+due 		 5.74380414901 		 5.7438
+dumbasses 		 6.72463340202 		 6.72463
+opening 		 5.18418836107 		 5.18419
+borders 		 5.3383390409 		 5.33834
+laughing 		 6.72463340202 		 6.72463
+stock 		 6.72463340202 		 6.72463
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+Prayers Today We Remember FortHood . 7 Years Ago 13 lives lost  32 wounded in a Tragic Muslim Terrorist Attack
+prayers 		 4.64519186034 		 4.64519
+forthood 		 5.62602111335 		 5.62602
+lives 		 3.47944026883 		 3.47944
+wounded 		 5.18418836107 		 5.18419
+tragic 		 5.62602111335 		 5.62602
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+FBI Warns Of Three Possible Al Qaeda Terror Attacks On Monday Targeting New York Texas American Military News https
+fbi 		 4.49104118051 		 0.0
+warns 		 4.18565953096 		 4.18566
+three 		 5.87733554163 		 5.87734
+possible 		 4.10967362398 		 4.10967
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+monday 		 3.47944026883 		 3.47944
+targeting 		 5.18418836107 		 5.18419
+military 		 4.29688516607 		 0.0
+
+
+#FBI Warns Possible Al Qaeda Terror Attacks Monday in #NewYork #Texas and #Virginia via American Military News https
+#fbi 		 6.03148622146 		 6.03149
+warns 		 4.18565953096 		 4.18566
+possible 		 4.10967362398 		 4.10967
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+monday 		 3.47944026883 		 3.47944
+#newyork 		 6.72463340202 		 6.72463
+military 		 4.29688516607 		 4.29689
+
+
+The grapevine rumor tells me there will be terror attacks ordered by our own POTUS on Tuesday to cover massive fraud . I hop
+grapevine 		 6.72463340202 		 6.72463
+rumor 		 6.72463340202 		 6.72463
+tells 		 5.52066059769 		 5.52066
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+ordered 		 5.52066059769 		 5.52066
+tuesday 		 6.21380777825 		 6.21381
+cover 		 6.43695132957 		 6.43695
+massive 		 4.18565953096 		 4.18566
+fraud 		 6.72463340202 		 6.72463
+hop 		 6.72463340202 		 6.72463
+
+
+ALERT . We #Anonymous are inclined to warn the US Gov is attempting to push US into civil war w terror attack rigg
+alert 		 4.64519186034 		 0.0
+warn 		 3.42879653601 		 3.4288
+gov 		 5.42535041789 		 0.0
+attempting 		 6.72463340202 		 6.72463
+civil 		 6.03148622146 		 6.03149
+war 		 4.52740882468 		 4.52741
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+Absolutely Disgusted by Clintons . Repulsed by Media . Dreading Next Terror Attack . 1 2 US Lost Desire to WORK .  SCALIA
+absolutely 		 6.72463340202 		 6.72463
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+Update Total # suicide attacks by ALL terror orgs in . 2014 739 62 month . 2015 906 76 month . #ISIS Jan to Oct
+total 		 6.03148622146 		 6.03149
+suicide 		 4.68775147476 		 4.68775
+attacks 		 1.03540070838 		 1.0354
+terror 		 0.856278552072 		 0.856279
+month 		 6.03148622146 		 6.03149
+month 		 6.03148622146 		 6.03149
+#isis 		 4.21232777804 		 4.21233
+jan 		 6.72463340202 		 6.72463
+
+
+#IRAQ . #IslamicState Claims Suicide Attack On #Peshmerga Convoy In AlShallalat Area N Of #Mosul . #TerrorMonitor
+#iraq 		 4.93287393279 		 4.93287
+#islamicstate 		 5.18418836107 		 5.18419
+claims 		 5.05065696845 		 5.05066
+suicide 		 4.68775147476 		 4.68775
+attack 		 0.58259599643 		 0.582596
+convoy 		 6.43695132957 		 6.43695
+area 		 6.03148622146 		 6.03149
+#mosul 		 6.03148622146 		 6.03149
+#terrormonitor 		 4.87880671152 		 4.87881
+
+
+Alert US Muslim Horror US Officials Warn Of Hillary lovely Muslims planning Terrorist Attack On Mon
+alert 		 4.64519186034 		 4.64519
+muslim 		 3.42879653601 		 3.4288
+horror 		 5.74380414901 		 5.7438
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+hillary 		 6.03148622146 		 0.0
+lovely 		 6.72463340202 		 6.72463
+muslims 		 4.21232777804 		 4.21233
+planning 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+mon 		 6.43695132957 		 6.43695
+
+
+Vote in the afternoon tomorrow because the small unit attacks by jihadists will be in the morning to maximum news cycle coverage and terror
+small 		 5.52066059769 		 5.52066
+unit 		 5.87733554163 		 5.87734
+attacks 		 1.03540070838 		 1.0354
+jihadists 		 6.72463340202 		 6.72463
+cycle 		 6.72463340202 		 6.72463
+coverage 		 6.43695132957 		 6.43695
+terror 		 0.856278552072 		 0.856279
+
+
+7 of Top 10 most deadly terror attacks in Europe are Islamic . leaves out of one the worst done by a fascist . Get it
+deadly 		 5.05065696845 		 5.05066
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+islamic 		 3.54657957167 		 3.54658
+leaves 		 6.72463340202 		 6.72463
+worst 		 5.18418836107 		 5.18419
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+Germany has a terrorist attack every month due to their dumbasses opening borders but yeah were the laughing stock
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+month 		 6.03148622146 		 6.03149
+due 		 5.74380414901 		 5.7438
+dumbasses 		 6.72463340202 		 6.72463
+opening 		 5.18418836107 		 5.18419
+borders 		 5.3383390409 		 5.33834
+laughing 		 6.72463340202 		 6.72463
+stock 		 6.72463340202 		 6.72463
+
+
+Prayers Today We Remember FortHood . 7 Years Ago 13 lives lost  32 wounded in a Tragic Muslim Terrorist Attack
+prayers 		 4.64519186034 		 4.64519
+forthood 		 5.62602111335 		 5.62602
+lives 		 3.47944026883 		 3.47944
+wounded 		 5.18418836107 		 5.18419
+tragic 		 5.62602111335 		 5.62602
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Pathankot #BharatVirodhiNDTV mentions Ammo depot at back side . Uri Terrorists attack ammo depot burnig alive soldiers . W
+pathankot 		 5.42535041789 		 5.42535
+#bharatvirodhindtv 		 6.72463340202 		 6.72463
+side 		 5.42535041789 		 5.42535
+terrorists 		 2.37650831902 		 0.0
+attack 		 0.58259599643 		 0.582596
+alive 		 6.21380777825 		 6.21381
+soldiers 		 4.77872325296 		 4.77872
+
+
+how can 1 forget media live coverage of terrorists attack on the Taj . did they repent . channels shd hv been shut down
+coverage 		 6.43695132957 		 6.43695
+terrorists 		 2.37650831902 		 2.37651
+attack 		 0.58259599643 		 0.582596
+channels 		 6.72463340202 		 6.72463
+hv 		 6.72463340202 		 6.72463
+shut 		 6.03148622146 		 6.03149
+
+
+I strongly condemn the terrorist attack in #Quetta at police training centre . Terrorists are enemies of Humanity
+strongly 		 3.81591250545 		 3.81591
+condemn 		 3.79789399995 		 3.79789
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+#quetta 		 6.43695132957 		 6.43695
+police 		 3.0357539479 		 3.03575
+centre 		 6.72463340202 		 6.72463
+terrorists 		 2.37650831902 		 2.37651
+enemies 		 6.72463340202 		 6.72463
+humanity 		 6.72463340202 		 6.72463
+
+
+#SAA have repelled an attempt by the terrorists from #AlWaer in #Homs to attack #SAA's location in the surroundings of #AlW
+repelled 		 6.72463340202 		 6.72463
+attempt 		 6.72463340202 		 6.72463
+terrorists 		 2.37650831902 		 2.37651
+attack 		 0.58259599643 		 0.582596
+'s 		 4.87880671152 		 4.87881
+location 		 5.87733554163 		 5.87734
+
+
+Assholes in Delhi ignored that Kejriwal questioned Batla encounter . This nation  it people deserve terrorist attacks
+assholes 		 6.72463340202 		 6.72463
+ignored 		 6.72463340202 		 6.72463
+questioned 		 6.43695132957 		 6.43695
+nation 		 5.52066059769 		 5.52066
+deserve 		 6.72463340202 		 6.72463
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+
+
+Be prepared for an Obama false flag . Fake Terror attack or fake cyber attack . MSM NBC keeps reporting this
+obama 		 4.93287393279 		 0.0
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+fake 		 5.62602111335 		 5.62602
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+fake 		 5.62602111335 		 5.62602
+cyber 		 6.21380777825 		 6.21381
+attack 		 0.58259599643 		 0.582596
+keeps 		 6.72463340202 		 6.72463
+reporting 		 5.74380414901 		 5.7438
+
+
+Obama plans fake attack . FALSE FLAG . US Warns Of Possible Al Qaeda Terrorist Attack On Monday Targeting NY
+obama 		 4.93287393279 		 4.93287
+plans 		 5.74380414901 		 5.7438
+fake 		 5.62602111335 		 5.62602
+attack 		 0.58259599643 		 0.582596
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+warns 		 4.18565953096 		 4.18566
+possible 		 4.10967362398 		 4.10967
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+targeting 		 5.18418836107 		 5.18419
+ny 		 5.62602111335 		 5.62602
+
+
+Obama plans massive false flag terror attacks on Monday to halt Trump victory  save democrats fr being indicted
+obama 		 4.93287393279 		 4.93287
+plans 		 5.74380414901 		 5.7438
+massive 		 4.18565953096 		 4.18566
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+monday 		 3.47944026883 		 3.47944
+halt 		 6.03148622146 		 6.03149
+victory 		 5.74380414901 		 5.7438
+democrats 		 6.43695132957 		 6.43695
+fr 		 6.43695132957 		 6.43695
+
+
+May we always remember the victims of the Fort Hood terror attack
+victims 		 3.32343602036 		 3.32344
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+Wow . From #UAE . #ISIS Khattab al Imarati has made his VBIED attack against #Iraq i regime troops and Shiite terror
+#isis 		 4.21232777804 		 4.21233
+al 		 3.466536864 		 3.46654
+attack 		 0.58259599643 		 0.582596
+#iraq 		 4.93287393279 		 4.93287
+regime 		 5.25829633322 		 5.2583
+troops 		 6.03148622146 		 6.03149
+terror 		 0.856278552072 		 0.856279
+
+
+SAA  allies are attacking the terrorists locations in the 1070 Dahiat AlAssad  the axis of Mouta hill W #Aleppo . #TheH
+allies 		 6.72463340202 		 6.72463
+attacking 		 3.9946042942 		 3.9946
+terrorists 		 2.37650831902 		 2.37651
+locations 		 6.72463340202 		 6.72463
+hill 		 4.73220323733 		 0.0
+#aleppo 		 5.87733554163 		 5.87734
+
+
+False Flag . US intelligence Warns Of Likely Al Qaeda Terror Attack Day Before Election
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+intelligence 		 5.18418836107 		 5.18419
+warns 		 4.18565953096 		 4.18566
+likely 		 4.82751341713 		 4.82751
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+So apparently terrorist will attack New York Virginia and . TEXAS . Watch out . This chaos is about to begin
+apparently 		 6.72463340202 		 6.72463
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+chaos 		 6.21380777825 		 6.21381
+
+
+Democrats cannot Figure Out Why USA Has Had So Many Terrorist Attacks Recently . Tucker Carlson Has The Simple Answer . http
+democrats 		 6.43695132957 		 6.43695
+figure 		 6.21380777825 		 6.21381
+usa 		 5.87733554163 		 0.0
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+recently 		 6.72463340202 		 6.72463
+answer 		 6.72463340202 		 6.72463
+http 		 4.4559498607 		 4.45595
+
+
+IBD Lying About #Benghazi Libya Terrorist Attack Sole Hillary accomplishment
+ibd 		 4.29688516607 		 4.29689
+lying 		 4.2678976292 		 4.2679
+#benghazi 		 3.97309808898 		 3.9731
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+sole 		 4.29688516607 		 4.29689
+hillary 		 6.03148622146 		 0.0
+accomplishment 		 4.29688516607 		 4.29689
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+#BharatVirodhiNDTV When Terrorist attack happens in Pakistan Candle light march . In India Disturbing Security forces L
+#bharatvirodhindtv 		 6.72463340202 		 6.72463
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+happens 		 5.87733554163 		 5.87734
+light 		 6.43695132957 		 6.43695
+march 		 6.72463340202 		 6.72463
+security 		 4.99003234663 		 0.0
+forces 		 5.52066059769 		 5.52066
+
+
+Intel officials warn of potential terror attack on Monday . Such warnings often come before major events
+intel 		 6.43695132957 		 6.43695
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+potential 		 4.77872325296 		 4.77872
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+major 		 4.21232777804 		 4.21233
+events 		 5.25829633322 		 5.2583
+
+
+Another #Palestinian terror attack stopped by the #Israel Defence Forces . #IDF
+#palestinian 		 6.43695132957 		 6.43695
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+stopped 		 6.21380777825 		 6.21381
+#israel 		 5.3383390409 		 0.0
+defence 		 6.72463340202 		 6.72463
+forces 		 5.52066059769 		 5.52066
+#idf 		 6.43695132957 		 6.43695
+
+
+ISIS calls for Terrorist Attacks on Election Day
+isis 		 4.4559498607 		 4.45595
+calls 		 4.64519186034 		 4.64519
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+Obama regime planning massive false flag terror attacks Mon halt Trump victory save dems
+obama 		 4.93287393279 		 0.0
+regime 		 5.25829633322 		 0.0
+planning 		 3.42879653601 		 3.4288
+massive 		 4.18565953096 		 4.18566
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+mon 		 6.43695132957 		 6.43695
+halt 		 6.03148622146 		 6.03149
+victory 		 5.74380414901 		 5.7438
+
+
+ALERT . MONDAY TERROR ATTACKS TO BE CARRIED OUT BY THE GOVERNMENT
+alert 		 4.64519186034 		 0.0
+monday 		 3.47944026883 		 3.47944
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+carried 		 5.42535041789 		 5.42535
+government 		 4.77872325296 		 4.77872
+
+
+5 terrorists 1 soldier dead in another failed suicide attack photos
+terrorists 		 2.37650831902 		 2.37651
+soldier 		 5.42535041789 		 5.42535
+failed 		 5.25829633322 		 5.2583
+suicide 		 4.68775147476 		 4.68775
+attack 		 0.58259599643 		 0.582596
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+Cernovich has said . demons are real . ISIS is not committing terrorist attacks bc they love Hillary . men in black hacked his
+isis 		 4.4559498607 		 4.45595
+committing 		 6.21380777825 		 6.21381
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+bc 		 6.21380777825 		 6.21381
+hillary 		 6.03148622146 		 0.0
+
+
+after terrorist attacks by assholes other aholes attack innocent brown ppl . Im ok with DoJ who are not the army sayin that
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+assholes 		 6.72463340202 		 6.72463
+aholes 		 6.72463340202 		 6.72463
+attack 		 0.58259599643 		 0.582596
+innocent 		 3.78019442285 		 3.78019
+ppl 		 5.05065696845 		 5.05066
+army 		 4.82751341713 		 4.82751
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+Exclusive There will be terrorist attacks in Britain  says MI5 chief . Election 2016 Millennial Monitor
+exclusive 		 6.72463340202 		 6.72463
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+chief 		 5.62602111335 		 5.62602
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+the sad remains of a terrorist attack
+remains 		 6.43695132957 		 6.43695
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+before Obama came along we did not have any successful radical Islamic terrorist attack inside the U . S
+obama 		 4.93287393279 		 0.0
+along 		 6.72463340202 		 6.72463
+successful 		 5.42535041789 		 5.42535
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+inside 		 5.62602111335 		 5.62602
+
+
+US Officials warn of possible Terror Attack on Monday Keep safe voters . #MAGA #VoteTrump
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+possible 		 4.10967362398 		 4.10967
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+safe 		 5.11519548958 		 5.1152
+voters 		 6.03148622146 		 6.03149
+#maga 		 5.62602111335 		 5.62602
+#votetrump 		 6.03148622146 		 6.03149
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+No matter what every1 votes 4 Trump on Nov 8 . If a false flag terror attack is staged do not let it stop u from voting
+every1 		 6.72463340202 		 6.72463
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+staged 		 5.42535041789 		 5.42535
+
+
+#Newsbud Exclusive Russia Documents its Success  US War Crimes  Failures in Syria Warns of New Terror Attacks
+exclusive 		 6.72463340202 		 6.72463
+documents 		 6.72463340202 		 6.72463
+war 		 4.52740882468 		 4.52741
+crimes 		 6.21380777825 		 6.21381
+syria 		 6.72463340202 		 0.0
+warns 		 4.18565953096 		 4.18566
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+Americans top fears in 2016 . 1 . Corruption of government officials . 2 . Terrorist attack . 3 . Inadequate funds
+americans 		 4.93287393279 		 4.93287
+fears 		 5.05065696845 		 5.05066
+corruption 		 5.52066059769 		 5.52066
+government 		 4.77872325296 		 4.77872
+officials 		 3.466536864 		 3.46654
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+inadequate 		 6.21380777825 		 6.21381
+funds 		 6.43695132957 		 6.43695
+
+
+Did I miss the news where Minnesota is suddenly suffering from terrorist attacks commited by refugees who have sett
+suffering 		 6.72463340202 		 6.72463
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+refugees 		 6.03148622146 		 6.03149
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+Americans top fears in 2016 . 1 . Corruption of government officials . 2 . Terrorist attack . 3 . Inadequate funds
+americans 		 4.93287393279 		 4.93287
+fears 		 5.05065696845 		 5.05066
+corruption 		 5.52066059769 		 5.52066
+government 		 4.77872325296 		 4.77872
+officials 		 3.466536864 		 3.46654
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+inadequate 		 6.21380777825 		 6.21381
+funds 		 6.43695132957 		 6.43695
+
+
+CIA OBAMA PLANNING MASSIVE FALSE FLAG TERROR ATTACKS ON MONDAY TO HALT A TRUMP VICTORY
+cia 		 6.72463340202 		 0.0
+obama 		 4.93287393279 		 0.0
+planning 		 3.42879653601 		 3.4288
+massive 		 4.18565953096 		 4.18566
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+monday 		 3.47944026883 		 3.47944
+halt 		 6.03148622146 		 6.03149
+victory 		 5.74380414901 		 5.7438
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+5 terrorists 1 soldier dead in another failed suicide attack photos
+terrorists 		 2.37650831902 		 2.37651
+soldier 		 5.42535041789 		 5.42535
+failed 		 5.25829633322 		 5.2583
+suicide 		 4.68775147476 		 4.68775
+attack 		 0.58259599643 		 0.582596
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+No matter what every1 votes 4 Trump on Nov 8 . If a false flag terror attack is staged do not let it stop u from voting . PLS RT
+every1 		 6.72463340202 		 6.72463
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+staged 		 5.42535041789 		 5.42535
+pls 		 6.43695132957 		 6.43695
+
+
+Barkha report on infiltration thru River Chenab was used by terrorists 4 d Pampore attack . Coincidence . #BharatVirodh
+report 		 4.68775147476 		 4.68775
+terrorists 		 2.37650831902 		 2.37651
+attack 		 0.58259599643 		 0.582596
+coincidence 		 5.74380414901 		 5.7438
+
+
+Americans top fears in 2016 . 1 . Corruption of government officials . 2 . Terrorist attack . 3 . Inadequate funds
+americans 		 4.93287393279 		 4.93287
+fears 		 5.05065696845 		 5.05066
+corruption 		 5.52066059769 		 5.52066
+government 		 4.77872325296 		 4.77872
+officials 		 3.466536864 		 3.46654
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+inadequate 		 6.21380777825 		 6.21381
+funds 		 6.43695132957 		 6.43695
+
+
+Prayers Today We Remember FortHood . 7 Years Ago 13 lives lost  32 wounded in a Tragic Muslim Terrorist Attack
+prayers 		 4.64519186034 		 4.64519
+forthood 		 5.62602111335 		 5.62602
+lives 		 3.47944026883 		 3.47944
+wounded 		 5.18418836107 		 5.18419
+tragic 		 5.62602111335 		 5.62602
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Prayers Today We Remember FortHood . 7 Years Ago 13 lives lost  32 wounded in a Tragic Muslim Terrorist Attack
+prayers 		 4.64519186034 		 4.64519
+forthood 		 5.62602111335 		 5.62602
+lives 		 3.47944026883 		 3.47944
+wounded 		 5.18418836107 		 5.18419
+tragic 		 5.62602111335 		 5.62602
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+Lot R are now Ind . Jihad Watch claim Terrorists will be attacking the Polls on 8th . Tried
+ind 		 6.72463340202 		 6.72463
+jihad 		 5.05065696845 		 5.05066
+claim 		 5.62602111335 		 5.62602
+terrorists 		 2.37650831902 		 0.0
+attacking 		 3.9946042942 		 3.9946
+polls 		 6.72463340202 		 6.72463
+8th 		 5.62602111335 		 5.62602
+tried 		 5.87733554163 		 5.87734
+
+
+FBI Director Comey if HRC was just careless in CompNatlSec there a terrorist attack we can blame her&you . We cannot have a careless Pres
+fbi 		 4.49104118051 		 4.49104
+director 		 6.72463340202 		 6.72463
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+blame 		 5.74380414901 		 5.7438
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+The grapevine rumor tells me there will be terror attacks ordered by our own POTUS on Tuesday to cover massive fraud . I hop
+grapevine 		 6.72463340202 		 6.72463
+rumor 		 6.72463340202 		 6.72463
+tells 		 5.52066059769 		 5.52066
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+ordered 		 5.52066059769 		 5.52066
+tuesday 		 6.21380777825 		 6.21381
+cover 		 6.43695132957 		 6.43695
+massive 		 4.18565953096 		 4.18566
+fraud 		 6.72463340202 		 6.72463
+hop 		 6.72463340202 		 6.72463
+
+
+Flashback Obama admin shameless PC response to Fort Hood Islamic terror attack . This continues under Hillary
+flashback 		 6.21380777825 		 6.21381
+obama 		 4.93287393279 		 4.93287
+admin 		 6.43695132957 		 6.43695
+shameless 		 6.43695132957 		 6.43695
+pc 		 6.72463340202 		 6.72463
+response 		 5.3383390409 		 5.33834
+islamic 		 3.54657957167 		 3.54658
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+continues 		 6.43695132957 		 6.43695
+hillary 		 6.03148622146 		 0.0
+
+
+Days after 3 right wing terrorists in Kansas planned attacks on Somali immigrant homes and mosques . This is incredi
+wing 		 6.21380777825 		 6.21381
+terrorists 		 2.37650831902 		 2.37651
+planned 		 4.0855760724 		 4.08558
+attacks 		 1.03540070838 		 1.0354
+immigrant 		 5.62602111335 		 5.62602
+homes 		 6.03148622146 		 6.03149
+mosques 		 6.72463340202 		 6.72463
+
+
+U . S . backed Syrian alliance declares attack on #IS in #Raqqa . #Muslims #Syria #Terror #Violence #Barbarism
+backed 		 6.03148622146 		 6.03149
+syrian 		 4.93287393279 		 4.93287
+attack 		 0.58259599643 		 0.582596
+#is 		 6.43695132957 		 6.43695
+#raqqa 		 6.72463340202 		 6.72463
+#muslims 		 6.21380777825 		 6.21381
+#syria 		 5.52066059769 		 5.52066
+#terror 		 5.05065696845 		 5.05066
+#violence 		 6.72463340202 		 6.72463
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+Flashback Obama admin shameless PC response to Fort Hood Islamic terror attack . This continues under Hillary
+flashback 		 6.21380777825 		 6.21381
+obama 		 4.93287393279 		 4.93287
+admin 		 6.43695132957 		 6.43695
+shameless 		 6.43695132957 		 6.43695
+pc 		 6.72463340202 		 6.72463
+response 		 5.3383390409 		 5.33834
+islamic 		 3.54657957167 		 3.54658
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+continues 		 6.43695132957 		 6.43695
+hillary 		 6.03148622146 		 0.0
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+are there still supposed to be a bunch of terrorist attacks tomorrow or no . I missed the news cycle on that
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+missed 		 6.21380777825 		 6.21381
+cycle 		 6.72463340202 		 6.72463
+
+
+wants OPEN BORDERS like GERMANY  FRANCE have TERRORIST ATTACKS due to open borders Do you want that for America . Vote TRUMP
+borders 		 5.3383390409 		 5.33834
+france 		 5.74380414901 		 0.0
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+due 		 5.74380414901 		 5.7438
+borders 		 5.3383390409 		 5.33834
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday running 4 president in 2020 2 bring America back 2 GOD
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+A VOTE FOR HILLARY IS A VOTE FOR . OPEN BORDERS . DRUG SMUGGLING . TERRORIST ATTACKS . #DrainTheSwamp
+hillary 		 6.03148622146 		 0.0
+borders 		 5.3383390409 		 5.33834
+drug 		 5.87733554163 		 5.87734
+smuggling 		 6.43695132957 		 6.43695
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+#draintheswamp 		 6.43695132957 		 6.43695
+
+
+False Flag . US intelligence Warns Of Likely Al Qaeda Terror Attack Day Before Election #Anonymo
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+intelligence 		 5.18418836107 		 5.18419
+warns 		 4.18565953096 		 4.18566
+likely 		 4.82751341713 		 4.82751
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+Military Briefed Obama On #Benghazi Terrorist Attack #PJNET 999 via
+military 		 4.29688516607 		 4.29689
+briefed 		 5.74380414901 		 5.7438
+obama 		 4.93287393279 		 4.93287
+#benghazi 		 3.97309808898 		 3.9731
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+#pjnet 		 4.73220323733 		 4.7322
+
+
+Hillary cleared . Terrorist attacks cancelled
+hillary 		 6.03148622146 		 0.0
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+
+
+SO OBVIOUS Obama regime planning massive false flag terror attacks on Monday to halt a Trump victory and save
+obama 		 4.93287393279 		 0.0
+regime 		 5.25829633322 		 5.2583
+planning 		 3.42879653601 		 3.4288
+massive 		 4.18565953096 		 4.18566
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+monday 		 3.47944026883 		 3.47944
+halt 		 6.03148622146 		 6.03149
+victory 		 5.74380414901 		 5.7438
+
+
+So sad to hear about the Gurdaspur terror attack  now the news of Dr . Kalam demise . May Allah bring peace upon all
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+allah 		 6.72463340202 		 6.72463
+peace 		 5.52066059769 		 5.52066
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+SO OBVIOUS Obama regime planning massive false flag terror attacks on Monday to halt a Trump victory and save
+obama 		 4.93287393279 		 0.0
+regime 		 5.25829633322 		 5.2583
+planning 		 3.42879653601 		 3.4288
+massive 		 4.18565953096 		 4.18566
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+monday 		 3.47944026883 		 3.47944
+halt 		 6.03148622146 		 6.03149
+victory 		 5.74380414901 		 5.7438
+
+
+A VOTE FOR HILLARY IS A VOTE FOR . OPEN BORDERS . DRUG SMUGGLING . TERRORIST ATTACKS . #DrainTheSwamp
+hillary 		 6.03148622146 		 0.0
+borders 		 5.3383390409 		 5.33834
+drug 		 5.87733554163 		 5.87734
+smuggling 		 6.43695132957 		 6.43695
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+#draintheswamp 		 6.43695132957 		 6.43695
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+Strongly condemn the terror attacks against Shias at Majalis in Khi . My prayers go to the families of these innocent vict
+strongly 		 3.81591250545 		 3.81591
+condemn 		 3.79789399995 		 3.79789
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+khi 		 6.72463340202 		 6.72463
+prayers 		 4.64519186034 		 4.64519
+families 		 5.05065696845 		 5.05066
+innocent 		 3.78019442285 		 3.78019
+
+
+can you stop tweeting and reporting a year old terrorist attack as though it unfolding now
+tweeting 		 6.72463340202 		 6.72463
+reporting 		 5.74380414901 		 5.7438
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+Retweeted Gov . Greg Abbott . May we always remember the victims of the Fort Hood terror attack
+gov 		 5.42535041789 		 0.0
+victims 		 3.32343602036 		 3.32344
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+U . S . intelligence Al Qaeda planning TERROR ATTACKS on 11 7 day before ELECTION DAY
+intelligence 		 5.18418836107 		 5.18419
+al 		 3.466536864 		 0.0
+qaeda 		 3.56056581364 		 0.0
+planning 		 3.42879653601 		 3.4288
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+
+
+Terrorist attacked Christian Colony Warsak Road Peshawar . Sec forces Promptly responded all 4 suicide bombers killed . Sea
+terrorist 		 0.977365815421 		 0.977366
+attacked 		 3.61855307129 		 3.61855
+peshawar 		 6.43695132957 		 0.0
+forces 		 5.52066059769 		 5.52066
+responded 		 5.18418836107 		 5.18419
+suicide 		 4.68775147476 		 4.68775
+bombers 		 6.72463340202 		 6.72463
+killed 		 3.33460932095 		 3.33461
+sea 		 6.72463340202 		 6.72463
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+The FBI of course are the same org who made 2pac mum a crack fiend  also create terror attacks as exposed in
+fbi 		 4.49104118051 		 0.0
+course 		 6.72463340202 		 6.72463
+org 		 6.72463340202 		 6.72463
+create 		 6.72463340202 		 6.72463
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+exposed 		 6.43695132957 		 6.43695
+
+
+is not it amazing how there have been zero major terrorist attacks in the last couple of months . Almost as if ISIS wants Hill
+zero 		 4.68775147476 		 4.68775
+major 		 4.21232777804 		 4.21233
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+couple 		 4.73220323733 		 4.7322
+months 		 4.32673812922 		 4.32674
+almost 		 4.64519186034 		 4.64519
+isis 		 4.4559498607 		 0.0
+hill 		 4.73220323733 		 4.7322
+
+
+New post Bataclan terror attack Family of British victim speak a year on
+bataclan 		 4.18565953096 		 4.18566
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+british 		 4.32673812922 		 4.32674
+victim 		 5.05065696845 		 5.05066
+speak 		 5.25829633322 		 5.2583
+
+
+This is not journalism and FOE to report location details of terror attack and operational details on TV to help enemy
+journalism 		 6.72463340202 		 6.72463
+foe 		 6.21380777825 		 6.21381
+report 		 4.68775147476 		 4.68775
+location 		 5.87733554163 		 5.87734
+details 		 5.87733554163 		 5.87734
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+operational 		 6.72463340202 		 6.72463
+details 		 5.87733554163 		 5.87734
+tv 		 6.03148622146 		 6.03149
+enemy 		 6.43695132957 		 6.43695
+
+
+Bataclan terror attack Family of British victim speak a year on
+bataclan 		 4.18565953096 		 4.18566
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+british 		 4.32673812922 		 4.32674
+victim 		 5.05065696845 		 5.05066
+speak 		 5.25829633322 		 5.2583
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday auto retweet
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+auto 		 6.72463340202 		 6.72463
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+Bataclan terror attack Family of British victim speak a year on
+bataclan 		 4.18565953096 		 4.18566
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+british 		 4.32673812922 		 4.32674
+victim 		 5.05065696845 		 5.05066
+speak 		 5.25829633322 		 5.2583
+
+
+Bataclan terror attack Family of British victim speak a year on
+bataclan 		 4.18565953096 		 4.18566
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+british 		 4.32673812922 		 4.32674
+victim 		 5.05065696845 		 5.05066
+speak 		 5.25829633322 		 5.2583
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+huge comfort for family that paris terror attack briton was loved as he died
+huge 		 5.52066059769 		 5.52066
+paris 		 5.25829633322 		 5.2583
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+loved 		 6.72463340202 		 6.72463
+died 		 5.52066059769 		 5.52066
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+#QuettaAttack #prayforquetta . #KulbhushanYadav s terrorist activities continue to cost #Pakistan heavil
+#quettaattack 		 5.42535041789 		 5.42535
+#prayforquetta 		 5.42535041789 		 5.42535
+#kulbhushanyadav 		 5.42535041789 		 5.42535
+terrorist 		 0.977365815421 		 0.977366
+activities 		 5.3383390409 		 5.33834
+continue 		 5.05065696845 		 5.05066
+cost 		 5.25829633322 		 5.2583
+#pakistan 		 5.18418836107 		 5.18419
+heavil 		 5.42535041789 		 5.42535
+
+
+#Iran Condemns Terrorist Attacks in #Iraq IFP News #TerroristAttack
+#iran 		 5.25829633322 		 5.2583
+condemns 		 4.56514915266 		 4.56515
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+#iraq 		 4.93287393279 		 4.93287
+#terroristattack 		 6.72463340202 		 6.72463
+
+
+Both UK and India face an increasing threat of cyber attack from other states terrorists
+uk 		 5.74380414901 		 0.0
+increasing 		 6.72463340202 		 6.72463
+threat 		 5.25829633322 		 5.2583
+cyber 		 6.21380777825 		 6.21381
+attack 		 0.58259599643 		 0.582596
+states 		 5.52066059769 		 5.52066
+terrorists 		 2.37650831902 		 2.37651
+
+
+Both UK and India face an increasing threat of cyber attack from other states terrorists and criminals operating i
+uk 		 5.74380414901 		 0.0
+increasing 		 6.72463340202 		 6.72463
+threat 		 5.25829633322 		 5.2583
+cyber 		 6.21380777825 		 6.21381
+attack 		 0.58259599643 		 0.582596
+states 		 5.52066059769 		 5.52066
+terrorists 		 2.37650831902 		 2.37651
+criminals 		 5.87733554163 		 5.87734
+operating 		 6.72463340202 		 6.72463
+
+
+peter townsend 7 Terror Attacks . Nothing to do with #Islam . #trump #maga #isis #tcot #an
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+#islam 		 5.52066059769 		 5.52066
+#trump 		 4.93287393279 		 4.93287
+#maga 		 5.62602111335 		 5.62602
+#isis 		 4.21232777804 		 4.21233
+#tcot 		 5.62602111335 		 5.62602
+
+
+The Kremlin has rejected the involvement of Moscow to try to organize terrorist attacks in
+involvement 		 6.43695132957 		 6.43695
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+
+
+Possible Terror Attack Monday Day Before Election . Wayne Levi Price
+possible 		 4.10967362398 		 4.10967
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+A VOTE FOR HILLARY IS A VOTE FOR . OPEN BORDERS . DRUG SMUGGLING . TERRORIST ATTACKS . #DrainTheSwamp
+hillary 		 6.03148622146 		 0.0
+borders 		 5.3383390409 		 5.33834
+drug 		 5.87733554163 		 5.87734
+smuggling 		 6.43695132957 		 6.43695
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+#draintheswamp 		 6.43695132957 		 6.43695
+
+
+U . S . Warns of Imminent Terror Attacks Total conservative via
+warns 		 4.18565953096 		 4.18566
+imminent 		 6.43695132957 		 6.43695
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+total 		 6.03148622146 		 6.03149
+conservative 		 6.72463340202 		 6.72463
+
+
+SO OBVIOUS Obama regime planning massive false flag terror attacks on Monday #FalseFlag
+obama 		 4.93287393279 		 0.0
+regime 		 5.25829633322 		 5.2583
+planning 		 3.42879653601 		 3.4288
+massive 		 4.18565953096 		 4.18566
+false 		 4.60436986582 		 4.60437
+flag 		 4.64519186034 		 4.64519
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+monday 		 3.47944026883 		 3.47944
+#falseflag 		 6.72463340202 		 6.72463
+
+
+Pilot who smashed sound barrier in F 15 with sonic boom that left people fearful of a terror attack in East
+smashed 		 6.21380777825 		 6.21381
+sound 		 6.72463340202 		 6.72463
+fearful 		 6.72463340202 		 6.72463
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+east 		 6.72463340202 		 6.72463
+
+
+#IRAQ . #IslamicState Claims Suicide Attack On #ISF  #PMU Near Hammam Al Alil In #Tigris . #TerrorMonitor
+#iraq 		 4.93287393279 		 4.93287
+#islamicstate 		 5.18418836107 		 5.18419
+claims 		 5.05065696845 		 5.05066
+suicide 		 4.68775147476 		 4.68775
+attack 		 0.58259599643 		 0.582596
+#isf 		 6.03148622146 		 6.03149
+#pmu 		 6.03148622146 		 6.03149
+near 		 5.05065696845 		 5.05066
+al 		 3.466536864 		 3.46654
+#tigris 		 6.72463340202 		 6.72463
+#terrormonitor 		 4.87880671152 		 4.87881
+
+
+at #WTMLDN Russians and Italians lead return to a destination after it suffers a terrorist attack
+return 		 6.72463340202 		 6.72463
+suffers 		 6.72463340202 		 6.72463
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+I have to wonder if made a deal with ISIS about pre election terror attacks . #ElectionFinalThoughts
+wonder 		 6.21380777825 		 6.21381
+deal 		 5.25829633322 		 5.2583
+isis 		 4.4559498607 		 0.0
+pre 		 5.42535041789 		 5.42535
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+#electionfinalthoughts 		 6.72463340202 		 6.72463
+
+
+Police officers gather at the grave of special patrol officer Yossi Kirma who was killed in terrorist attack on the
+police 		 3.0357539479 		 3.03575
+officers 		 6.21380777825 		 6.21381
+gather 		 6.72463340202 		 6.72463
+officer 		 5.62602111335 		 5.62602
+killed 		 3.33460932095 		 3.33461
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+
+
+IBD Lying About #Benghazi Libya Terrorist Attack Sole Hillary accomplishment
+ibd 		 4.29688516607 		 4.29689
+lying 		 4.2678976292 		 4.2679
+#benghazi 		 3.97309808898 		 3.9731
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+sole 		 4.29688516607 		 4.29689
+hillary 		 6.03148622146 		 0.0
+accomplishment 		 4.29688516607 		 4.29689
+
+
+Terrorists headquarters . Terrorist Sir We are planning to attack India on 9 nov . Hafeez Saeed Plan change kro NDTV nh
+terrorists 		 2.37650831902 		 2.37651
+headquarters 		 6.72463340202 		 6.72463
+terrorist 		 0.977365815421 		 0.977366
+sir 		 6.72463340202 		 6.72463
+planning 		 3.42879653601 		 3.4288
+attack 		 0.58259599643 		 0.582596
+plan 		 5.18418836107 		 5.18419
+
+
+It would be like arresting a filmmaker for just making a film and blaming a terror attack on him
+arresting 		 5.74380414901 		 5.7438
+film 		 6.72463340202 		 6.72463
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+ISIS Calls For Terror Attacks On Voters In U . S . Elections via
+isis 		 4.4559498607 		 0.0
+calls 		 4.64519186034 		 4.64519
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+voters 		 6.03148622146 		 6.03149
+elections 		 6.21380777825 		 6.21381
+
+
+GOA Erich Pratt said fear of a Clinton presidency  rise of terror attacks have spurred people to arm themselves
+fear 		 5.87733554163 		 5.87734
+presidency 		 5.87733554163 		 5.87734
+rise 		 5.87733554163 		 5.87734
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+spurred 		 6.43695132957 		 6.43695
+arm 		 6.03148622146 		 6.03149
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+Government Sources on #NDTVBan issue after reportage on #Pathankot terror attack came under severe criticism . #NDTV
+government 		 4.77872325296 		 4.77872
+sources 		 5.05065696845 		 5.05066
+#ndtvban 		 5.74380414901 		 5.7438
+issue 		 4.93287393279 		 4.93287
+reportage 		 5.18418836107 		 5.18419
+#pathankot 		 5.3383390409 		 5.33834
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+severe 		 5.18418836107 		 5.18419
+criticism 		 5.74380414901 		 5.7438
+#ndtv 		 5.62602111335 		 5.62602
+
+
+#BreakingNews #IS terrorists attack Mel ha village in Southeast Hasakah Violent Clashes between #YPG  #IS gangs 
+#breakingnews 		 6.03148622146 		 6.03149
+#is 		 6.43695132957 		 6.43695
+terrorists 		 2.37650831902 		 2.37651
+attack 		 0.58259599643 		 0.582596
+ha 		 6.72463340202 		 6.72463
+violent 		 6.21380777825 		 6.21381
+#is 		 6.43695132957 		 6.43695
+gangs 		 6.72463340202 		 6.72463
+
+
+Government Sources on #NDTVBan issue after reportage on #Pathankot terror attack came under severe criticism . #NDTV
+government 		 4.77872325296 		 4.77872
+sources 		 5.05065696845 		 5.05066
+#ndtvban 		 5.74380414901 		 5.7438
+issue 		 4.93287393279 		 4.93287
+reportage 		 5.18418836107 		 5.18419
+#pathankot 		 5.3383390409 		 5.33834
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+severe 		 5.18418836107 		 5.18419
+criticism 		 5.74380414901 		 5.7438
+#ndtv 		 5.62602111335 		 5.62602
+
+
+Since the day #CPEC project is started the terror attacks are on rise in Balochistan . It mean insecurity has also r
+#cpec 		 5.74380414901 		 5.7438
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+rise 		 5.87733554163 		 5.87734
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday Jj
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+Sindh CM announced terrorists arrested from Liaquat Abad are involved in 28 terrorist attacks including Amjad Sabr
+cm 		 6.72463340202 		 6.72463
+announced 		 6.72463340202 		 6.72463
+terrorists 		 2.37650831902 		 2.37651
+arrested 		 3.11371548937 		 3.11372
+involved 		 5.3383390409 		 5.33834
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+including 		 5.42535041789 		 5.42535
+
+
+US intel promotes unconfirmed al Qaeda terror attack the day before the US election
+intel 		 6.43695132957 		 0.0
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+
+
+All this talk about potential terrorist attacks and i am sittin here like . I know where they are not comin . #myhouse #yeeyee
+potential 		 4.77872325296 		 4.77872
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+
+
+Government Sources on #NDTVBan issue after reportage on #Pathankot terror attack came under severe criticism . #NDTV
+government 		 4.77872325296 		 4.77872
+sources 		 5.05065696845 		 5.05066
+#ndtvban 		 5.74380414901 		 5.7438
+issue 		 4.93287393279 		 4.93287
+reportage 		 5.18418836107 		 5.18419
+#pathankot 		 5.3383390409 		 5.33834
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+severe 		 5.18418836107 		 5.18419
+criticism 		 5.74380414901 		 5.7438
+#ndtv 		 5.62602111335 		 5.62602
+
+
+Government Sources on #NDTVBan issue after reportage on #Pathankot terror attack came under severe criticism . #NDTV
+government 		 4.77872325296 		 4.77872
+sources 		 5.05065696845 		 5.05066
+#ndtvban 		 5.74380414901 		 5.7438
+issue 		 4.93287393279 		 4.93287
+reportage 		 5.18418836107 		 5.18419
+#pathankot 		 5.3383390409 		 5.33834
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+severe 		 5.18418836107 		 5.18419
+criticism 		 5.74380414901 		 5.7438
+#ndtv 		 5.62602111335 		 5.62602
+
+
+U . S Officials Warn Of Al Qaeda Terrorist Attack On Monday
+officials 		 3.466536864 		 3.46654
+warn 		 3.42879653601 		 3.4288
+al 		 3.466536864 		 3.46654
+qaeda 		 3.56056581364 		 3.56057
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+monday 		 3.47944026883 		 3.47944
+
+
+#TerrorismTracker data shows that 69 of attacks in #Turkey this year have targeted police  military
+data 		 6.21380777825 		 6.21381
+shows 		 5.52066059769 		 5.52066
+attacks 		 1.03540070838 		 1.0354
+#turkey 		 6.21380777825 		 0.0
+police 		 3.0357539479 		 3.03575
+military 		 4.29688516607 		 4.29689
+
+
+This was not workplace violence . This was a radical Islamic terrorist attack . Never forget any of these victims or t
+workplace 		 4.2678976292 		 4.2679
+violence 		 4.13436623657 		 4.13437
+radical 		 4.13436623657 		 4.13437
+islamic 		 3.54657957167 		 3.54658
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+victims 		 3.32343602036 		 3.32344
+
+
+HOW MANY MORE MUSLIM TERRORIST ATTACKS WILL IT TAKE FOR THE WORLD TO WAKE UP TO ISLAM PLAN FOR WORLD DOMINATION
+muslim 		 3.42879653601 		 3.4288
+terrorist 		 0.977365815421 		 0.977366
+attacks 		 1.03540070838 		 1.0354
+wake 		 5.87733554163 		 5.87734
+islam 		 6.21380777825 		 6.21381
+plan 		 5.18418836107 		 5.18419
+
+
+Bataclan terror attack Family of British victim speak a year on The family of the only British . #breakingnews
+bataclan 		 4.18565953096 		 4.18566
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+british 		 4.32673812922 		 4.32674
+victim 		 5.05065696845 		 5.05066
+speak 		 5.25829633322 		 5.2583
+british 		 4.32673812922 		 4.32674
+#breakingnews 		 6.03148622146 		 6.03149
+
+
+BREAKING NYPD says terror threat warning of attack before #ElectionDay lacks credibility
+breaking 		 3.8720019721 		 0.0
+terror 		 0.856278552072 		 0.856279
+threat 		 5.25829633322 		 5.2583
+warning 		 4.4559498607 		 4.45595
+attack 		 0.58259599643 		 0.582596
+#electionday 		 6.43695132957 		 6.43695
+lacks 		 6.72463340202 		 6.72463
+credibility 		 6.43695132957 		 6.43695
+
+
+Despite Severe Gun Controls UK Warns of Terrorist Gun Attacks #2A
+despite 		 6.03148622146 		 6.03149
+severe 		 5.18418836107 		 5.18419
+gun 		 5.74380414901 		 5.7438
+controls 		 6.72463340202 		 6.72463
+uk 		 5.74380414901 		 5.7438
+warns 		 4.18565953096 		 4.18566
+terrorist 		 0.977365815421 		 0.977366
+gun 		 5.74380414901 		 5.7438
+attacks 		 1.03540070838 		 1.0354
+#2a 		 6.43695132957 		 0.0
+
+
+How does New York continue 2 vote . The ppl of NY have faced the devastation of Islamic terror attacks . HRC wants open bo
+continue 		 5.05065696845 		 5.05066
+ppl 		 5.05065696845 		 5.05066
+ny 		 5.62602111335 		 5.62602
+faced 		 6.72463340202 		 6.72463
+islamic 		 3.54657957167 		 3.54658
+terror 		 0.856278552072 		 0.856279
+attacks 		 1.03540070838 		 1.0354
+bo 		 6.72463340202 		 6.72463
+
+
+BREAKING NYPD says terror threat warning of attack before #ElectionDay lacks credibility
+breaking 		 3.8720019721 		 0.0
+terror 		 0.856278552072 		 0.856279
+threat 		 5.25829633322 		 5.2583
+warning 		 4.4559498607 		 4.45595
+attack 		 0.58259599643 		 0.582596
+#electionday 		 6.43695132957 		 6.43695
+lacks 		 6.72463340202 		 6.72463
+credibility 		 6.43695132957 		 6.43695
+
+
+Government Sources on #NDTVBan issue after reportage on #Pathankot terror attack came under severe criticism . #NDTV
+government 		 4.77872325296 		 4.77872
+sources 		 5.05065696845 		 5.05066
+#ndtvban 		 5.74380414901 		 5.7438
+issue 		 4.93287393279 		 4.93287
+reportage 		 5.18418836107 		 5.18419
+#pathankot 		 5.3383390409 		 5.33834
+terror 		 0.856278552072 		 0.856279
+attack 		 0.58259599643 		 0.582596
+severe 		 5.18418836107 		 5.18419
+criticism 		 5.74380414901 		 5.7438
+#ndtv 		 5.62602111335 		 5.62602
+
+
+Terrorist attack on type of city described . #premonitions
+terrorist 		 0.977365815421 		 0.977366
+attack 		 0.58259599643 		 0.582596
+type 		 5.74380414901 		 5.7438
+city 		 4.4559498607 		 4.45595
+described 		 6.43695132957 		 6.43695
+#premonitions 		 6.72463340202 		 6.72463
+

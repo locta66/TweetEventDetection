@@ -1,0 +1,9 @@
+
+
+# echo 1 > /proc/sys/vm/drop_caches
+
+pip install nltk
+pip install wordsegment
+# nltk_data	E:\DOWNLOADS\BaiduYun\nltk_data.tar.gz
+# http://python.jobbole.com/81675/
+
