@@ -8,6 +8,7 @@ from JsonParser import JsonParser
 from SeedQuery import SeedQuery
 from NerServiceProxy import get_ner_service_pool
 from WordFreqCounter import WordFreqCounter
+from EventClassifier import EventClassifier
 
 
 class SeedParser(JsonParser):
@@ -85,11 +86,15 @@ class SeedParser(JsonParser):
         #         print(word, '\t\t', localcounter.twdict.worddict[word]['idf'], '\t\t', v[wordid])
         #     print('\n')
         
-        localcounter.init_params()
+        print('start train')
+        classifier = EventClassifier(localcounter.vocabulary_size(), 3e-2)
         added_twarr = self.added_twarr[0: int(len(self.added_twarr) * 8 / 10)]
         idf_vectors = [localcounter.idf_vector_of_wordlabels(tw['pos']) for tw in added_twarr]
-        for i in range(20):
-            localcounter.train_step(None, idf_vectors, [0.3])
+        import time
+        s = time.time()
+        loss = classifier.train_steps(500, 1e-4, None, idf_vectors, [[0.3]])
+        print(loss)
+        print('training time ', time.time()-s, 's')
     
     def is_file_of_query_date(self, file):
         for seed_query in self.seed_query_list:

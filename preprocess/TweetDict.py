@@ -44,9 +44,11 @@ class TweetDict:
     def vocabulary_size(self):
         return len(self.worddict.keys())
     
-    def remove_words(self, words):
+    def remove_words(self, words, updateid=False):
         for word in words:
             self.remove_word(word)
+        if updateid:
+            self.reset_ids()
     
     def remove_word(self, word):
         if self.is_word_in_dict(word):
