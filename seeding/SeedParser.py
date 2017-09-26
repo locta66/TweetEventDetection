@@ -10,21 +10,19 @@ from NerServiceProxy import get_ner_service_pool
 from WordFreqCounter import WordFreqCounter
 from EventClassifier import EventClassifier
 
+import numpy as np
+
 
 class SeedParser(JsonParser):
     def __init__(self, query_list, theme):
         JsonParser.__init__(self)
         self.theme = theme
         self.query_list = query_list
-        self.seed_query_list = list()
-        self.construct_seed_query_list()
+        self.seed_query_list = [SeedQuery(*query) for query in self.query_list]
         self.added_twarr = list()
         self.not_added_twarr = list()
         self.localcounter = WordFreqCounter()
         self.globalcounter = WordFreqCounter()
-    
-    def construct_seed_query_list(self):
-        self.seed_query_list = [SeedQuery(*query) for query in self.query_list]
     
     def read_tweet_from_json_file(self, file, filtering=False):
         if not self.is_file_of_query_date(file):
@@ -41,7 +39,7 @@ class SeedParser(JsonParser):
                 if tw_added:
                     self.added_twarr.append(tw_af)
                 else:
-                    if random.random() < 1 / 800:
+                    if random.random() < 1 / 400:
                         self.not_added_twarr.append(tw)
     
     def twarr_ner(self, twarr):
@@ -74,7 +72,6 @@ class SeedParser(JsonParser):
         print('common word', local_global_common)
         
         # print('\n')
-        # localcounter.reset_ids()
         # for i in range(400):
         #     print(self.added_twarr[i]['text'])
         #     wordlabels = self.added_twarr[i]['pos']
@@ -87,14 +84,42 @@ class SeedParser(JsonParser):
         #     print('\n')
         
         print('start train')
-        classifier = EventClassifier(localcounter.vocabulary_size(), 3e-2)
-        added_twarr = self.added_twarr[0: int(len(self.added_twarr) * 8 / 10)]
-        idf_vectors = [localcounter.idf_vector_of_wordlabels(tw['pos']) for tw in added_twarr]
+        classifier = EventClassifier(localcounter.vocabulary_size(), 5e-2, 0.2, 0.2)
+        print('train len', int(len(self.added_twarr) * 8 / 10))
+        train_twarr = self.added_twarr[int(len(self.added_twarr) * 8 / 10): ]
+        train_idf_mtx = []
+        for tw in train_twarr:
+            idfvec, added = localcounter.idf_vector_of_wordlabels(tw['pos'])
+            train_idf_mtx.append(idfvec * np.log(len(added) + 1))
         import time
         s = time.time()
-        loss = classifier.train_steps(500, 1e-4, None, idf_vectors, [[0.3]])
-        print(loss)
+        classifier.train_steps(300, 1e-5, None, train_idf_mtx, [[0.9]])
         print('training time ', time.time()-s, 's')
+        
+        print(classifier.get_value(classifier.thetaEb))
+        print(classifier.get_value(classifier.thetaEW))
+        
+        test_twarr = self.added_twarr[0: int(len(self.added_twarr) * 95 / 100)]
+        test_idf_mtx = []
+        for tw in test_twarr:
+            idfvec, added = localcounter.idf_vector_of_wordlabels(tw['pos'])
+            test_idf_mtx.append(idfvec * np.log(len(added) + 1))
+        test_loss = classifier.predict(test_idf_mtx)
+        print('predictions:')
+        for i, e in enumerate(test_loss[0]):
+            print(e, test_twarr[i]['text'], localcounter.idf_vector_of_wordlabels(test_twarr[i]['pos']), '\n')
+        print('test_loss', test_loss[1])
+        
+        # test_twarr = self.not_added_twarr[int(len(self.not_added_twarr) * 98 / 100):]
+        # test_idf_mtx = []
+        # for tw in test_twarr:
+        #     idfvec, added = localcounter.idf_vector_of_wordlabels(tw['pos'])
+        #     test_idf_mtx.append(idfvec * np.log(len(added)))
+        # test_loss = classifier.predict(test_idf_mtx)
+        # print('\n\n\npredictions:')
+        # for i, e in enumerate(test_loss[0]):
+        #     print(e, test_twarr[i]['pos'])
+        # print('test_loss', test_loss[1])
     
     def is_file_of_query_date(self, file):
         for seed_query in self.seed_query_list:
@@ -141,7 +166,7 @@ class SeedParser(JsonParser):
         return wordlabels
     
     def dump_query_list_results(self, seed_path):
-        theme = self.theme if self.theme else 'default theme'
+        theme = self.theme if self.theme else 'default_theme'
         theme_path = FileIterator.append_slash_if_necessary(seed_path + theme)
         if os.path.exists(theme_path):
             shutil.rmtree(theme_path)

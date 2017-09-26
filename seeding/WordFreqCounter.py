@@ -1,11 +1,10 @@
 import re
 import __init__
-from TweetDict import TweetDict
 import FileIterator
+from TweetDict import TweetDict
 
-from nltk.corpus import stopwords
 import numpy as np
-import tensorflow as tf
+from nltk.corpus import stopwords
 
 
 class WordFreqCounter(TweetDict):
@@ -74,7 +73,7 @@ class WordFreqCounter(TweetDict):
     
     def idf_vector_of_wordlabels(self, wordlabels):
         added_word = {}
-        vector = np.zeros(self.vocabulary_size(), dtype=np.float32)
+        vector = np.array([0]*self.vocabulary_size(), dtype=np.float32)
         for wordlabel in wordlabels:
             word = wordlabel[0].lower() if self.capignore else wordlabel[0]
             if not (self.is_valid_keyword(word) and self.is_valid_wordlabel(wordlabel)):
@@ -83,32 +82,13 @@ class WordFreqCounter(TweetDict):
                 if word in added_word:
                     continue
                 added_word[word] = True
-                wordid = self.word_id(word)
+                wordid = self.word_2_id(word)
                 if wordid:
                     vector[wordid] = self.worddict[word]['idf']
-        return vector
+        return vector, sorted(added_word.keys())
     
-    def dump_worddict(self, dict_file):
-        FileIterator.dump_array(dict_file, [self.worddict])
-
-
-# def test_train():
-#     fc = FreqCounter()
-#     for w in ['me', 'you', 'he', 'never', 'give', 'up', 'not', 'only', 'and', 'put', ]:
-#         fc.expand_dict_from_word(w)
-#     fc.reset_freq_couter()
-#     fc.count_df_from_wordarray('he never give me'.split(' '))
-#     fc.count_df_from_wordarray('you shall put and on yourself'.split(' '))
-#     fc.count_df_from_wordarray('i should not put and on yourself'.split(' '))
-#     fc.count_df_from_wordarray('have you ever been defeated'.split(' '))
-#     fc.calculate_idf()
-#     idfmatrix = list()
-#     idfmatrix.append(fc.idf_vector_of_wordarray('he never give me'.split(' ')))
-#     idfmatrix.append(fc.idf_vector_of_wordarray('you shall put and on yourself'.split(' ')))
-#     idfmatrix.append(fc.idf_vector_of_wordarray('i should not put and on yourself'.split(' ')))
-#     idfmatrix.append(fc.idf_vector_of_wordarray('have you ever been defeated'.split(' ')))
-#     fc.supervised_loss(idfmatrix, [[0]]*len(idfmatrix))
-#
-#
-# if __name__ == "__main__":
-#     test_train()
+    def dump_worddict(self, dict_file, overwrite=False):
+        FileIterator.dump_array(dict_file, [self.worddict], overwrite)
+    
+    def load_worddict(self, dict_file):
+        FileIterator.load_array(dict_file)

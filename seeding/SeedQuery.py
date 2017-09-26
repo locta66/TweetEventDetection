@@ -15,7 +15,7 @@ class SeedQuery:
         self.date_calculator = DateCalculator()
         self.month_dict = {'Jan': '1', 'Feb': '2', 'Mar': '3', 'Apr': '4', 'May': '5', 'June': '6',
                            'July': '7', 'Aug': '8', 'Sept': '9', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
-        self.query_result = list()
+        self.query_results = list()
         self.parse_keywords()
     
     def parse_keywords(self):
@@ -35,7 +35,7 @@ class SeedQuery:
             return False
         if not self.is_text_desired(tw['text']):
             return False
-        self.query_result.append(tw)
+        self.query_results.append(tw)
         return True
     
     def time_of_tweet(self, time_about_str, source='filename'):
@@ -84,18 +84,11 @@ class SeedQuery:
         parts.append(sep_title_content.join(['until', '-'.join(self.until)]))
         return sep_title.join(parts)
     
-    def get_query_result(self):
-        return self.query_result
+    def get_query_results(self):
+        return self.query_results
     
     def dump_query_results(self, result_path):
-        query_result = self.get_query_result()
-        if len(query_result) == 0:
-            return
-        seed_postfix = '.sed'
-        seed_file = result_path + self.get_query_name() + seed_postfix
-        FileIterator.dump_array(seed_file, query_result)
-        # import json
-        # FileIterator.remove_files(seed_file)
-        # with open(seed_file, 'a') as fp:
-        #     for tw in self.get_query_result():
-        #         fp.write(json.dumps(tw) + '\n')
+        query_results = self.get_query_results()
+        if not len(query_results) == 0:
+            seed_file = result_path + self.get_query_name() + '.sed'
+            FileIterator.dump_array(seed_file, query_results)

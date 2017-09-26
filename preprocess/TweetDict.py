@@ -35,7 +35,7 @@ class TweetDict:
     def is_word_in_dict(self, word):
         return word in self.worddict
     
-    def word_id(self, word):
+    def word_2_id(self, word):
         return self.worddict[word]['id'] if self.is_word_in_dict(word) else None
     
     def vocabulary(self):
@@ -54,19 +54,6 @@ class TweetDict:
         if self.is_word_in_dict(word):
             self.worddict.pop(word)
         self.idordered = False
-    
-    # def expand_dict_from_file(self, file, file_type='json'):
-    #     with open(file) as fp:
-    #         for line in fp.readlines():
-    #             if 'json' in file_type:
-    #                 tw = json.loads(line)
-    #                 if 'text' in tw:
-    #                     text = tw['text']
-    #                 else:
-    #                     continue
-    #             else:
-    #                 text = line
-    #             self.expand_dict_from_text(text, wordreg=True, capignore=True)
     
     def expand_dict_from_word(self, word):
         if not word:
@@ -91,47 +78,3 @@ class TweetDict:
             else:
                 text_seg.append(word.strip())
         return text_seg
-
-
-# def get_dict():
-#     path = '/home/nfs/cdong/tw/summary/'
-#     d = TweetDict()
-#     iii = 0
-#     import FileIterator
-#     for subfile in FileIterator.listchildren(path, children_type='file'):
-#         d.expand_dict_from_file(path + subfile, file_type='json')
-#         iii += 1
-#         if iii >= 10:
-#             break
-#     worddict, posdict = d.get_dict()
-#
-#     # span_num = 1000
-#     # span = 10
-#     # count = [0] * span_num
-#     # too_many = 0
-#     # for word in list(worddict):
-#     #     cnt = int(worddict[word]['count'] / span)
-#     #     if cnt >= span_num:
-#     #         too_many += 1
-#     #     else:
-#     #         count[cnt] += 1
-#     # for idx, cnt in enumerate(count):
-#     #     if cnt > 0:
-#     #         print(idx*span, (idx+1)*span, ':', cnt)
-#     # print('too_many :', too_many)
-#
-#     for word in list(worddict):
-#         if worddict[word]['count'] >= 10:
-#             print(word)
-#
-#     # for i in sorted(list(worddict)):
-#     #     print(i)
-#
-#     print(d.maxid)
-#     return worddict
-#
-#
-# if __name__ == "__main__":
-#     # get_ner_service_proxy().open_ner_service(False, True)
-#     get_dict()
-#     # get_ner_service_proxy().close_ner_service()
