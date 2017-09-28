@@ -20,6 +20,8 @@ def parse_args():
     #                     help='Filtered tweets organized in days as file XX_XX_XX.txt under this path')
     parser.add_argument('--seed_path', nargs='?', default='/home/nfs/cdong/tw/seeding/',
                         help='Path for extracted seed instances according to particular query')
+    # parser.add_argument('--tagger', action='store_true', default=False,
+    #                     help='If makes tagging file for query')
     return parser.parse_args()
 
 if __name__ == "__main__":

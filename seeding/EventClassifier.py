@@ -16,23 +16,23 @@ class EventClassifier:
         self.unlbscore = tf.nn.xw_plus_b(self.unlbxe, tf.transpose(self.thetaEW), self.thetaEb)
         self.unlbpred = tf.sigmoid(self.unlbscore)
         self.unlbpredave = tf.reduce_mean(self.unlbpred)
-        # self.unlbcross = self.cross_entropy(self.unlbye, self.unlbye) - \
-        #     self.cross_entropy(self.unlbpredave, self.unlbye)
-        self.unlbcross = self.cross_entropy(self.unlbpredave, self.unlbye)
+        self.unlbcross = self.cross_entropy(self.unlbpredave, self.unlbye) - \
+            self.cross_entropy(self.unlbye, self.unlbye)
+        # self.unlbcross = self.cross_entropy(self.unlbpredave, self.unlbye)
         self.unlbloss = tf.reduce_mean(self.unlbcross)
         
         self.unlbreg_lambda = unlbreg_lambda
         self.l2reg_lambda = l2reg_lambda
         self.l2reg = tf.nn.l2_loss(self.thetaEW) + tf.nn.l2_loss(self.thetaEb)
         # self.loss = self.seedloss + unlb_lambda * self.unlbloss + l2reg_lambda * self.l2reg
-        self.loss = unlbreg_lambda * self.unlbloss + l2reg_lambda * self.l2reg
+        self.loss = self.unlbreg_lambda * self.unlbloss + self.l2reg_lambda * self.l2reg
         self.trainop = tf.train.AdamOptimizer(learning_rate).minimize(self.loss)
         
         self.sess = tf.InteractiveSession()
         self.sess.run(tf.global_variables_initializer())
     
     def cross_entropy(self, logits, labels):
-        log_loss = labels * tf.log(logits) + (1 - labels) * tf.log(1 - logits)
+        log_loss = labels * tf.log(logits) + (tf.constant(1, dtype=tf.float32) - labels) * tf.log(1 - logits)
         return - log_loss
     
     def train_steps(self, stepnum, threshold, seedx, unlbx, unlby):

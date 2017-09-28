@@ -64,12 +64,21 @@ class WordFreqCounter(TweetDict):
                     self.worddict[word]['df'] += 1
         self.doc_num += 1
     
-    def remove_word_by_idf_threshold(self, rmv_cond):
+    def reserve_word_by_idf_threshold(self, rsv_cond):
         self.calculate_idf()
         for word in sorted(self.worddict.keys()):
             word_idf = self.worddict[word]['idf']
-            if not rmv_cond(word_idf):
-                self.remove_words([word])
+            if not rsv_cond(word_idf):
+                self.remove_word(word)
+    
+    def reserve_word_by_rank(self, rsv_cond):
+        from operator import itemgetter
+        self.calculate_idf()
+        idf_ranked_list = sorted(self.worddict.items(), key=itemgetter(1), reverse=True)
+        total = len(idf_ranked_list)
+        for rank, (word, idf) in enumerate(idf_ranked_list):
+            if not rsv_cond(rank, total):
+                self.remove_word(word)
     
     def idf_vector_of_wordlabels(self, wordlabels):
         added_word = {}

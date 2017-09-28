@@ -60,6 +60,7 @@ class JsonParser:
             # if tw_filtered['id'] in [793339741898993664, ]:
             #     print(tw_filtered['id'])
             # print(tw_filtered['text'], '\n--------')
+            tw_filtered['norm'] = normalized_text
             tw_filtered['text'] = self.sentence_filter(normalized_text)
             # print(tw_filtered['text'], '\n')
         return tw_filtered

@@ -155,19 +155,24 @@ s.is_text_desired('Dog pulled from rubble after 6 . 6 magnitude earthquake in It
 
 
 import tensorflow as tf
+def cross_entropy(logits, labels):
+    log_loss = labels * tf.log(logits) + (1 - labels) * tf.log(1 - logits)
+    return - log_loss
 
-aa = bb = tf.placeholder(tf.float32, [2])
+e = tf.placeholder(tf.float32, [1, None])
+f = tf.placeholder(tf.float32, [1, None])
+c = cross_entropy(logits=e, labels=f)
 
-cross = tf.nn.sigmoid_cross_entropy_with_logits(logits=aa, labels=bb)
-
-qqq = -tf.log(tf.Variable(5, dtype=tf.float32))
 
 sess = tf.InteractiveSession()
 sess.run(tf.global_variables_initializer())
-# arr = [0.4, 0.5]
-# sess.run([cross], feed_dict={aa: arr, bb: arr})
-sess.run([qqq])
+sess.run([c], feed_dict={e:[[0.1,0.2,0.3,0.5]], f:[[0.5]]})
 
+
+from operator import itemgetter
+idf_ranked_list = sorted({1:2, 2:10, 4:3}.items(), key=itemgetter(1))
+for idx, (a, b) in enumerate(idf_ranked_list):
+    print(idx, a, b)
 
 
 
