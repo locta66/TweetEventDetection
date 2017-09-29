@@ -176,4 +176,16 @@ for idx, (a, b) in enumerate(idf_ranked_list):
 
 
 
+import tag_converter
+from tag_converter import Tagger
+t=Tagger()
+t.load_untagged('/home/nfs/cdong/tw/seeding/Terrorist/Terrorist.utg')
+
+
+
+
+a=[6,4,7,9,4]
+for i in a:
+    if i < 7:
+        a.pop(i)
 

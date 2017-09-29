@@ -57,12 +57,8 @@ class JsonParser:
             normalized_text = self.pattern.normalization(tw_filtered['text'])
             if len(re.split('\s', normalized_text)) <= 3:
                 return None
-            # if tw_filtered['id'] in [793339741898993664, ]:
-            #     print(tw_filtered['id'])
-            # print(tw_filtered['text'], '\n--------')
             tw_filtered['norm'] = normalized_text
             tw_filtered['text'] = self.sentence_filter(normalized_text)
-            # print(tw_filtered['text'], '\n')
         return tw_filtered
     
     def sentence_filter(self, text):
@@ -76,10 +72,13 @@ class JsonParser:
         return ' . '.join(res)
     
     def attribute_filter(self, target_dict, attr_list):
-        extracted_dict = {}
-        for attr in attr_list:
-            extracted_dict[attr] = target_dict[attr]
-        return extracted_dict
+        for attr in list(target_dict.keys()):
+            if attr not in attr_list:
+                target_dict.pop(attr)
+        # extracted_dict = {}
+        # for attr in attr_list:
+        #     extracted_dict[attr] = target_dict[attr]
+        return target_dict
     
     @staticmethod
     def dump_json_arr_into_file(json_arr, file_path, mode='append'):

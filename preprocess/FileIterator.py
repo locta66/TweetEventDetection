@@ -31,13 +31,16 @@ def append_slash_if_necessary(path):
 def remove_files(files):
     if type(files) is list:
         for f in files:
-            if type(f) is str and os.path.exists(f):
-                print('removing file', f)
-                os.remove(f)
-    elif type(files) is str:
-        if os.path.exists(files):
-            print('removing file', files)
-            os.remove(files)
+            remove_file(f)
+    else:
+        raise TypeError("File descriptor array not an expected type")
+
+
+def remove_file(file):
+    if type(file) is str:
+        if os.path.exists(file):
+            print('removing file', file)
+            os.remove(file)
     else:
         raise TypeError("File descriptor not an expected type")
 
@@ -152,7 +155,7 @@ def remove_ymdh_from_path(summary_path, ymdh_file_name):
     subfiles = listchildren(summary_path, children_type='file')
     for subfile in subfiles:
         if ymdh_file_name in subfile:
-            remove_files(summary_path + subfile)
+            remove_file(summary_path + subfile)
 
 
 def pos_of_summary(summary_file):
@@ -173,7 +176,7 @@ def tokens_of_pos(pos_file):
     name_without_postfix = pos_file[0:-4]
     pos_token_file = name_without_postfix + '.tkn'
     if os.path.exists(pos_token_file):
-        remove_files(pos_token_file)
+        remove_file(pos_token_file)
     with open(pos_file, 'r') as posfp, open(pos_token_file, 'a') as tknfp:
         for line in posfp.readlines():
             tokenized = line.split('\t', 4)[0]

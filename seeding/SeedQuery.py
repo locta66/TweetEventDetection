@@ -51,23 +51,21 @@ class SeedQuery:
         return self.date_calculator.is_target_ymdh(tw_ymd, self.since, self.until)
     
     def is_text_desired(self, text):
-        if not self.all and not self.any and not self.none:
+        if (self.all is []) and (self.any is []) and (self.none is []):
             return True
-        if self.all:
-            for w1 in self.all:
-                if not re.search(w1, text, re.IGNORECASE):
-                    return False
-        if self.none:
-            for w2 in self.none:
-                if re.search(w2, text, re.IGNORECASE):
-                    return False
-        if self.any:
-            for w3 in self.any:
-                if re.search(w3, text, re.IGNORECASE):
-                    return True
+        for w1 in self.all:
+            if not re.search(w1, text, re.IGNORECASE):
+                return False
+        for w2 in self.none:
+            if re.search(w2, text, re.IGNORECASE):
+                return False
+        # complementary pass, then additional
+        for w3 in self.any:
+            if re.search(w3, text, re.IGNORECASE):
+                return True
         if (self.all is []) and (self.none is []) and (self.any is not []):
             return False
-        return True
+        return False
     
     def get_query_name(self):
         parts = list()
