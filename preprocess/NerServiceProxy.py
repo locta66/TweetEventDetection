@@ -64,7 +64,6 @@ class NerServiceProxy:
             return res
         else:
             raise ValueError('Error occurs in NER')
-            # return None
     
     # def execute_ner_array(self, textarr):
     #     if not self.is_service_open():
