@@ -59,12 +59,12 @@ class SeedQuery:
         for w2 in self.none:
             if re.search(w2, text, re.IGNORECASE):
                 return False
+        if (self.all is not []) or (self.none is not []):
+            return True
         # complementary pass, then additional
         for w3 in self.any:
             if re.search(w3, text, re.IGNORECASE):
                 return True
-        if (self.all is []) and (self.none is []) and (self.any is not []):
-            return False
         return False
     
     def get_query_name(self):

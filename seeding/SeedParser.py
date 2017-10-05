@@ -1,5 +1,4 @@
 import os
-import shutil
 
 import FileIterator
 from JsonParser import JsonParser
@@ -8,15 +7,22 @@ from EventFeatureExtractor import EventFeatureExtractor
 
 
 class SeedParser(JsonParser):
-    def __init__(self, query_list, theme, description):
+    key_ptagtime = 'ptt'
+    key_ntagtime = 'ntt'
+    key_tagtimes = 'ttms'
+    
+    def __init__(self, query_list, theme, description, is_seed):
         JsonParser.__init__(self)
+        self.base_path = './'
         self.theme = theme
         self.description = description
-        self.query_list = query_list
-        self.seed_query_list = [SeedQuery(*query) for query in self.query_list]
-        self.tweet_desired_attrs = ['created_at', 'id', 'text', 'norm', 'place',
-                                    'user', 'retweet_count', 'favorite_count']
-        self.added_ids = {}
+        self.is_seed = is_seed
+        
+        # self.query_list = query_list
+        self.seed_query_list = [SeedQuery(*query) for query in query_list]
+        self.tweet_desired_attrs.append('norm')
+        
+        self.added_ids = dict()
         self.added_twarr = list()
     
     def read_tweet_from_json_file(self, file, filtering=False):
@@ -45,63 +51,102 @@ class SeedParser(JsonParser):
                 return True
         return False
     
-    def get_theme_path(self, base_path):
+    def set_base_path(self, base_path):
+        self.base_path = FileIterator.append_slash_if_necessary(base_path)
+        FileIterator.make_dirs_if_not_exists(self.get_base_path())
+        FileIterator.make_dirs_if_not_exists(self.get_theme_path())
+    
+    def get_base_path(self):
+        return self.base_path
+    
+    def get_theme_path(self, base_path=None):
+        base_path = base_path if base_path else self.get_base_path()
         return FileIterator.append_slash_if_necessary(base_path + self.theme)
     
-    def get_query_result_file_name(self, base_path):
-        return self.get_theme_path(base_path) + self.theme + '.sum'
+    def get_query_result_file_name(self, base_path=None):
+        return self.get_theme_path(base_path) + self.theme + '%s.sum' % ('' if self.is_seed else '_unlabeled')
     
-    def get_to_tag_file_name(self, base_path):
-        return self.get_theme_path(base_path) + self.theme + '.utg'
+    def get_to_tag_file_name(self, base_path=None):
+        return self.get_theme_path(base_path) + self.theme + '%s.utg' % ('' if self.is_seed else '_unlabeled')
     
-    def dump_query_list_results(self, seed_path):
-        print(len(self.added_twarr))
-        theme_path = self.get_theme_path(seed_path)
-        if os.path.exists(theme_path):
-            shutil.rmtree(theme_path)
-        os.makedirs(theme_path)
-        FileIterator.dump_array(self.get_query_result_file_name(seed_path), self.added_twarr)
-    
-    def create_to_tag_form_file_of_query(self, tw_file, to_tag_file):
-        to_tag_dict = {}
-        for tw in FileIterator.load_array(tw_file):
-            to_tag_dict[tw['id']] = tw['norm']
-        print(len(to_tag_dict.keys()))
-        FileIterator.dump_array(to_tag_file, [self.theme], overwrite=True)
-        FileIterator.dump_array(to_tag_file, [self.description], overwrite=False)
-        directory = FileIterator.append_slash_if_necessary(os.path.dirname(tw_file))
-        FileIterator.dump_array(to_tag_file, [directory], overwrite=False)
-        FileIterator.dump_array(to_tag_file, [to_tag_dict], overwrite=False)
+    def get_param_file_name(self, base_path=None):
+        return self.get_theme_path(base_path) + self.theme + '.param'
 
 
-def parse_files_in_path(json_path, *args, **kwargs):
-    seed_parser = kwargs['seed_parser']
+def query_tw_files_in_path(json_path, *args, **kwargs):
+    parser = kwargs['parser']
     subfiles = FileIterator.listchildren(json_path, children_type='file')
-    for subfile in subfiles[0:15]:
+    for subfile in subfiles:
         if not subfile.endswith('.sum'):
             continue
         json_file = json_path + subfile
-        seed_parser.read_tweet_from_json_file(json_file)
+        parser.read_tweet_from_json_file(json_file)
 
 
-since = ['2016', '11', '01']
-until = ['2016', '11', '30']
-seed_parser = SeedParser([
-    [{'any_of': ['terror', 'attack']}, since, until],
-], theme='Terrorist', description='Event of terrorist attack')
-
-
-def parse_querys(data_path, seed_path):
+def exec_query(data_path, parser):
     data_path = FileIterator.append_slash_if_necessary(data_path)
-    FileIterator.iterate_file_tree(data_path, parse_files_in_path, seed_parser=seed_parser)
-    seed_parser.dump_query_list_results(seed_path)
+    FileIterator.iterate_file_tree(data_path, query_tw_files_in_path, parser=parser)
+    theme_path = parser.get_theme_path()
+    if not os.path.exists(theme_path):
+        os.makedirs(theme_path)
+        print(parser.get_query_result_file_name())
+        print(len(parser.added_twarr))
+    FileIterator.dump_array(parser.get_query_result_file_name(), parser.added_twarr)
 
 
-def create_to_tag(seed_path):
-    seed_parser.create_to_tag_form_file_of_query(seed_parser.get_query_result_file_name(seed_path),
-                                                 seed_parser.get_to_tag_file_name(seed_path))
+def reset_tag_of_tw_file(tw_file):
+    tw_arr = FileIterator.load_array(tw_file)
+    for tw in tw_arr:
+        tw[SeedParser.key_ptagtime] = 0
+        tw[SeedParser.key_ntagtime] = 0
+        tw[SeedParser.key_tagtimes] = 0
+    FileIterator.dump_array(tw_file, tw_arr)
 
 
-def perform_ner(seed_path):
+def exec_totag(parser):
+    reset_tag_of_tw_file(parser.get_query_result_file_name())
+    tw_file = parser.get_query_result_file_name()
+    to_tag_file = parser.get_to_tag_file_name()
+    to_tag_dict = {}
+    for tw in FileIterator.load_array(tw_file):
+        to_tag_dict[tw['id']] = tw['norm']
+    FileIterator.dump_array(to_tag_file, [parser.theme], overwrite=True)
+    FileIterator.dump_array(to_tag_file, [parser.description], overwrite=False)
+    FileIterator.dump_array(to_tag_file, [parser.get_theme_path()], overwrite=False)
+    FileIterator.dump_array(to_tag_file, [to_tag_dict], overwrite=False)
+
+
+def exec_ner(parser):
     efe = EventFeatureExtractor()
-    efe.perform_ner_on_tw_file(seed_parser.get_query_result_file_name(seed_path))
+    efe.start_ner_service()
+    efe.perform_ner_on_tw_file(parser.get_query_result_file_name())
+    efe.end_ner_service()
+
+
+def update_tw_arr_dict_from_tagged_file(tw_arr_dict, tagged_file):
+    with open(tagged_file) as fp:
+        for line in fp.readlines():
+            twid, tag = 0, 1      # parse lines
+            tw_arr_dict[twid][SeedParser.key_ptagtime] += 1 if tag == 1 else 0
+            tw_arr_dict[twid][SeedParser.key_ntagtime] += 1 if tag == -1 else 0
+            tw_arr_dict[twid][SeedParser.key_tagtimes] += 1
+
+
+def update_tw_file_from_tag_in_path(tw_file, tagged_file_path, tagged_postfix='.tag',
+                                    output_to_another_file=False, another_file='./deafult.sum'):
+    tw_arr = FileIterator.load_array(tw_file)
+    tw_arr_dict = {}
+    for tw in tw_arr:
+        tw_arr_dict[tw['id']] = tw
+    subfiles = FileIterator.listchildren(tagged_file_path, children_type='file')
+    for subfile in subfiles:
+        if not subfile.endswith(tagged_postfix):
+            continue
+        tagged_file = tagged_file_path + subfile
+        update_tw_arr_dict_from_tagged_file(tw_arr_dict, tagged_file)
+    output_file = another_file if output_to_another_file else tw_file
+    FileIterator.dump_array(output_file, tw_arr)
+
+
+def exec_untag(parser):
+    update_tw_file_from_tag_in_path(parser.get_query_result_file_name(), parser.get_theme_path())

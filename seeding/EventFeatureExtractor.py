@@ -8,22 +8,28 @@ class EventFeatureExtractor:
     key_wordlabels = 'pos'
     
     def __init__(self):
-        return
+        self.seed_twarr = []
+        self.unlb_twarr = []
+    
+    def start_ner_service(self, pool_size=8, classify=True, pos=True):
+        get_ner_service_pool().start(pool_size, classify, pos)
+    
+    def end_ner_service(self):
+        get_ner_service_pool().end()
     
     def perform_ner_on_tw_file(self, tw_file, output_to_another_file=False, another_file='./deafult.sum'):
         twarr = FileIterator.load_array(tw_file)
         if not twarr:
             print('No tweets read from file', tw_file)
-            return
+            return twarr
         if self.key_wordlabels in twarr[0]:
             print('Ner already done for', tw_file)
-            return
-        get_ner_service_pool().start(pool_size=8, classify=True, pos=True)
+            return twarr
         twarr = self.twarr_ner(twarr)
-        get_ner_service_pool().end()
         output_file = another_file if output_to_another_file else tw_file
         FileIterator.dump_array(output_file, twarr)
         print('Ner result written into', output_file, ',', len(twarr), 'tweets processed.')
+        return twarr
     
     def twarr_ner(self, twarr):
         ner_text_arr = get_ner_service_pool().execute_ner_multiple([tw['text'] for tw in twarr])
@@ -142,3 +148,9 @@ class EventFeatureExtractor:
     #     # for i, e in enumerate(test_loss[0]):
     #     #     print(e, test_twarr[i]['pos'])
     #     # print('test_loss', test_loss[1])
+    
+    def load_twarr(self, seed_file, unlb_file):
+        self.start_ner_service()
+        self.seed_twarr = self.perform_ner_on_tw_file(seed_file)
+        self.unlb_twarr = self.perform_ner_on_tw_file(unlb_file)
+        self.end_ner_service()

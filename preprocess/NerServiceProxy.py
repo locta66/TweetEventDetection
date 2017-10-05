@@ -180,18 +180,25 @@ class NerServicePool:
         Instance of this class holds multiple instances of DaemonProcess.
         """
         self.dae_pool = None
+        self.service_on = False
     
     def start(self, pool_size, classify, pos):
+        if self.service_on:
+            return
         self.dae_pool = list()
         for i in range(pool_size):
             daeprocess = DaemonProcess(ner_service_daemon)
             daeprocess.start()
             daeprocess.open_ner_service(classify, pos)
             self.dae_pool.append(daeprocess)
+        self.service_on = True
     
     def end(self):
-        for dae in self.dae_pool:
-            dae.end()
+        if not self.service_on:
+            return
+        for daeprocess in self.dae_pool:
+            daeprocess.end()
+        self.service_on = False
     
     def execute_ner_multiple(self, textarr):
         blocksize = math.ceil(len(textarr) / len(self.dae_pool))

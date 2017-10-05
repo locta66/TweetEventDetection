@@ -236,6 +236,100 @@ def handpick_words_of_theme(in_dict, theme):
 
 # d = {'my': 12, 'no': 2, 'kill': 9, 'damn': 53, 'shoot': 0, 'hate': 0, 'fire': 0, 'bomb': 0, 'cake': 0, 'movie': 0,
 #      'attack': 0, 'football': 0, 'swim': 0, 'gold': 0, 'money': 0, 'can': 0, 'make': 0, 'death': 0, 'explode': 0, }
-d = {'my': 12, 'no': 2, 'kill': 9, 'damn': 53, }
-handpick_words_of_theme(d, 'Terrorist')
-print(d)
+# d = {'my': 12, 'no': 2, 'kill': 9, 'damn': 53, }
+# handpick_words_of_theme(d, 'Terrorist')
+# print(d)
+
+
+# 默认模式r,读
+import zipfile
+azip = zipfile.ZipFile('src.zip')  # ['bb/', 'bb/aa.txt']
+print(azip.namelist())
+
+
+
+
+
+
+# Cho, K., Courville, A., Bengio, Y., 2015. Describing multimedia
+# content using attention-based encoder-decoder
+# networks. IEEE Trans. Multim., 17(11):1875-1886.
+# http://dx.doi.org/10.1109/TMM.2015.2477044
+#
+#
+# Kalchbrenner, N., Grefenstette, E., Blunsom, P., 2014. A
+# convolutional neural network for modelling sentences.
+# ePrint Archive, arXiv:1404.2188.
+#
+# # Li, J.W., Monroe, W., Ritter, A., et al., 2016. Deep reinforcement
+# # learning for dialogue generation. ePrint
+# # Archive, arXiv:1606.01541.
+#
+# Liu, Y., Sun, C.J., Lin, L., et al., 2016. Learning natural
+# language inference using bidirectional LSTM model and
+# inner-attention. ePrint Archive, arXiv:1605.09090.
+#
+# Low, Y.C., Gonzalez, J.E., Kyrola, A., et al., 2014.
+# GraphLab: a new framework for parallel machine learning.
+# ePrint Archive, arXiv:1408.2041.
+#
+#
+# Marrinan, T., Aurisano, J., Nishimoto, A., et al., 2014.
+# SAGE2: a new approach for data intensive collaboration
+# using scalable resolution shared displays. Int.
+# Conf. on Collaborative Computing: Networking,
+# Applications and Worksharing (CollaborateCom),
+# p.177-186.
+#
+# Mikolov, T., Chen, K., Corrado, G., et al., 2013. Efficient estimation
+# of word representations in vector space. ePrint
+# Archive, arXiv:1301.3781.
+#
+# Shijia, E., Jia, S.B., Yang, X., et al., 2016. Knowledge graph
+# embedding for link prediction and triplet classification.
+# China Conf. on Knowledge Graph and Semantic Computing:
+# Semantic, Knowledge, and Linked Big Data,
+# p.228-232.
+# http://dx.doi.org/10.1007/978-981-10-3168-7_23
+#
+# Sutskever, I., Vinyals, O., Le, Q.V., 2014. Sequence to
+# sequence learning with neural networks. Conf. on
+# Neural Information Processing Systems, p.3104-3112.
+#
+# Weston, J., Chopra, S., Bordes, A., 2014. Memory networks.
+# ePrint Archive, arXiv:1410.3916.
+#
+# Wu, F., Yu, Z., Yang, Y., et al., 2014. Sparse multi-modal
+# hashing. IEEE Trans. Multim., 16(2):427-439.
+# http://dx.doi.org/10.1109/TMM.2013.2291214
+#
+# Wu, F., Jiang, X.Y., Li, X., et al., 2015. Cross-modal
+# learning to rank via latent joint representation. IEEE
+# Trans. Imag. Process., 24(5):1497-1509.
+# http://dx.doi.org/10.1109/TIP.2015.2403240
+
+import re
+def remove_noneword_from_wordlabels(wordlabels):
+    for idx, wordlabel in enumerate(wordlabels):
+        if re.search('^[^a-zA-Z0-9]+$', wordlabel) is not None:
+            print('pre', wordlabels)
+            print(idx)
+            del wordlabels[idx]
+            print('post', wordlabels)
+    return wordlabels
+
+w = ['i', '\'', 'm', ' ', 'not', 'going', '&', ]
+remove_noneword_from_wordlabels(w)
+
+
+
+from EventClassifier import EventClassifier
+ec = EventClassifier(10, 1e-3)
+print(ec.get_theta())
+ec.reserve_params('/home/nfs/cdong/tw/seeding/params.p')
+ec.restore_params('/home/nfs/cdong/tw/seeding/params.p')
+print(ec.get_theta())
+
+
+
+

@@ -7,8 +7,8 @@ def main(args):
     s = time.time()
     
     FileIterator.set_commands(args.unzip_cmd, args.pos_cmd, args.ner_cmd)
-    if args.unzip or args.all_op:
-        FileIterator.iterate_file_tree(args.path, FileIterator.unzip_files_in_path)
+    # if args.unzip or args.all_op:
+    #     FileIterator.iterate_file_tree(args.path, FileIterator.unzip_files_in_path)
     if args.summary or args.all_op:
         FileIterator.iterate_file_tree(args.path, FileIterator.summary_files_in_path, summary_path=args.summary_path)
     # if args.pre or args.all_op:

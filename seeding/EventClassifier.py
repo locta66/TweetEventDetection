@@ -3,8 +3,9 @@ import tensorflow as tf
 
 class EventClassifier:
     def __init__(self, vocab_size, learning_rate, unlbreg_lambda=0.2, l2reg_lambda=0.2):
-        self.thetaEW = tf.Variable(tf.random_normal([1, vocab_size], dtype=tf.float32))
-        self.thetaEb = tf.Variable(tf.random_normal([1], dtype=tf.float32))
+        self.thetaEW = tf.Variable(tf.random_normal([1, vocab_size], dtype=tf.float32), name='event_thetaEW')
+        self.thetaEb = tf.Variable(tf.random_normal([1], dtype=tf.float32), name='event_thetaEb')
+        self.params = [self.thetaEW, self.thetaEb]
         
         self.seedxe = tf.placeholder(tf.float32, [None, vocab_size])
         self.seedscore = tf.nn.xw_plus_b(self.seedxe, tf.transpose(self.thetaEW), self.thetaEb)
@@ -50,11 +51,19 @@ class EventClassifier:
         _, loss = self.sess.run([self.trainop, self.loss], feed_dict={self.unlbxe: unlbx, self.unlbye: unlby})
         return loss
     
-    def unlabel_predict(self, idfmtx, label):
-        return self.sess.run([self.unlbpred, self.unlbpredave], feed_dict={self.unlbxe: idfmtx, self.unlbye: label})
-    
     def predict(self, idfmtx):
         return self.sess.run([self.seedpred, self.seedloss], feed_dict={self.seedxe: idfmtx})
     
-    def get_value(self, attrofself):
-        return self.sess.run([attrofself])
+    def unlabel_predict(self, idfmtx, label):
+        return self.sess.run([self.unlbpred, self.unlbpredave], feed_dict={self.unlbxe: idfmtx, self.unlbye: label})
+    
+    def get_theta(self):
+        return self.sess.run(self.params)
+    
+    def reserve_params(self, file_name):
+        saver = tf.train.Saver(self.params)
+        saver.save(self.sess, file_name)
+    
+    def restore_params(self, file_name):
+        saver = tf.train.Saver(self.params)
+        saver.save(self.sess, file_name)
