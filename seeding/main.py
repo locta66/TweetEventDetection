@@ -9,10 +9,10 @@ def main(args):
     s = time.time()
     
     seed_parser = SeedParser([
-        [{'all_of': ['terror', 'attack', 'death']}, ['2016', '11', '01'], ['2016', '11', '30']],
+        [{'all_of': ['terror', 'attack']}, ['2016', '11', '01'], ['2016', '11', '30']],
     ], theme='Terrorist', description='Describes event of terrorist attack', is_seed=True)
     unlb_parser = SeedParser([
-        [{'any_of': ['terror', 'attack']}, ['2016', '11', '01'], ['2016', '11', '01']],
+        [{'all_of': ['terror', 'attack', 'death']}, ['2016', '11', '01'], ['2016', '11', '30']],
     ], theme='Terrorist', description='Event of terrorist attack', is_seed=False)
     
     if args.unlb:

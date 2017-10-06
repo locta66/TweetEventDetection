@@ -33,7 +33,7 @@ def append_slash_if_necessary(path):
 
 def make_dirs_if_not_exists(dir_name):
     if not type(dir_name) is str:
-        raise ValueError('Bot valid directory description token')
+        raise ValueError('Not valid directory description token')
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
 
@@ -58,12 +58,12 @@ def remove_file(file):
 def listchildren(directory, children_type='dir'):
     if children_type not in ['dir', 'file', 'all']:
         print('listchildren() : Incorrect children type')
-        return []
+        return list()
     directory = append_slash_if_necessary(directory)
     children = sorted(os.listdir(directory))
     if children_type == 'all':
         return children
-    res = []
+    res = list()
     for child in children:
         child_path = directory + child
         if not os.path.exists(child_path):
@@ -134,20 +134,11 @@ def summary_files_in_path(file_path, *args, **kwargs):
     summary_file = summary_path + summary_name + '.sum'
     remove_ymdh_from_path(summary_path, summary_name)
     subfiles = listchildren(file_path, children_type='file')
-    file_list = [(file_path + subfile) for subfile in subfiles]
     
-    process_num = 15
-    block_size = math.ceil(len(subfiles) / process_num)
-    pool = mp.Pool(processes=process_num)
-    res_getter = list()
-    for i in range(process_num):
-        res = pool.apply_async(func=summary_tweets_multi, args=(file_list[i*block_size: (i+1)*block_size], ))
-        res_getter.append(res)
-    pool.close()
-    pool.join()
-    twarr = list()
-    for i in range(process_num):
-        twarr.extend(res_getter[i].get())
+    file_list = split_into_multi_format([(file_path + subfile) for subfile in subfiles], process_num=15)
+    twarr_blocks = multi_process(summary_tweets_multi, [(file_list_slice, ) for file_list_slice in file_list])
+    twarr = merge_list(twarr_blocks)
+    
     dump_array(summary_file, twarr)
     print(summary_file, 'written')
     
@@ -261,6 +252,36 @@ def remove_ymdh_from_path(summary_path, ymdh_file_name):
 #         return True
 
 
+def merge_list(array):
+    res = list()
+    for ele in array:
+        res.extend(ele)
+    return res
+
+
+def split_into_multi_format(array, process_num):
+    block_size = math.ceil(len(array) / process_num)
+    formatted_array = list()
+    for i in range(process_num):
+        formatted_array.append(array[i * block_size: (i + 1) * block_size])
+    return formatted_array
+
+
+def multi_process(func, args_list):
+    process_num = len(args_list)
+    pool = mp.Pool(processes=process_num)
+    res_getter = list()
+    for i in range(process_num):
+        res = pool.apply_async(func=func, args=args_list[i])
+        res_getter.append(res)
+    pool.close()
+    pool.join()
+    results = list()
+    for i in range(process_num):
+        results.append(res_getter[i].get())
+    return results
+
+
 def dump_array(file, array, overwrite=True):
     if type(array) is not list:
         raise TypeError("Dict array not of valid type.")
@@ -270,7 +291,7 @@ def dump_array(file, array, overwrite=True):
 
 
 def load_array(file):
-    array = []
+    array = list()
     with open(file, 'r') as fp:
         for line in fp.readlines():
             array.append(json.loads(line.strip()))

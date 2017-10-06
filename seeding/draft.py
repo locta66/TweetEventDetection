@@ -332,4 +332,25 @@ print(ec.get_theta())
 
 
 
+class a:
+    def __init__(self, age):
+        self.age = age
+
+class b:
+    def __init__(self):
+        self.a = a(-1)
+
+from copy import deepcopy, copy
+b1 = b()
+b2 = deepcopy(b())
+b3 = copy(b1)
+
+b1.a.age = 0
+b2.a.age = 233
+b3.a.age = 999
+
+b1.a.age
+b2.a.age
+b3.a.age
+
 

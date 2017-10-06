@@ -7,11 +7,11 @@ def main(args):
     s = time.time()
     
     FileIterator.set_commands(args.unzip_cmd, args.pos_cmd, args.ner_cmd)
-    # if args.unzip or args.all_op:
+    # if args.unzip:
     #     FileIterator.iterate_file_tree(args.path, FileIterator.unzip_files_in_path)
     if args.summary or args.all_op:
         FileIterator.iterate_file_tree(args.path, FileIterator.summary_files_in_path, summary_path=args.summary_path)
-    # if args.pre or args.all_op:
+    # if args.pre:
     #     FileIterator.preprocess_summary(args.summary_path)
     
     print('time elapsed:', time.time() - s, 's')
@@ -19,8 +19,8 @@ def main(args):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Preprocess tw streaming data")
-    parser.add_argument('--all_op', action='store_true', default=False,
-                        help='If perform all the operations below')
+    # parser.add_argument('--all_op', action='store_true', default=False,
+    #                     help='If perform all the operations below')
     parser.add_argument('--path', nargs='?', default='/home/nfs/cdong/tw/data/',
                         help='Input tweet streaming data path of all months')
     parser.add_argument('--unzip', action='store_true', default=False,

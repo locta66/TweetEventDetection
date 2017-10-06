@@ -1,5 +1,3 @@
-import os
-
 import FileIterator
 from JsonParser import JsonParser
 from SeedQuery import SeedQuery
@@ -18,7 +16,7 @@ class SeedParser(JsonParser):
         self.description = description
         self.is_seed = is_seed
         
-        # self.query_list = query_list
+        self.query_list = query_list
         self.seed_query_list = [SeedQuery(*query) for query in query_list]
         self.tweet_desired_attrs.append('norm')
         
@@ -28,8 +26,8 @@ class SeedParser(JsonParser):
     def read_tweet_from_json_file(self, file, filtering=False):
         if not self.is_file_of_query_date(file):
             return
-        with open(file) as json_file:
-            for line in json_file.readlines():
+        with open(file) as fp:
+            for line in fp.readlines():
                 tw = self.parse_text(line, filtering=False)
                 tw = self.attribute_filter(tw, self.tweet_desired_attrs)
                 if 'user' in tw:
@@ -55,6 +53,9 @@ class SeedParser(JsonParser):
         self.base_path = FileIterator.append_slash_if_necessary(base_path)
         FileIterator.make_dirs_if_not_exists(self.get_base_path())
         FileIterator.make_dirs_if_not_exists(self.get_theme_path())
+        FileIterator.make_dirs_if_not_exists(self.get_queried_path())
+        FileIterator.make_dirs_if_not_exists(self.get_param_path())
+        FileIterator.make_dirs_if_not_exists(self.get_dict_path())
     
     def get_base_path(self):
         return self.base_path
@@ -63,34 +64,62 @@ class SeedParser(JsonParser):
         base_path = base_path if base_path else self.get_base_path()
         return FileIterator.append_slash_if_necessary(base_path + self.theme)
     
-    def get_query_result_file_name(self, base_path=None):
-        return self.get_theme_path(base_path) + self.theme + '%s.sum' % ('' if self.is_seed else '_unlabeled')
+    def get_queried_path(self):
+        return FileIterator.append_slash_if_necessary(self.get_theme_path() + 'queried')
     
-    def get_to_tag_file_name(self, base_path=None):
-        return self.get_theme_path(base_path) + self.theme + '%s.utg' % ('' if self.is_seed else '_unlabeled')
+    def get_param_path(self):
+        return FileIterator.append_slash_if_necessary(self.get_theme_path() + 'params')
     
-    def get_param_file_name(self, base_path=None):
-        return self.get_theme_path(base_path) + self.theme + '.param'
+    def get_dict_path(self):
+        return FileIterator.append_slash_if_necessary(self.get_theme_path() + 'dict')
+    
+    def get_query_result_file_name(self):
+        return self.get_queried_path() + self.theme + '%s.sum' % ('' if self.is_seed else '_unlabeled')
+    
+    def get_to_tag_file_name(self):
+        return self.get_queried_path() + self.theme + '%s.utg' % ('' if self.is_seed else '_unlabeled')
+    
+    def get_param_file_name(self):
+        return self.get_param_path() + self.theme + '.prm'
+    
+    def get_dict_file_name(self):
+        return self.get_param_path() + self.theme + '.dic'
 
 
-def query_tw_files_in_path(json_path, *args, **kwargs):
+def query_tw_file_multi(file_list, query_list, theme, description, is_seed):
+    parser = SeedParser(query_list, theme, description, is_seed)
+    for file in file_list:
+        parser.read_tweet_from_json_file(file)
+    return parser.added_twarr
+
+
+def query_tw_files_in_path_multi(json_path, *args, **kwargs):
     parser = kwargs['parser']
     subfiles = FileIterator.listchildren(json_path, children_type='file')
-    for subfile in subfiles:
-        if not subfile.endswith('.sum'):
-            continue
-        json_file = json_path + subfile
-        parser.read_tweet_from_json_file(json_file)
+    file_list = [(json_path + file_name) for file_name in subfiles if
+                 file_name.endswith('.sum') and parser.is_file_of_query_date(file_name)]
+    file_list = FileIterator.split_into_multi_format(file_list, process_num=16)
+    added_twarr_block = FileIterator.multi_process(query_tw_file_multi,
+        [(file_list_slice, parser.query_list, parser.theme,
+          parser.description, parser.is_seed, ) for file_list_slice in file_list])
+    parser.added_twarr.extend(FileIterator.merge_list(added_twarr_block))
+
+
+# def query_tw_files_in_path(json_path, *args, **kwargs):
+#     parser = kwargs['parser']
+#     subfiles = FileIterator.listchildren(json_path, children_type='file')
+#     for subfile in subfiles[0:72]:
+#         if not subfile.endswith('.sum'):
+#             continue
+#         json_file = json_path + subfile
+#         parser.read_tweet_from_json_file(json_file)
 
 
 def exec_query(data_path, parser):
     data_path = FileIterator.append_slash_if_necessary(data_path)
-    FileIterator.iterate_file_tree(data_path, query_tw_files_in_path, parser=parser)
-    theme_path = parser.get_theme_path()
-    if not os.path.exists(theme_path):
-        os.makedirs(theme_path)
-        print(parser.get_query_result_file_name())
-        print(len(parser.added_twarr))
+    FileIterator.iterate_file_tree(data_path, query_tw_files_in_path_multi, parser=parser)
+    print(parser.get_query_result_file_name(), 'written')
+    print('added_twarr num:', len(parser.added_twarr))
     FileIterator.dump_array(parser.get_query_result_file_name(), parser.added_twarr)
 
 
@@ -107,7 +136,7 @@ def exec_totag(parser):
     reset_tag_of_tw_file(parser.get_query_result_file_name())
     tw_file = parser.get_query_result_file_name()
     to_tag_file = parser.get_to_tag_file_name()
-    to_tag_dict = {}
+    to_tag_dict = dict()
     for tw in FileIterator.load_array(tw_file):
         to_tag_dict[tw['id']] = tw['norm']
     FileIterator.dump_array(to_tag_file, [parser.theme], overwrite=True)
@@ -135,7 +164,7 @@ def update_tw_arr_dict_from_tagged_file(tw_arr_dict, tagged_file):
 def update_tw_file_from_tag_in_path(tw_file, tagged_file_path, tagged_postfix='.tag',
                                     output_to_another_file=False, another_file='./deafult.sum'):
     tw_arr = FileIterator.load_array(tw_file)
-    tw_arr_dict = {}
+    tw_arr_dict = dict()
     for tw in tw_arr:
         tw_arr_dict[tw['id']] = tw
     subfiles = FileIterator.listchildren(tagged_file_path, children_type='file')
