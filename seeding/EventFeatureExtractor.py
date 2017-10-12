@@ -2,14 +2,13 @@ import re
 
 import FileIterator
 from NerServiceProxy import get_ner_service_pool
+import TweetKeys
 
 
 class EventFeatureExtractor:
-    key_wordlabels = 'pos'
-    
     def __init__(self):
-        self.seed_twarr = []
-        self.unlb_twarr = []
+        self.seed_twarr = list()
+        self.unlb_twarr = list()
     
     def start_ner_service(self, pool_size=8, classify=True, pos=True):
         get_ner_service_pool().start(pool_size, classify, pos)
@@ -17,12 +16,20 @@ class EventFeatureExtractor:
     def end_ner_service(self):
         get_ner_service_pool().end()
     
+    def load_seed_twarr(self, seed_tw_file):
+        seed_twarr = FileIterator.load_array(seed_tw_file)
+        for idx, tw in enumerate(seed_twarr):
+            if tw[TweetKeys.key_tagtimes] == 0 or tw[TweetKeys.key_ptagtime] <= tw[TweetKeys.key_ntagtime]:
+                del seed_twarr[idx]
+        self.seed_twarr = seed_twarr
+        # return seed_twarr
+    
     def perform_ner_on_tw_file(self, tw_file, output_to_another_file=False, another_file='./deafult.sum'):
         twarr = FileIterator.load_array(tw_file)
         if not twarr:
             print('No tweets read from file', tw_file)
             return twarr
-        if self.key_wordlabels in twarr[0]:
+        if TweetKeys.key_wordlabels in twarr[0]:
             print('Ner already done for', tw_file)
             return twarr
         twarr = self.twarr_ner(twarr)
@@ -38,7 +45,7 @@ class EventFeatureExtractor:
         for idx, ner_text in enumerate(ner_text_arr):
             wordlabels = self.parse_ner_text_into_wordlabels(ner_text)
             wordlabels = self.remove_noneword_from_wordlabels(wordlabels)
-            twarr[idx][self.key_wordlabels] = wordlabels
+            twarr[idx][TweetKeys.key_wordlabels] = wordlabels
         return twarr
     
     def parse_ner_text_into_wordlabels(self, ner_text):
@@ -149,7 +156,9 @@ class EventFeatureExtractor:
     #     #     print(e, test_twarr[i]['pos'])
     #     # print('test_loss', test_loss[1])
     
+    
     def load_twarr(self, seed_file, unlb_file):
+        
         self.start_ner_service()
         self.seed_twarr = self.perform_ner_on_tw_file(seed_file)
         self.unlb_twarr = self.perform_ner_on_tw_file(unlb_file)

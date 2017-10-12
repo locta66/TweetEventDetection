@@ -2,18 +2,26 @@ import __init__
 import argparse
 
 from SeedParser import *
+from Main2Parser import *
+
+# seed_parser = SeedParser([
+#     [{'all_of': ['terror', 'attack']}, ['2016', '11', '01'], ['2016', '11', '30']],
+# ], theme='Terrorist', description='Describes event of terrorist attack')
+seed_parser = SeedParser([
+    # [{'all_of': ['Paris', 'Tarek', 'Belgacem', 'police', 'station']}, ['2016', '01', '07'], ['2016', '01', '08']],
+    # [{'all_of': ['', '']}, ['2016', '', ''], ['2016', '', '']],
+    # [{'all_of': ['Mosul', 'civilian']}, ['2016', '10', '31'], ['2016', '11', '03']],
+    [{'all_of': ['Mogadishu', 'bomb']}, ['2016', '12', '11'], ['2016', '12', '12']],
+    # [{'all_of': ['Cairo', 'Coptic', 'explosion']}, ['2016', '12', '11'], ['2016', '12', '12']],
+], theme='Terrorist', description='Describes event of terrorist attack')
+unlb_parser = UnlbParser([
+    [{'all_of': ['terror', 'attack', 'death']}, ['2016', '11', '01'], ['2016', '11', '30']],
+], theme='Terrorist', description='Event of terrorist attack')
 
 
 def main(args):
     import time
     s = time.time()
-    
-    seed_parser = SeedParser([
-        [{'all_of': ['terror', 'attack']}, ['2016', '11', '01'], ['2016', '11', '30']],
-    ], theme='Terrorist', description='Describes event of terrorist attack', is_seed=True)
-    unlb_parser = SeedParser([
-        [{'all_of': ['terror', 'attack', 'death']}, ['2016', '11', '01'], ['2016', '11', '30']],
-    ], theme='Terrorist', description='Event of terrorist attack', is_seed=False)
     
     if args.unlb:
         args.totag = args.untag = False

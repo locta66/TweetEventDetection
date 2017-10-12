@@ -5,6 +5,7 @@ import bz2file
 
 from Pattern import get_pattern
 from TweetDict import TweetDict
+import TweetKeys
 
 
 class JsonParser:
@@ -48,16 +49,18 @@ class JsonParser:
             return tw_arr
     
     def tweet_filter(self, tw):
-        if not('text' in tw and tw['lang'] == 'en'):
+        if 'lang' not in tw or 'text' not in tw:
+            return None
+        if not tw['lang'] == 'en':
             return None
         tw_filtered = self.attribute_filter(tw, self.tweet_desired_attrs)
         if 'user' in tw_filtered:
             tw_filtered['user'] = self.attribute_filter(tw_filtered['user'], self.user_desired_attrs)
         if 'text' in tw_filtered:
+            tw_filtered[TweetKeys.key_origintext] = self.pattern.remove_non_ascii(tw_filtered['text'])
             normalized_text = self.pattern.normalization(tw_filtered['text'])
             if len(re.split('\s', normalized_text)) <= 3:
                 return None
-            tw_filtered['norm'] = normalized_text
             tw_filtered['text'] = self.sentence_filter(normalized_text)
         return tw_filtered
     
@@ -75,9 +78,6 @@ class JsonParser:
         for attr in list(target_dict.keys()):
             if attr not in attr_list:
                 target_dict.pop(attr)
-        # extracted_dict = {}
-        # for attr in attr_list:
-        #     extracted_dict[attr] = target_dict[attr]
         return target_dict
     
     @staticmethod

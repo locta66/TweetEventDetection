@@ -38,12 +38,9 @@ class EventClassifier:
     
     def train_steps(self, stepnum, seedx, unlbx, unlby):
         loss = 0
-        # prev_loss = 1e10
         for i in range(stepnum):
             loss = self.train_per_step(seedx, unlbx, unlby)
             print(i, 'th ,loss', loss)
-            # if prev_loss - loss < threshold:
-            #     break
         return loss
     
     def train_per_step(self, seedx, unlbx, unlby):

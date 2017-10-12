@@ -111,7 +111,6 @@ class Pattern(Singleton):
     
     def remove_non_ascii(self, text):
         return self.nonascii_pattern.sub(' ', text)
-        # return self.htmltrans_pattern.sub(' ', text)
     
     def remove_redundant_spaces(self, text):
         return self.redundant_space_pattern.sub(' ', text).strip(' ')

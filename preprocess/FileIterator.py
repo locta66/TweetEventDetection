@@ -268,6 +268,12 @@ def split_into_multi_format(array, process_num):
 
 
 def multi_process(func, args_list):
+    """
+    Do func in multiprocess way.
+    :param func: To be executed within every
+    :param args_list:
+    :return:
+    """
     process_num = len(args_list)
     pool = mp.Pool(processes=process_num)
     res_getter = list()
@@ -282,12 +288,12 @@ def multi_process(func, args_list):
     return results
 
 
-def dump_array(file, array, overwrite=True):
+def dump_array(file, array, overwrite=True, sort_keys=False):
     if type(array) is not list:
         raise TypeError("Dict array not of valid type.")
     with open(file, 'w' if overwrite else 'a') as fp:
         for element in array:
-            fp.write(json.dumps(element) + '\n')
+            fp.write(json.dumps(element, sort_keys=sort_keys) + '\n')
 
 
 def load_array(file):
@@ -301,12 +307,12 @@ def load_array(file):
 # If you wish to customize the ymdh of summary & pre-process procedure, judge the ymdh of a file here
 def is_target_ymdh(ymdh_arr):
     # ymdh_arr resembles ['201X', '0X', '2X', '1X']
-    # year = int(ymdh_arr[0])
-    # month = int(ymdh_arr[1])
-    # date = int(ymdh_arr[2])
-    # hour = int(ymdh_arr[3])
+    year = int(ymdh_arr[0])
+    month = int(ymdh_arr[1])
+    date = int(ymdh_arr[2])
+    hour = int(ymdh_arr[3])
     return True
     # import datetime
     # tw_time = datetime.datetime.strptime('-'.join(ymdh_arr[0:3]), '%Y-%m-%d')
-    # start_time = datetime.datetime.strptime('2016-11-08', '%Y-%m-%d')
+    # start_time = datetime.datetime.strptime('2016-12-01', '%Y-%m-%d')
     # return (tw_time - start_time).days >= 0

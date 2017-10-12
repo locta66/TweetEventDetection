@@ -77,8 +77,8 @@
 # segment('I\'m')
 #
 #
-# from nltk.corpus import stopwords
-# english_stops = set(stopwords.words('english'))
+from nltk.corpus import stopwords
+english_stops = set(stopwords.words('english'))
 #
 #
 # from TweetDict import TweetDict
@@ -345,6 +345,7 @@ b1 = b()
 b2 = deepcopy(b())
 b3 = copy(b1)
 
+
 b1.a.age = 0
 b2.a.age = 233
 b3.a.age = 999
@@ -352,5 +353,89 @@ b3.a.age = 999
 b1.a.age
 b2.a.age
 b3.a.age
+
+from EventFeatureExtractor import EventFeatureExtractor
+e = EventFeatureExtractor()
+e.__name__
+
+
+class AA:
+    def __init__(self, age):
+        self.age = age
+
+a = AA(233)
+b=a.__class__(555)
+b.age
+
+
+import multiprocessing as mp
+def f(a, b):
+    return a+b
+
+
+d
+parma = [(1,2), (3,4), (5,6), (6,7), (9,1), (2,4), (5,2), (3,7)]
+
+
+process_num = 8
+pool = mp.Pool(processes=process_num)
+res_getter = []
+for i in range(process_num):
+    res = pool.apply_async(func=f, args=parma[i])
+    res_getter.append(res)
+
+pool.close()
+pool.join()
+results = []
+for i in range(process_num):
+    results.append(res_getter[i].get())
+
+results
+
+
+
+
+
+
+import tensorflow as tf
+import numpy as np
+from EventClassifier import EventClassifier
+
+ec = EventClassifier(100, 0)
+ec.restore_params('./what.prams')
+print(ec.predict(np.random.random([1,100])))
+
+ec2 = EventClassifier(1, 0)
+ec2.restore_params('./what.prams')
+print(ec2.predict(np.random.random([1,100])))
+
+
+
+import Levenshtein
+import __init__
+import TweetKeys
+def remove_similar_tws(twarr, sim_threashold=0):
+    tw_id_cpy = sorted([(idx, tw) for idx, tw in enumerate(twarr)], key=lambda item: item[1][TweetKeys.key_cleantext])
+    prev = 0
+    remove_ids = list()
+    for cur in range(1, len(tw_id_cpy)):
+        if Levenshtein.distance(tw_id_cpy[prev][1][TweetKeys.key_cleantext],
+                                tw_id_cpy[cur][1][TweetKeys.key_cleantext]) < 5:
+            remove_ids.append(tw_id_cpy[cur][0])
+        else:
+            prev = cur
+    for idx in sorted(remove_ids, reverse=True):
+        del twarr[idx]
+    return twarr
+
+
+# remove_similar_tws([{'text':'asdfg'}, {'text':'asdfg'}, {'text':'asdfg'}, {'text':'asdfg'},{'text':'wueigf'}, ])
+
+import Levenshtein
+Levenshtein.distance("Burns to the bone White phosphorus used in #Mosul may cause civilian suffering #Amnesty Int'l",
+                     "RT com Burns to the bone White phosphorus used in #Mosul may cause civilian suffering #Amnesty Int'l")
+
+
+
 
 
