@@ -7,3 +7,5 @@ key_wordlabels = 'pos'
 key_ptagtime = 'ptt'
 key_ntagtime = 'ntt'
 key_tagtimes = 'ttms'
+
+key_idf = 'idf'

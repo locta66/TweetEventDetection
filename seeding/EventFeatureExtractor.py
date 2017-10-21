@@ -1,14 +1,21 @@
 import re
 
+import ArrayUtils
+import TweetKeys
 import FileIterator
 from NerServiceProxy import get_ner_service_pool
-import TweetKeys
+from EventClassifier import EventClassifier
+from WordFreqCounter import WordFreqCounter
+
+import numpy as np
 
 
 class EventFeatureExtractor:
     def __init__(self):
-        self.seed_twarr = list()
-        self.unlb_twarr = list()
+        self.seed_twarr = self.unlb_twarr = self.cntr_twarr = None
+        self.seed_train = self.seed_validate = self.seed_test = None
+        self.cntr_train = self.cntr_validate = self.cntr_test = None
+        self.event_classifier = None
     
     def start_ner_service(self, pool_size=8, classify=True, pos=True):
         get_ner_service_pool().start(pool_size, classify, pos)
@@ -18,20 +25,109 @@ class EventFeatureExtractor:
     
     def load_seed_twarr(self, seed_tw_file):
         seed_twarr = FileIterator.load_array(seed_tw_file)
-        for idx, tw in enumerate(seed_twarr):
-            if tw[TweetKeys.key_tagtimes] == 0 or tw[TweetKeys.key_ptagtime] <= tw[TweetKeys.key_ntagtime]:
-                del seed_twarr[idx]
+        # for i in range(len(seed_twarr)-1, -1, -1):
+        #     tw = seed_twarr[i]
+        #     if tw[TweetKeys.key_tagtimes] == 0 or tw[TweetKeys.key_ptagtime] <= tw[TweetKeys.key_ntagtime]:
+        #         del seed_twarr[i]
         self.seed_twarr = seed_twarr
-        # return seed_twarr
+        return seed_twarr
+    
+    def load_unlb_twarr(self, unlb_tw_file):
+        self.unlb_twarr = FileIterator.load_array(unlb_tw_file)
+        return self.unlb_twarr
+    
+    def load_cntr_twarr(self, cntr_tw_file):
+        self.cntr_twarr = FileIterator.load_array(cntr_tw_file)
+        return self.cntr_twarr
+    
+    def split_seed_twarr(self, part_arr=(7, 3)):
+        self.seed_train, self.seed_test = ArrayUtils.array_partition(self.seed_twarr, part_arr)
+    
+    def split_cntr_twarr(self, part_arr=(7, 3)):
+        self.cntr_train, self.cntr_test = ArrayUtils.array_partition(self.cntr_twarr, part_arr)
+    
+    def train_and_test(self, localcounter, global_counter):
+        self.split_seed_twarr()
+        self.split_cntr_twarr()
+        
+        for sort_exponent in range(5, 8):
+            auc_sum = 0
+            for i in range(5):
+                l, e, auc = self.train_and_test_epoch_for_exponent(sort_exponent)
+                auc_sum += auc
+            print('mean auc:', auc_sum / 5)
+            #     epoch_vector += np.array([np.mean(rtl), np.mean(rcl), np.mean(tl), np.mean(cl)], dtype=np.float32)
+            # epoch_vector /= 1
+            # print('\nexponent', sort_exponent, 're_test_loss ave', epoch_vector[0],
+            #       're_cntr_loss ave', epoch_vector[1], 'test_loss ave, ', epoch_vector[2],
+            #       'cntr_loss ave, ', epoch_vector[3], '\n--------------------\n')
+            
+            # for idx, predict in enumerate(test_loss[0]):
+            #     if predict < 0.5:
+            #         print('se', self.seed_train[idx][TweetKeys.key_cleantext])
+            # print('\n--------------------------\n')
+            # for idx, predict in enumerate(cntr_loss[0]):
+            #     if predict > 0.5:
+            #         print('cn', self.cntr_train[idx][TweetKeys.key_cleantext])
+        return localcounter, self.event_classifier
+    
+    def train_and_test_epoch_for_exponent(self, exponent):
+        localcounter = WordFreqCounter()
+        
+        localcounter.expand_from_wordlabel_array([tw[TweetKeys.key_wordlabels] for tw in self.seed_train])
+        localcounter.expand_from_wordlabel_array([tw[TweetKeys.key_wordlabels] for tw in self.cntr_train])
+        print('\npre vocabulary', localcounter.vocabulary_size(), end=',')
+        localcounter.reserve_word_by_idf_threshold(rsv_cond=lambda idf: idf < exponent)
+        print(' post vocabulary', localcounter.vocabulary_size())
+        
+        event_classifier = EventClassifier(vocab_size=localcounter.vocabulary_size(), learning_rate=5e-1,
+                                           unlbreg_lambda=0.2, l2reg_lambda=0.1)
+        
+        seed_train_mtx = self.feature_matrix_of_twarr(self.seed_train, localcounter)
+        cntr_train_mtx = self.feature_matrix_of_twarr(self.cntr_train, localcounter)
+        seed_train_lbl = np.array([[1.0]] * len(self.seed_train), dtype=np.float32)
+        cntr_train_lbl = np.array([[0.0]] * len(self.cntr_train), dtype=np.float32)
+        train_mtx = np.concatenate((seed_train_mtx, cntr_train_mtx), axis=0)
+        train_lbl = np.concatenate((seed_train_lbl, cntr_train_lbl), axis=0)
+        # print('seed instance:', len(self.seed_train), 'cntr instance:', len(self.cntr_train))
+        event_classifier.train_steps(1200, train_mtx, train_lbl, None, None, print_loss=False)
+        
+        seed_test_mtx = self.feature_matrix_of_twarr(self.seed_test, localcounter)
+        cntr_test_mtx = self.feature_matrix_of_twarr(self.cntr_test, localcounter)
+        # re_test_loss = event_classifier.test(seed_train_mtx, [[1.0]] * len(seed_train_mtx))
+        # re_cntr_loss = event_classifier.test(cntr_train_mtx, [[0.0]] * len(cntr_train_mtx))
+        test_res = event_classifier.test(seed_test_mtx, [[1.0]] * len(seed_test_mtx))
+        cntr_res = event_classifier.test(cntr_test_mtx, [[0.0]] * len(cntr_test_mtx))
+        # print('seed test:', len(self.seed_test), 'cntr test:', len(self.cntr_test))
+        
+        scoreidx = 0
+        probidx = 1
+        lossidx = 2
+        
+        score_label_pairs = list()
+        for score in test_res[scoreidx]:
+            score_label_pairs.append([score[0], 1])
+        for score in cntr_res[scoreidx]:
+            score_label_pairs.append([score[0], 0])
+        auc = ArrayUtils.roc_auc(score_label_pairs)
+        print('auc', auc)
+        return localcounter, event_classifier, auc
+    
+    def feature_matrix_of_twarr(self, twarr, wordfreqcounter):
+        mtx = list()
+        for tw in twarr:
+            idfvec, added, num_entity = wordfreqcounter.wordlabel_vector(tw[TweetKeys.key_wordlabels])
+            mtx.append(idfvec * np.log(len(added) + 2) * np.log(num_entity + 2))
+        return np.array(mtx)
     
     def perform_ner_on_tw_file(self, tw_file, output_to_another_file=False, another_file='./deafult.sum'):
         twarr = FileIterator.load_array(tw_file)
         if not twarr:
             print('No tweets read from file', tw_file)
             return twarr
-        if TweetKeys.key_wordlabels in twarr[0]:
-            print('Ner already done for', tw_file)
-            return twarr
+        # elif TweetKeys.key_wordlabels in twarr[0]:
+        #     print('Ner already done for', tw_file)
+        #     return twarr
         twarr = self.twarr_ner(twarr)
         output_file = another_file if output_to_another_file else tw_file
         FileIterator.dump_array(output_file, twarr)
@@ -84,82 +180,5 @@ class EventFeatureExtractor:
             if re.search('^[^a-zA-Z0-9]+$', wordlabel[0]) is not None:
                 del wordlabels[idx]
         return wordlabels
-    
-    # def sort_idf_of_added_tweet(self, localidfthreashold=0.0, globalidfthreashold=0.0):
-    #     localcounter = self.localcounter
-    #     globalcounter = self.globalcounter
-    #     print('added docs', len(self.added_twarr))
-    #     for tw in self.twarr_ner(self.added_twarr):
-    #         localcounter.expand_dict_and_count_df_from_wordlabels(tw['pos'])
-    #     print('not added docs', len(self.not_added_twarr))
-    #     for tw in self.twarr_ner(self.not_added_twarr):
-    #         globalcounter.expand_dict_and_count_df_from_wordlabels(tw['pos'])
-    #
-    #     print('pre vocabulary', localcounter.vocabulary_size())
-    #     localcounter.reserve_word_by_idf_threshold(rsv_cond=lambda idf: idf < localidfthreashold)
-    #     print('mid vocabulary', localcounter.vocabulary_size())
-    #     globalcounter.reserve_word_by_idf_threshold(rsv_cond=lambda idf: idf < globalidfthreashold)
-    #     local_global_common = set(localcounter.vocabulary()).intersection(set(globalcounter.vocabulary()))
-    #     localcounter.remove_words(list(local_global_common), updateid=True)
-    #     print('post vocabulary', localcounter.vocabulary_size())
-    #     print('common word', local_global_common)
-    #
-    #     # print('\n')
-    #     # for i in range(400):
-    #     #     print(self.added_twarr[i]['text'])
-    #     #     wordlabels = self.added_twarr[i]['pos']
-    #     #     v = localcounter.idf_vector_of_wordlabels(wordlabels)
-    #     #     for word in [wordlabel[0].lower() for wordlabel in wordlabels]:
-    #     #         if not localcounter.is_word_in_dict(word):
-    #     #             continue
-    #     #         wordid = localcounter.word_id(word)
-    #     #         print(word, '\t\t', localcounter.twdict.worddict[word]['idf'], '\t\t', v[wordid])
-    #     #     print('\n')
-    #
-    #     print('start train')
-    #     classifier = EventClassifier(vocab_size=localcounter.vocabulary_size(), learning_rate=2e-2,
-    #                                  unlbreg_lambda=0.2, l2reg_lambda=0.1)
-    #     print('train len', int(len(self.added_twarr) * 8 / 10))
-    #     train_twarr = self.added_twarr[int(len(self.added_twarr) * 8 / 10):]
-    #     train_idf_mtx = []
-    #     for tw in train_twarr:
-    #         idfvec, added = localcounter.idf_vector_of_wordlabels(tw['pos'])
-    #         train_idf_mtx.append(idfvec * np.log(len(added) + 2))
-    #     import time
-    #     s = time.time()
-    #     classifier.train_steps(500, 1e-5, None, train_idf_mtx, unlby=[[0.2]])
-    #     print('training time ', time.time()-s, 's')
-    #
-    #     print(classifier.get_value(classifier.thetaEb))
-    #     # print(classifier.get_value(classifier.thetaEW))
-    #
-    #     test_twarr = self.added_twarr[0: int(len(self.added_twarr) * 95 / 100)]
-    #     test_idf_mtx = []
-    #     for tw in test_twarr:
-    #         idfvec, added = localcounter.idf_vector_of_wordlabels(tw['pos'])
-    #         test_idf_mtx.append(idfvec * np.log(len(added) + 2))
-    #     test_loss = classifier.predict(test_idf_mtx)
-    #     print('predictions:')
-    #     for i, e in enumerate(test_loss[0]):
-    #         print(e, test_twarr[i]['text'], localcounter.idf_vector_of_wordlabels(test_twarr[i]['pos'])[1], '\n')
-    #     print('test_loss', test_loss[1])
-    #     print('mean:', np.mean(test_loss[0]), 'var:', np.var(test_loss[0]))
-    #
-    #     # test_twarr = self.not_added_twarr[int(len(self.not_added_twarr) * 98 / 100):]
-    #     # test_idf_mtx = []
-    #     # for tw in test_twarr:
-    #     #     idfvec, added = localcounter.idf_vector_of_wordlabels(tw['pos'])
-    #     #     test_idf_mtx.append(idfvec * np.log(len(added)))
-    #     # test_loss = classifier.predict(test_idf_mtx)
-    #     # print('\n\n\npredictions:')
-    #     # for i, e in enumerate(test_loss[0]):
-    #     #     print(e, test_twarr[i]['pos'])
-    #     # print('test_loss', test_loss[1])
-    
-    
-    def load_twarr(self, seed_file, unlb_file):
-        
-        self.start_ner_service()
-        self.seed_twarr = self.perform_ner_on_tw_file(seed_file)
-        self.unlb_twarr = self.perform_ner_on_tw_file(unlb_file)
-        self.end_ner_service()
+
+

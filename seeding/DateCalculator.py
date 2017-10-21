@@ -31,7 +31,7 @@ class DateCalculator:
         if end_ymdh is not []:
             de = datetime.datetime.strptime('-'.join(self.normalize_ymdh(end_ymdh)), '%Y-%m-%d')
         if ds and de and (ds - de).days > 0:
-            return False
+            raise ValueError('Ending date earlier than beginning date.')
         is_t_lt_s = (dt - ds).days >= 0 if ds else True
         is_e_lt_t = (de - dt).days >= 0 if de else True
         return is_t_lt_s and is_e_lt_t

@@ -59,7 +59,7 @@ class SeedQuery:
         for w2 in self.none:
             if re.search(w2, text, re.IGNORECASE):
                 return False
-        if (self.all is not []) or (self.none is not []):
+        if not self.any:
             return True
         # complementary pass, then additional
         for w3 in self.any:

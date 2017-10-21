@@ -137,6 +137,7 @@ class DaemonProcess:
     close = 'close'
     exec = 'exec'
     exit = 'exit'
+    success = 'success'
     
     def __init__(self, func):
         """
@@ -162,9 +163,23 @@ class DaemonProcess:
         self.inq.put(DaemonProcess.open)
         self.inq.put(str(classify))
         self.inq.put(str(pos))
+        # if self.outq.get() == DaemonProcess.success:
+        #     return
+        # else:
+        #     raise ValueError('Service open failed.')
     
     def close_ner_service(self):
         self.inq.put(DaemonProcess.close)
+        # if self.outq.get() == DaemonProcess.success:
+        #     return
+        # else:
+        #     raise ValueError('Service close failed.')
+    
+    def wait_for_daemon(self):
+        if self.outq.get() == DaemonProcess.success:
+            return
+        else:
+            raise ValueError('Service failed.')
     
     def set_text_arr(self, textarr):
         self.inq.put(DaemonProcess.exec)
@@ -191,13 +206,17 @@ class NerServicePool:
             daeprocess.start()
             daeprocess.open_ner_service(classify, pos)
             self.dae_pool.append(daeprocess)
+        for daeprocess in self.dae_pool:
+            daeprocess.wait_for_daemon()
         self.service_on = True
     
     def end(self):
         if not self.service_on:
             return
         for daeprocess in self.dae_pool:
-            daeprocess.end()
+            daeprocess.close_ner_service()
+        for daeprocess in self.dae_pool:
+            daeprocess.wait_for_daemon()
         self.service_on = False
     
     def execute_ner_multiple(self, textarr):
@@ -220,13 +239,16 @@ def ner_service_daemon(inq, outq):
             classify = bool(inq.get())
             pos = bool(inq.get())
             ner_service.open_ner_service(classify=classify, pos=pos)
+            outq.put(DaemonProcess.success)
         if command == DaemonProcess.close:
             ner_service.close_ner_service()
+            outq.put(DaemonProcess.success)
         if command == DaemonProcess.exec:
             textarr = inq.get()
-            resarr = []
-            for text in textarr:
-                resarr.append(ner_service.execute_ner(text))
+            resarr = [ner_service.execute_ner(text) for text in textarr]
+            # resarr = []
+            # for text in textarr:
+            #     resarr.append(ner_service.execute_ner(text))
             # resarr = ner_service.execute_ner_array(textarr)
             outq.put(resarr)
         if command == DaemonProcess.exit:

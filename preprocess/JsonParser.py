@@ -4,7 +4,7 @@ import json
 import bz2file
 
 from Pattern import get_pattern
-from TweetDict import TweetDict
+from MyDict import MyDict
 import TweetKeys
 
 
@@ -15,18 +15,18 @@ class JsonParser:
         self.user_desired_attrs = ['id', 'time_zone', 'location', 'followers_count',
                                    'friends_count', 'listed_count', 'statuses_count']
         self.pattern = get_pattern()
-        self.twdict = TweetDict()
+        self.mydict = MyDict()
     
     def parse_text(self, text, filtering):
-        json_obj = json.loads(text)
-        if filtering:
-            return self.tweet_filter(json_obj)
-        else:
-            return json_obj
+        try:
+            json_obj = json.loads(text)
+        except:
+            return None
+        return self.tweet_filter(json_obj) if filtering else json_obj
     
     def read_tweet_from_bz2_file(self, file, filtering=True):
         fp = bz2file.open(file, 'r')
-        tw_arr = []
+        tw_arr = list()
         for line in fp.readlines():
             line = line.decode('utf8')
             tw = self.parse_text(line, filtering)
@@ -53,16 +53,16 @@ class JsonParser:
             return None
         if not tw['lang'] == 'en':
             return None
-        tw_filtered = self.attribute_filter(tw, self.tweet_desired_attrs)
-        if 'user' in tw_filtered:
-            tw_filtered['user'] = self.attribute_filter(tw_filtered['user'], self.user_desired_attrs)
-        if 'text' in tw_filtered:
-            tw_filtered[TweetKeys.key_origintext] = self.pattern.remove_non_ascii(tw_filtered['text'])
-            normalized_text = self.pattern.normalization(tw_filtered['text'])
-            if len(re.split('\s', normalized_text)) <= 3:
+        tw = self.attribute_filter(tw, self.tweet_desired_attrs)
+        if 'user' in tw:
+            tw['user'] = self.attribute_filter(tw['user'], self.user_desired_attrs)
+        if 'text' in tw:
+            tw[TweetKeys.key_origintext] = tw['text']
+            normalized_text = self.pattern.normalization(tw['text'])
+            if len(re.split('[\s,.!?]', normalized_text)) <= 6:
                 return None
-            tw_filtered['text'] = self.sentence_filter(normalized_text)
-        return tw_filtered
+            tw['text'] = self.sentence_filter(normalized_text)
+        return tw
     
     def sentence_filter(self, text):
         sentences = re.split('[.?!]', text)
@@ -70,7 +70,7 @@ class JsonParser:
         for sentence in sentences:
             if sentence is '':
                 continue
-            sentence_seg = self.twdict.text_regularization(sentence, seglen=12)
+            sentence_seg = self.mydict.text_regularization(sentence, seglen=12)
             res.append(' '.join(sentence_seg))
         return ' . '.join(res)
     

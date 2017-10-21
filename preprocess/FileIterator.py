@@ -139,7 +139,12 @@ def summary_files_in_path(file_path, *args, **kwargs):
     twarr_blocks = multi_process(summary_tweets_multi, [(file_list_slice, ) for file_list_slice in file_list])
     twarr = merge_list(twarr_blocks)
     
-    dump_array(summary_file, twarr)
+    # twarr = list()
+    # for file in subfiles:
+    #     twarr.extend(summary_tweets(file))
+    
+    if twarr:
+        dump_array(summary_file, twarr)
     print(summary_file, 'written')
     
 
@@ -147,18 +152,19 @@ def summary_tweets_multi(file_list):
     j_parser = JsonParser()
     twarr = list()
     for file in file_list:
+        if not file.endswith(".bz2"):
+            continue
         twarr.extend(j_parser.read_tweet_from_bz2_file(file))
     return twarr
 
 
-# def summary_tweets(file, summary_file):
-#     j_parser = JsonParser()
-#     if not file.endswith(".bz2"):
-#         return False
-#     tw_arr = j_parser.read_tweet_from_bz2_file(file)
-#     dump_array(summary_file, tw_arr, overwrite=False)
-#     print(file, 'read')
-#     return True
+def summary_tweets(file, summary_file=''):
+    j_parser = JsonParser()
+    if not file.endswith(".bz2"):
+        return list()
+    tw_arr = j_parser.read_tweet_from_bz2_file(file)
+    # dump_array(summary_file, tw_arr, overwrite=False)
+    return tw_arr
 
 
 def remove_ymdh_from_path(summary_path, ymdh_file_name):
@@ -311,8 +317,9 @@ def is_target_ymdh(ymdh_arr):
     month = int(ymdh_arr[1])
     date = int(ymdh_arr[2])
     hour = int(ymdh_arr[3])
-    return True
-    # import datetime
-    # tw_time = datetime.datetime.strptime('-'.join(ymdh_arr[0:3]), '%Y-%m-%d')
-    # start_time = datetime.datetime.strptime('2016-12-01', '%Y-%m-%d')
-    # return (tw_time - start_time).days >= 0
+    # return True
+    # return month <= 4
+    import datetime
+    tw_time = datetime.datetime.strptime('-'.join(ymdh_arr[0:3]), '%Y-%m-%d')
+    start_time = datetime.datetime.strptime('2016-06-08', '%Y-%m-%d')
+    return (tw_time - start_time).days >= 0

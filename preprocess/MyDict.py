@@ -1,14 +1,15 @@
 import re
 import json
+import FileIterator
 from Pattern import get_pattern, PatternHolder
 
 from wordsegment import segment
 
 
-class TweetDict:
+class MyDict:
     def __init__(self):
-        self.idordered = False
-        self.worddict = dict()
+        # self.idordered = False
+        self.dictionary = dict()
         self.clear_dict()
         self.reg_list = [('^[^A-Za-z0-9]+$', ''), ('^\W*', ''), ('\W*$', ''), ("'[sS]?\W*$", ''),
                          ('(.+?)\\1{3,}', '\\1'), ('^(.+?)\\1{3,}$', ''), ]
@@ -23,26 +24,26 @@ class TweetDict:
         self.contraction_patterns = PatternHolder(self.contraction_list, capignore=True)
     
     def clear_dict(self):
-        if self.worddict is not None:
-            self.worddict.clear()
-        self.idordered = False
+        if self.dictionary is not None:
+            self.dictionary.clear()
+        # self.idordered = False
     
     def reset_ids(self):
-        for idx, word in enumerate(sorted(self.worddict.keys())):
-            self.worddict[word]['id'] = idx
-        self.idordered = True
+        for idx, word in enumerate(sorted(self.dictionary.keys())):
+            self.dictionary[word]['id'] = idx
+        # self.idordered = True
     
     def is_word_in_dict(self, word):
-        return word in self.worddict
+        return word in self.dictionary
     
     def word_2_id(self, word):
-        return self.worddict[word]['id'] if self.is_word_in_dict(word) else None
+        return self.dictionary[word]['id'] if self.is_word_in_dict(word) else None
     
     def vocabulary(self):
-        return sorted(self.worddict.keys())
+        return sorted(self.dictionary.keys())
     
     def vocabulary_size(self):
-        return len(self.worddict.keys())
+        return len(self.dictionary.keys())
     
     def remove_words(self, words, updateid=False):
         for word in words:
@@ -52,14 +53,14 @@ class TweetDict:
     
     def remove_word(self, word):
         if self.is_word_in_dict(word):
-            self.worddict.pop(word)
-        self.idordered = False
+            self.dictionary.pop(word)
+        # self.idordered = False
     
     def expand_dict_from_word(self, word):
         if not word:
             return
         if not self.is_word_in_dict(word):
-            self.worddict[word] = dict()
+            self.dictionary[word] = dict()
     
     def text_regularization(self, text, removeht=False, seglen=16):
         modified_text = text.strip()
@@ -78,3 +79,9 @@ class TweetDict:
             else:
                 text_seg.append(word.strip())
         return text_seg
+    
+    def dump_worddict(self, dict_file, overwrite=False):
+        FileIterator.dump_array(dict_file, [self.dictionary], overwrite, sort_keys=True)
+    
+    def load_worddict(self, dict_file):
+        self.dictionary = FileIterator.load_array(dict_file)[0]

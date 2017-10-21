@@ -73,15 +73,64 @@ class SeedParser(JsonParser):
         return self.get_param_path() + self.theme + '.prm'
     
     def get_dict_file_name(self):
-        return self.get_param_path() + self.theme + '.dic'
+        return self.get_dict_path() + self.theme + '.dic'
 
 
 class UnlbParser(SeedParser):
     def __init__(self, query_list, theme, description):
         SeedParser.__init__(self, query_list, theme, description)
+
+    def read_tweet_from_json_file(self, file, filtering=False):
+        if not self.is_file_of_query_date(file):
+            return
+        for tw in FileIterator.load_array(file):
+            tw = self.attribute_filter(tw, self.tweet_desired_attrs)
+            if 'user' in tw:
+                tw['user'] = self.attribute_filter(tw['user'], self.user_desired_attrs)
+            tw_added = False
+            for seed_query in self.seed_query_list:
+                tw_added = seed_query.append_desired_tweet(tw, usingtwtime=False) or tw_added
+            if tw_added:
+                if tw['id'] in self.added_ids:
+                    continue
+                else:
+                    self.added_ids[tw['id']] = True
+                self.added_twarr.append(tw)
+                if len(self.added_twarr) > 200:
+                    return
     
     def get_query_result_file_name(self):
         return self.get_queried_path() + self.theme + '_unlabeled.sum'
-
+    
     def get_to_tag_file_name(self):
-        return self.get_queried_path() + self.theme + '_unlabeled.utg'
+        raise ValueError('Unimplemented yet')
+
+
+class CounterParser(SeedParser):
+    def __init__(self, query_list, theme, description):
+        SeedParser.__init__(self, query_list, theme, description)
+    
+    def read_tweet_from_json_file(self, file, filtering=False):
+        if not self.is_file_of_query_date(file):
+            return
+        for tw in FileIterator.load_array(file):
+            tw = self.attribute_filter(tw, self.tweet_desired_attrs)
+            if 'user' in tw:
+                tw['user'] = self.attribute_filter(tw['user'], self.user_desired_attrs)
+            tw_added = False
+            for seed_query in self.seed_query_list:
+                tw_added = seed_query.append_desired_tweet(tw, usingtwtime=False) or tw_added
+            if tw_added:
+                if tw['id'] in self.added_ids:
+                    continue
+                else:
+                    self.added_ids[tw['id']] = True
+                self.added_twarr.append(tw)
+                if len(self.added_twarr) > 200:
+                    return
+    
+    def get_query_result_file_name(self):
+        return self.get_queried_path() + self.theme + '_counter.sum'
+    
+    def get_to_tag_file_name(self):
+        raise ValueError('Unimplemented yet')

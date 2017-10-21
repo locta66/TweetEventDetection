@@ -18,12 +18,12 @@ class Clusterer:
         self.freqcounter.load_worddict(dict_file)
     
     def load_classifier_model(self, model_file):
-        self.classifier = EventClassifier(vocab_size=self.freqcounter.vocabulary_size(), learning_rate=0)
-        self.classifier.restore_params(model_file)
+        self.classifier = EventClassifier(vocab_size=self.freqcounter.s(), learning_rate=0)
+        self.classifier.save_params(model_file)
     
     def validate_model_dimension(self):
         try:
-            self.classifier.predict(np.random.random([1, self.freqcounter.vocabulary_size()]))
+            self.classifier.predict(np.random.random([1, self.freqcounter.s()]))
         except:
             print('Model dimension does not match that of the dict.')
     
