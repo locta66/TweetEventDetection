@@ -1,3 +1,4 @@
+from FunctionUtils import slash_appender, uid_by_random
 import FileIterator
 from JsonParser import JsonParser
 from SeedQuery import SeedQuery
@@ -48,26 +49,31 @@ class SeedParser(JsonParser):
                      self.get_param_path(), self.get_dict_path()]:
             FileIterator.make_dirs_if_not_exists(path)
     
+    @slash_appender
     def get_base_path(self):
         return self.base_path
     
+    @slash_appender
     def get_theme_path(self):
-        return FileIterator.append_slash_if_necessary(self.get_base_path() + self.theme)
+        return self.get_base_path() + self.theme
     
+    @slash_appender
     def get_queried_path(self):
-        return FileIterator.append_slash_if_necessary(self.get_theme_path() + 'queried')
+        return self.get_theme_path() + 'queried'
     
+    @slash_appender
     def get_param_path(self):
-        return FileIterator.append_slash_if_necessary(self.get_theme_path() + 'params')
+        return self.get_theme_path() + 'params'
     
+    @slash_appender
     def get_dict_path(self):
-        return FileIterator.append_slash_if_necessary(self.get_theme_path() + 'dict')
+        return self.get_theme_path() + 'dict'
     
     def get_query_result_file_name(self):
         return self.get_queried_path() + self.theme + '.sum'
     
     def get_to_tag_file_name(self):
-        return self.get_queried_path() + self.theme + '.utg'
+        raise ValueError('Unimplemented yet')
     
     def get_param_file_name(self):
         return self.get_param_path() + self.theme + '.prm'
@@ -79,7 +85,7 @@ class SeedParser(JsonParser):
 class UnlbParser(SeedParser):
     def __init__(self, query_list, theme, description):
         SeedParser.__init__(self, query_list, theme, description)
-
+    
     def read_tweet_from_json_file(self, file, filtering=False):
         if not self.is_file_of_query_date(file):
             return
@@ -96,41 +102,34 @@ class UnlbParser(SeedParser):
                 else:
                     self.added_ids[tw['id']] = True
                 self.added_twarr.append(tw)
-                if len(self.added_twarr) > 200:
+                if len(self.added_twarr) > 250:
                     return
     
     def get_query_result_file_name(self):
-        return self.get_queried_path() + self.theme + '_unlabeled.sum'
+        return self.get_queried_path() + self.theme + '_unlabelled.sum'
     
     def get_to_tag_file_name(self):
-        raise ValueError('Unimplemented yet')
+        return self.get_queried_path() + self.theme + '_unlabelled.utg'
 
 
 class CounterParser(SeedParser):
     def __init__(self, query_list, theme, description):
         SeedParser.__init__(self, query_list, theme, description)
     
-    def read_tweet_from_json_file(self, file, filtering=False):
-        if not self.is_file_of_query_date(file):
-            return
-        for tw in FileIterator.load_array(file):
-            tw = self.attribute_filter(tw, self.tweet_desired_attrs)
-            if 'user' in tw:
-                tw['user'] = self.attribute_filter(tw['user'], self.user_desired_attrs)
-            tw_added = False
-            for seed_query in self.seed_query_list:
-                tw_added = seed_query.append_desired_tweet(tw, usingtwtime=False) or tw_added
-            if tw_added:
-                if tw['id'] in self.added_ids:
-                    continue
-                else:
-                    self.added_ids[tw['id']] = True
-                self.added_twarr.append(tw)
-                if len(self.added_twarr) > 200:
-                    return
-    
     def get_query_result_file_name(self):
         return self.get_queried_path() + self.theme + '_counter.sum'
     
     def get_to_tag_file_name(self):
         raise ValueError('Unimplemented yet')
+
+
+class TestParser(SeedParser):
+    def __init__(self, query_list, theme, description):
+        SeedParser.__init__(self, query_list, theme, description)
+        self.uid = uid_by_random()
+    
+    def get_query_result_file_name(self):
+        return self.get_queried_path() + self.theme + '_test_%s.sum' % self.uid
+    
+    def get_query_results(self):
+        return self.added_twarr

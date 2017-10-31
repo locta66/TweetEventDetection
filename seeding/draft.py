@@ -11,25 +11,11 @@
 # # segment(' '.join(t))
 # #
 # #
-# # # import re
-# # re.split('[\|\[\]\(\),.]', '(qwe)poi.tyu,098|')
-# # re.split('[\|\[\]\(\),.\^%\$\!`~\+=_\-\s]', '* Documentation:  https://help.ubuntu.com')
-# #
-# #
 # from nltk.corpus import stopwords
 # english_stops = set(stopwords.words('english'))
+# len(english_stops)
 # #
 # #
-# # import re
-# # from JsonParser import JsonParser
-# # j=JsonParser()
-# # text = 'RT @Clue_BBP: new month\nnew vibes\nnew money\nnew opportunities. '
-# # text='RT @The_ashima: We bow to the culture and simplicity of the state and its people! Congratulations to everyone. :) @Gurmeetramrahim Ji'
-# # text='RT @NPP_GH: #WeSeeYou and we see CORRUPTION, INCOMPETENCE, MISMANAGEMENT, SUFFERING.'
-# # normalized_text = j.pattern.normalization(text)
-# # print(normalized_text)
-# #
-#
 # import sys
 # def handpick_words_of_theme(in_dict, theme):
 #     print('Judge if the word can imply the theme of:', theme)

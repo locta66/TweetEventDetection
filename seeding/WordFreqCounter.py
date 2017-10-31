@@ -2,7 +2,6 @@ import re
 import os
 
 import __init__
-import FileIterator
 from MyDict import MyDict
 
 import numpy as np
@@ -23,6 +22,7 @@ class WordFreqCounter:
     
     def vocabulary_size(self):
         return self.worddict.vocabulary_size() + self.posdict.vocabulary_size()
+        # return self.worddict.vocabulary_size()
     
     @staticmethod
     def create_stopword_dict():
@@ -42,18 +42,18 @@ class WordFreqCounter:
         notentity = wordlabel[1].startswith('O')
         return notentity
     
-    def reset_freq_couter(self):
-        self.doc_num = 0
-        for word in self.worddict.dictionary:
-            self.worddict.dictionary[word]['df'] = 0
-            self.worddict.dictionary[word]['idf'] = 0
+    # def reset_freq_couter(self):
+    #     self.doc_num = 0
+    #     for word in self.worddict.dictionary:
+    #         self.worddict.dictionary[word]['df'] = 0
+    #         self.worddict.dictionary[word]['idf'] = 0
     
     def calculate_idf(self):
         if self.doc_num == 0:
             raise ValueError('No valid word has been recorded yet.')
         for word in self.worddict.dictionary:
-            df = self.worddict.dictionary[word]['df'] + 1
-            self.worddict.dictionary[word]['idf'] = np.log(self.doc_num / df)
+            df = self.worddict.dictionary[word]['df']
+            self.worddict.dictionary[word]['idf'] = 10 / np.log((self.doc_num + 1) / df)
     
     def wordlabel_vector(self, wordlabels):
         added_word = dict()
@@ -63,11 +63,9 @@ class WordFreqCounter:
             word = wordlabel[0].lower() if self.capignore else wordlabel[0]
             if not (self.is_valid_keyword(word) and self.is_valid_wordlabel(wordlabel)):
                 continue
-            
             if word in added_word:
                 continue
             added_word[word] = True
-            
             if not self.worddict.is_word_in_dict(word):
                 pos_tag = wordlabel[2]
                 pos_vector[self.posdict.word_2_id(pos_tag)] += 1
@@ -76,6 +74,8 @@ class WordFreqCounter:
                 word_vector[wordid] = self.worddict.dictionary[word]['idf']
         return np.concatenate([word_vector, pos_vector]), sorted(added_word.keys()), \
             sum([1 for wordlabel in wordlabels if not self.is_valid_wordlabel(wordlabel)])
+        # return word_vector, sorted(added_word.keys()), \
+        #     sum([1 for wordlabel in wordlabels if not self.is_valid_wordlabel(wordlabel)])
     
     def expand_dict_and_count_df_from_wordlabel(self, wordlabels):
         added_word = {}
@@ -100,19 +100,24 @@ class WordFreqCounter:
             self.expand_dict_and_count_df_from_wordlabel(wordlabel)
         self.worddict.reset_ids()
     
-    def reserve_word_by_idf_threshold(self, rsv_cond):
+    def reserve_word_by_idf_condition(self, rsv_cond):
         self.calculate_idf()
-        for word in sorted(self.worddict.dictionary.keys()):
+        # for word in sorted(self.worddict.dictionary.keys()):
+        for word in list(self.worddict.dictionary.keys()):
             word_idf = self.worddict.dictionary[word]['idf']
             if not rsv_cond(word_idf):
                 self.worddict.remove_word(word)
         self.worddict.reset_ids()
     
-    # def reserve_word_by_rank(self, rsv_cond):
-    #     from operator import itemgetter
-    #     self.calculate_idf()
-    #     idf_ranked_list = sorted(self.worddict.items(), key=itemgetter(1), reverse=True)
-    #     total = len(idf_ranked_list)
-    #     for rank, (word, idf) in enumerate(idf_ranked_list):
-    #         if not rsv_cond(rank, total):
-    #             self.remove_word(word)
+    def merge_from(self, othercounter):
+        thisdict = self.worddict.dictionary
+        otherdict = othercounter.worddict.dictionary
+        for otherword, otherwordattr in otherdict.items():
+            if otherword not in thisdict:
+                thisdict[otherword] = otherwordattr
+    
+    def dump_worddict(self, dict_file, overwrite=False):
+        self.worddict.dump_worddict(dict_file, overwrite)
+    
+    def load_worddict(self, dict_file):
+        self.worddict.load_worddict(dict_file)

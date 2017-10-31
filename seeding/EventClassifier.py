@@ -2,7 +2,7 @@ import tensorflow as tf
 
 
 class EventClassifier:
-    def __init__(self, vocab_size, learning_rate, unlbreg_lambda=0.2, l2reg_lambda=0.2):
+    def __init__(self, vocab_size, learning_rate, unlbreg_lambda=0.1, l2reg_lambda=0.1):
         self.construct_calculate_graph(vocab_size, learning_rate, unlbreg_lambda, l2reg_lambda)
     
     def construct_calculate_graph(self, vocab_size, learning_rate, unlbreg_lambda, l2reg_lambda):
@@ -16,8 +16,6 @@ class EventClassifier:
         self.seedye = tf.placeholder(tf.float32, [None, 1])
         self.seedscore = tf.nn.xw_plus_b(self.seedxe, tf.transpose(self.thetaEW), self.thetaEb)
         self.seedpred = tf.sigmoid(self.seedscore)
-        """tf.nn.sigmoid_cross_entropy_with_logits(logits=a, labels=b)
-           makes log(sigmoid(a)), and then cross it with its label b"""
         self.seedcross = tf.nn.sigmoid_cross_entropy_with_logits(logits=self.seedscore, labels=self.seedye)
         self.seedloss = tf.reduce_mean(self.seedcross)
         
@@ -26,22 +24,24 @@ class EventClassifier:
         self.unlbscore = tf.nn.xw_plus_b(self.unlbxe, tf.transpose(self.thetaEW), self.thetaEb)
         self.unlbpred = tf.sigmoid(self.unlbscore)
         self.unlbpredave = tf.reduce_mean(self.unlbpred)
-        self.unlbcross = self.cross_entropy(self.unlbpredave, self.unlbye) - \
-                         self.cross_entropy(self.unlbye, self.unlbye)
         # self.unlbcross = self.cross_entropy(self.unlbpredave, self.unlbye)
-        self.unlbloss = tf.reduce_mean(self.unlbcross)
+        self.unlbcross = self.cross_entropy(self.unlbpredave, self.unlbye) - \
+            self.cross_entropy(self.unlbye, self.unlbye)
+        self.unlbloss = self.unlbcross
         
         self.unlbreg_lambda = unlbreg_lambda
         self.l2reg_lambda = l2reg_lambda
         self.l2reg = tf.nn.l2_loss(self.thetaEW) + tf.nn.l2_loss(self.thetaEb)
-        # self.loss = self.seedloss + unlb_lambda * self.unlbloss + l2reg_lambda * self.l2reg   # origin expression
-        self.loss = self.seedloss
+        # self.loss = self.seedloss + self.l2reg_lambda * self.l2reg
+        self.loss = self.seedloss + self.unlbreg_lambda * self.unlbloss + self.l2reg_lambda * self.l2reg
         self.trainop = tf.train.AdamOptimizer(learning_rate).minimize(self.loss)
         
         self.sess = tf.InteractiveSession()
         self.sess.run(tf.global_variables_initializer())
     
     def cross_entropy(self, logits, labels):
+        """tf.nn.sigmoid_cross_entropy_with_logits(logits=a, labels=b)
+           makes log(sigmoid(a)), and then cross it with its label b"""
         log_loss = labels * tf.log(logits) + (tf.constant(1, dtype=tf.float32) - labels) * tf.log(1 - logits)
         return - log_loss
     
@@ -55,19 +55,17 @@ class EventClassifier:
     
     def train_per_step(self, seedx, seedy, unlbx, unlby):
         # self.sess.run([self.trainop], feed_dict={self.seedxe: seedx, self.unlbxe: unlbx, self.unlbye: unlby})
-        # _, loss = self.sess.run([self.trainop, self.loss], feed_dict={self.unlbxe: unlbx, self.unlbye: unlby})
-        _, loss = self.sess.run([self.trainop, self.loss], feed_dict={self.seedxe: seedx, self.seedye: seedy})
+        _, loss = self.sess.run([self.trainop, self.loss], feed_dict={self.seedxe: seedx, self.seedye: seedy,
+                                                                      self.unlbxe: unlbx, self.unlbye: unlby})
+        # _, loss = self.sess.run([self.trainop, self.loss], feed_dict={self.seedxe: seedx, self.seedye: seedy})
         return loss
     
     def predict(self, idfmtx):
         return self.sess.run([self.seedpred, ], feed_dict={self.seedxe: idfmtx})
     
     def test(self, idfmtx, label):
-        return self.sess.run([self.seedscore, self.seedpred, self.seedloss, ],
+        return self.sess.run([self.seedscore, ],
                              feed_dict={self.seedxe: idfmtx, self.seedye: label})
-    
-    # def unlabel_predict(self, idfmtx, label):
-    #     return self.sess.run([self.unlbpred, self.unlbpredave], feed_dict={self.unlbxe: idfmtx, self.unlbye: label})
     
     def get_theta(self):
         return self.sess.run(self.params)
@@ -79,10 +77,3 @@ class EventClassifier:
     def save_params(self, file_name):
         saver = tf.train.Saver(self.params)
         saver.save(self.sess, file_name)
-    
-    # def new_param_if_not_exists(self, file_name, vocab_size, learning_rate, unlbreg_lambda=0.2, l2reg_lambda=0.2):
-    #     try:
-    #         self.save_params(file_name)
-    #     except:
-    #         self.construct_calculate_graph(vocab_size, learning_rate, unlbreg_lambda, l2reg_lambda)
-    #         self.load_params(file_name)

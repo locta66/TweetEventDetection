@@ -2,20 +2,35 @@ import FileIterator
 import numpy as np
 
 
+def random_array_items(array, item_num, keep_order=True):
+    """
+    Get random items from array.
+    :param array: From which items are extracted.
+    :param item_num: Number of items to be extracted.
+    :param keep_order: If remains the relative order within array in the result.
+    :return:
+    """
+    array_len = len(array)
+    item_num = array_len if item_num >= array_len else item_num
+    indexes = np.random.choice(array_len, item_num, replace=False)
+    indexes = sorted(indexes) if keep_order else indexes
+    return [array[i] for i in indexes]
+
+
 def array_partition(array, partition_arr=(1, 1, 1), random=True):
     convert_arr = np.array(array) if not isinstance(array, np.ndarray) else array
     indexes = index_partition(array, partition_arr, random)
     return [convert_arr[indexes[i]] for i in range(len(indexes))]
 
 
-def arrays_partition(arrays, partition_arr=(1, 1, 1), random=True):
-    for i in range(len(arrays) - 1):
-        if not len(arrays[i]) == len(arrays[i+1]):
-            raise ValueError('Item dimension inconsistent.')
-    convert_arr = [np.array(array) if not isinstance(array, np.ndarray) else array for array in arrays]
-    print(convert_arr)
-    indexes = index_partition(arrays[0], partition_arr, random)
-    return [[convert_arr[i][indexes[j]] for i in range(len(arrays))] for j in range(len(indexes))]
+# def arrays_partition(arrays, partition_arr=(1, 1, 1), random=True):
+#     for i in range(len(arrays) - 1):
+#         if not len(arrays[i]) == len(arrays[i+1]):
+#             raise ValueError('Item dimension inconsistent.')
+#     convert_arr = [np.array(array) if not isinstance(array, np.ndarray) else array for array in arrays]
+#     print(convert_arr)
+#     indexes = index_partition(arrays[0], partition_arr, random)
+#     return [[convert_arr[i][indexes[j]] for i in range(len(arrays))] for j in range(len(indexes))]
 
 
 def index_partition(array, partition_arr=(1, 1, 1), random=True):
@@ -33,7 +48,7 @@ def index_partition(array, partition_arr=(1, 1, 1), random=True):
 
 
 def shuffle(array, new_arr=False):
-    array = array if new_arr else array[:]
+    array = array[:] if new_arr else array
     np.random.shuffle(array)
     return array
 

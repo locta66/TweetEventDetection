@@ -31,8 +31,8 @@ class Tagger:
     
     def load_untagged(self, file):
         # untagged = {id(int): 'text', ...}
-        self.theme, self.description, self.return_path, self.untagged = load_array(file)
-        return self.theme, self.description, self.return_path, self.untagged
+        self.return_path, self.untagged = load_array(file)
+        return self.return_path, self.untagged
     
     def dump_tagged(self, file):
         # self.tagged = {id1(int): {'ltimes': 123, 'pos': 23, 'neg':5} , ...}

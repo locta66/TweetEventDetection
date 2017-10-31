@@ -139,10 +139,6 @@ def summary_files_in_path(file_path, *args, **kwargs):
     twarr_blocks = multi_process(summary_tweets_multi, [(file_list_slice, ) for file_list_slice in file_list])
     twarr = merge_list(twarr_blocks)
     
-    # twarr = list()
-    # for file in subfiles:
-    #     twarr.extend(summary_tweets(file))
-    
     if twarr:
         dump_array(summary_file, twarr)
     print(summary_file, 'written')
@@ -260,8 +256,8 @@ def remove_ymdh_from_path(summary_path, ymdh_file_name):
 
 def merge_list(array):
     res = list()
-    for ele in array:
-        res.extend(ele)
+    for item in array:
+        res.extend(item)
     return res
 
 
@@ -317,9 +313,9 @@ def is_target_ymdh(ymdh_arr):
     month = int(ymdh_arr[1])
     date = int(ymdh_arr[2])
     hour = int(ymdh_arr[3])
-    # return True
+    return True
     # return month <= 4
-    import datetime
-    tw_time = datetime.datetime.strptime('-'.join(ymdh_arr[0:3]), '%Y-%m-%d')
-    start_time = datetime.datetime.strptime('2016-06-08', '%Y-%m-%d')
-    return (tw_time - start_time).days >= 0
+    # import datetime
+    # tw_time = datetime.datetime.strptime('-'.join(ymdh_arr[0:3]), '%Y-%m-%d')
+    # start_time = datetime.datetime.strptime('2016-06-08', '%Y-%m-%d')
+    # return (tw_time - start_time).days >= 0
