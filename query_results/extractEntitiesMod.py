@@ -92,15 +92,15 @@ class EntityExtractor:
             (dictionary, label) = line.rstrip('\n').split(' ')
             self.dict2label[dictionary] = label
     
+    def clear_line_counter(self):
+        self.nlines = 0
+    
     def trigger_line_counter(self):
         self.ner.stdin.close()
         self.ner.stdout.close()
         os.kill(self.ner.pid, SIGTERM)  # Need to do this for python 2.4
         self.ner.wait()
         self.ner = GetNer(self.ner_model)
-    
-    def clear_line_counter(self):
-        self.nlines = 0
     
     def line_counter(self):
         self.nlines += 1
@@ -154,7 +154,7 @@ class EntityExtractor:
             
             # Extract and classify entities
             for i in range(len(features.entities)):
-                type = None
+                # type = None
                 wids = [str(self.vocab.GetID(x.lower())) for x in features.features[i] if self.vocab.HasWord(x.lower())]
                 if self.llda and len(wids) > 0:
                     entityid = "-1"
@@ -163,7 +163,7 @@ class EntityExtractor:
                     labels = self.dictionaries.GetDictVector(features.entityStrings[i])
                     
                     if sum(labels) == 0:
-                        labels = [1 for x in labels]
+                        labels = [1 for _ in labels]
                     self.llda.stdin.write("\t".join([entityid, " ".join(wids), " ".join([str(x) for x in labels])]) + "\n")
                     sample = self.llda.stdout.readline().rstrip('\n')
                     labels = [self.dict2label[self.dictMap[int(x)]] for x in sample[4:len(sample) - 8].split(' ')]
@@ -218,7 +218,6 @@ class EntityExtractor:
         self.llda.terminate()
         self.llda.wait()
         del self.ner, self.llda
-        
         del self.dict2index, self.dict2label, self.dictionaries, self.dictMap, self.entityMap
         del self.chunkTagger, self.eventTagger, self.posTagger
         del self.capClassifier, self.fe, self.vocab

@@ -4,69 +4,66 @@ import argparse
 from SeedParser import *
 from Main2Parser import *
 
-
 seed_parser = SeedParser([
     # [{'all_of': ['', '', ], 'any_of':['', '', ], }, ['2016', '', ''], ['2016', '', '']],
-    
-    [{'all_of': ['Paris', 'police', 'station', ], 'any_of':['attack', 'knife', ], },
+    [{'all_of': ['Paris', 'police', 'station', ], 'any_of': ['attack', 'knife', ], },
      ['2016', '1', '6'], ['2016', '1', '10']],
-    [{'all_of': ['Quetta', ], 'any_of':['policemen', 'security ', 'bomb', 'suicide', 'polio', ], },
+    [{'all_of': ['Quetta', ], 'any_of': ['\Wbomb', 'security ', 'suicide', 'polio', 'policemen', ], },
      ['2016', '1', '12'], ['2016', '1', '17']],
-    [{'all_of': ['\WAdde\W', ], 'any_of':['Union', 'attack', 'siege', 'massive', ], },
+    [{'all_of': ['\WAdde\W', ], 'any_of': ['Union', 'attack', 'massive', 'siege', ], },
      ['2016', '1', '14'], ['2016', '1', '19']],
-    [{'all_of': ['Dalori', 'Boko', ], 'any_of':['attack', 'kill', ], },
+    [{'all_of': ['Dalori', 'Boko', ], 'any_of': ['attack', '\Wkill', ], },
      ['2016', '1', '29'], ['2016', '2', '3']],
-    [{'all_of': ['Ankara', 'explosion', ], 'any_of':['bomb', 'military', 'attack', ], },
+    [{'all_of': ['Ankara', 'explosion', ], 'any_of': ['attack', '\Wbomb', 'military', ], },
      ['2016', '2', '16'], ['2016', '2', '21']],
-    [{'all_of': ['Cameroon\W', ], 'any_of':['\Wbomb', 'blast', 'kill', 'suicide', ], },
+    [{'all_of': ['Cameroon\W', ], 'any_of': ['\Wbomb', 'blast', '\Wkill', 'suicide', ], },
      ['2016', '2', '18'], ['2016', '2', '23']],
-    [{'all_of': ['Homs', ], 'any_of':['bomb', 'suicide', 'kill', 'attack', ], 'none_of':['airstrike', ]},
+    [{'all_of': ['Homs', ], 'any_of': ['attack', '\Wbomb', '\Wkill', 'suicide', ],
+      'none_of': ['airstrike', ]},
      ['2016', '2', '20'], ['2016', '2', '25']],
-    [{'all_of': ['Bassam', ], 'any_of':['Grand', 'AQIM', 'shoot', 'gunmen', 'attack', 'kill', 'shot', ], },
+    [{'all_of': ['Bassam', ],
+      'any_of': ['Grand', 'AQIM', 'attack', 'gunmen', '\Wkill', '\Wshot', 'shoot', ], },
      ['2016', '3', '12'], ['2016', '3', '17']],
-    [{'all_of': ['Brussels', 'attack', ], 'any_of':['suicide', 'kill', 'bomb', ], },
+    [{'all_of': ['Brussels', 'attack', ], 'any_of': ['\Wbomb', '\Wkill', 'suicide', ], },
      ['2016', '3', '22'], ['2016', '3', '25']],
-    [{'all_of': ['Chhattisgarh', 'CRPF', ], 'any_of':['attack', 'Dantewada', ], },
+    [{'all_of': ['Chhattisgarh', 'CRPF', ], 'any_of': ['attack', 'Dantewada', ], },
      ['2016', '3', '29'], ['2016', '4', '3']],
-    [{'all_of': ['Philippine', 'soldier', ], 'any_of':['\WAbu\W', 'Sayyaf', '\Wgun\W', 'militant', 'clash', ], },
+    [{'all_of': ['Philippine', 'soldier', ],
+      'any_of': ['\WAbu\W', 'Sayyaf', 'clash', '\Wgun\W', 'militant', ], },
      ['2016', '4', '8'], ['2016', '4', '13']],
-    [{'all_of': ['Kabul', 'attack', ], 'any_of': ['Afghanistan', 'security', 'bomb', 'gun', ], },
+    [{'all_of': ['Kabul', 'attack', ], 'any_of': ['Afghanistan', '\Wbomb', '\Wgun\W', 'security', ], },
      ['2016', '4', '18'], ['2016', '4', '23']],
-    [{'all_of': ['Somalia', ], 'any_of':['bomb', 'military', 'attack', 'recapture', 'Shabaab', ], },
+    [{'all_of': ['Somalia', ], 'any_of': ['attack', '\Wbomb', 'military', 'recapture', 'Shabaab', ], },
      ['2016', '4', '30'], ['2016', '5', '5']],
-    [{'all_of': ['Munich', 'attack', ], 'any_of':['knife', 'railway', ], },
+    [{'all_of': ['Munich', 'attack', ], 'any_of': ['knife', 'railway', ], },
      ['2016', '5', '9'], ['2016', '5', '14']],
-    [{'all_of': ['Jableh', ], 'any_of':['attack', 'bomb', 'suicide', 'military', ], },
+    [{'all_of': ['Jableh', ], 'any_of': ['attack', '\Wbomb', 'military', 'suicide', ], },
      ['2016', '5', '22'], ['2016', '5', '27']],
     [{'all_of': ['Boko', 'Bosso', ], },
      ['2016', '6', '3'], ['2016', '6', '9']],
-    [{'all_of': ['Orlando', 'nightclub', 'attack', ], 'any_of':['shoot', 'shot', 'gunman', 'hostage', ], },
+    [{'all_of': ['Orlando', 'nightclub', 'attack', ], 'any_of': ['gunman', 'hostage', 'shoot', '\Wshot', ], },
      ['2016', '6', '11'], ['2016', '6', '16']],
-    [{'all_of': ['Aden', 'airport'], 'any_of': ['headquarter', 'attack', 'bomb', 'security', ], },
+    [{'all_of': ['Mogadishu', ],
+      'any_of': ['attack', '\Wbomb', 'explode', 'hostage', '\Wkill', 'injured', ], },
+     ['2016', '6', '24'], ['2016', '6', '29']],
+    [{'all_of': ['Aden', 'airport'], 'any_of': ['attack', '\Wbomb', 'headquarter', 'security', ], },
      ['2016', '7', '5'], ['2016', '7', '11']],
-    [{'all_of': ['Nice', 'truck'], 'any_of':['gunfire', 'Bastille', 'crowd', ], },
+    [{'all_of': ['Nice', 'truck'], 'any_of': ['Bastille', 'crowd', 'gunfire', ], },
      ['2016', '7', '13'], ['2016', '7', '18']],
-    [{'all_of': ['Mogadishu', ], 'any_of':['Shabaab', 'kill', 'bomb', 'suicide', ], },
+    [{'all_of': ['Mogadishu', ], 'any_of': ['\Wkill', '\Wbomb', 'suicide', 'Shabaab', ], },
      ['2016', '7', '25'], ['2016', '7', '31']],
-    [{'all_of': ['Kokrajhar', ], 'any_of':['Bodo', 'shoot', '\Wgun\W', 'grenade', 'Assam', 'kill', ], },
+    [{'all_of': ['Kokrajhar', ], 'any_of': ['Assam', 'Bodo', '\Wgun\W', 'grenade', '\Wkill', 'shoot', ], },
      ['2016', '8', '4'], ['2016', '8', '9']],
-    [{'all_of': ['Quetta', ], 'any_of':['hospital', 'attack', 'bomb', 'suicide', 'kill', ], },
+    [{'all_of': ['Quetta', ], 'any_of': ['attack', '\Wbomb', 'hospital', '\Wkill', 'suicide', ], },
      ['2016', '8', '7'], ['2016', '8', '9']],
-    [{'all_of': ['PKK', 'Turkey', ], 'any_of':['bomb', 'soldier', 'attack']},
+    [{'all_of': ['PKK', 'Turkey', ], 'any_of': ['attack', '\Wbomb', 'soldier', ]},
      ['2016', '8', '9'], ['2016', '8', '14']],
-    
-    # [{'all_of': ['Kabul', 'attack'], 'any_of':['security', 'ministry', 'blast', 'bomb', 'militant', ], },
-    #  ['2016', '9', '5'], ['2016', '9', '10']],
-    # [{'all_of': ['Mogadishu'], 'any_of':['Shabaab', 'bomb', 'attack', 'toll', 'suicide', ], },
-    #  ['2016', '12', '10'], ['2016', '12', '15']],
-    # [{'all_of': ['Cairo', 'explosion'], 'any_of':['Shabaab', 'Cathedral', 'Coptic', ], },
-    #  ['2016', '12', '10'], ['2016', '12', '16']],
 ], theme='Terrorist', description='Describes event of terrorist attack')
 
 unlb_parser = UnlbParser([
     [{
-      'all_of': ['attack', ], 'any_of': ['terror', 'kill', 'death', 'bomb', 'explode', ],
-     }, ['2016', '8', '15'], ['2016', '10', '31']],
+        'all_of': ['attack', ], 'any_of': ['terror', 'kill', 'death', 'bomb', 'explode', ],
+    }, ['2016', '8', '15'], ['2016', '10', '31']],
 ], theme='Terrorist', description='Unidentified event of terrorist attack')
 
 cntr_parser = CounterParser([
@@ -92,7 +89,8 @@ cntr_parser = CounterParser([
     [{'any_of': ['Romania', 'Belgium', 'France', 'Seine\W', 'Germany', 'disaster',
                  '\Wdead\W', 'death', 'missing', 'rainfall', 'rescue', ],
       'all_of': ['flood', ], }, ['2016', '5', '27'], ['2016', '6', '7']],
-    [{'any_of': ['catastrophic ', 'rainfall', 'state of emergency', 'death', 'flooding', '\Wdead\W', 'FEMA', ],
+    [{'any_of': ['catastrophic ', 'rainfall', 'state of emergency', 'death', 'flooding', '\Wdead\W',
+                 'FEMA', ],
       'all_of': ['Louisiana', 'flood', ], }, ['2016', '8', '10'], ['2016', '8', '17']],
     [{'any_of': ['damage', 'disaster', '\Wdead\W', 'death', 'kill', 'missing', 'rainfall', 'rescue', ],
       'all_of': ['Pakistan', 'flood', ], }, ['2016', '4', '2'], ['2016', '4', '8']],
@@ -157,16 +155,18 @@ def main(args):
     
     if args.query:
         query_func(args.summary_path, parser)
-    if args.totag:
-        exec_totag(parser)
-    if args.untag:
-        exec_untag(parser)
+    # if args.totag:
+    #     exec_totag(parser)
+    # if args.untag:
+    #     exec_untag(parser)
     if args.ner:
         exec_ner(parser)
     if args.train:
         exec_train(seed_parser, unlb_parser, cntr_parser)
     if args.temp:
         temp(cntr_parser)
+    if args.pre_test:
+        exec_pre_test(args.test_data_path)
 
 
 def parse_args():
@@ -193,7 +193,13 @@ def parse_args():
                         help='If train the model according to the queried tweets, with internal logic.')
     parser.add_argument('--temp', action='store_true', default=False,
                         help='Just a temp function.')
+    
+    parser.add_argument('--test_data_path', nargs='?', default='/home/nfs/cdong/tw/testdata/',
+                        help='Path for test data from dianzisuo.')
+    parser.add_argument('--pre_test', action='store_true', default=False,
+                        help='Just a temp function.')
     return parser.parse_args()
+
 
 if __name__ == "__main__":
     main(parse_args())

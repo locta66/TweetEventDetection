@@ -3,7 +3,7 @@ import os
 
 import __init__
 from MyDict import MyDict
-
+import TweetKeys
 import numpy as np
 from nltk.corpus import stopwords
 
@@ -19,10 +19,12 @@ class WordFreqCounter:
         self.posdict = MyDict()
         self.posdict.load_worddict(pos_dict_file)
         self.posdict.reset_ids()
+        self.notional = {'NN': 0, 'NNP': 0, 'NNPS': 0, 'NNS': 0, 'RB': 0, 'RBR': 0, 'RBS': 0,
+                         'UH': 0, 'VB': 0, 'VBD': 0, 'VBG': 0, 'VBN': 0, 'VBP': 0, 'VBZ': 0, }
     
     def vocabulary_size(self):
-        return self.worddict.vocabulary_size() + self.posdict.vocabulary_size()
-        # return self.worddict.vocabulary_size()
+        # return self.worddict.vocabulary_size() + self.posdict.vocabulary_size()
+        return self.worddict.vocabulary_size()
     
     @staticmethod
     def create_stopword_dict():
@@ -39,14 +41,10 @@ class WordFreqCounter:
         return isword and notchar and notstopword
     
     def is_valid_wordlabel(self, wordlabel):
-        notentity = wordlabel[1].startswith('O')
-        return notentity
-    
-    # def reset_freq_couter(self):
-    #     self.doc_num = 0
-    #     for word in self.worddict.dictionary:
-    #         self.worddict.dictionary[word]['df'] = 0
-    #         self.worddict.dictionary[word]['idf'] = 0
+        isnotentity = wordlabel[1].startswith('O')
+        return isnotentity
+        # isnotional = wordlabel[2] in self.notional
+        # return isnotentity and isnotional
     
     def calculate_idf(self):
         if self.doc_num == 0:
@@ -55,27 +53,35 @@ class WordFreqCounter:
             df = self.worddict.dictionary[word]['df']
             self.worddict.dictionary[word]['idf'] = 10 / np.log((self.doc_num + 1) / df)
     
+    def feature_matrix_of_twarr(self, twarr):
+        mtx = list()
+        for tw in twarr:
+            idfvec, added, num_entity = self.wordlabel_vector(tw[TweetKeys.key_wordlabels])
+            mtx.append(idfvec * (np.log(len(added) + 1) + 1) * (np.log(num_entity + 1) + 1))
+            # mtx.append(idfvec)
+        return np.array(mtx)
+    
     def wordlabel_vector(self, wordlabels):
-        added_word = dict()
+        added_word_dict = dict()
         word_vector = np.array([0] * self.worddict.vocabulary_size(), dtype=np.float32)
         pos_vector = np.array([0] * self.posdict.vocabulary_size(), dtype=np.float32)
         for wordlabel in wordlabels:
             word = wordlabel[0].lower() if self.capignore else wordlabel[0]
             if not (self.is_valid_keyword(word) and self.is_valid_wordlabel(wordlabel)):
                 continue
-            if word in added_word:
+            if word in added_word_dict:
                 continue
-            added_word[word] = True
+            added_word_dict[word] = True
             if not self.worddict.is_word_in_dict(word):
                 pos_tag = wordlabel[2]
                 pos_vector[self.posdict.word_2_id(pos_tag)] += 1
             else:
                 wordid = self.worddict.word_2_id(word)
                 word_vector[wordid] = self.worddict.dictionary[word]['idf']
-        return np.concatenate([word_vector, pos_vector]), sorted(added_word.keys()), \
-            sum([1 for wordlabel in wordlabels if not self.is_valid_wordlabel(wordlabel)])
-        # return word_vector, sorted(added_word.keys()), \
-        #     sum([1 for wordlabel in wordlabels if not self.is_valid_wordlabel(wordlabel)])
+        added_word = sorted(added_word_dict.keys())
+        added_entity = sorted([1 for w in wordlabels if not self.is_valid_wordlabel(w)])
+        return word_vector, added_word, len(added_entity)
+        # return np.concatenate([word_vector, pos_vector]), added_word, len(added_entity)
     
     def expand_dict_and_count_df_from_wordlabel(self, wordlabels):
         added_word = {}
@@ -87,7 +93,7 @@ class WordFreqCounter:
                 if word in added_word:
                     continue
                 added_word[word] = True
-                # "word" is now neither entity nor invalid keyword or duplicated word now
+                # "word" is now neither entity nor invalid keyword or duplicated word by now
                 self.worddict.expand_dict_from_word(word)
                 if 'df' not in self.worddict.dictionary[word]:
                     self.worddict.dictionary[word]['df'] = 1
@@ -102,7 +108,6 @@ class WordFreqCounter:
     
     def reserve_word_by_idf_condition(self, rsv_cond):
         self.calculate_idf()
-        # for word in sorted(self.worddict.dictionary.keys()):
         for word in list(self.worddict.dictionary.keys()):
             word_idf = self.worddict.dictionary[word]['idf']
             if not rsv_cond(word_idf):
@@ -115,8 +120,9 @@ class WordFreqCounter:
         for otherword, otherwordattr in otherdict.items():
             if otherword not in thisdict:
                 thisdict[otherword] = otherwordattr
+                thisdict[otherword]['idf'] /= 5
     
-    def dump_worddict(self, dict_file, overwrite=False):
+    def dump_worddict(self, dict_file, overwrite=True):
         self.worddict.dump_worddict(dict_file, overwrite)
     
     def load_worddict(self, dict_file):

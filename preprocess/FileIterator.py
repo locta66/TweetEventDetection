@@ -9,7 +9,6 @@ import multiprocessing as mp
 from Pattern import get_pattern
 from JsonParser import JsonParser
 
-
 unzip_cmd = pos_cmd = ner_cmd = ''
 
 
@@ -38,6 +37,10 @@ def make_dirs_if_not_exists(dir_name):
         os.makedirs(dir_name)
 
 
+def basename(abspath):
+    return os.path.basename(abspath)
+
+
 def remove_files(files):
     if type(files) is list:
         for f in files:
@@ -49,7 +52,7 @@ def remove_files(files):
 def remove_file(file):
     if type(file) is str:
         if os.path.exists(file):
-            print('removing file', file)
+            # print('removing file', file)
             os.remove(file)
     else:
         raise TypeError("File descriptor not an expected type")
@@ -135,16 +138,17 @@ def summary_files_in_path(file_path, *args, **kwargs):
     remove_ymdh_from_path(summary_path, summary_name)
     subfiles = listchildren(file_path, children_type='file')
     
-    file_list = split_into_multi_format([(file_path + subfile) for subfile in subfiles], process_num=15)
-    twarr_blocks = multi_process(summary_tweets_multi, [(file_list_slice, ) for file_list_slice in file_list])
+    file_list = split_multi_format([(file_path + subfile) for subfile in subfiles], process_num=15)
+    twarr_blocks = multi_process(summary_zipped_tweets_multi,
+                                 [(file_list_slice,) for file_list_slice in file_list])
     twarr = merge_list(twarr_blocks)
     
     if twarr:
         dump_array(summary_file, twarr)
     print(summary_file, 'written')
-    
 
-def summary_tweets_multi(file_list):
+
+def summary_zipped_tweets_multi(file_list):
     j_parser = JsonParser()
     twarr = list()
     for file in file_list:
@@ -154,13 +158,14 @@ def summary_tweets_multi(file_list):
     return twarr
 
 
-def summary_tweets(file, summary_file=''):
+def summary_unzipped_tweets_multi(file_list):
     j_parser = JsonParser()
-    if not file.endswith(".bz2"):
-        return list()
-    tw_arr = j_parser.read_tweet_from_bz2_file(file)
-    # dump_array(summary_file, tw_arr, overwrite=False)
-    return tw_arr
+    twarr = list()
+    for file in file_list:
+        if not file.endswith(".json"):
+            continue
+        twarr.extend(j_parser.read_tweet_from_json_file(file))
+    return twarr
 
 
 def remove_ymdh_from_path(summary_path, ymdh_file_name):
@@ -261,7 +266,7 @@ def merge_list(array):
     return res
 
 
-def split_into_multi_format(array, process_num):
+def split_multi_format(array, process_num):
     block_size = math.ceil(len(array) / process_num)
     formatted_array = list()
     for i in range(process_num):

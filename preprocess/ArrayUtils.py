@@ -17,23 +17,13 @@ def random_array_items(array, item_num, keep_order=True):
     return [array[i] for i in indexes]
 
 
-def array_partition(array, partition_arr=(1, 1, 1), random=True):
+def array_partition(array, partition_arr=(1, 1, 1), random=True, ordered=False):
     convert_arr = np.array(array) if not isinstance(array, np.ndarray) else array
     indexes = index_partition(array, partition_arr, random)
     return [convert_arr[indexes[i]] for i in range(len(indexes))]
 
 
-# def arrays_partition(arrays, partition_arr=(1, 1, 1), random=True):
-#     for i in range(len(arrays) - 1):
-#         if not len(arrays[i]) == len(arrays[i+1]):
-#             raise ValueError('Item dimension inconsistent.')
-#     convert_arr = [np.array(array) if not isinstance(array, np.ndarray) else array for array in arrays]
-#     print(convert_arr)
-#     indexes = index_partition(arrays[0], partition_arr, random)
-#     return [[convert_arr[i][indexes[j]] for i in range(len(arrays))] for j in range(len(indexes))]
-
-
-def index_partition(array, partition_arr=(1, 1, 1), random=True):
+def index_partition(array, partition_arr=(1, 1, 1), random=True, ordered=False):
     item_num = len(array)
     indexes = np.array([i for i in range(item_num)])
     indexes = shuffle(indexes) if random else indexes
@@ -53,15 +43,15 @@ def shuffle(array, new_arr=False):
     return array
 
 
-def roc_auc(score_label_pairs, curve_points=150):
+def roc(score_label_pairs, curve_points=150):
     scoreidx = 0
     score_label_pairs = sorted(score_label_pairs, key=lambda item: item[scoreidx], reverse=True)
     max_threshold = score_label_pairs[0][scoreidx]
     min_threshold = score_label_pairs[-1][scoreidx]
     interval = (max_threshold - min_threshold) / curve_points
-    list_of_thresholds = [min_threshold + i * interval for i in range(1, curve_points - 1)]
+    threshold_list = [min_threshold + i * interval for i in range(1, curve_points - 1)]
     
-    thresholds_per_process = FileIterator.split_into_multi_format(list_of_thresholds, 15)
+    thresholds_per_process = FileIterator.split_multi_format(threshold_list, 15)
     param_list = [(score_label_pairs, process_threshold) for process_threshold in thresholds_per_process]
     roc_curve_arr = FileIterator.multi_process(roc_through_thresholds, param_list)
     roc_curve = FileIterator.merge_list(roc_curve_arr)
@@ -90,7 +80,7 @@ def roc_through_thresholds(score_label_pairs, threshold_list):
     return curve
 
 
-def auc(curve, exec_sort=True, sort_axis=0):
+def auc(curve, exec_sort=True):
     if exec_sort:
         curve = sorted(curve)
     area = 0.0
@@ -99,6 +89,18 @@ def auc(curve, exec_sort=True, sort_axis=0):
         x2, y2 = curve[idx + 1]
         area += (y1 + y2) * (x2 - x1) / 2
     return area
+
+
+def recall(score_label_pairs, threshold_list):
+    scoreidx = 0
+    recall_per_threshold = list()
+    for threshold in threshold_list:
+        count = 0
+        for score_label_pair in score_label_pairs:
+            if score_label_pair[scoreidx] > threshold:
+                count += 1
+        recall_per_threshold.append([threshold, count / len(score_label_pairs)])
+    return recall_per_threshold
 
 
 def group_array_by_condition(array, item_key):

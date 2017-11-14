@@ -1,4 +1,5 @@
 import __init__
+import re
 import math
 import subprocess
 import multiprocessing as mp
@@ -163,17 +164,9 @@ class DaemonProcess:
         self.inq.put(DaemonProcess.open)
         self.inq.put(str(classify))
         self.inq.put(str(pos))
-        # if self.outq.get() == DaemonProcess.success:
-        #     return
-        # else:
-        #     raise ValueError('Service open failed.')
     
     def close_ner_service(self):
         self.inq.put(DaemonProcess.close)
-        # if self.outq.get() == DaemonProcess.success:
-        #     return
-        # else:
-        #     raise ValueError('Service close failed.')
     
     def wait_for_daemon(self):
         if self.outq.get() == DaemonProcess.success:
@@ -229,7 +222,7 @@ class NerServicePool:
             output = dae.get_text_arr()
             res.extend(output)
         return res
-
+    
 
 def ner_service_daemon(inq, outq):
     ner_service = NerServiceProxy()

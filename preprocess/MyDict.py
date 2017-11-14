@@ -8,7 +8,6 @@ from wordsegment import segment
 
 class MyDict:
     def __init__(self):
-        # self.idordered = False
         self.dictionary = dict()
         self.clear_dict()
         self.reg_list = [('^[^A-Za-z0-9]+$', ''), ('^\W*', ''), ('\W*$', ''), ("'[sS]?\W*$", ''),
@@ -26,15 +25,13 @@ class MyDict:
     def clear_dict(self):
         if self.dictionary is not None:
             self.dictionary.clear()
-        # self.idordered = False
+    
+    def is_word_in_dict(self, word):
+        return word in self.dictionary
     
     def reset_ids(self):
         for idx, word in enumerate(sorted(self.dictionary.keys())):
             self.dictionary[word]['id'] = idx
-        # self.idordered = True
-    
-    def is_word_in_dict(self, word):
-        return word in self.dictionary
     
     def word_2_id(self, word):
         return self.dictionary[word]['id'] if self.is_word_in_dict(word) else None
@@ -54,9 +51,13 @@ class MyDict:
     def remove_word(self, word):
         if self.is_word_in_dict(word):
             self.dictionary.pop(word)
-        # self.idordered = False
     
     def expand_dict_from_word(self, word):
+        """
+        It is better not to modify the dictionary outside, and thus creating the description information
+        of a word using this function is preferred.
+        :param word:
+        """
         if not word:
             return
         if not self.is_word_in_dict(word):
