@@ -3,6 +3,8 @@ import argparse
 
 from SeedParser import *
 from Main2Parser import *
+from Configure import getconfig
+
 
 seed_parser = SeedParser([
     # [{'all_of': ['', '', ], 'any_of':['', '', ], }, ['2016', '', ''], ['2016', '', '']],
@@ -61,9 +63,10 @@ seed_parser = SeedParser([
 ], theme='Terrorist', description='Describes event of terrorist attack')
 
 unlb_parser = UnlbParser([
-    [{
-        'all_of': ['attack', ], 'any_of': ['terror', 'kill', 'death', 'bomb', 'explode', ],
-    }, ['2016', '8', '15'], ['2016', '10', '31']],
+    [{'all_of': ['attack', ],
+      'any_of': ['terror', 'attack', 'fight', 'assault', 'death', '\Wgun\W', '\Wfire\W', '\Wbomb',
+                 'battle', '\Wkill', 'explode', 'explosion', 'wound', 'injure', 'deadly', 'shoot', ],
+      }, ['2016', '8', '15'], ['2016', '10', '31']],
 ], theme='Terrorist', description='Unidentified event of terrorist attack')
 
 cntr_parser = CounterParser([
@@ -143,11 +146,11 @@ def main(args):
         query_func = exec_query_unlabelled
         parser = unlb_parser
     elif args.cntr:
-        args.totag = args.untag = False
+        # args.totag = args.untag = False
         query_func = exec_query_counter
         parser = cntr_parser
     else:
-        args.totag = args.untag = False
+        # args.totag = args.untag = False
         query_func = exec_query
         parser = seed_parser
     for p in [seed_parser, unlb_parser, cntr_parser]:
@@ -165,15 +168,18 @@ def main(args):
         exec_train(seed_parser, unlb_parser, cntr_parser)
     if args.temp:
         temp(cntr_parser)
+    
     if args.pre_test:
         exec_pre_test(args.test_data_path)
+    if args.train_outer:
+        exec_train_with_outer(seed_parser, unlb_parser, cntr_parser)
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Seeding information")
-    parser.add_argument('--summary_path', nargs='?', default='/home/nfs/cdong/tw/summary/',
+    parser.add_argument('--summary_path', nargs='?', default=getconfig().summary_path,
                         help='Filtered tweets organized in days as file XX_XX_XX_XX.sum under this path.')
-    parser.add_argument('--seed_path', nargs='?', default='/home/nfs/cdong/tw/seeding/',
+    parser.add_argument('--seed_path', nargs='?', default=getconfig().seed_path,
                         help='Path for extracted seed instances according to particular query.')
     
     parser.add_argument('--unlb', action='store_true', default=False,
@@ -183,21 +189,23 @@ def parse_args():
     
     parser.add_argument('--query', action='store_true', default=False,
                         help='If query tweets from summarized tw files.')
-    parser.add_argument('--totag', action='store_true', default=False,
-                        help='If makes to tag file from queried tweets.')
     parser.add_argument('--ner', action='store_true', default=False,
                         help='If perform ner on queried file.')
-    parser.add_argument('--untag', action='store_true', default=False,
-                        help='If updates queried tweets from tagged files.')
+    # parser.add_argument('--totag', action='store_true', default=False,
+    #                     help='If makes to tag file from queried tweets.')
+    # parser.add_argument('--untag', action='store_true', default=False,
+    #                     help='If updates queried tweets from tagged files.')
     parser.add_argument('--train', action='store_true', default=False,
                         help='If train the model according to the queried tweets, with internal logic.')
     parser.add_argument('--temp', action='store_true', default=False,
                         help='Just a temp function.')
     
-    parser.add_argument('--test_data_path', nargs='?', default='/home/nfs/cdong/tw/testdata/',
-                        help='Path for test data from dianzisuo.')
+    parser.add_argument('--test_data_path', nargs='?', default=getconfig().test_data_path,
+                        help='Path for test data from dzs.')
     parser.add_argument('--pre_test', action='store_true', default=False,
-                        help='Just a temp function.')
+                        help='Just a temp function to preprocess data from dzs.')
+    parser.add_argument('--train_outer', action='store_true', default=False,
+                        help='If train and test the model with data from dzs.')
     return parser.parse_args()
 
 

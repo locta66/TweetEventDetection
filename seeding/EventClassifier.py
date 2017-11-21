@@ -6,8 +6,9 @@ class EventClassifier:
         self.construct_calculate_graph(vocab_size, learning_rate, unlbreg_lambda, l2reg_lambda)
     
     def construct_calculate_graph(self, vocab_size, learning_rate, unlbreg_lambda, l2reg_lambda):
-        # self.thetaEW = tf.Variable(tf.random_normal([1, vocab_size], mean=0.3, stddev=0.3, dtype=tf.float32))
-        self.thetaEW = tf.Variable(tf.random_normal([1, vocab_size], dtype=tf.float32), name='event_thetaEW')
+        self.thetaEW = tf.Variable(tf.random_normal([1, vocab_size], mean=0.3, stddev=0.3, dtype=tf.float32),
+                                   name='event_thetaEW')
+        # self.thetaEW = tf.Variable(tf.random_normal([1, vocab_size], dtype=tf.float32), name='event_thetaEW')
         self.thetaEb = tf.Variable(tf.random_normal([1], dtype=tf.float32), name='event_thetaEb')
         self.params = [self.thetaEW, self.thetaEb]
         
@@ -19,7 +20,7 @@ class EventClassifier:
         self.seedloss = tf.reduce_mean(self.seedcross)
         
         self.unlbxe = tf.placeholder(tf.float32, [None, vocab_size])
-        self.unlbye = tf.placeholder(tf.float32, [None, 1])
+        self.unlbye = tf.placeholder(tf.float32, [1, 1])
         self.unlbscore = tf.nn.xw_plus_b(self.unlbxe, tf.transpose(self.thetaEW), self.thetaEb)
         self.unlbpred = tf.sigmoid(self.unlbscore)
         self.unlbpredave = tf.reduce_mean(self.unlbpred)
@@ -30,8 +31,8 @@ class EventClassifier:
         self.unlbreg_lambda = unlbreg_lambda
         self.l2reg_lambda = l2reg_lambda
         self.l2reg = tf.nn.l2_loss(self.thetaEW) + tf.nn.l2_loss(self.thetaEb)
-        self.loss = self.seedloss + self.l2reg_lambda * self.l2reg
-        # self.loss = self.seedloss + self.unlbreg_lambda * self.unlbloss + self.l2reg_lambda * self.l2reg
+        # self.loss = self.seedloss + self.l2reg_lambda * self.l2reg
+        self.loss = self.seedloss + self.unlbreg_lambda * self.unlbloss + self.l2reg_lambda * self.l2reg
         self.trainop = tf.train.AdamOptimizer(learning_rate).minimize(self.loss)
         
         self.sess = tf.InteractiveSession()
@@ -47,7 +48,7 @@ class EventClassifier:
         loss = 0
         for i in range(stepnum):
             loss = self.train_per_step(seedx, seedy, unlbx, unlby)
-            if i % int(stepnum / 50) == 0 and print_loss:
+            if i % int(stepnum / 30) == 0 and print_loss:
                 print(i, 'th ,loss', loss)
         return loss
     
@@ -58,7 +59,7 @@ class EventClassifier:
         return loss
     
     def predict(self, idfmtx):
-        return self.sess.run([self.seedpred, ], feed_dict={self.seedxe: idfmtx})
+        return self.sess.run(self.seedpred, feed_dict={self.seedxe: idfmtx})
     
     def get_theta(self):
         return self.sess.run(self.params)

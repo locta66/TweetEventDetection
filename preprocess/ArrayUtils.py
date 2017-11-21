@@ -18,9 +18,10 @@ def random_array_items(array, item_num, keep_order=True):
 
 
 def array_partition(array, partition_arr=(1, 1, 1), random=True, ordered=False):
-    convert_arr = np.array(array) if not isinstance(array, np.ndarray) else array
+    # convert_arr = np.array(array) if not isinstance(array, np.ndarray) else array
     indexes = index_partition(array, partition_arr, random)
-    return [convert_arr[indexes[i]] for i in range(len(indexes))]
+    return [[array[j] for j in indexes[i]] for i in range(len(indexes))]
+    # return [array[indexes[i]] for i in range(len(indexes))]
 
 
 def index_partition(array, partition_arr=(1, 1, 1), random=True, ordered=False):
@@ -92,15 +93,23 @@ def auc(curve, exec_sort=True):
 
 
 def recall(score_label_pairs, threshold_list):
-    scoreidx = 0
+    # thresholds_per_process = FileIterator.split_into_multi_format(threshold_list, 4)
+    # param_list = [(score_label_pairs, list_per_process) for list_per_process in thresholds_per_process]
     recall_per_threshold = list()
     for threshold in threshold_list:
-        count = 0
-        for score_label_pair in score_label_pairs:
-            if score_label_pair[scoreidx] > threshold:
-                count += 1
-        recall_per_threshold.append([threshold, count / len(score_label_pairs)])
+        relevant = [pair for pair in score_label_pairs if pair[1] == 1]
+        tp = [pair for pair in relevant if pair[0] > threshold]
+        recall_per_threshold.append([threshold, len(tp) / len(relevant)])
     return recall_per_threshold
+
+
+def precision(score_label_pairs, threshold_list):
+    precision_per_threshold = list()
+    for threshold in threshold_list:
+        retrived = [pair for pair in score_label_pairs if pair[0] > threshold]
+        tp = [pair for pair in retrived if pair[1] == 1]
+        precision_per_threshold.append([threshold, len(tp) / len(retrived)])
+    return precision_per_threshold
 
 
 def group_array_by_condition(array, item_key):
@@ -108,3 +117,12 @@ def group_array_by_condition(array, item_key):
     for item in array:
         dictionary[item_key(item)].append(item)
     return [dictionary[key] for key in sorted(dictionary.keys())]
+
+
+def sample_index_by_array_value(array):
+    return np.random.choice(a=[i for i in range(len(array))], p=np.array(array) / np.sum(array))
+
+
+def softmax(array, factor=1):
+    array = array if factor == 1 else np.array(array) * factor
+    return np.exp(array) / np.sum(np.exp(array), axis=0)

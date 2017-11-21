@@ -34,8 +34,10 @@ class WordFreqCounter:
         return stopdict
     
     def is_valid_keyword(self, word):
+        if not word:
+            return False
         # Assume that word has been properly processed.
-        isword = re.search('^[^A-Za-z]+$', word) is None
+        isword = re.search('^[^a-zA-Z]+$', word) is None
         notchar = re.search('^\w$', word) is None
         notstopword = word not in self.stopworddict
         return isword and notchar and notstopword
@@ -66,7 +68,7 @@ class WordFreqCounter:
         word_vector = np.array([0] * self.worddict.vocabulary_size(), dtype=np.float32)
         pos_vector = np.array([0] * self.posdict.vocabulary_size(), dtype=np.float32)
         for wordlabel in wordlabels:
-            word = wordlabel[0].lower() if self.capignore else wordlabel[0]
+            word = wordlabel[0].lower().strip("#") if self.capignore else wordlabel[0]
             if not (self.is_valid_keyword(word) and self.is_valid_wordlabel(wordlabel)):
                 continue
             if word in added_word_dict:
@@ -86,7 +88,7 @@ class WordFreqCounter:
     def expand_dict_and_count_df_from_wordlabel(self, wordlabels):
         added_word = {}
         for wordlabel in wordlabels:
-            word = wordlabel[0].lower() if self.capignore else wordlabel[0]
+            word = wordlabel[0].lower().strip("#") if self.capignore else wordlabel[0]
             if not (self.is_valid_keyword(word) and self.is_valid_wordlabel(wordlabel)):
                 continue
             else:
@@ -122,6 +124,17 @@ class WordFreqCounter:
                 thisdict[otherword] = otherwordattr
                 thisdict[otherword]['idf'] /= 5
     
+    def most_common_words(self, rank):
+        wordnum = self.worddict.vocabulary_size()
+        if 0 < rank < 1:
+            top_k = wordnum * rank
+        elif rank > 1 and type(rank) is int:
+            top_k = rank
+        else:
+            raise ValueError('rank is not a valid number' + str(rank))
+        dic = self.worddict.dictionary
+        return sorted(dic.keys(), key=lambda w: dic[w]['idf'])[:top_k]
+
     def dump_worddict(self, dict_file, overwrite=True):
         self.worddict.dump_worddict(dict_file, overwrite)
     

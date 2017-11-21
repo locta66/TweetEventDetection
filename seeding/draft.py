@@ -155,10 +155,10 @@
 
 
 
-# import tensorflow as tf
-#
-# vocab_size = 3
-# thetaEW = tf.Variable(tf.ones([1, vocab_size], dtype=tf.float32))
+import tensorflow as tf
+
+vocab_size = 6
+thetaEW = tf.Variable([[1, 2, 3]], dtype=tf.float32)
 # thetaEb = tf.Variable(tf.ones([1], dtype=tf.float32))
 #
 # seedxe = tf.placeholder(tf.float32, [None, vocab_size])
@@ -169,9 +169,10 @@
 #
 # idfmtx = [[1, 1, 1], [0, 0, 1], ]
 # lblmtx = [[1], [0], ]
-# sess = tf.InteractiveSession()
-# sess.run(tf.global_variables_initializer())
+sess = tf.InteractiveSession()
+sess.run(tf.global_variables_initializer())
 # sess.run([seedpred, seedloss], feed_dict={seedxe: idfmtx, seedye: lblmtx})
+sess.run([thetaEW, tf.nn.l2_loss(thetaEW)])
 #
 #
 # import __init__
@@ -193,16 +194,40 @@
 # aa.put(indices=[-1], values=[[3,4,5]])
 
 print(len([('#', 'B-NP'), ('$', 'B-NP'), ("''", 'O'), ('(', 'O'), (')', 'O'),
- (',', 'O'), ('.', 'O'), (':', 'O'), ('CC', 'O'), ('CD', 'I-NP'),
- ('DT', 'B-NP'), ('EX', 'B-NP'), ('FW', 'I-NP'), ('IN', 'O'),
- ('JJ', 'I-NP'), ('JJR', 'B-NP'), ('JJS', 'I-NP'), ('MD', 'O'),
- ('NN', 'I-NP'), ('NNP', 'I-NP'), ('NNPS', 'I-NP'), ('NNS', 'I-NP'),
- ('PDT', 'B-NP'), ('POS', 'B-NP'), ('PRP', 'B-NP'), ('PRP$', 'B-NP'),
- ('RB', 'O'), ('RBR', 'O'), ('RBS', 'B-NP'), ('RP', 'O'), ('SYM', 'O'),
- ('TO', 'O'), ('UH', 'O'), ('VB', 'O'), ('VBD', 'O'), ('VBG', 'O'),
- ('VBN', 'O'), ('VBP', 'O'), ('VBZ', 'O'), ('WDT', 'B-NP'),
- ('WP', 'B-NP'), ('WP$', 'B-NP'), ('WRB', 'O'), ('``', 'O')]))
+           (',', 'O'), ('.', 'O'), (':', 'O'), ('CC', 'O'), ('CD', 'I-NP'),
+           ('DT', 'B-NP'), ('EX', 'B-NP'), ('FW', 'I-NP'), ('IN', 'O'),
+           ('JJ', 'I-NP'), ('JJR', 'B-NP'), ('JJS', 'I-NP'), ('MD', 'O'),
+           ('NN', 'I-NP'), ('NNP', 'I-NP'), ('NNPS', 'I-NP'), ('NNS', 'I-NP'),
+           ('PDT', 'B-NP'), ('POS', 'B-NP'), ('PRP', 'B-NP'), ('PRP$', 'B-NP'),
+           ('RB', 'O'), ('RBR', 'O'), ('RBS', 'B-NP'), ('RP', 'O'), ('SYM', 'O'),
+           ('TO', 'O'), ('UH', 'O'), ('VB', 'O'), ('VBD', 'O'), ('VBG', 'O'),
+           ('VBN', 'O'), ('VBP', 'O'), ('VBZ', 'O'), ('WDT', 'B-NP'),
+           ('WP', 'B-NP'), ('WP$', 'B-NP'), ('WRB', 'O'), ('``', 'O')]))
 
 import nltk
-nltk.help.upenn_tagset()
 
+nltk.help.upenn_tagset()
+import ArrayUtils
+
+import numpy as np
+from sklearn import metrics
+
+y_true = np.array([0, 0, 1, 1])
+y_scores = np.array([0.1, 0.4, 0.35, 0.8])
+pairs = [(y_scores[i], y_true[i]) for i in range(len(y_true))]
+
+# metrics.roc_auc_score(y_true, y_scores)
+precision, recall, thresholds = metrics.precision_recall_curve(y_true, y_scores,
+                                                               sample_weight=[0.1, 0.2, 0.4, 0.9])
+span = int(len(y_true) / 2)
+print([precision[i * span] for i in range(2)])
+print([recall[i * span] for i in range(2)])
+
+# fpr, tpr, thresholds = metrics.roc_curve(y_true, y_scores, pos_label=1)
+# metrics.auc(fpr, tpr, reorder=True)
+# ArrayUtils.roc(pairs)
+# ArrayUtils.recall(pairs, [i / 10 for i in range(1, 10)])
+# ArrayUtils.precision(pairs, [i / 10 for i in range(1, 10)])
+
+# import multiprocessing
+# print(multiprocessing.cpu_count())

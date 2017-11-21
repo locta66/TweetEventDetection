@@ -32,15 +32,18 @@ class CacheBack:
         return len(self.twdict.keys())
     
     def n_keywords(self):
-        return len(self.keywords.dictionary.keys())
+        return sum([dic[self.key_count] for dic in self.keywords.dictionary.values()])
+        # return len(self.keywords.dictionary.keys())
     
     def n_entities_non_geo(self):
-        return len(self.entities_non_geo.dictionary.keys())
+        return sum([dic[self.key_count] for dic in self.entities_non_geo.dictionary.values()])
+        # return len(self.entities_non_geo.dictionary.keys())
     
     def n_entities_geo(self):
-        return len(self.entities_geo.dictionary.keys())
+        return sum([dic[self.key_count] for dic in self.entities_geo.dictionary.values()])
+        # return len(self.entities_geo.dictionary.keys())
     
-    def word_count(self, word, mydict, increment=1):
+    def word_count_incr(self, word, mydict, increment=1):
         if word in mydict.dictionary:
             mydict.dictionary[word][self.key_count] += increment
             if mydict.dictionary[word][self.key_count] <= 0:
@@ -64,14 +67,40 @@ class CacheBack:
             if not self.freqcounter.is_valid_keyword(word):
                 continue
             elif 'geo' in nertag:  # if the wordlabel is a geo entity
-                self.word_count(word, self.entities_geo, increment)
+                self.word_count_incr(word, self.entities_geo, increment)
             elif not nertag == 'O':  # if the wordlabel is a normal entity
-                self.word_count(word, self.entities_non_geo, increment)
+                self.word_count_incr(word, self.entities_non_geo, increment)
             elif postag in self.notional:  # if the wordlabel is a notional word(noun, verb, adverb, etc.)
-                self.word_count(word, self.keywords, increment)
+                self.word_count_incr(word, self.keywords, increment)
         if not add:
             if tw_id in self.twdict:
                 self.twdict.pop(tw_id)
+    
+    def score_with_tw(self, tw, doc_num, event_num, g_vocab, ng_vocab, k_vocab, alpha, beta):
+        g_beta0 = g_vocab * beta
+        ng_beta0 = ng_vocab * beta
+        k_beta0 = k_vocab * beta
+        prob = (self.tweet_number() + alpha) / (doc_num - 1 + event_num * alpha)
+        num_en_geo = self.n_entities_geo()
+        num_en_non_geo = self.n_entities_non_geo()
+        num_keyword = self.n_keywords()
+        wordlabels = tw[TweetKeys.key_wordlabels][:]
+        for i in range(len(wordlabels) - 1, -1, -1):
+            wordlabels[i][0] = wordlabels[i][0].lower()
+            word = wordlabels[i][0]
+            if not self.freqcounter.is_valid_keyword(word):
+                del wordlabels[i]
+        for i in range(len(wordlabels)):
+            if self.entities_geo.is_word_in_dict(word):
+                prob *= (self.entities_geo.dictionary[word][self.key_count] + beta) / \
+                          (num_en_geo + g_beta0 + i)
+            elif self.entities_non_geo.is_word_in_dict(word):
+                prob *= (self.entities_non_geo.dictionary[word][self.key_count] + beta) / \
+                          (num_en_non_geo + ng_beta0 + i)
+            elif self.keywords.is_word_in_dict(word):
+                prob *= (self.keywords.dictionary[word][self.key_count] + beta) / \
+                          (num_keyword + k_beta0 + i)
+        return prob
     
     # def score_with_tw(self, tw, tw_corpus, event_corpus, geo_corpus, non_geo_corpus, keyword_corpus,
     #                   alpha, h_geo, h_non_geo, h_keyword):

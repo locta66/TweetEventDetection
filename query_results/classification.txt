@@ -1,0 +1,130 @@
+联合使用dzs的60%样本
+
+1倍正例
+pos pre vocabulary 11055, pos post vocabulary 3540
+neg pre vocabulary 42031, neg post vocabulary 4139
+pos merge vocabulary 5232
+seed train: 11097 cntr train: 48814
+0 th ,loss 279.503
+104 th ,loss 0.615254
+200 th ,loss 0.353822
+304 th ,loss 0.353133
+392 th ,loss 0.353133
+max:auc 0.9254797333770667  loss 0.353136 vocab 5232
+auc 0.866568158898
+threshold 0.1 	precision 0.17616 	recall 0.96562
+threshold 0.2 	precision 0.24428 	recall 0.89585
+threshold 0.3 	precision 0.42275 	recall 0.80233
+threshold 0.4 	precision 0.57125 	recall 0.69211
+threshold 0.5 	precision 0.658 	recall 0.58847
+threshold 0.6 	precision 0.71936 	recall 0.47624
+threshold 0.7 	precision 0.7805 	recall 0.35415
+threshold 0.8 	precision 0.81637 	recall 0.21689
+threshold 0.9 	precision 0.85022 	recall 0.09757
+function name: main , main time elapsed: 429.40203523635864 s
+
+
+
+2倍正例
+pos pre vocabulary 11611, pos post vocabulary 3429
+neg pre vocabulary 41890, neg post vocabulary 4138
+pos merge vocabulary 5195
+seed train: 22195 cntr train: 48814
+0 th ,loss 275.363
+8 th ,loss 163.036
+104 th ,loss 0.493528
+112 th ,loss 0.43805
+200 th ,loss 0.381574
+304 th ,loss 0.381567
+392 th ,loss 0.381567
+max:auc 0.940777210427126  loss 0.381567 vocab 5195
+auc 0.881438450593
+threshold 0.1 	precision 0.16647 	recall 0.98458
+threshold 0.2 	precision 0.21193 	recall 0.94186
+threshold 0.3 	precision 0.32603 	recall 0.8726
+threshold 0.4 	precision 0.50524 	recall 0.79272
+threshold 0.5 	precision 0.57174 	recall 0.71815
+threshold 0.6 	precision 0.641 	recall 0.62917
+threshold 0.7 	precision 0.70913 	recall 0.52629
+threshold 0.8 	precision 0.77233 	recall 0.38246
+threshold 0.9 	precision 0.82106 	recall 0.20298
+function name: main , main time elapsed: 682.8492493629456 s
+
+
+
+4倍正例
+pos pre vocabulary 11625, pos post vocabulary 3511
+neg pre vocabulary 41933, neg post vocabulary 4164
+pos merge vocabulary 5231
+seed train: 44391 cntr train: 48814
+0 th ,loss 291.256
+104 th ,loss 0.633492
+200 th ,loss 0.380471
+304 th ,loss 0.379996
+392 th ,loss 0.379996
+max:auc 0.9477249132642047  loss 0.379996 vocab 5231
+auc 0.894577666504
+threshold 0.1 	precision 0.15663 	recall 0.99292
+threshold 0.2 	precision 0.18338 	recall 0.97649
+threshold 0.3 	precision 0.24762 	recall 0.94034
+threshold 0.4 	precision 0.41927 	recall 0.87563
+threshold 0.5 	precision 0.49103 	recall 0.80915
+threshold 0.6 	precision 0.54836 	recall 0.7452
+threshold 0.7 	precision 0.61672 	recall 0.65445
+threshold 0.8 	precision 0.67994 	recall 0.53539
+threshold 0.9 	precision 0.74972 	recall 0.33696
+function name: main , main time elapsed: 592.7252638339996 s
+
+
+
+
+
+
+只使用dzs的60%样本
+
+2倍正例
+pos pre vocabulary 7525, pos post vocabulary 3398
+neg pre vocabulary 31895, neg post vocabulary 4546
+pos merge vocabulary 5476
+seed train: 10681 cntr train: 34638
+0 th ,loss 288.942
+104 th ,loss 0.593892
+200 th ,loss 0.408054
+304 th ,loss 0.407981
+392 th ,loss 0.407981
+max:auc 0.9008289134990107  loss 0.407981 vocab 5476
+auc 0.892631508846
+threshold 0.1 	precision 0.17561 	recall 0.97599
+threshold 0.2 	precision 0.24474 	recall 0.92619
+threshold 0.3 	precision 0.41889 	recall 0.84858
+threshold 0.4 	precision 0.6018 	recall 0.74494
+threshold 0.5 	precision 0.68978 	recall 0.65369
+threshold 0.6 	precision 0.76007 	recall 0.54853
+threshold 0.7 	precision 0.78945 	recall 0.43883
+threshold 0.8 	precision 0.80351 	recall 0.31218
+threshold 0.9 	precision 0.84232 	recall 0.15394
+function name: main , main time elapsed: 350.2932813167572 s
+
+
+4倍正例
+pos pre vocabulary 7568, pos post vocabulary 3391
+neg pre vocabulary 31924, neg post vocabulary 4550
+pos merge vocabulary 5491
+seed train: 21362 cntr train: 34638
+0 th ,loss 296.604
+104 th ,loss 0.751572
+200 th ,loss 0.436453
+304 th ,loss 0.435822
+392 th ,loss 0.435796
+max:auc 0.9075448809368623  loss 0.435796 vocab 5491
+auc 0.907539477359
+threshold 0.1 	precision 0.16343 	recall 0.9909
+threshold 0.2 	precision 0.20561 	recall 0.96486
+threshold 0.3 	precision 0.30614 	recall 0.91835
+threshold 0.4 	precision 0.51139 	recall 0.85137
+threshold 0.5 	precision 0.59537 	recall 0.77326
+threshold 0.6 	precision 0.6717 	recall 0.69767
+threshold 0.7 	precision 0.73171 	recall 0.59151
+threshold 0.8 	precision 0.77537 	recall 0.47118
+threshold 0.9 	precision 0.82046 	recall 0.29803
+function name: main , main time elapsed: 409.26855301856995 s
