@@ -1,7 +1,7 @@
 import os
 import re
-import __init__
-import FileIterator
+
+from Synset import get_synset
 from Pattern import get_pattern
 from DateCalculator import DateCalculator
 
@@ -16,13 +16,29 @@ class SeedQuery:
         self.month_dict = {'Jan': '1', 'Feb': '2', 'Mar': '3', 'Apr': '4', 'May': '5', 'June': '6',
                            'July': '7', 'Aug': '8', 'Sept': '9', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
         self.query_results = list()
-        self.parse_keywords()
+        self.parse_keywords(keywords)
     
-    def parse_keywords(self):
-        keywords = self.keywords
+    def parse_keywords(self, keywords):
         self.all = keywords['all_of'] if 'all_of' in keywords else []
         self.any = keywords['any_of'] if 'any_of' in keywords else []
         self.none = keywords['none_of'] if 'none_of' in keywords else []
+        # print(self.any)
+        # self.expand_keywords(self.any)
+        # print(self.any)
+    
+    def expand_keywords(self, keywords):
+        if not keywords:
+            return keywords
+        mylabel = r'\W'
+        for idx in range(len(keywords) - 1, -1, -1):
+            w_synset = get_synset(keywords[idx].strip(mylabel))
+            if keywords[idx].startswith(mylabel):
+                w_synset = [mylabel + w for w in w_synset]
+            if keywords[idx].endswith(mylabel):
+                w_synset = [w + mylabel for w in w_synset]
+            keywords.extend(w_synset)
+            del keywords[idx]
+        return keywords
     
     def append_desired_tweet(self, tw, usingtwtime=False):
         """
@@ -66,27 +82,27 @@ class SeedQuery:
             if re.search(w3, text, re.IGNORECASE):
                 return True
         return False
-    
-    def get_query_name(self):
-        parts = list()
-        sep_title_content = '-'
-        sep_content = '_'
-        sep_title = '+'
-        if self.all:
-            parts.append(sep_title_content.join(['allof', sep_content.join(self.all)]))
-        if self.none:
-            parts.append(sep_title_content.join(['noneof', sep_content.join(self.none)]))
-        if self.any:
-            parts.append(sep_title_content.join(['anyof', sep_content.join(self.any)]))
-        parts.append(sep_title_content.join(['since', '-'.join(self.since)]))
-        parts.append(sep_title_content.join(['until', '-'.join(self.until)]))
-        return sep_title.join(parts)
-    
-    def get_query_results(self):
-        return self.query_results
-    
-    def dump_query_results(self, result_path):
-        query_results = self.get_query_results()
-        if not len(query_results) == 0:
-            seed_file = result_path + self.get_query_name() + '.sed'
-            FileIterator.dump_array(seed_file, query_results)
+        
+        # def get_query_name(self):
+        #     parts = list()
+        #     sep_title_content = '-'
+        #     sep_content = '_'
+        #     sep_title = '+'
+        #     if self.all:
+        #         parts.append(sep_title_content.join(['allof', sep_content.join(self.all)]))
+        #     if self.none:
+        #         parts.append(sep_title_content.join(['noneof', sep_content.join(self.none)]))
+        #     if self.any:
+        #         parts.append(sep_title_content.join(['anyof', sep_content.join(self.any)]))
+        #     parts.append(sep_title_content.join(['since', '-'.join(self.since)]))
+        #     parts.append(sep_title_content.join(['until', '-'.join(self.until)]))
+        #     return sep_title.join(parts)
+        #
+        # def get_query_results(self):
+        #     return self.query_results
+        #
+        # def dump_query_results(self, result_path):
+        #     query_results = self.get_query_results()
+        #     if not len(query_results) == 0:
+        #         seed_file = result_path + self.get_query_name() + '.sed'
+        #         FileIterator.dump_array(seed_file, query_results)

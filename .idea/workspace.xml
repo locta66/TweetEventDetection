@@ -18,49 +18,47 @@
       <file leaf-file-name="Main2Parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/seeding/Main2Parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="533">
-              <caret line="209" column="21" lean-forward="true" selection-start-line="209" selection-start-column="21" selection-end-line="209" selection-end-column="21" />
+            <state relative-caret-position="311">
+              <caret line="192" column="4" lean-forward="true" selection-start-line="192" selection-start-column="4" selection-end-line="192" selection-end-column="4" />
               <folding>
-                <element signature="e#0#37#0" expanded="true" />
-                <element signature="e#326#1625#0" expanded="false" />
-                <element signature="e#3534#4693#0" expanded="false" />
-                <element signature="e#4782#5015#0" expanded="false" />
-                <element signature="e#5018#5075#0" expanded="false" />
-                <element signature="e#5404#5837#0" expanded="false" />
-                <element signature="e#5840#5876#0" expanded="false" />
-                <element signature="e#7691#7833#0" expanded="false" />
-                <element signature="e#7895#8357#0" expanded="false" />
-                <element signature="e#10248#11249#0" expanded="false" />
-                <element signature="e#11291#12386#0" expanded="false" />
+                <element signature="e#326#1585#0" expanded="false" />
+                <element signature="e#458#600#0" expanded="false" />
+                <element signature="e#631#673#0" expanded="false" />
+                <element signature="e#939#1147#0" expanded="false" />
+                <element signature="e#941#1070#0" expanded="false" />
+                <element signature="e#1361#1392#0" expanded="false" />
+                <element signature="e#1676#3409#0" expanded="false" />
+                <element signature="e#1744#1912#0" expanded="false" />
+                <element signature="e#2266#2762#0" expanded="false" />
+                <element signature="e#2369#2623#0" expanded="false" />
+                <element signature="e#2371#2499#0" expanded="false" />
+                <element signature="e#3028#3098#0" expanded="false" />
+                <element signature="e#3562#3761#0" expanded="false" />
+                <element signature="e#4027#4236#0" expanded="false" />
+                <element signature="e#4029#4201#0" expanded="false" />
+                <element signature="e#4742#4975#0" expanded="false" />
+                <element signature="e#4978#5035#0" expanded="false" />
+                <element signature="e#5364#5797#0" expanded="false" />
+                <element signature="e#5412#5780#0" expanded="false" />
+                <element signature="e#5463#5780#0" expanded="false" />
+                <element signature="e#5699#5780#0" expanded="false" />
+                <element signature="e#5800#5836#0" expanded="false" />
+                <element signature="e#7651#7793#0" expanded="false" />
+                <element signature="e#7855#8317#0" expanded="false" />
+                <element signature="e#10252#11253#0" expanded="false" />
+                <element signature="e#10441#11253#0" expanded="false" />
+                <element signature="e#10639#10659#0" expanded="false" />
+                <marker date="1511667648737" expanded="false" signature="12080:12248" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EventTrainer.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EventTrainer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/seeding/EventTrainer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="65" column="8" lean-forward="true" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="8" />
-              <folding>
-                <element signature="e#469#523#0" expanded="false" />
-                <element signature="e#582#610#0" expanded="false" />
-                <element signature="e#4187#5649#0" expanded="false" />
-                <element signature="e#5770#6189#0" expanded="false" />
-                <element signature="e#6235#6863#0" expanded="false" />
-                <element signature="e#6933#7280#0" expanded="false" />
-                <element signature="e#7357#8109#0" expanded="false" />
-                <element signature="e#8182#8359#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventClassifier.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/seeding/EventClassifier.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="36" column="8" lean-forward="true" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
+            <state relative-caret-position="185">
+              <caret line="53" column="4" lean-forward="true" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -69,18 +67,56 @@
       <file leaf-file-name="WordFreqCounter.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/seeding/WordFreqCounter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="533">
-              <caret line="130" column="38" lean-forward="true" selection-start-line="130" selection-start-column="38" selection-end-line="130" selection-end-column="38" />
+            <state relative-caret-position="481">
+              <caret line="21" column="32" lean-forward="true" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
               <folding>
-                <element signature="e#1026#1153#0" expanded="false" />
-                <element signature="e#1566#1732#0" expanded="false" />
-                <element signature="e#1775#2054#0" expanded="false" />
-                <element signature="e#2114#2398#0" expanded="false" />
-                <element signature="e#4513#4646#0" expanded="false" />
-                <element signature="e#4715#4976#0" expanded="false" />
-                <element signature="e#5030#5319#0" expanded="false" />
-                <element signature="e#5804#5853#0" expanded="false" />
-                <element signature="e#5907#5945#0" expanded="false" />
+                <element signature="e#957#1077#0" expanded="false" />
+                <element signature="e#1141#1268#0" expanded="false" />
+                <element signature="e#1708#1777#0" expanded="false" />
+                <element signature="e#1820#2099#0" expanded="false" />
+                <element signature="e#2159#2443#0" expanded="false" />
+                <element signature="e#4880#5013#0" expanded="false" />
+                <element signature="e#5082#5343#0" expanded="false" />
+                <element signature="e#5397#5686#0" expanded="false" />
+                <element signature="e#5739#6105#0" expanded="false" />
+                <element signature="e#6171#6220#0" expanded="false" />
+                <element signature="e#6274#6312#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main2Clusterer.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/clustering/Main2Clusterer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1421">
+              <caret line="67" column="4" lean-forward="true" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+                <element signature="e#484#1389#0" expanded="false" />
+                <element signature="e#3528#3546#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EventExtractor.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/clustering/EventExtractor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="224">
+              <caret line="279" column="8" lean-forward="true" selection-start-line="279" selection-start-column="8" selection-end-line="279" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+                <element signature="e#1012#1125#0" expanded="false" />
+                <element signature="e#1199#1320#0" expanded="false" />
+                <element signature="e#1378#3080#0" expanded="false" />
+                <element signature="e#3090#3131#0" expanded="false" />
+                <element signature="e#4131#4237#0" expanded="false" />
+                <element signature="e#4287#4665#0" expanded="false" />
+                <element signature="e#9878#11128#0" expanded="false" />
+                <element signature="e#10152#10237#0" expanded="false" />
+                <element signature="e#10679#11128#0" expanded="false" />
+                <element signature="e#15176#15228#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -97,7 +133,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ServiceException</find>
       <find>removin</find>
       <find>remo</find>
       <find>reset_ids</find>
@@ -123,10 +158,11 @@
       <find>beq</find>
       <find>BEQ R5, R0,</find>
       <find>J #324</find>
-      <find>FileIterator</find>
       <find>cli</find>
       <find>ccc</find>
       <find>top_k = wordnum * rank</find>
+      <find>load</find>
+      <find>FileIterator</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -135,9 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/seeding/SeedProcessor.py" />
-        <option value="$PROJECT_DIR$/seeding/TweetDict.py" />
-        <option value="$PROJECT_DIR$/../../_在下/尝试/SeqGAN_Node2vec/sequence_gan.py" />
         <option value="$PROJECT_DIR$/preprocess/NerService.py" />
         <option value="$PROJECT_DIR$/seeding/FreqCounter.py" />
         <option value="$PROJECT_DIR$/../../_在下/尝试/SeqGAN_Node2vec/discriminator.py" />
@@ -146,46 +179,49 @@
         <option value="$PROJECT_DIR$/../../_在下/尝试/SeqGAN_Node2vec/main.py" />
         <option value="$PROJECT_DIR$/query_results/EventTable/Terrorist.txt" />
         <option value="$USER_HOME$/AppData/Local/Temp/scp45110/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist.sum" />
-        <option value="$PROJECT_DIR$/seeding/SeedQuery.py" />
         <option value="$PROJECT_DIR$/../../_在下/尝试/SeqGAN_Node2vec/_dc_predictor.py" />
         <option value="$PROJECT_DIR$/preprocess/ArrayOperator.py" />
         <option value="$PROJECT_DIR$/seeding/DateCalculator.py" />
-        <option value="$PROJECT_DIR$/preprocess/Pattern.py" />
         <option value="$PROJECT_DIR$/preprocess/TweetDict.py" />
         <option value="$PROJECT_DIR$/preprocess/TweetKeys.py" />
-        <option value="$PROJECT_DIR$/preprocess/JsonParser.py" />
         <option value="$PROJECT_DIR$/preprocess/FuncUtils.py" />
         <option value="$PROJECT_DIR$/query_results/tag_converter.py" />
         <option value="$PROJECT_DIR$/../../_在下/尝试/SeqGAN_Node2vec/generator.py" />
-        <option value="$PROJECT_DIR$/seeding/SeedParser.py" />
         <option value="$PROJECT_DIR$/seeding/EventFeatureExtractor.py" />
         <option value="$PROJECT_DIR$/clustering/Clusterer.py" />
         <option value="$PROJECT_DIR$/clustering/Cacha.py" />
-        <option value="$PROJECT_DIR$/preprocess/MyDict.py" />
         <option value="$PROJECT_DIR$/../../_在下/研一上/计算机体系结构/proj1/simulation.txt" />
-        <option value="$PROJECT_DIR$/clustering/draft.py" />
-        <option value="$PROJECT_DIR$/preprocess/FileIterator.py" />
         <option value="$PROJECT_DIR$/query_results/extractEntitiesMod.py" />
         <option value="$PROJECT_DIR$/clustering/Cache.py" />
         <option value="$PROJECT_DIR$/preprocess/FunctionUtils.py" />
-        <option value="$PROJECT_DIR$/preprocess/ArrayUtils.py" />
-        <option value="$PROJECT_DIR$/seeding/__init__.py" />
-        <option value="$PROJECT_DIR$/preprocess/__init__.py" />
         <option value="$PROJECT_DIR$/config/myconfiger.py" />
-        <option value="$PROJECT_DIR$/preprocess/main.py" />
         <option value="$PROJECT_DIR$/preprocess/NerServiceProxy.py" />
-        <option value="$PROJECT_DIR$/clustering/__init__.py" />
-        <option value="$PROJECT_DIR$/seeding/main.py" />
         <option value="$PROJECT_DIR$/clustering/main.py" />
+        <option value="$PROJECT_DIR$/utils/__init__.py" />
+        <option value="$PROJECT_DIR$/seeding/__init__.py" />
+        <option value="$PROJECT_DIR$/preprocess/ArrayUtils.py" />
+        <option value="$PROJECT_DIR$/clustering/draft.py" />
+        <option value="$PROJECT_DIR$/seeding/draft.py" />
+        <option value="$PROJECT_DIR$/clustering/__init__.py" />
+        <option value="$PROJECT_DIR$/utils/Synset.py" />
+        <option value="$PROJECT_DIR$/seeding/SeedQuery.py" />
+        <option value="$PROJECT_DIR$/preprocess/__init__.py" />
+        <option value="$PROJECT_DIR$/preprocess/Pattern.py" />
+        <option value="$PROJECT_DIR$/preprocess/MyDict.py" />
+        <option value="$PROJECT_DIR$/preprocess/JsonParser.py" />
+        <option value="$PROJECT_DIR$/preprocess/main.py" />
+        <option value="$PROJECT_DIR$/seeding/main.py" />
+        <option value="$PROJECT_DIR$/preprocess/FileIterator.py" />
+        <option value="$PROJECT_DIR$/utils/ArrayUtils.py" />
+        <option value="$PROJECT_DIR$/seeding/EventClassifier.py" />
+        <option value="$PROJECT_DIR$/seeding/WordFreqCounter.py" />
+        <option value="$PROJECT_DIR$/seeding/SeedParser.py" />
+        <option value="$PROJECT_DIR$/seeding/Main2Parser.py" />
+        <option value="$PROJECT_DIR$/config/conf.ini" />
+        <option value="$PROJECT_DIR$/config/Configure.py" />
+        <option value="$PROJECT_DIR$/seeding/EventTrainer.py" />
         <option value="$PROJECT_DIR$/clustering/Main2Clusterer.py" />
         <option value="$PROJECT_DIR$/clustering/EventExtractor.py" />
-        <option value="$PROJECT_DIR$/config/Configure.py" />
-        <option value="$PROJECT_DIR$/config/conf.ini" />
-        <option value="$PROJECT_DIR$/seeding/draft.py" />
-        <option value="$PROJECT_DIR$/seeding/EventClassifier.py" />
-        <option value="$PROJECT_DIR$/seeding/EventTrainer.py" />
-        <option value="$PROJECT_DIR$/seeding/WordFreqCounter.py" />
-        <option value="$PROJECT_DIR$/seeding/Main2Parser.py" />
       </list>
     </option>
   </component>
@@ -227,7 +263,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -298,20 +333,23 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\query_results" />
-      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\seeding" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\utils" />
+      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\clustering" />
       <recent name="E:\DOCUMENTS\ECNU post\项目\src\preprocess" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\clustering" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\utils" />
+      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\seeding" />
+      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\query_results" />
       <recent name="E:\DOCUMENTS\ECNU post\项目\src\preprocess" />
     </key>
   </component>
@@ -358,7 +396,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="src" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/preprocess/ArrayUtils.py" />
+      <option name="SCRIPT_NAME" value="E:\DOCUMENTS\ECNUpost\项目\src\utils\ArrayUtils.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -482,20 +520,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1042" extended-state="7" />
+    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1203125" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3990878" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -510,64 +548,15 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="24" />
+      <option name="time" value="31" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/query_results/tag_converter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="30" column="4" lean-forward="true" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/DEVELOPMENT/Python/Python35/Lib/hashlib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/DEVELOPMENT/Python/Python35/Lib/site-packages/tensorflow/python/training/saver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="1437" column="6" lean-forward="false" selection-start-line="1437" selection-start-column="6" selection-end-line="1437" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../_在下/尝试/SeqGAN_Node2vec/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="139" column="19" lean-forward="false" selection-start-line="139" selection-start-column="19" selection-end-line="139" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../_在下/尝试/SeqGAN_Node2vec/sequence_gan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="292" column="73" lean-forward="true" selection-start-line="292" selection-start-column="73" selection-end-line="292" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/DEVELOPMENT/Python/Python35/Lib/site-packages/tensorflow/python/client/session.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="666" column="6" lean-forward="false" selection-start-line="666" selection-start-column="6" selection-end-line="666" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/DEVELOPMENT/Python/Python35/Lib/site-packages/nltk/corpus/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="193" column="0" lean-forward="false" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seeding/SeedParser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="9" column="33" lean-forward="true" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -620,13 +609,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/clustering/draft.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="36" column="0" lean-forward="true" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/DEVELOPMENT/Python/Python35/Lib/site-packages/pandas/io/parsers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -642,13 +624,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/clustering/Clusterer.py" />
-    <entry file="file://$PROJECT_DIR$/clustering/Cache.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="64" column="44" lean-forward="true" selection-start-line="64" selection-start-column="12" selection-end-line="64" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/preprocess/TweetKeys.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
@@ -696,29 +671,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="475" column="4" lean-forward="false" selection-start-line="475" selection-start-column="4" selection-end-line="475" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/query_results/extractEntitiesMod.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="234" column="50" lean-forward="true" selection-start-line="234" selection-start-column="50" selection-end-line="234" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/ArrayUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="94" column="46" lean-forward="false" selection-start-line="94" selection-start-column="46" selection-end-line="94" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/JsonParser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="25" column="4" lean-forward="true" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -726,29 +678,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="1180" column="6" lean-forward="false" selection-start-line="1180" selection-start-column="6" selection-end-line="1180" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/Pattern.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="42" column="24" lean-forward="false" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seeding/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="5" column="52" lean-forward="true" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/FileIterator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1443">
-          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -759,176 +688,318 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/main.py">
+    <entry file="file://D:/DEVELOPMENT/Python/Python35/Lib/site-packages/tensorflow/python/ops/variables.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="22" column="73" lean-forward="true" selection-start-line="22" selection-start-column="73" selection-end-line="22" selection-end-column="73" />
+        <state relative-caret-position="280">
+          <caret line="120" column="6" lean-forward="false" selection-start-line="120" selection-start-column="6" selection-end-line="120" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/__init__.py">
+    <entry file="file://$PROJECT_DIR$/utils/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="7" column="66" lean-forward="false" selection-start-line="7" selection-start-column="66" selection-end-line="7" selection-end-column="66" />
+        <state relative-caret-position="74">
+          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/query_results/extractEntitiesMod.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="233" column="51" lean-forward="false" selection-start-line="233" selection-start-column="51" selection-end-line="233" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/seeding/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/seeding/DateCalculator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-170">
+          <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/draft.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-518">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/seeding/draft.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3160">
+          <caret line="183" column="33" lean-forward="true" selection-start-line="183" selection-start-column="33" selection-end-line="183" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/clustering/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="3" column="78" lean-forward="true" selection-start-line="3" selection-start-column="78" selection-end-line="3" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/seeding/SeedQuery.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="26" column="25" lean-forward="true" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#9#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="3" column="58" lean-forward="true" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess/MyDict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1131">
+          <caret line="70" column="26" lean-forward="true" selection-start-line="70" selection-start-column="26" selection-end-line="70" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess/JsonParser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="10" column="17" lean-forward="true" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess/FileIterator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="320" column="15" lean-forward="true" selection-start-line="320" selection-start-column="15" selection-end-line="320" selection-end-column="15" />
+          <folding>
+            <element signature="e#199#235#0" expanded="false" />
+            <element signature="e#2652#2701#0" expanded="false" />
+            <element signature="e#5538#5573#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess/main.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="222">
-          <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+          <caret line="9" column="4" lean-forward="true" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
+          <folding>
+            <element signature="e#1386#1482#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/Cache.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="160" column="0" lean-forward="true" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/ENTERTAINMENT/WeChat/_FILE RECEIVER/WeChat Files/wxid_dompbkkygx1i12/Files/output.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="43">
+          <caret line="23" column="25" lean-forward="true" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/ENTERTAINMENT/WeChat/_FILE RECEIVER/WeChat Files/wxid_dompbkkygx1i12/Files/output(1).txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="7" column="49" lean-forward="true" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/Synset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="9" column="4" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/clustering/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-799">
-          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="false" />
-            <element signature="e#243#2263#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/conf.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+        <state relative-caret-position="777">
+          <caret line="34" column="51" lean-forward="true" selection-start-line="34" selection-start-column="51" selection-end-line="34" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/Configure.py">
+    <entry file="file://$PROJECT_DIR$/seeding/SeedParser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        <state relative-caret-position="253">
+          <caret line="103" column="0" lean-forward="true" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/seeding/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1280">
-          <caret line="157" column="4" lean-forward="true" selection-start-line="157" selection-start-column="4" selection-end-line="157" selection-end-column="4" />
+        <state relative-caret-position="-555">
+          <caret line="98" column="0" lean-forward="true" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="false" />
-            <element signature="e#143#3655#0" expanded="false" />
-            <element signature="e#4144#6307#0" expanded="false" />
-            <element signature="e#6375#6403#0" expanded="false" />
+            <element signature="e#142#3877#0" expanded="false" />
+            <element signature="e#3975#4262#0" expanded="false" />
+            <element signature="e#4366#6529#0" expanded="false" />
+            <element signature="e#6596#6624#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/DEVELOPMENT/Python/Python35/Lib/site-packages/tensorflow/python/ops/variables.py">
+    <entry file="file://$PROJECT_DIR$/utils/ArrayUtils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="120" column="6" lean-forward="false" selection-start-line="120" selection-start-column="6" selection-end-line="120" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seeding/draft.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="175" column="0" lean-forward="false" selection-start-line="157" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clustering/Main2Clusterer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="51" column="8" lean-forward="true" selection-start-line="51" selection-start-column="8" selection-end-line="51" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clustering/EventExtractor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="112" column="35" lean-forward="false" selection-start-line="112" selection-start-column="35" selection-end-line="112" selection-end-column="35" />
+        <state relative-caret-position="301">
+          <caret line="94" column="48" lean-forward="true" selection-start-line="94" selection-start-column="48" selection-end-line="94" selection-end-column="48" />
           <folding>
-            <element signature="e#315#546#0" expanded="false" />
-            <element signature="e#608#880#0" expanded="false" />
-            <element signature="e#936#1049#0" expanded="false" />
-            <element signature="e#1123#1244#0" expanded="false" />
-            <element signature="e#1302#3004#0" expanded="false" />
-            <element signature="e#3014#3055#0" expanded="false" />
-            <element signature="e#4055#4161#0" expanded="false" />
-            <element signature="e#4211#4589#0" expanded="false" />
-            <element signature="e#4637#8850#0" expanded="false" />
+            <element signature="e#111#607#0" expanded="false" />
+            <element signature="e#1560#1607#0" expanded="false" />
+            <element signature="e#3883#3914#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/MyDict.py">
+    <entry file="file://$PROJECT_DIR$/config/conf.ini">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-37">
-          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        <state relative-caret-position="333">
+          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/seeding/WordFreqCounter.py">
+    <entry file="file://$PROJECT_DIR$/config/Configure.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="130" column="38" lean-forward="true" selection-start-line="130" selection-start-column="38" selection-end-line="130" selection-end-column="38" />
-          <folding>
-            <element signature="e#1026#1153#0" expanded="false" />
-            <element signature="e#1566#1732#0" expanded="false" />
-            <element signature="e#1775#2054#0" expanded="false" />
-            <element signature="e#2114#2398#0" expanded="false" />
-            <element signature="e#4513#4646#0" expanded="false" />
-            <element signature="e#4715#4976#0" expanded="false" />
-            <element signature="e#5030#5319#0" expanded="false" />
-            <element signature="e#5804#5853#0" expanded="false" />
-            <element signature="e#5907#5945#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="449">
+          <caret line="17" column="8" lean-forward="true" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/seeding/Main2Parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="209" column="21" lean-forward="true" selection-start-line="209" selection-start-column="21" selection-end-line="209" selection-end-column="21" />
+        <state relative-caret-position="311">
+          <caret line="192" column="4" lean-forward="true" selection-start-line="192" selection-start-column="4" selection-end-line="192" selection-end-column="4" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
-            <element signature="e#326#1625#0" expanded="false" />
-            <element signature="e#3534#4693#0" expanded="false" />
-            <element signature="e#4782#5015#0" expanded="false" />
-            <element signature="e#5018#5075#0" expanded="false" />
-            <element signature="e#5404#5837#0" expanded="false" />
-            <element signature="e#5840#5876#0" expanded="false" />
-            <element signature="e#7691#7833#0" expanded="false" />
-            <element signature="e#7895#8357#0" expanded="false" />
-            <element signature="e#10248#11249#0" expanded="false" />
-            <element signature="e#11291#12386#0" expanded="false" />
+            <element signature="e#326#1585#0" expanded="false" />
+            <element signature="e#458#600#0" expanded="false" />
+            <element signature="e#631#673#0" expanded="false" />
+            <element signature="e#939#1147#0" expanded="false" />
+            <element signature="e#941#1070#0" expanded="false" />
+            <element signature="e#1361#1392#0" expanded="false" />
+            <element signature="e#1676#3409#0" expanded="false" />
+            <element signature="e#1744#1912#0" expanded="false" />
+            <element signature="e#2266#2762#0" expanded="false" />
+            <element signature="e#2369#2623#0" expanded="false" />
+            <element signature="e#2371#2499#0" expanded="false" />
+            <element signature="e#3028#3098#0" expanded="false" />
+            <element signature="e#3562#3761#0" expanded="false" />
+            <element signature="e#4027#4236#0" expanded="false" />
+            <element signature="e#4029#4201#0" expanded="false" />
+            <element signature="e#4742#4975#0" expanded="false" />
+            <element signature="e#4978#5035#0" expanded="false" />
+            <element signature="e#5364#5797#0" expanded="false" />
+            <element signature="e#5412#5780#0" expanded="false" />
+            <element signature="e#5463#5780#0" expanded="false" />
+            <element signature="e#5699#5780#0" expanded="false" />
+            <element signature="e#5800#5836#0" expanded="false" />
+            <element signature="e#7651#7793#0" expanded="false" />
+            <element signature="e#7855#8317#0" expanded="false" />
+            <element signature="e#10252#11253#0" expanded="false" />
+            <element signature="e#10441#11253#0" expanded="false" />
+            <element signature="e#10639#10659#0" expanded="false" />
+            <marker date="1511667648737" expanded="false" signature="12080:12248" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/Main2Clusterer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1421">
+          <caret line="67" column="4" lean-forward="true" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#484#1389#0" expanded="false" />
+            <element signature="e#3528#3546#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/seeding/EventClassifier.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="36" column="8" lean-forward="true" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
+        <state relative-caret-position="0">
+          <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/seeding/WordFreqCounter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="21" column="32" lean-forward="true" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
+          <folding>
+            <element signature="e#957#1077#0" expanded="false" />
+            <element signature="e#1141#1268#0" expanded="false" />
+            <element signature="e#1708#1777#0" expanded="false" />
+            <element signature="e#1820#2099#0" expanded="false" />
+            <element signature="e#2159#2443#0" expanded="false" />
+            <element signature="e#4880#5013#0" expanded="false" />
+            <element signature="e#5082#5343#0" expanded="false" />
+            <element signature="e#5397#5686#0" expanded="false" />
+            <element signature="e#5739#6105#0" expanded="false" />
+            <element signature="e#6171#6220#0" expanded="false" />
+            <element signature="e#6274#6312#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess/Pattern.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="93" column="4" lean-forward="true" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/seeding/EventTrainer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="65" column="8" lean-forward="true" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="8" />
+        <state relative-caret-position="185">
+          <caret line="53" column="4" lean-forward="true" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/EventExtractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="279" column="8" lean-forward="true" selection-start-line="279" selection-start-column="8" selection-end-line="279" selection-end-column="8" />
           <folding>
-            <element signature="e#469#523#0" expanded="false" />
-            <element signature="e#582#610#0" expanded="false" />
-            <element signature="e#4187#5649#0" expanded="false" />
-            <element signature="e#5770#6189#0" expanded="false" />
-            <element signature="e#6235#6863#0" expanded="false" />
-            <element signature="e#6933#7280#0" expanded="false" />
-            <element signature="e#7357#8109#0" expanded="false" />
-            <element signature="e#8182#8359#0" expanded="false" />
+            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#1012#1125#0" expanded="false" />
+            <element signature="e#1199#1320#0" expanded="false" />
+            <element signature="e#1378#3080#0" expanded="false" />
+            <element signature="e#3090#3131#0" expanded="false" />
+            <element signature="e#4131#4237#0" expanded="false" />
+            <element signature="e#4287#4665#0" expanded="false" />
+            <element signature="e#9878#11128#0" expanded="false" />
+            <element signature="e#10152#10237#0" expanded="false" />
+            <element signature="e#10679#11128#0" expanded="false" />
+            <element signature="e#15176#15228#0" expanded="false" />
           </folding>
         </state>
       </provider>

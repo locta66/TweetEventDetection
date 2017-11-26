@@ -70,8 +70,8 @@ class SeedParser(JsonParser):
     def get_query_result_file_name(self):
         return self.get_queried_path() + self.theme + '.sum'
     
-    def get_to_tag_file_name(self):
-        raise ValueError('Unimplemented yet')
+    # def get_to_tag_file_name(self):
+    #     raise ValueError('Unimplemented yet')
     
     def get_param_file_name(self):
         return self.get_param_path() + self.theme
@@ -87,8 +87,8 @@ class UnlbParser(SeedParser):
     def get_query_result_file_name(self):
         return self.get_queried_path() + self.theme + '_unlabelled.sum'
     
-    def get_to_tag_file_name(self):
-        return self.get_queried_path() + self.theme + '_unlabelled.utg'
+    # def get_to_tag_file_name(self):
+    #     return self.get_queried_path() + self.theme + '_unlabelled.utg'
 
 
 class CounterParser(SeedParser):
@@ -98,14 +98,14 @@ class CounterParser(SeedParser):
     def get_query_result_file_name(self):
         return self.get_queried_path() + self.theme + '_counter.sum'
     
-    def get_to_tag_file_name(self):
-        raise ValueError('Unimplemented yet')
+    # def get_to_tag_file_name(self):
+    #     raise ValueError('Unimplemented yet')
 
 
 class TestParser(SeedParser):
     def __init__(self, query_list, theme, description, outterid='default'):
         SeedParser.__init__(self, query_list, theme, description)
         self.outterid = outterid
-    
+
     def get_query_result_file_name(self):
         return self.get_queried_path() + self.theme + '_test_' + self.outterid + '.sum'

@@ -1,18 +1,18 @@
 import re
 
-import ArrayUtils
-import TweetKeys
-import FileIterator
-from NerServiceProxy import get_ner_service_pool
-from EventClassifier import EventClassifier
-from WordFreqCounter import WordFreqCounter
-
 import numpy as np
+from sklearn import metrics
+
+import FileIterator
+import TweetKeys
+from EventClassifier import LREventClassifier
+from NerServiceProxy import get_ner_service_pool
+from WordFreqCounter import WordFreqCounter
 
 
 class EventTrainer:
     def __init__(self):
-        self.seed_twarr = self.unlb_twarr = self.cntr_twarr = self.classifier = self.freqcounter = None
+        self.classifier = self.freqcounter = None
     
     @staticmethod
     def start_ner_service(pool_size=8, classify=True, pos=True):
@@ -22,28 +22,21 @@ class EventTrainer:
     def end_ner_service():
         get_ner_service_pool().end()
     
-    def train_and_test(self, seed_twarr, unlb_twarr, cntr_twarr):
-        part_arr = (9, 1)
-        seed_train, seed_test = ArrayUtils.array_partition(seed_twarr, part_arr)
-        cntr_train, cntr_test = ArrayUtils.array_partition(cntr_twarr, part_arr)
-        
+    def train_and_test(self, seed_twarr, unlb_twarr, cntr_twarr, seed_test, cntr_test):
+        # part_arr = (9, 1)
+        # seed_train, seed_valid = ArrayUtils.array_partition(seed_twarr, part_arr)
+        # cntr_train, cntr_valid = ArrayUtils.array_partition(cntr_twarr, part_arr)
+        seed_train = seed_twarr
+        seed_valid = seed_test
+        cntr_train = cntr_twarr
+        cntr_valid = cntr_test
         # [2.1, 1.4, 1.2, ]:
-        param = 1.2
-        localcounter, event_classifier, loss = self.train_epoch(seed_train, unlb_twarr, cntr_train, param)
-        auc = self.test(localcounter, event_classifier, seed_test, cntr_test)
-        print('test - auc:', auc, ' loss', loss, 'vocab', localcounter.vocabulary_size())
-        
-        self.classifier = event_classifier
-        self.freqcounter = localcounter
-        return localcounter, event_classifier
-    
-    def train_epoch(self, seed_train, unlb_train, cntr_train, hyperparam):
+        hyperparam = 1.15
         localcounter = WordFreqCounter()
         globalcounter = WordFreqCounter()
-        
-        localcounter.expand_from_wordlabel_array([tw[TweetKeys.key_wordlabels] for tw in seed_train])
-        globalcounter.expand_from_wordlabel_array([tw[TweetKeys.key_wordlabels] for tw in unlb_train])
-        globalcounter.expand_from_wordlabel_array([tw[TweetKeys.key_wordlabels] for tw in cntr_train])
+        localcounter.expand_from_wordlabel_array([tw[TweetKeys.key_wordlabels] for tw in seed_twarr])
+        globalcounter.expand_from_wordlabel_array([tw[TweetKeys.key_wordlabels] for tw in unlb_twarr])
+        globalcounter.expand_from_wordlabel_array([tw[TweetKeys.key_wordlabels] for tw in cntr_twarr])
         print('\npos pre vocab', localcounter.vocabulary_size(), end=', ')
         localcounter.reserve_word_by_idf_condition(rsv_cond=lambda idf: idf > hyperparam)
         print('pos post vocab', localcounter.vocabulary_size())
@@ -53,33 +46,74 @@ class EventTrainer:
         localcounter.merge_from(globalcounter)
         print('pos merge vocab', localcounter.vocabulary_size())
         
-        seed_train_mtx = localcounter.feature_matrix_of_twarr(seed_train)
-        cntr_train_mtx = localcounter.feature_matrix_of_twarr(cntr_train)
-        train_mtx = np.concatenate((seed_train_mtx, cntr_train_mtx), axis=0)
+        event_classifier, loss = self.train_epoch(localcounter, seed_train, seed_valid, unlb_twarr,
+                                                  cntr_train, cntr_valid)
+        auc = self.test_using_twarr(localcounter, event_classifier, seed_valid, cntr_valid)
+        print('test result auc:', auc, ' loss', loss, 'vocab', localcounter.vocabulary_size())
+        return localcounter, event_classifier
+    
+    def train_epoch(self, freqcounter, seed_train, seed_valid, unlb_twarr, cntr_train, cntr_valid):
+        seed_train_mtx = freqcounter.feature_matrix_of_twarr(seed_train)
         seed_train_lbl = np.array([[1.0]] * len(seed_train), dtype=np.float32)
+        cntr_train_mtx = freqcounter.feature_matrix_of_twarr(cntr_train)
         cntr_train_lbl = np.array([[0.0]] * len(cntr_train), dtype=np.float32)
+        train_mtx = np.concatenate((seed_train_mtx, cntr_train_mtx), axis=0)
         train_lbl = np.concatenate((seed_train_lbl, cntr_train_lbl), axis=0)
-        unlb_mtx = localcounter.feature_matrix_of_twarr(unlb_train)
+        unlb_mtx = freqcounter.feature_matrix_of_twarr(unlb_twarr)
         unlb_lbl = np.array([[0.1]], dtype=np.float32)
+        
+        seed_valid_mtx = freqcounter.feature_matrix_of_twarr(seed_valid)
+        cntr_valid_mtx = freqcounter.feature_matrix_of_twarr(cntr_valid)
         unlbreg_lambda = 0.01
         l2reg_lambda = 0.01
         
-        print('seed train:', len(seed_train), 'cntr train:', len(cntr_train), 'unlb:', len(unlb_train))
-        print('unlbreg_lambda:', unlbreg_lambda, 'l2reg_lambda:', l2reg_lambda)
+        print('seed train:', len(seed_train), 'cntr train:', len(cntr_train), 'unlb:', len(unlb_twarr))
         
-        classifier = EventClassifier(vocab_size=localcounter.vocabulary_size(), learning_rate=4e-2,
-                                     unlbreg_lambda=unlbreg_lambda, l2reg_lambda=l2reg_lambda)
-        final_loss = classifier.train_steps(300, train_mtx, train_lbl, unlb_mtx, unlb_lbl, print_loss=True)
-        return localcounter, classifier, final_loss
+        classifier = LREventClassifier(vocab_size=freqcounter.vocabulary_size(), learning_rate=3e-2,
+                                       unlbreg_lambda=unlbreg_lambda, l2reg_lambda=l2reg_lambda)
+        classifier.save_params('/home/nfs/cdong/tw/seeding/temp/nonsense')
+        
+        loss = 0
+        for unlbreg_lambda in [0.01, 0.02, 0.04, 0.08]:
+            for l2reg_lambda in [0.01, 0.02, 0.04, 0.08]:
+                # for l2reg_lambda in [0.01]:
+                #     for unlbreg_lambda in [0]:
+                print('\n\nunlbreg_lambda:', unlbreg_lambda, 'l2reg_lambda:', l2reg_lambda)
+                classifier.load_params('/home/nfs/cdong/tw/seeding/temp/nonsense')
+                classifier.construct_graph(unlbreg_lambda=unlbreg_lambda, l2reg_lambda=l2reg_lambda)
+                stepnum = 400
+                auc = 0
+                for i in range(stepnum):
+                    loss = classifier.train_per_step(train_mtx, train_lbl, unlb_mtx, unlb_lbl)
+                    if i % int(stepnum / 15) == 0:
+                        print('{:<4}th ,loss {:<10} '.format(i, int(loss * 1e6) / 1e6), end='')
+                        tup = self.test_using_matrix(classifier, seed_valid_mtx, cntr_valid_mtx)
+                        if auc < tup[0]:
+                            auc = tup[0]
+                        else:
+                            break
+        return classifier, loss
     
-    def test(self, freqcounter, classifier, pos_twarr, neg_twarr):
+    def test_using_twarr(self, freqcounter, classifier, pos_twarr, neg_twarr):
         pos_feature_mtx = freqcounter.feature_matrix_of_twarr(pos_twarr)
         neg_feature_mtx = freqcounter.feature_matrix_of_twarr(neg_twarr)
+        return self.test_using_matrix(classifier, pos_feature_mtx, neg_feature_mtx)
+    
+    def test_using_matrix(self, classifier, pos_feature_mtx, neg_feature_mtx):
         pos_preds = classifier.predict(pos_feature_mtx)
         neg_preds = classifier.predict(neg_feature_mtx)
-        score_label_pairs = [(s1[0], 1) for s1 in pos_preds] + [(s2[0], 0) for s2 in neg_preds]
-        auc = ArrayUtils.roc(score_label_pairs)
-        return auc
+        lebels = [1 for _ in pos_preds] + [0 for _ in neg_preds]
+        scores = [s1[0] for s1 in pos_preds] + [s2[0] for s2 in neg_preds]
+        auc = metrics.roc_auc_score(lebels, scores)
+        precision, recall, thresholds = metrics.precision_recall_curve(lebels, scores)
+        for idx in range(0, len(thresholds)):
+            if thresholds[idx] >= 0.5:
+                print('auc {:<8}; '.format(round(auc, 6)),
+                      '(thres {:<4})'.format(round(thresholds[idx], 2)),
+                      'precision {:<8}'.format(round(precision[idx], 5)),
+                      'recall {:<8}'.format(round(recall[idx], 5)))
+                break
+        return auc, precision, recall, thresholds
     
     @staticmethod
     def extract_tw_with_high_freq_entity(twarr, entity_freq=3):

@@ -1,12 +1,12 @@
-from EventTrainer import EventTrainer
-from FunctionUtils import sync_real_time_counter
+import Levenshtein
+from sklearn import metrics
+
 import ArrayUtils
 import FileIterator as fI
 import TweetKeys
 from Configure import getconfig
-
-from sklearn import metrics
-import Levenshtein
+from EventTrainer import EventTrainer
+from FunctionUtils import sync_real_time_counter
 
 query_process_num = 16
 
@@ -24,15 +24,15 @@ def exec_query(data_path, parser):
     file_list = fI.split_multi_format(file_list, process_num=query_process_num)
     added_twarr_block = fI.multi_process(query_tw_file_multi,
                                          [(file_list_slice, parser.__class__, parser.query_list,
-                                           parser.theme,
-                                           parser.description) for file_list_slice in file_list])
+                                           parser.theme, parser.description)
+                                          for file_list_slice in file_list])
     parser.added_twarr = fI.merge_list(added_twarr_block)
     print('Queried', len(parser.added_twarr), 'tweets,')
     remove_similar_tws(parser.added_twarr)
-    print(len(parser.added_twarr), 'accepted.\n', parser.get_query_result_file_name(), 'written.\n')
+    print(len(parser.added_twarr), 'accepted.\n')
     # for tw in parser.added_twarr:
     #     print(tw[TweetKeys.key_origintext], '\n---\n')
-    # print(parser.get_query_result_file_name())
+    print(parser.get_query_result_file_name(), 'written.\n')
     fI.dump_array(parser.get_query_result_file_name(), parser.added_twarr)
 
 
@@ -188,31 +188,29 @@ def exec_train_with_outer(seed_parser, unlb_parser, cntr_parser):
     seed_twarr += dzs_pos_train
     cntr_twarr += dzs_non_pos_train
     
-    localcounter, event_classifier = et.train_and_test(seed_twarr * 4, unlb_twarr, cntr_twarr)
+    localcounter, event_classifier = et.train_and_test(seed_twarr * 4, unlb_twarr, cntr_twarr,
+                                                       dzs_pos_test, dzs_non_pos_test)
     
     pos_pred = event_classifier.predict(localcounter.feature_matrix_of_twarr(dzs_pos_test))
     non_pos_pred = event_classifier.predict(localcounter.feature_matrix_of_twarr(dzs_non_pos_test))
-    print('dzs_pos_test', len(dzs_pos_test), end=', ')
-    print('dzs_non_pos_test', len(dzs_non_pos_test))
     lebels = [1 for _ in pos_pred] + [0 for _ in non_pos_pred]
     scores = [pred[0] for pred in pos_pred] + [pred[0] for pred in non_pos_pred]
     
+    print('\nTest on dianzisuo')
     print('auc', metrics.roc_auc_score(lebels, scores))
     precision, recall, thresholds = metrics.precision_recall_curve(lebels, scores)
     
-    idx_list = []
     last_idx = 0
-    for ref in [i / 10 for i in range(1, 10)]:
+    for ref in [i / 10 for i in range(3, 8)]:
         for idx in range(last_idx, len(thresholds)):
             if thresholds[idx] >= ref:
-                idx_list.append(idx)
+                print('threshold', round(thresholds[idx], 2), '\tprecision', round(precision[idx], 5),
+                      '\trecall', round(recall[idx], 5))
                 last_idx = idx
                 break
-    for i in idx_list:
-        print('threshold', round(thresholds[i], 2), '\tprecision', round(precision[i], 5),
-              '\trecall', round(recall[i], 5))
     
-    print(localcounter.worddict.dictionary)
+    localcounter.dump_worddict(seed_parser.get_dict_file_name())
+    event_classifier.save_params(seed_parser.get_param_file_name())
 
 
 def temp(parser):
@@ -241,7 +239,7 @@ def temp(parser):
 def exec_pre_test(test_data_path):
     subfiles = fI.listchildren(test_data_path, children_type='file')
     file_list = fI.split_multi_format(
-        [(test_data_path + file) for file in subfiles if file.endswith('.json')], process_num=15)
+        [(test_data_path + file) for file in subfiles if file.endswith('.json')], process_num=6)
     twarr_blocks = fI.multi_process(fI.summary_unzipped_tweets_multi,
                                     [(file_list_slice,) for file_list_slice in file_list])
     twarr = fI.merge_list(twarr_blocks)
@@ -264,5 +262,5 @@ def exec_pre_test(test_data_path):
         elif twid in non_pos_ids:
             non_pos_twarr.append(tw)
     
-    fI.dump_array(test_data_path + 'pos_tweets.sum', pos_twarr)
-    fI.dump_array(test_data_path + 'non_pos_tweets.sum', non_pos_twarr)
+    fI.dump_array(getconfig().pos_data_file, pos_twarr)
+    fI.dump_array(getconfig().non_pos_data_file, non_pos_twarr)

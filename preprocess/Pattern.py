@@ -40,7 +40,8 @@ class Singleton(object):
 class Pattern(Singleton):
     def __init__(self):
         self.special_char_pattern = self.rule_pattern = self.abbr_pattern = self.emo_pattern = None
-        self.file_dir = os.path.split(os.path.realpath(__file__))[0] + os.path.sep
+        # self.file_dir = os.path.split(os.path.realpath(__file__))[0] + os.path.sep
+        self.file_dir = os.path.abspath(os.path.dirname(__file__)) + os.path.sep
         self.abbr_dict_file = self.file_dir + 'abbrs.txt'
         self.emo_dict_file = self.file_dir + 'emoticons.txt'
         self.endline_pattern = re.compile(r'[\n\r]+$')

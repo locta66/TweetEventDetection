@@ -1,16 +1,23 @@
 import tensorflow as tf
 
 
-class EventClassifier:
-    def __init__(self, vocab_size, learning_rate, unlbreg_lambda=0.1, l2reg_lambda=0.1):
-        self.construct_calculate_graph(vocab_size, learning_rate, unlbreg_lambda, l2reg_lambda)
-    
-    def construct_calculate_graph(self, vocab_size, learning_rate, unlbreg_lambda, l2reg_lambda):
-        self.thetaEW = tf.Variable(tf.random_normal([1, vocab_size], mean=0.3, stddev=0.3, dtype=tf.float32),
+class LREventClassifier:
+    def __init__(self, vocab_size, learning_rate, unlbreg_lambda, l2reg_lambda):
+        self.vocab_size = vocab_size
+        self.learning_rate = learning_rate
+        self.unlbreg_lambda = unlbreg_lambda
+        self.l2reg_lambda = l2reg_lambda
+        self.thetaEW = tf.Variable(tf.random_normal([1, vocab_size], mean=0.0, stddev=0.5, dtype=tf.float32),
                                    name='event_thetaEW')
-        # self.thetaEW = tf.Variable(tf.random_normal([1, vocab_size], dtype=tf.float32), name='event_thetaEW')
         self.thetaEb = tf.Variable(tf.random_normal([1], dtype=tf.float32), name='event_thetaEb')
         self.params = [self.thetaEW, self.thetaEb]
+        self.construct_graph(vocab_size, learning_rate, unlbreg_lambda, l2reg_lambda)
+    
+    def construct_graph(self, vocab_size=None, learning_rate=None, unlbreg_lambda=None, l2reg_lambda=None):
+        vocab_size = vocab_size if vocab_size is not None else self.vocab_size
+        learning_rate = learning_rate if learning_rate is not None else self.learning_rate
+        unlbreg_lambda = unlbreg_lambda if unlbreg_lambda is not None else self.unlbreg_lambda
+        l2reg_lambda = l2reg_lambda if l2reg_lambda is not None else self.l2reg_lambda
         
         self.seedxe = tf.placeholder(tf.float32, [None, vocab_size])
         self.seedye = tf.placeholder(tf.float32, [None, 1])
@@ -44,13 +51,13 @@ class EventClassifier:
         log_loss = labels * tf.log(logits) + (tf.constant(1, dtype=tf.float32) - labels) * tf.log(1 - logits)
         return - log_loss
     
-    def train_steps(self, stepnum, seedx, seedy, unlbx, unlby, print_loss=True):
-        loss = 0
-        for i in range(stepnum):
-            loss = self.train_per_step(seedx, seedy, unlbx, unlby)
-            if i % int(stepnum / 30) == 0 and print_loss:
-                print(i, 'th ,loss', loss)
-        return loss
+    # def train_steps(self, stepnum, seedx, seedy, unlbx, unlby, print_loss=True):
+    #     loss = 0
+    #     for i in range(stepnum):
+    #         loss = self.train_per_step(seedx, seedy, unlbx, unlby)
+    #         if i % int(stepnum / 20) == 0 and print_loss:
+    #             print(i, 'th ,loss', loss)
+    #     return loss
     
     def train_per_step(self, sx, sy, ux, uy):
         _, loss = self.sess.run(fetches=[self.trainop, self.loss],
@@ -71,3 +78,8 @@ class EventClassifier:
     def save_params(self, file_name):
         saver = tf.train.Saver(self.params)
         saver.save(self.sess, file_name)
+
+
+class UnknownTypeEventClassifier(LREventClassifier):
+    def __init__(self, vocab_size, learning_rate, unlbreg_lambda, l2reg_lambda):
+        LREventClassifier.__init__(self, vocab_size, learning_rate, unlbreg_lambda, l2reg_lambda)

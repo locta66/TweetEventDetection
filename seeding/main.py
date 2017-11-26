@@ -5,9 +5,8 @@ from SeedParser import *
 from Main2Parser import *
 from Configure import getconfig
 
-
 seed_parser = SeedParser([
-    # [{'all_of': ['', '', ], 'any_of':['', '', ], }, ['2016', '', ''], ['2016', '', '']],
+    # [{'any_of': ['', '', ], 'all_of': ['', '', ], }, ['2016', '', ''], ['2016', '', '']],
     [{'all_of': ['Paris', 'police', 'station', ], 'any_of': ['attack', 'knife', ], },
      ['2016', '1', '6'], ['2016', '1', '10']],
     [{'all_of': ['Quetta', ], 'any_of': ['\Wbomb', 'security ', 'suicide', 'polio', 'policemen', ], },
@@ -20,21 +19,21 @@ seed_parser = SeedParser([
      ['2016', '2', '16'], ['2016', '2', '21']],
     [{'all_of': ['Cameroon\W', ], 'any_of': ['\Wbomb', 'blast', '\Wkill', 'suicide', ], },
      ['2016', '2', '18'], ['2016', '2', '23']],
-    [{'all_of': ['Homs', ], 'any_of': ['attack', '\Wbomb', '\Wkill', 'suicide', ],
-      'none_of': ['airstrike', ]},
-     ['2016', '2', '20'], ['2016', '2', '25']],
-    [{'all_of': ['Bassam', ],
-      'any_of': ['Grand', 'AQIM', 'attack', 'gunmen', '\Wkill', '\Wshot', 'shoot', ], },
-     ['2016', '3', '12'], ['2016', '3', '17']],
+    [{'any_of': ['attack', '\Wbomb', '\Wkill', 'suicide', ],
+      'all_of': ['Homs', ], 'none_of': ['airstrike', ]}, ['2016', '2', '20'], ['2016', '2', '25']],
+    [{'any_of': ['Grand', 'AQIM', 'attack', 'gunmen', '\Wkill', '\Wshot', 'shoot', ],
+      'all_of': ['Bassam', ], }, ['2016', '3', '12'], ['2016', '3', '17']],
     [{'all_of': ['Brussels', 'attack', ], 'any_of': ['\Wbomb', '\Wkill', 'suicide', ], },
-     ['2016', '3', '22'], ['2016', '3', '25']],
+     ['2016', '3', '22'], ['2016', '3', '26']],
     [{'all_of': ['Chhattisgarh', 'CRPF', ], 'any_of': ['attack', 'Dantewada', ], },
      ['2016', '3', '29'], ['2016', '4', '3']],
-    [{'all_of': ['Philippine', 'soldier', ],
-      'any_of': ['\WAbu\W', 'Sayyaf', 'clash', '\Wgun\W', 'militant', ], },
-     ['2016', '4', '8'], ['2016', '4', '13']],
+    [{'any_of': ['\WAbu\W', 'Sayyaf', 'clash', '\Wgun\W', 'militant', ],
+      'all_of': ['Philippine', 'soldier', ], }, ['2016', '4', '8'], ['2016', '4', '13']],
     [{'all_of': ['Kabul', 'attack', ], 'any_of': ['Afghanistan', '\Wbomb', '\Wgun\W', 'security', ], },
      ['2016', '4', '18'], ['2016', '4', '23']],
+    [{'any_of': ['murder', 'raid', 'injure', 'suicide', '\Wbomb', 'explosion', '\Wkill', 'wound',
+                 'troop', 'Boko Haram', 'terrorist'],
+      'all_of': ['Borno', ], }, ['2016', '4', '23'], ['2016', '4', '29']],
     [{'all_of': ['Somalia', ], 'any_of': ['attack', '\Wbomb', 'military', 'recapture', 'Shabaab', ], },
      ['2016', '4', '30'], ['2016', '5', '5']],
     [{'all_of': ['Munich', 'attack', ], 'any_of': ['knife', 'railway', ], },
@@ -43,13 +42,12 @@ seed_parser = SeedParser([
      ['2016', '5', '22'], ['2016', '5', '27']],
     [{'all_of': ['Boko', 'Bosso', ], },
      ['2016', '6', '3'], ['2016', '6', '9']],
-    [{'all_of': ['Orlando', 'nightclub', 'attack', ], 'any_of': ['gunman', 'hostage', 'shoot', '\Wshot', ], },
-     ['2016', '6', '11'], ['2016', '6', '16']],
-    [{'all_of': ['Mogadishu', ],
-      'any_of': ['attack', '\Wbomb', 'explode', 'hostage', '\Wkill', 'injured', ], },
-     ['2016', '6', '24'], ['2016', '6', '29']],
-    [{'all_of': ['Aden', 'airport'], 'any_of': ['attack', '\Wbomb', 'headquarter', 'security', ], },
-     ['2016', '7', '5'], ['2016', '7', '11']],
+    [{'any_of': ['gunman', 'hostage', 'shoot', '\Wshot', ],
+      'all_of': ['Orlando', 'nightclub', 'attack', ], }, ['2016', '6', '11'], ['2016', '6', '16']],
+    [{'any_of': ['attack', '\Wbomb', 'explode', 'hostage', '\Wkill', 'injured', ],
+      'all_of': ['Mogadishu', ], }, ['2016', '6', '24'], ['2016', '6', '29']],
+    [{'any_of': ['attack', '\Wbomb', 'headquarter', 'security', '\Wkill'],
+      'all_of': ['\WAden\W', 'airport'], }, ['2016', '7', '5'], ['2016', '7', '11']],
     [{'all_of': ['Nice', 'truck'], 'any_of': ['Bastille', 'crowd', 'gunfire', ], },
      ['2016', '7', '13'], ['2016', '7', '18']],
     [{'all_of': ['Mogadishu', ], 'any_of': ['\Wkill', '\Wbomb', 'suicide', 'Shabaab', ], },
@@ -57,7 +55,7 @@ seed_parser = SeedParser([
     [{'all_of': ['Kokrajhar', ], 'any_of': ['Assam', 'Bodo', '\Wgun\W', 'grenade', '\Wkill', 'shoot', ], },
      ['2016', '8', '4'], ['2016', '8', '9']],
     [{'all_of': ['Quetta', ], 'any_of': ['attack', '\Wbomb', 'hospital', '\Wkill', 'suicide', ], },
-     ['2016', '8', '7'], ['2016', '8', '9']],
+     ['2016', '8', '7'], ['2016', '8', '10']],
     [{'all_of': ['PKK', 'Turkey', ], 'any_of': ['attack', '\Wbomb', 'soldier', ]},
      ['2016', '8', '9'], ['2016', '8', '14']],
 ], theme='Terrorist', description='Describes event of terrorist attack')
@@ -99,10 +97,8 @@ cntr_parser = CounterParser([
       'all_of': ['Pakistan', 'flood', ], }, ['2016', '4', '2'], ['2016', '4', '8']],
 ], theme='Terrorist', description='Not Event of terrorist attack')
 
-
 # seed_parser = SeedParser([
 #     # [{'any_of': ['', '', ], 'all_of': ['', '', ], }, ['2016', '', ''], ['2016', '', '']],
-#
 #     [{'any_of': ['tornado', 'struck', 'cyclone', 'extratropical', 'state of emergency', 'record-breaking',
 #                  'damage', 'destroy', 'supercell', ],
 #       'all_of': ['Manzanita', ], }, ['2016', '10', '13'], ['2016', '10', '18']],
@@ -128,7 +124,7 @@ cntr_parser = CounterParser([
 #     [{'any_of': ['Romania', 'Belgium', 'France', 'Seine\W', 'Germany', 'disaster',
 #                  '\Wdead\W', 'death', 'missing', 'rainfall', 'rescue', ],
 #       'all_of': ['flood', ], }, ['2016', '5', '27'], ['2016', '6', '7']],
-#     [{'any_of': ['catastrophic ', 'rainfall', 'state of emergency', 'death', 'flooding', '\Wdead\W', 'FEMA', ],
+#     [{'any_of': ['catastrophic', '\Wdead\W', 'death', 'FEMA', 'flooding', 'rainfall', 'state of emergency', ],
 #       'all_of': ['Louisiana', 'flood', ], }, ['2016', '8', '10'], ['2016', '8', '17']],
 #     [{'any_of': ['disaster', '\Wdead\W', 'death', 'missing', 'rainfall', 'rescue', ],
 #       'all_of': ['Virginia', 'flood', ], }, ['2016', '6', '22'], ['2016', '6', '28']],
@@ -158,10 +154,6 @@ def main(args):
     
     if args.query:
         query_func(args.summary_path, parser)
-    # if args.totag:
-    #     exec_totag(parser)
-    # if args.untag:
-    #     exec_untag(parser)
     if args.ner:
         exec_ner(parser)
     if args.train:
@@ -177,9 +169,9 @@ def main(args):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Seeding information")
-    parser.add_argument('--summary_path', nargs='?', default=getconfig().summary_path,
+    parser.add_argument('--summary_path', default=getconfig().summary_path,
                         help='Filtered tweets organized in days as file XX_XX_XX_XX.sum under this path.')
-    parser.add_argument('--seed_path', nargs='?', default=getconfig().seed_path,
+    parser.add_argument('--seed_path', default=getconfig().seed_path,
                         help='Path for extracted seed instances according to particular query.')
     
     parser.add_argument('--unlb', action='store_true', default=False,
@@ -200,7 +192,7 @@ def parse_args():
     parser.add_argument('--temp', action='store_true', default=False,
                         help='Just a temp function.')
     
-    parser.add_argument('--test_data_path', nargs='?', default=getconfig().test_data_path,
+    parser.add_argument('--test_data_path', default=getconfig().test_data_path,
                         help='Path for test data from dzs.')
     parser.add_argument('--pre_test', action='store_true', default=False,
                         help='Just a temp function to preprocess data from dzs.')

@@ -16,37 +16,6 @@
 # len(english_stops)
 # #
 # #
-# import sys
-# def handpick_words_of_theme(in_dict, theme):
-#     print('Judge if the word can imply the theme of:', theme)
-#     print('"1" indicates YES ,while "2" means NO; "3" to go back to the previous word')
-#     tobe_removed = {}
-#     words = sorted(list(in_dict))
-#     i = 0
-#     while i < len(words):
-#         key = words[i]
-#         while True:
-#             sys.stdout.write(' '.join(['word:', '"'+key+'"', ', judge:']))
-#             sys.stdout.flush()
-#             judge = sys.stdin.readline().strip()
-#             if '1' in judge:
-#                 tobe_removed[key] = False
-#                 print('"'+key+'"', 'reserved')
-#                 i += 1
-#             elif '2' in judge:
-#                 tobe_removed[key] = True
-#                 print('"'+key+'"', 'popped')
-#                 i += 1
-#             elif "3" in judge:
-#                 print('')
-#                 i -= (1 if i > 0 else 0)
-#             else:
-#                 print('Re-enter your judge.')
-#                 continue
-#             break
-#     for word in tobe_removed.keys():
-#         if tobe_removed[word]:
-#             in_dict.pop(word)
 #
 #
 # # Cho, K., Courville, A., Bengio, Y., 2015. Describing multimedia
@@ -127,30 +96,6 @@
 # ec.reserve_params('/home/nfs/cdong/tw/seeding/params.p')
 # ec.restore_params('/home/nfs/cdong/tw/seeding/params.p')
 # print(ec.get_theta())
-#
-#
-#
-#
-#
-# import tensorflow as tf
-# import numpy as np
-# from EventClassifier import EventClassifier
-#
-# ec = EventClassifier(100, 0)
-# ec.restore_params('./what.prams')
-# print(ec.predict(np.random.random([1,100])))
-#
-# ec2 = EventClassifier(1, 0)
-# ec2.restore_params('./what.prams')
-# print(ec2.predict(np.random.random([1,100])))
-#
-#
-# import __init__
-# import time
-# import FileIterator
-# s = time.time()
-# twarr = FileIterator.load_array('/home/nfs/cdong/tw/summary/2016_07_01_14.sum')
-# print('time elapsed:', time.time() - s, 's')
 
 
 
@@ -207,7 +152,6 @@ print(len([('#', 'B-NP'), ('$', 'B-NP'), ("''", 'O'), ('(', 'O'), (')', 'O'),
 import nltk
 
 nltk.help.upenn_tagset()
-import ArrayUtils
 
 import numpy as np
 from sklearn import metrics
@@ -231,3 +175,14 @@ print([recall[i * span] for i in range(2)])
 
 # import multiprocessing
 # print(multiprocessing.cpu_count())
+
+
+import numpy as np
+
+X = np.matrix([[0.65, 0.35, 0.0],
+               [0.15, 0.67, 0.18],
+               [0.12, 0.36, 0.52]])
+for _ in range(10):
+    X = X * X
+    print(X, '\n')
+

@@ -66,7 +66,7 @@ class MyDict:
     def text_regularization(self, text, removeht=False, seglen=16):
         modified_text = text.strip()
         modified_text = self.contraction_patterns.apply_pattern(modified_text)
-        text_seg = []
+        text_seg = list()
         for word in re.split('[|\[\](),.^%$!`~+=_\-\s]', modified_text):
             if word is '':
                 continue

@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/query_results" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/clustering" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/config" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/utils" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

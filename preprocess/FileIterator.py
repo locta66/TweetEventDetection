@@ -12,11 +12,11 @@ from JsonParser import JsonParser
 unzip_cmd = pos_cmd = ner_cmd = ''
 
 
-def set_commands(unzip, pos, ner):
-    global unzip_cmd, pos_cmd, ner_cmd
-    unzip_cmd = unzip
-    pos_cmd = pos
-    ner_cmd = ner
+# def set_commands(unzip, pos, ner):
+#     global unzip_cmd, pos_cmd, ner_cmd
+#     unzip_cmd = unzip
+#     pos_cmd = pos
+#     ner_cmd = ner
 
 
 def judgetype(regex, target_str):
@@ -319,7 +319,7 @@ def is_target_ymdh(ymdh_arr):
     date = int(ymdh_arr[2])
     hour = int(ymdh_arr[3])
     return True
-    # return month <= 4
+    # return 4 == month and date <= 2
     # import datetime
     # tw_time = datetime.datetime.strptime('-'.join(ymdh_arr[0:3]), '%Y-%m-%d')
     # start_time = datetime.datetime.strptime('2016-06-08', '%Y-%m-%d')

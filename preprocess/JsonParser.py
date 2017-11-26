@@ -10,10 +10,12 @@ import TweetKeys
 
 class JsonParser:
     def __init__(self, tweet_desired_attrs=None, user_desired_attrs=None):
-        self.tweet_desired_attrs = ['created_at', 'id', 'text', 'place',    # 'geo', 'coordinates',
-                                    'user', 'retweet_count', 'favorite_count']
+        self.tweet_desired_attrs = ['created_at', 'id', 'text', 'place',  # 'geo', 'coordinates',
+                                    'user', 'retweet_count', 'favorite_count', 'entities',
+                                    'in_reply_to_status_id', 'in_reply_to_user_id']
         self.user_desired_attrs = ['id', 'time_zone', 'location', 'followers_count',
-                                   'friends_count', 'listed_count', 'statuses_count']
+                                   'friends_count', 'listed_count', 'statuses_count',
+                                   "description", "verified"]
         self.pattern = get_pattern()
         self.mydict = MyDict()
     
@@ -59,14 +61,14 @@ class JsonParser:
         if 'text' in tw:
             tw[TweetKeys.key_origintext] = tw['text']
             normalized_text = self.pattern.normalization(tw['text'])
-            if len(re.split('[\s,.!?]', normalized_text)) <= 6:
+            if len(re.split('[\s,.!?]', normalized_text)) <= 5:
                 return None
             tw['text'] = self.sentence_filter(normalized_text)
         return tw
     
     def sentence_filter(self, text):
         sentences = re.split('[.?!]', text)
-        res = []
+        res = list()
         for sentence in sentences:
             if sentence is '':
                 continue
@@ -91,7 +93,6 @@ class JsonParser:
             for obj in json_arr:
                 line = json.dumps(obj, sort_keys=True) + '\n'
                 fp.write(line)
-
 
 # ######## 推文属性 ########
 # text
