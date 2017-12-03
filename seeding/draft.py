@@ -186,3 +186,103 @@ for _ in range(10):
     X = X * X
     print(X, '\n')
 
+
+import pandas as pd
+d = pd.DataFrame({'pred': [2,2,3,4,4,4,4,5,5,6,7,7,7], 'label': [1,2,1,5,5,4,3,1,1,2,3,3,4]})
+d.groupby('pred').groups
+
+label = [11,2,1,55,55,4,3,1,11,2,3,33,4]
+dic = d.groupby('pred').indices
+print(type(dic))
+for pred in dic:
+    dic[pred] = [label[i] for i in dic[pred]]
+
+import numpy as np
+a = np.array([11,22,11,22,33,33,22,11,44])
+counts = np.bincount(a)
+np.argmax(counts)
+
+L=[1,2,3,2,4,33]
+from collections import Counter
+counter = Counter(L)
+list(counter)
+
+
+from collections import Counter
+import pandas as pd
+pred = [9,8,7,6,1]
+label = [11,2,1,55,55,4,3,1,11,2,3,33,4]
+df = pd.DataFrame(index=sorted(pred), columns=set(label), data=0)
+# df.append({11:1, 4:2}, ignore_index=True, verify_integrity=False)
+# df.fillna(0)
+
+
+import matplotlib.pyplot as plt
+plt.figure()
+plt.plot([1, 2, 3], [5, 7, 4], '^-', lw=1, label='cosine', color='r')
+plt.legend(loc='lower right')
+# plt.grid(True, linestyle="-", color="#333333", linewidth="0.1")
+plt.text(2.75, 7.3, 'matplotlib', verticalalignment="bottom",horizontalalignment="left")
+plt.show()
+# plt.savefig("examples.png")
+
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+fig = plt.figure()
+ax = Axes3D(fig)
+X = [-1, 0]
+Y = [-2, -1]
+X, Y = np.meshgrid(X, Y)
+Z = np.sqrt(X**2 + Y**2)
+# Z = np.sin(R)
+ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
+plt.show()
+
+
+# fig = plt.figure()
+# ax = fig.add_subplot(1,1,1)
+# ax.plot(x,y,'k--')
+# ax.set_xticks([0,25,50,75,100])
+# ax.set_xticklabels(['one','two','three','four','five'],rotation=45,fontsize=    'small')
+# ax.set_title('Demo Figure')
+# ax.set_xlabel('Time')
+# plt.show()
+
+import numpy as np
+import pandas as pd
+from mpl_toolkits.mplot3d import Axes3D
+
+X = [1.,2.,3.,4.,5.]
+Y = [3.,4.,5.,6.,7.]
+
+nmi_frame = pd.DataFrame(index=X, columns=Y, data=0.1)
+nmi_frame.loc[1][3] = 0.2
+nmi_frame.loc[1][4] = 0.3
+nmi_frame.loc[1][5] = 0.4
+nmi_frame.loc[2][3] = 0.5
+nmi_frame.loc[2][5] = 0.6
+nmi_frame.loc[3][3] = 0.7
+nmi_frame.loc[3][4] = 0.8
+nmi_frame.loc[3][5] = 0.9
+
+fig = plt.figure()
+ax = Axes3D(fig)
+X, Y = np.meshgrid(X, Y)
+# ax.plot_surface([1,2,3], [3,4,5], np.array(nmi_frame).tolist(), rstride=1, cstride=1, cmap='rainbow')
+ax.plot_surface(X, Y, np.array(nmi_frame.T).tolist(), vmin=0, cmap='BrBG_r')
+fig.savefig('e.png')
+
+import multiprocessing as mp
+mp.cpu_count()
+
+
+
+import numpy as np
+from scipy import sparse, io
+mtx = [[1.2, 2.3], [4.2, 3.1]]*30000
+contract_mtx = sparse.csr_matrix(mtx)
+io.mmwrite('shit.sss', contract_mtx)
+read_contract_mtx = io.mmread('shit.sss')
+dense_mtx = read_contract_mtx.todense()
+print(np.sum(np.matrix(mtx) - np.matrix(dense_mtx)))
+

@@ -1,8 +1,8 @@
-from MyDict import MyDict
-import TweetKeys
-import FunctionUtils
 import time
-import numpy as np
+
+import FunctionUtils
+import TweetKeys
+from MyDict import MyDict
 
 
 class CacheBack:

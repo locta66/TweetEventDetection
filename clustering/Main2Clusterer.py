@@ -1,11 +1,12 @@
 import FileIterator as fI
+import FunctionUtils as fu
 import Main2Parser
-import TweetKeys
-from Configure import getconfig
 from ArrayUtils import roc_auc
+from Configure import getconfig
 from EventExtractor import EventExtractor
 from EventTrainer import EventTrainer
 from FunctionUtils import sync_real_time_counter
+from collections import Counter
 
 
 @sync_real_time_counter('query')
@@ -43,39 +44,56 @@ def exec_temp(parser):
     log_path = '/home/nfs/cdong/tw/seeding/temp/'
     
     import os
-    if os.path.exists('hehe.txt'):
-        twarr = fI.load_array('hehe.txt')
+    if os.path.exists('positive.txt'):
+        twarr = fu.load_array('positive.txt')
+        cluster_label = fu.load_array('label.txt')
     else:
-        et.start_ner_service(pool_size=12, classify=True, pos=True)
+        et.start_ner_service(pool_size=16, classify=True, pos=True)
         
         # subfiles = [data_path + file for file in fI.listchildren(data_path, children_type='file')
         #             if (file[5: 7] == '08' and file[8: 10] == '29')][0:10]
         # twarr = fI.merge_list([ee.filter_twarr(et.twarr_ner(fI.load_array(file))) for file in subfiles])
+    
+        # file_list = [(data_path + file) for file in fI.listchildren(data_path, children_type='file') if
+        #              file.endswith('.sum') and parser.is_file_of_query_date(file)]
+        # print('from', file_list[0], ',', len(file_list), 'files until', '\n', file_list[-1])
+        # file_list = fI.split_multi_format(file_list, process_num=16)
+        # twarr_blocks = fI.multi_process(Main2Parser.query_tw_file_multi,
+        #                                [(file_list_slice, parser.__class__, parser.query_list, parser.theme,
+        #                                  parser.description) for file_list_slice in file_list])
+        # twarr = fI.merge_list([et.twarr_ner(twarr) for twarr in twarr_blocks])
+        # print('Queried', len(twarr), 'tweets,', end=' ')
+        # twarr = Main2Parser.remove_similar_tws(twarr)
         
-        file_list = [(data_path + file) for file in fI.listchildren(data_path, children_type='file') if
-                     file.endswith('.sum') and parser.is_file_of_query_date(file)]
-        print('from', file_list[0], ',', len(file_list), 'files until', '\n', file_list[-1])
-        file_list = fI.split_multi_format(file_list, process_num=16)
-        twarr_block = fI.multi_process(Main2Parser.query_tw_file_multi,
-                                       [(file_list_slice, parser.__class__, parser.query_list, parser.theme,
-                                         parser.description) for file_list_slice in file_list])
-        twarr = fI.merge_list([et.twarr_ner(twarr) for twarr in twarr_block])
-        print('Queried', len(twarr), 'tweets,', end=' ')
-        twarr = Main2Parser.remove_similar_tws(twarr)
-        fI.dump_array('hehe.txt', twarr)
-        print('accepted', len(twarr), 'tweets,')
+        twarr_blocks = Main2Parser.query_per_query_multi(data_path, parser.seed_query_list)
+        print('query over')
+        for i in range(len(parser.seed_query_list)):
+            twarr_blocks[i] = et.twarr_ner(twarr_blocks[i])
+            query = parser.seed_query_list[i]
+            fu.dump_array(log_path + query.all[0].strip('\W') + '_' + '-'.join(query.since) + '.sum', twarr_blocks[i])
+        
+        print('ner over')
+        twarr = fu.merge_list(twarr_blocks)
+        cluster_label = fu.merge_list([[i for _ in twarr_blocks[i]] for i in range(len(twarr_blocks))])
+        fu.dump_array('positive.txt', twarr)
+        fu.dump_array('label.txt', cluster_label)
+        
         et.end_ner_service()
     
-    twarr = fI.load_array(getconfig().pos_data_file)
-    tw_topic_arr = ee.GSDMM_twarr(twarr)
+    print('Label distribution ', list(dict(Counter(cluster_label)).values()),
+          'total cluster', Counter(cluster_label).__len__())
+    # twarr = fI.load_array(getconfig().pos_data_file)
+    # tw_topic_arr, cluster_pred = ee.GSDMM_twarr_with_label(twarr, cluster_label)
+    # tw_topic_arr, cluster_pred = ee.LECM_twarr_with_label(twarr, cluster_label)
+    tw_topic_arr, cluster_pred = ee.GSDPMM_twarr_with_label(twarr, cluster_label)
     
-    fI.remove_files([log_path + file for file in fI.listchildren(log_path, children_type='file')
-                     if file.endswith('.txt')])
-    for i, _twarr in enumerate(tw_topic_arr):
-        if len(_twarr) < 6:
-            continue
-        fI.dump_array(log_path + str(i) + '.txt',
-                      [' '.join([w[0] for w in tw[TweetKeys.key_wordlabels]]) for tw in _twarr])
+    
+    # import TweetKeys
+    # fI.remove_files([log_path + file for file in fI.listchildren(log_path, children_type='file')
+    #                  if file.endswith('.txt')])
+    # for i, _twarr in enumerate(tw_topic_arr):
+    #     if not len(_twarr) == 0:
+    #         fI.dump_array(log_path + str(i) + '.txt', [tw[TweetKeys.key_cleantext] for tw in _twarr])
     
     # for tw in twarr:
     #     ee.merge_tw_into_cache_back(tw)

@@ -1,8 +1,8 @@
-from FunctionUtils import slash_appender
 import FileIterator
+import TweetKeys
+from FunctionUtils import slash_appender
 from JsonParser import JsonParser
 from SeedQuery import SeedQuery
-import TweetKeys
 
 
 class SeedParser(JsonParser):

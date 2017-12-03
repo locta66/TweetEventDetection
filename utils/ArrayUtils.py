@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+from collections import Counter
 from sklearn import metrics
 
 
@@ -37,7 +39,6 @@ def index_partition(array, partition_arr=(1, 1, 1), random=True, ordered=False):
 
 
 def shuffle(array, new_arr=False):
-    array[9]
     array = array[:] if new_arr else array
     np.random.shuffle(array)
     return array
@@ -91,8 +92,21 @@ def shuffle(array, new_arr=False):
 #     return area
 
 
-def roc_auc(lebels, scores):
-    return metrics.roc_auc_score(lebels, scores)
+def roc_auc(labels_true, scores):
+    return metrics.roc_auc_score(labels_true, scores)
+
+
+def score(labels_true, labels_pred, score_type):
+    if score_type == 'roc':
+        return metrics.roc_auc_score(labels_true, labels_pred)
+    elif score_type == 'nmi':
+        return metrics.normalized_mutual_info_score(labels_true, labels_pred)
+    elif score_type == 'homo':
+        return metrics.homogeneity_score(labels_true, labels_pred)
+    elif score_type == 'cmplt':
+        return metrics.completeness_score(labels_true, labels_pred)
+    
+    
 
 
 def group_array_by_condition(array, item_key):
@@ -102,10 +116,23 @@ def group_array_by_condition(array, item_key):
     return [dictionary[key] for key in sorted(dictionary.keys())]
 
 
+# def softmax(array, factor=1):
+#     array = array if factor == 1 else np.array(array) * factor
+#     return np.exp(array) / np.sum(np.exp(array), axis=0)
+
+
 def sample_index_by_array_value(array):
     return np.random.choice(a=[i for i in range(len(array))], p=np.array(array) / np.sum(array))
 
 
-# def softmax(array, factor=1):
-#     array = array if factor == 1 else np.array(array) * factor
-#     return np.exp(array) / np.sum(np.exp(array), axis=0)
+def element_over_half(array):
+    total = len(array)
+    for element, count in dict(Counter(array)).items():
+        if count << 1 >= total:
+            return element
+    return None
+
+
+def element_max_count(array):
+    return list(pd.Series(array).mode())
+

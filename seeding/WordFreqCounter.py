@@ -69,7 +69,7 @@ class WordFreqCounter:
         pos_vector = np.array([0] * self.posdict.vocabulary_size(), dtype=np.float32)
         for wordlabel in wordlabels:
             word = wordlabel[0].lower().strip("#") if self.capignore else wordlabel[0]
-            word = get_root_word(word) if wordlabel[2] in self.verb else word
+            # word = get_root_word(word) if wordlabel[2] in self.verb else word
             # if not wordlabel[0].lower().strip("#") == word:
             #     print(wordlabel[2], wordlabel[0].lower().strip("#"), '->', word)
             if not (self.is_valid_keyword(word) and self.is_valid_wordlabel(wordlabel)):

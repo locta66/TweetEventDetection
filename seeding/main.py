@@ -3,6 +3,7 @@ import argparse
 
 from SeedParser import *
 from Main2Parser import *
+import FunctionUtils as fu
 from Configure import getconfig
 
 seed_parser = SeedParser([
@@ -135,7 +136,7 @@ cntr_parser = CounterParser([
 # ], theme='NaturalDisaster', description='Describes event of natural disaster events')
 
 
-@sync_real_time_counter('main')
+@fu.sync_real_time_counter('main')
 def main(args):
     if args.unlb:
         args.ner = False
@@ -160,6 +161,8 @@ def main(args):
         exec_train(seed_parser, unlb_parser, cntr_parser)
     if args.temp:
         temp(cntr_parser)
+    if args.matrix:
+        construct_feature_matrix(seed_parser, unlb_parser, cntr_parser)
     
     if args.pre_test:
         exec_pre_test(args.test_data_path)
@@ -191,6 +194,8 @@ def parse_args():
                         help='If train the model according to the queried tweets, with internal logic.')
     parser.add_argument('--temp', action='store_true', default=False,
                         help='Just a temp function.')
+    parser.add_argument('--matrix', action='store_true', default=False,
+                        help='To obtain the matrix for both train and test twarr.')
     
     parser.add_argument('--test_data_path', default=getconfig().test_data_path,
                         help='Path for test data from dzs.')

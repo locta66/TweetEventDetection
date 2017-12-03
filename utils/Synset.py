@@ -40,5 +40,5 @@ if __name__ == "__main__":
     while True:
         print('input your query:')
         query = sys.stdin.readline().strip('\n')
-        print(has_root_word(query), get_root_word(query))
-        print(get_synset(query))
+        print('has_root_word:', has_root_word(query), 'root_word:', get_root_word(query))
+        print('synset', get_synset(query))
