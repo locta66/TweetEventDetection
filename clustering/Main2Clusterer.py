@@ -1,12 +1,17 @@
-import FileIterator as fI
-import FunctionUtils as fu
+from collections import Counter
+
+import numpy as np
 import Main2Parser
+import TweetKeys
+import FunctionUtils as fu
+import ArrayUtils as au
+import TweetUtils as tu
+import DateUtils as du
 from ArrayUtils import roc_auc
 from Configure import getconfig
 from EventExtractor import EventExtractor
 from EventTrainer import EventTrainer
 from FunctionUtils import sync_real_time_counter
-from collections import Counter
 
 
 @sync_real_time_counter('query')
@@ -25,8 +30,8 @@ def exec_classification(seed_parser, test_parser):
     # pos_pred = event_extractor.make_classification(twarr)
     # print(recall([(pred[0], 1) for pred in pos_pred], [i / 10 for i in range(1, 10)]))
     
-    pos_twarr = fI.load_array(getconfig().pos_data_file)
-    non_pos_twarr = fI.load_array(getconfig().non_pos_data_file)
+    pos_twarr = fu.load_array(getconfig().pos_data_file)
+    non_pos_twarr = fu.load_array(getconfig().non_pos_data_file)
     pos_pred = event_extractor.make_classification(pos_twarr)
     non_pos_pred = event_extractor.make_classification(non_pos_twarr)
     scores = [pred[0] for pred in pos_pred] + [pred[0] for pred in non_pos_pred]
@@ -37,56 +42,23 @@ def exec_classification(seed_parser, test_parser):
     #         print(pos_twarr[idx][TweetKeys.key_origintext], '\n---\n')
 
 
-def exec_temp(parser):
-    et = EventTrainer()
+def exec_cluster(parser):
+    # twarr, label = load_clusters_and_labels()
+    # print('Label distribution ', list(Counter(label).values()), 'total cluster', Counter(label).__len__(),
+    #       '\ntotal tweet num ', len(twarr))
+    
     ee = EventExtractor(parser.get_dict_file_name(), parser.get_param_file_name())
-    data_path = '/home/nfs/cdong/tw/summary/'
-    log_path = '/home/nfs/cdong/tw/seeding/temp/'
+    # tw_topic_arr, cluster_pred = ee.LECM_twarr_with_label(twarr, label)
+    # tw_topic_arr, cluster_pred = ee.GSDMM_twarr_with_label(twarr, label)
+    # tw_topic_arr, cluster_pred = ee.GSDPMM_twarr_with_label(twarr, label)
+    # tw_topic_arr, cluster_pred = ee.GSDMM_twarr_hashtag_with_label(twarr, label)
+    # ee.semantic_cluster_with_label(twarr, label)
     
-    import os
-    if os.path.exists('positive.txt'):
-        twarr = fu.load_array('positive.txt')
-        cluster_label = fu.load_array('label.txt')
-    else:
-        et.start_ner_service(pool_size=16, classify=True, pos=True)
-        
-        # subfiles = [data_path + file for file in fI.listchildren(data_path, children_type='file')
-        #             if (file[5: 7] == '08' and file[8: 10] == '29')][0:10]
-        # twarr = fI.merge_list([ee.filter_twarr(et.twarr_ner(fI.load_array(file))) for file in subfiles])
-    
-        # file_list = [(data_path + file) for file in fI.listchildren(data_path, children_type='file') if
-        #              file.endswith('.sum') and parser.is_file_of_query_date(file)]
-        # print('from', file_list[0], ',', len(file_list), 'files until', '\n', file_list[-1])
-        # file_list = fI.split_multi_format(file_list, process_num=16)
-        # twarr_blocks = fI.multi_process(Main2Parser.query_tw_file_multi,
-        #                                [(file_list_slice, parser.__class__, parser.query_list, parser.theme,
-        #                                  parser.description) for file_list_slice in file_list])
-        # twarr = fI.merge_list([et.twarr_ner(twarr) for twarr in twarr_blocks])
-        # print('Queried', len(twarr), 'tweets,', end=' ')
-        # twarr = Main2Parser.remove_similar_tws(twarr)
-        
-        twarr_blocks = Main2Parser.query_per_query_multi(data_path, parser.seed_query_list)
-        print('query over')
-        for i in range(len(parser.seed_query_list)):
-            twarr_blocks[i] = et.twarr_ner(twarr_blocks[i])
-            query = parser.seed_query_list[i]
-            fu.dump_array(log_path + query.all[0].strip('\W') + '_' + '-'.join(query.since) + '.sum', twarr_blocks[i])
-        
-        print('ner over')
-        twarr = fu.merge_list(twarr_blocks)
-        cluster_label = fu.merge_list([[i for _ in twarr_blocks[i]] for i in range(len(twarr_blocks))])
-        fu.dump_array('positive.txt', twarr)
-        fu.dump_array('label.txt', cluster_label)
-        
-        et.end_ner_service()
-    
-    print('Label distribution ', list(dict(Counter(cluster_label)).values()),
-          'total cluster', Counter(cluster_label).__len__())
-    # twarr = fI.load_array(getconfig().pos_data_file)
-    # tw_topic_arr, cluster_pred = ee.GSDMM_twarr_with_label(twarr, cluster_label)
-    # tw_topic_arr, cluster_pred = ee.LECM_twarr_with_label(twarr, cluster_label)
-    tw_topic_arr, cluster_pred = ee.GSDPMM_twarr_with_label(twarr, cluster_label)
-    
+    tw_batches, lb_batches = create_batches_through_time()
+    print('Label distribution ', list(Counter(fu.merge_list(lb_batches)).values()),
+          'total cluster', Counter(fu.merge_list(lb_batches)).__len__(),
+          '\ntotal tweet num ', len(fu.merge_list(tw_batches)))
+    ee.stream_semantic_cluster_with_label(tw_batches, lb_batches)
     
     # import TweetKeys
     # fI.remove_files([log_path + file for file in fI.listchildren(log_path, children_type='file')
@@ -126,3 +98,82 @@ def exec_temp(parser):
     #                    '----',
     #                    ee.cache_back[i].tweet_number()
     #                    ], overwrite=False)
+
+
+def exec_temp(parser):
+    # """find tws that classifier fail to recognize on dzs_neg_data, and split them into blocks"""
+    # event_extractor = EventExtractor(parser.get_dict_file_name(), parser.get_param_file_name())
+    # dzs_neg_data = '/home/nfs/cdong/tw/testdata/non_pos_tweets.sum'
+    # dzs_neg_twarr = fu.load_array(dzs_neg_data)
+    # preds = event_extractor.make_classification(dzs_neg_twarr)
+    # false_pos_twarr = [dzs_neg_twarr[idx] for idx, pred in enumerate([pred for pred in preds]) if pred > 0.5]
+    # # false_pos_twarr_blocks = au.array_partition(false_pos_twarr, [1] * 10)
+    # fu.dump_array('falseevents.txt', false_pos_twarr)
+    
+    """query for pos events into blocks"""
+    data_path = getconfig().summary_path
+    log_path = '/home/nfs/cdong/tw/seeding/temp/'
+    twarr_blocks = Main2Parser.query_per_query_multi(data_path, parser.seed_query_list)
+    print('query over')
+    et = EventTrainer()
+    et.start_ner_service(pool_size=16, classify=True, pos=True)
+    for i in range(len(parser.seed_query_list)):
+        twarr_blocks[i] = et.twarr_ner(twarr_blocks[i])
+        query_i = parser.seed_query_list[i]
+        file_name_i = query_i.all[0].strip('\W') + '_' + '-'.join(query_i.since) + '.sum'
+        fu.dump_array(log_path + file_name_i, twarr_blocks[i])
+    et.end_ner_service()
+    print('ner over, event num queried ', len(twarr_blocks))
+    fu.dump_array('events.txt', twarr_blocks, overwrite=False)
+    
+    # """splitting dzs_neg_data into blocks"""
+    # twarr_blocks = list()
+    # dzs_neg_data = '/home/nfs/cdong/tw/testdata/non_pos_tweets.sum'
+    # dzs_neg_parts = au.array_partition(fu.load_array(dzs_neg_data), (1, 1, 1, 1))
+    # for dzs_part in dzs_neg_parts:
+    #     twarr_blocks.append(au.random_array_items(dzs_part, 300))
+    # my_neg_data = '/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_counter.sum'
+    # my_neg_parts = au.array_partition(fu.load_array(my_neg_data), (1, 1, 1, 1))
+    # for my_part in my_neg_parts:
+    #     twarr_blocks.append(au.random_array_items(my_part, 300))
+    #
+    # print('tweet distribution ', [len(twarr) for twarr in twarr_blocks], '\n\rtotal cluster', len(twarr_blocks))
+    # fu.dump_array('nonevents.txt', twarr_blocks)
+
+
+def load_clusters_and_labels():
+    # event_twarr_blocks = fu.load_array('events.txt')
+    # false_pos_twarr_blocks = fu.load_array('falseevents.txt')
+    # non_event_twarr_blocks = fu.load_array('nonevents.txt')
+    # print('pos event group num:', len(event_twarr_blocks),
+    #       'false pos event group num:', len(false_pos_twarr_blocks),
+    #       'non event group num:', len(non_event_twarr_blocks))
+    # blocks = event_twarr_blocks[0:12] + false_pos_twarr_blocks[::2] + non_event_twarr_blocks[::2]
+    # twarr = fu.merge_list(blocks)
+    # label = fu.merge_list([[i for _ in range(len(blocks[i]))] for i in range(len(blocks))])
+    # return twarr, label
+    event_twarr_blocks = fu.load_array('events.txt')
+    blocks = event_twarr_blocks[0:12]
+    twarr = fu.merge_list(blocks)
+    label = fu.merge_list([[i for _ in range(len(blocks[i]))] for i in range(len(blocks))])
+    return twarr, label
+
+
+def create_batches_through_time():
+    event_blocks = fu.load_array('events.txt')
+    twarr = fu.merge_list(event_blocks)
+    label = fu.merge_list([[i for _ in range(len(event_blocks[i]))] for i in range(len(event_blocks))])
+    
+    idx_time_order = tu.rearrange_idx_by_time(twarr)
+    twarr = [twarr[idx] for idx in idx_time_order]
+    label = [label[idx] for idx in idx_time_order]
+    
+    # for idx in range(len(twarr) - 1):
+    #     if du.get_timestamp_form_created_at(twarr[idx][TweetKeys.key_created_at].strip()) > \
+    #             du.get_timestamp_form_created_at(twarr[idx + 1][TweetKeys.key_created_at].strip()):
+    #         raise ValueError('wrong')
+    
+    idx_parts = au.index_partition(twarr, [1] * int(len(twarr) / 400), random=False)
+    tw_batches = [[twarr[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
+    lb_batches = [[label[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
+    return tw_batches, lb_batches

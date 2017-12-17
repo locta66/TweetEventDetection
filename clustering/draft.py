@@ -132,3 +132,19 @@ y_true = [5,3,5,5,5]
 nmi = normalized_mutual_info_score(y_true, y_pred)
 nmi
 
+import pandas as pd
+# pd.DataFrame(columns=['qwe', 'a', 'weqr','yt'], data=[[1,2,3,4], [0,0,0,0]])
+data = np.array([[1, 2, 3],
+                 [3, 4, 5],
+                 [4, 5, 6],
+                 [3, 2, 3],
+                 [4, 3, 5],
+                 ])
+df = pd.DataFrame(data=data)
+df.sort_values(by=[2, 0], ascending=False)
+df.loc[:,1]
+
+for i, j in [1,2,3], [3,4]:
+    print(i, j)
+
+

@@ -1,27 +1,10 @@
-import re
 import os
-import json
-# import subprocess
-
-import math
-import multiprocessing as mp
 
 from Pattern import get_pattern
 from JsonParser import JsonParser
+import FunctionUtils as fu
 
 unzip_cmd = pos_cmd = ner_cmd = ''
-
-
-# def set_commands(unzip, pos, ner):
-#     global unzip_cmd, pos_cmd, ner_cmd
-#     unzip_cmd = unzip
-#     pos_cmd = pos
-#     ner_cmd = ner
-
-
-def judgetype(regex, target_str):
-    pattern = re.compile(regex)
-    return pattern.findall(target_str)
 
 
 def append_slash_if_necessary(path):
@@ -37,8 +20,20 @@ def make_dirs_if_not_exists(dir_name):
         os.makedirs(dir_name)
 
 
-def basename(abspath):
+def base_name(abspath):
     return os.path.basename(abspath)
+
+
+def get_parent_path(path):
+    return os.path.dirname(path)
+
+
+def is_dir(path):
+    return os.path.isdir(path)
+
+
+def is_file(file):
+    return os.path.isfile(file)
 
 
 def remove_files(files):
@@ -138,13 +133,13 @@ def summary_files_in_path(file_path, *args, **kwargs):
     remove_ymdh_from_path(summary_path, summary_name)
     subfiles = listchildren(file_path, children_type='file')
     
-    file_list = split_multi_format([(file_path + subfile) for subfile in subfiles], process_num=15)
-    twarr_blocks = multi_process(summary_zipped_tweets_multi,
+    file_list = fu.split_multi_format([(file_path + subfile) for subfile in subfiles], process_num=15)
+    twarr_blocks = fu.multi_process(summary_zipped_tweets_multi,
                                  [(file_list_slice,) for file_list_slice in file_list])
-    twarr = merge_list(twarr_blocks)
+    twarr = fu.merge_list(twarr_blocks)
     
     if twarr:
-        dump_array(summary_file, twarr)
+        fu.dump_array(summary_file, twarr)
     print(summary_file, 'written')
 
 
@@ -174,6 +169,34 @@ def remove_ymdh_from_path(summary_path, ymdh_file_name):
     for subfile in subfiles:
         if ymdh_file_name in subfile:
             remove_file(summary_path + subfile)
+
+
+# def simplify_files_multi(from_dir, to_dir):
+#     import FunctionUtils as fu
+#     import ArrayUtils as au
+#     file_list = listchildren(from_dir, children_type='file')[:6]
+#     file_lists = au.array_partition(file_list, [1] * 2)
+#     fu.multi_process(simplify_files, [(from_dir, f, to_dir) for f in file_lists])
+
+
+# def simplify_files(from_dir, file_list, to_dir):
+#     import FunctionUtils as fu
+#     tweet_desired_attrs = ['created_at', 'timestamp_ms', 'id', 'text', 'place', 'user',
+#                             'retweet_count', 'favorite_count', 'in_reply_to_status_id', 'in_reply_to_user_id', ]
+#     user_desired_attrs = ['id', 'created_at', 'time_zone', 'location', 'favourites_count',
+#                            'followers_count', 'friends_count', 'listed_count', 'statuses_count', 'verified', ]
+#     def attribute_filter(target_dict, attr_list):
+#         for attr in list(target_dict.keys()):
+#             if attr not in attr_list:
+#                 target_dict.pop(attr)
+#         return target_dict
+#
+#     for file in file_list:
+#         print(from_dir + file)
+#         twarr = fu.load_array(from_dir + file)
+#         for tw in twarr:
+#             attribute_filter(tw, tweet_desired_attrs)
+#             attribute_filter(tw['user'], user_desired_attrs)
 
 
 # def pos_of_summary(summary_file):
@@ -259,59 +282,6 @@ def remove_ymdh_from_path(summary_path, ymdh_file_name):
 #         return True
 
 
-def merge_list(array):
-    res = list()
-    for item in array:
-        res.extend(item)
-    return res
-
-
-def split_multi_format(array, process_num):
-    block_size = math.ceil(len(array) / process_num)
-    formatted_array = list()
-    for i in range(process_num):
-        formatted_array.append(array[i * block_size: (i + 1) * block_size])
-    return formatted_array
-
-
-def multi_process(func, args_list):
-    """
-    Do func in multiprocess way.
-    :param func: To be executed within every
-    :param args_list:
-    :return:
-    """
-    process_num = len(args_list)
-    pool = mp.Pool(processes=process_num)
-    res_getter = list()
-    for i in range(process_num):
-        res = pool.apply_async(func=func, args=args_list[i])
-        res_getter.append(res)
-    pool.close()
-    pool.join()
-    results = list()
-    for i in range(process_num):
-        results.append(res_getter[i].get())
-    return results
-
-
-def dump_array(file, array, overwrite=True, sort_keys=False):
-    if type(array) is not list:
-        raise TypeError("Dict array not of valid type.")
-    with open(file, 'w' if overwrite else 'a') as fp:
-        for element in array:
-            fp.write(json.dumps(element, sort_keys=sort_keys) + '\n')
-
-
-def load_array(file):
-    array = list()
-    with open(file, 'r') as fp:
-        for line in fp.readlines():
-            array.append(json.loads(line.strip()))
-    return array
-
-
-# If you wish to customize the ymdh of summary & pre-process procedure, judge the ymdh of a file here
 def is_target_ymdh(ymdh_arr):
     # ymdh_arr resembles ['201X', '0X', '2X', '1X']
     year = int(ymdh_arr[0])

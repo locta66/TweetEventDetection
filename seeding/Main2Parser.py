@@ -2,7 +2,7 @@ import Levenshtein
 from sklearn import metrics
 
 import ArrayUtils as au
-import FileIterator as fI
+import FileIterator as fi
 import FunctionUtils as fu
 import TweetKeys
 from Configure import getconfig
@@ -13,8 +13,8 @@ query_process_num = 16
 
 @fu.sync_real_time_counter('query')
 def exec_query(data_path, parser):
-    data_path = fI.append_slash_if_necessary(data_path)
-    subfiles = fI.listchildren(data_path, children_type='file')
+    data_path = fi.append_slash_if_necessary(data_path)
+    subfiles = fi.listchildren(data_path, children_type='file')
     file_list = [(data_path + file_name) for file_name in subfiles if
                  file_name.endswith('.sum') and parser.is_file_of_query_date(file_name)]
     if not file_list:
@@ -33,15 +33,15 @@ def exec_query(data_path, parser):
     # for tw in parser.added_twarr:
     #     print(tw[TweetKeys.key_origintext], '\n---\n')
     print(parser.get_query_result_file_name(), 'written.\n')
-    fu.dump_array(parser.get_query_result_file_name(), parser.added_twarr)
+    fu.dump_array(parser.get_query_result_file_name() + '1', parser.added_twarr)
 
 
 @fu.sync_real_time_counter('unlabelled')
 def exec_query_unlabelled(data_path, parser):
-    data_path = fI.append_slash_if_necessary(data_path)
-    file_list = [file_name for file_name in fI.listchildren(data_path, children_type='file') if
+    data_path = fi.append_slash_if_necessary(data_path)
+    file_list = [file_name for file_name in fi.listchildren(data_path, children_type='file') if
                  file_name.endswith('.sum') and parser.is_file_of_query_date(file_name)]
-    date_group = ArrayUtils.group_array_by_condition(file_list, lambda item: item[:11])
+    date_group = au.group_array_by_condition(file_list, lambda item: item[:11])
     file_list = [[(data_path + file_name) for file_name in group] for group in date_group]
     print('total file number', sum([len(f_list) for f_list in file_list]))
     start = 0
@@ -69,15 +69,15 @@ def exec_query_unlabelled(data_path, parser):
     # twarr = remove_similar_tws(fI.merge_list(twarr_block))
     twarr = fu.merge_list(twarr_block)
     print(len(twarr), 'accepted.')
-    fu.dump_array(parser.get_query_result_file_name(), twarr)
+    fu.dump_array(parser.get_query_result_file_name() + '1', twarr)
     et.end_ner_service()
 
 
 @fu.sync_real_time_counter('counter')
 def exec_query_counter(data_path, parser):
-    data_path = fI.append_slash_if_necessary(data_path)
+    data_path = fi.append_slash_if_necessary(data_path)
     file_list = [(data_path + file_name) for file_name in
-                 fI.listchildren(data_path, children_type='file') if
+                 fi.listchildren(data_path, children_type='file') if
                  file_name.endswith('.sum') and parser.is_file_of_query_date(file_name)]
     print(file_list[0], '\n', len(file_list), 'files until', '\n', file_list[-1])
     file_list = fu.split_multi_format(file_list, process_num=query_process_num)
@@ -87,10 +87,10 @@ def exec_query_counter(data_path, parser):
                                            parser.description) for file_list_slice in file_list])
     parser.added_twarr = fu.merge_list(added_twarr_block)
     print('Queried', len(parser.added_twarr), 'tweets,')
-    parser.added_twarr = ArrayUtils.random_array_items(parser.added_twarr, 30000)
-    remove_similar_tws(parser.added_twarr)
+    parser.added_twarr = au.random_array_items(parser.added_twarr, 40000)
+    # remove_similar_tws(parser.added_twarr)
     print(len(parser.added_twarr), 'accepted.\n', parser.get_query_result_file_name(), 'written.\n')
-    fu.dump_array(parser.get_query_result_file_name(), parser.added_twarr)
+    fu.dump_array(parser.get_query_result_file_name() + '1', parser.added_twarr)
 
 
 def query_tw_file_multi(file_list, parser_class, query_list, theme, description):
@@ -112,11 +112,12 @@ def query_tw_file_multi(file_list, parser_class, query_list, theme, description)
 
 
 def query_per_query_multi(data_path, query_list):
+    """make query and return corresponding twarr in the order of queries"""
     return fu.multi_process(func=per_query, args_list=[(data_path, query) for query in query_list])
 
 
 def per_query(data_path, query):
-    subfiles = fI.listchildren(data_path, children_type='file')
+    subfiles = fi.listchildren(data_path, children_type='file')
     file_list = [(data_path + file_name) for file_name in subfiles if file_name.endswith('.sum') and
                  query.is_time_desired(query.time_of_tweet(file_name, source='filename'))]
     for file in file_list:
@@ -176,15 +177,16 @@ def remove_similar_tws(twarr):
 def exec_ner(parser):
     efe = EventTrainer()
     efe.start_ner_service()
-    efe.perform_ner_on_tw_file(parser.get_query_result_file_name())
+    efe.perform_ner_on_tw_file(parser.get_query_result_file_name() + '1')
+    # efe.perform_ner_on_tw_file('/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_counter.sum1')
     efe.end_ner_service()
 
 
 def exec_train(seed_parser, unlb_parser, cntr_parser):
     et = EventTrainer()
-    seed_twarr = fI.load_array(seed_parser.get_query_result_file_name())
-    unlb_twarr = fI.load_array(unlb_parser.get_query_result_file_name())
-    cntr_twarr = fI.load_array(cntr_parser.get_query_result_file_name())
+    seed_twarr = fu.load_array(seed_parser.get_query_result_file_name())
+    unlb_twarr = fu.load_array(unlb_parser.get_query_result_file_name())
+    cntr_twarr = fu.load_array(cntr_parser.get_query_result_file_name())
     localcounter, event_classifier = et.train_and_test(seed_twarr, unlb_twarr, cntr_twarr)
     localcounter.dump_worddict(seed_parser.get_dict_file_name())
     event_classifier.save_params(seed_parser.get_param_file_name())
@@ -192,18 +194,18 @@ def exec_train(seed_parser, unlb_parser, cntr_parser):
 
 def exec_train_with_outer(seed_parser, unlb_parser, cntr_parser):
     et = EventTrainer()
-    seed_twarr = fI.load_array(seed_parser.get_query_result_file_name())
-    unlb_twarr = fI.load_array(unlb_parser.get_query_result_file_name())
-    cntr_twarr = fI.load_array(cntr_parser.get_query_result_file_name())
+    seed_twarr = fu.load_array(seed_parser.get_query_result_file_name())
+    unlb_twarr = fu.load_array(unlb_parser.get_query_result_file_name())
+    cntr_twarr = fu.load_array(cntr_parser.get_query_result_file_name())
     
-    dzs_pos_twarr = fI.load_array(getconfig().pos_data_file)
-    dzs_non_pos_twarr = fI.load_array(getconfig().non_pos_data_file)
+    dzs_pos_twarr = fu.load_array(getconfig().pos_data_file)
+    dzs_non_pos_twarr = fu.load_array(getconfig().non_pos_data_file)
     dzs_pos_train, dzs_pos_test = au.array_partition(dzs_pos_twarr, (1, 1))
     dzs_non_pos_train, dzs_non_pos_test = au.array_partition(dzs_non_pos_twarr, (1, 1))
-    seed_twarr += dzs_pos_train
-    cntr_twarr += dzs_non_pos_train
+    pos_twarr = seed_twarr + dzs_pos_train * 5
+    neg_twarr = cntr_twarr + dzs_non_pos_train
     
-    localcounter, event_classifier = et.train_and_test(seed_twarr * 4, unlb_twarr, cntr_twarr,
+    localcounter, event_classifier = et.train_and_test(pos_twarr, unlb_twarr, neg_twarr,
                                                        dzs_pos_test, dzs_non_pos_test)
     
     pos_pred = event_classifier.predict(localcounter.feature_matrix_of_twarr(dzs_pos_test))
@@ -255,14 +257,14 @@ def construct_feature_matrix(seed_parser, unlb_parser, cntr_parser):
     print('construct_feature_matrix')
     et = EventTrainer()
     
-    seed_twarr = fI.load_array(seed_parser.get_query_result_file_name())
+    seed_twarr = fu.load_array(seed_parser.get_query_result_file_name())
     print('seed_twarr:', len(seed_twarr))
-    unlb_twarr = fI.load_array(unlb_parser.get_query_result_file_name())
-    cntr_twarr = fI.load_array(cntr_parser.get_query_result_file_name())
+    unlb_twarr = fu.load_array(unlb_parser.get_query_result_file_name())
+    cntr_twarr = fu.load_array(cntr_parser.get_query_result_file_name())
     print('cntr_twarr:', len(cntr_twarr))
     
-    dzs_pos_twarr = fI.load_array(getconfig().pos_data_file)
-    dzs_neg_twarr = fI.load_array(getconfig().non_pos_data_file)
+    dzs_pos_twarr = fu.load_array(getconfig().pos_data_file)
+    dzs_neg_twarr = fu.load_array(getconfig().non_pos_data_file)
     print('dzs_pos_twarr:', len(cntr_twarr))
     dzs_pos_train, dzs_pos_test = au.array_partition(dzs_pos_twarr, (1, 1))
     print('dzs_pos_train:', len(dzs_pos_train))
@@ -304,20 +306,20 @@ def construct_feature_matrix(seed_parser, unlb_parser, cntr_parser):
 
 
 def exec_pre_test(test_data_path):
-    subfiles = fI.listchildren(test_data_path, children_type='file')
-    file_list = fI.split_multi_format(
+    subfiles = fi.listchildren(test_data_path, children_type='file')
+    file_list = fu.split_multi_format(
         [(test_data_path + file) for file in subfiles if file.endswith('.json')], process_num=6)
-    twarr_blocks = fI.multi_process(fI.summary_unzipped_tweets_multi,
+    twarr_blocks = fu.multi_process(fi.summary_unzipped_tweets_multi,
                                     [(file_list_slice,) for file_list_slice in file_list])
-    twarr = fI.merge_list(twarr_blocks)
+    twarr = fu.merge_list(twarr_blocks)
     
     et = EventTrainer()
     et.start_ner_service(pool_size=16)
     et.twarr_ner(twarr)
     et.end_ner_service()
     
-    all_ids = set(fI.load_array(test_data_path + 'test_ids_all.csv'))
-    pos_ids = set(fI.load_array(test_data_path + 'test_ids_pos.csv'))
+    all_ids = set(fu.load_array(test_data_path + 'test_ids_all.csv'))
+    pos_ids = set(fu.load_array(test_data_path + 'test_ids_pos.csv'))
     non_pos_ids = all_ids.difference(pos_ids)
     
     pos_twarr = list()
@@ -328,6 +330,6 @@ def exec_pre_test(test_data_path):
             pos_twarr.append(tw)
         elif twid in non_pos_ids:
             non_pos_twarr.append(tw)
-    
-    fI.dump_array(getconfig().pos_data_file, pos_twarr)
-    fI.dump_array(getconfig().non_pos_data_file, non_pos_twarr)
+
+    fu.dump_array(getconfig().pos_data_file, pos_twarr)
+    fu.dump_array(getconfig().non_pos_data_file, non_pos_twarr)

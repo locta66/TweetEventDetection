@@ -9,13 +9,12 @@ pip install python-Levenshtein
 
 
 
-bzip2 -z FileName
-for file in *.gz; do gunzip -xf $file; done
-for file in *.json; do bzip2 -z $file; done
+# bzip2 -z FileName
+# for file in *.gz; do gunzip -xf $file; done
+# for file in *.json; do bzip2 -z $file; done
 
 
 
-合同关键要求：
 * 数据预处理：
     * 网络用语和不规范用语的规范化处理
         * Lexical Normalisation for English Tweets—评测任务和相关文章汇总：

@@ -9,13 +9,15 @@ import TweetKeys
 
 
 class JsonParser:
-    def __init__(self, tweet_desired_attrs=None, user_desired_attrs=None):
-        self.tweet_desired_attrs = ['created_at', 'id', 'text', 'place',  # 'geo', 'coordinates',
-                                    'user', 'retweet_count', 'favorite_count', 'entities',
+    def __init__(self):
+        self.tweet_desired_attrs = ['created_at', 'timestamp_ms', 'id', 'text', 'place', 'user',
+                                    'retweet_count', 'favorite_count', 'entities',
+                                    'filter_level', 'truncated', 'is_quote_status',
                                     'in_reply_to_status_id', 'in_reply_to_user_id']
-        self.user_desired_attrs = ['id', 'time_zone', 'location', 'followers_count',
-                                   'friends_count', 'listed_count', 'statuses_count',
-                                   "description", "verified"]
+        self.user_desired_attrs = ['id', 'created_at', 'time_zone', 'location', 'favourites_count',
+                                   'followers_count', 'friends_count', 'listed_count', 'statuses_count',
+                                   'contributors_enabled', 'protected', 'is_translator',
+                                   'description', 'verified']
         self.pattern = get_pattern()
         self.mydict = MyDict()
     
@@ -82,17 +84,17 @@ class JsonParser:
                 target_dict.pop(attr)
         return target_dict
     
-    @staticmethod
-    def dump_json_arr_into_file(json_arr, file_path, mode='append'):
-        if mode is 'append':
-            pass
-        elif mode is 'renew':
-            if os.path.exists(file_path):
-                os.remove(file_path)
-        with open(file_path, 'a') as fp:
-            for obj in json_arr:
-                line = json.dumps(obj, sort_keys=True) + '\n'
-                fp.write(line)
+    # @staticmethod
+    # def dump_json_arr_into_file(json_arr, file_path, mode='append'):
+    #     if mode is 'append':
+    #         pass
+    #     elif mode is 'renew':
+    #         if os.path.exists(file_path):
+    #             os.remove(file_path)
+    #     with open(file_path, 'a') as fp:
+    #         for obj in json_arr:
+    #             line = json.dumps(obj, sort_keys=True) + '\n'
+    #             fp.write(line)
 
 # ######## 推文属性 ########
 # text
@@ -115,45 +117,43 @@ class JsonParser:
 # user
 # id
 # in_reply_to_user_id
-# in_reply_to_user_id_str
 # in_reply_to_status_id
-# in_reply_to_status_id_str
-# in_reply_to_screen_name
 # ######## 推文属性 undesired ########
 # contributors
 # source
 # id_str
-
+# in_reply_to_status_id_str
+# in_reply_to_user_id_str
+# in_reply_to_screen_name
 
 # ######## 用户属性 ########
 # id
-# id_str
 # name
 # time_zone
 # lang
 # location
 # geo_enabled
 
-# followers_count
-# friends_count
-# listed_count
-# statuses_count
-# screen_name
-
-# notifications
-# contributors_enabled
-# protected
-# utc_offset
-# url
-# verified
-# is_translator
-# description
-# ######## 用户属性 undesired ########
 # created_at
 # following
 # follow_request_sent
 # favourites_count
+# followers_count
+# friends_count
+# listed_count
+# statuses_count
 
+# screen_name
+# notifications
+# contributors_enabled
+# protected
+# utc_offset
+# verified
+# is_translator
+# description
+# ######## 用户属性 undesired ########
+# url
+# id_str
 # default_profile
 # profile_link_color
 # profile_text_color

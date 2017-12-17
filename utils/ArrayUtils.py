@@ -34,7 +34,7 @@ def index_partition(array, partition_arr=(1, 1, 1), random=True, ordered=False):
     for portion in normed_portion:
         sum_normed_por.append(sum_normed_por[-1] + portion)
         sum_idx.append(int(sum_normed_por[-1] * item_num))
-    sum_idx.append(item_num)
+    sum_idx[-1] = item_num
     return [indexes[sum_idx[i]: sum_idx[i + 1]] for i in range(len(partition_arr))]
 
 
@@ -105,14 +105,19 @@ def score(labels_true, labels_pred, score_type):
         return metrics.homogeneity_score(labels_true, labels_pred)
     elif score_type == 'cmplt':
         return metrics.completeness_score(labels_true, labels_pred)
-    
-    
 
 
 def group_array_by_condition(array, item_key):
-    dictionary = dict(zip([item_key(item) for item in array], [[] for item in array]))
+    dictionary = dict()
     for item in array:
-        dictionary[item_key(item)].append(item)
+        item_key = item_key(item)
+        if item_key not in dictionary:
+            dictionary[item_key] = [item]
+        else:
+            dictionary[item_key].append(item)
+    # dictionary = dict(zip([item_key(item) for item in array], [[] for _ in array]))
+    # for item in array:
+    #     dictionary[item_key(item)].append(item)
     return [dictionary[key] for key in sorted(dictionary.keys())]
 
 

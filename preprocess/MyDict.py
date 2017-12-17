@@ -1,6 +1,5 @@
 import re
-import json
-import FileIterator
+import FunctionUtils as fu
 from Pattern import get_pattern, PatternHolder
 
 from wordsegment import segment
@@ -82,7 +81,7 @@ class MyDict:
         return text_seg
     
     def dump_worddict(self, dict_file, overwrite=False):
-        FileIterator.dump_array(dict_file, [self.dictionary], overwrite, sort_keys=True)
+        fu.dump_array(dict_file, [self.dictionary], overwrite, sort_keys=True)
     
     def load_worddict(self, dict_file):
-        self.dictionary = FileIterator.load_array(dict_file)[0]
+        self.dictionary = fu.load_array(dict_file)[0]

@@ -14,6 +14,7 @@ class MyConfig:
         self.data_path = configreader.get(module_name, 'data_path')
         self.seed_path = configreader.get(module_name, 'seed_path')
         self.summary_path = configreader.get(module_name, 'summary_path')
+        self.origin_path = configreader.get(module_name, 'origin_path')
         self.ner_service_command = configreader.get(module_name, 'ner_service_command')
         
         self.dc_test = configreader.get(module_name, 'dc_test')

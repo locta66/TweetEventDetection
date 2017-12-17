@@ -72,7 +72,7 @@ cntr_parser = CounterParser([
     [{'any_of': ['happy', 'glad', 'nice', 'party', 'good', 'excellent', 'wonderful', 'magnificent'],
       'none_of': ['terror', 'attack', 'fight', 'assault', 'death', '\Wgun\W', 'fire', 'bomb',
                   'battle', 'kill', 'explode', 'explosion', 'wound', 'injure', 'deadly', 'shoot', ]
-      }, ['2016', '4', '1'], ['2016', '8', '13']],
+      }, ['2016', '4', '1'], ['2016', '6', '13']],
     [{'any_of': ['tornado', 'struck', 'cyclone', 'extratropical', 'state of emergency', 'record-breaking',
                  'damage', 'destroy', 'supercell', ],
       'all_of': ['Manzanita', ], }, ['2016', '10', '13'], ['2016', '10', '18']],
@@ -143,11 +143,9 @@ def main(args):
         query_func = exec_query_unlabelled
         parser = unlb_parser
     elif args.cntr:
-        # args.totag = args.untag = False
         query_func = exec_query_counter
         parser = cntr_parser
     else:
-        # args.totag = args.untag = False
         query_func = exec_query
         parser = seed_parser
     for p in [seed_parser, unlb_parser, cntr_parser]:
@@ -172,7 +170,7 @@ def main(args):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Seeding information")
-    parser.add_argument('--summary_path', default=getconfig().summary_path,
+    parser.add_argument('--summary_path', default=getconfig().origin_path,
                         help='Filtered tweets organized in days as file XX_XX_XX_XX.sum under this path.')
     parser.add_argument('--seed_path', default=getconfig().seed_path,
                         help='Path for extracted seed instances according to particular query.')
@@ -186,10 +184,6 @@ def parse_args():
                         help='If query tweets from summarized tw files.')
     parser.add_argument('--ner', action='store_true', default=False,
                         help='If perform ner on queried file.')
-    # parser.add_argument('--totag', action='store_true', default=False,
-    #                     help='If makes to tag file from queried tweets.')
-    # parser.add_argument('--untag', action='store_true', default=False,
-    #                     help='If updates queried tweets from tagged files.')
     parser.add_argument('--train', action='store_true', default=False,
                         help='If train the model according to the queried tweets, with internal logic.')
     parser.add_argument('--temp', action='store_true', default=False,

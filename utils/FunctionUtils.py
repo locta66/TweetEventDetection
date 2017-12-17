@@ -4,11 +4,22 @@ import json
 import shutil
 import multiprocessing as mp
 import math
+from scipy.special import gamma
+
+
+def B_function(m, n):
+    if m <= 0 or n <= 0:
+        raise ValueError('incorrect m=' + str(m) + ' , n=' + str(n))
+    return gamma(m) * gamma(n) / gamma(m + n)
 
 
 def rmtree(path):
     if os.path.exists(path):
         shutil.rmtree(path)
+
+
+def makedirs(path):
+    os.makedirs(path)
 
 
 def slash_appender(func):
@@ -44,7 +55,7 @@ def split_multi_format(array, process_num):
     return formatted_array
 
 
-def multi_process(func, args_list):
+def multi_process(func, args_list=None, kwargs_list=None):
     """
     Do func in multiprocess way.
     :param func: To be executed within every
@@ -55,7 +66,8 @@ def multi_process(func, args_list):
     pool = mp.Pool(processes=process_num)
     res_getter = list()
     for i in range(process_num):
-        res = pool.apply_async(func=func, args=args_list[i])
+        res = pool.apply_async(func=func, args=args_list[i] if args_list else (),
+                               kwds=kwargs_list[i] if kwargs_list else {})
         res_getter.append(res)
     pool.close()
     pool.join()

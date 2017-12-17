@@ -17,8 +17,7 @@ class DateCalculator:
     
     # ymdh resembles ['201X', '0X', '2X', '1X'] ,with element of type string
     def is_target_ymdh(self, tweet_ymdh, start_ymdh, end_ymdh):
-        if start_ymdh is [] and end_ymdh is []:
-            # No ymdh limit given, taken as all dates.
+        if start_ymdh is [] and end_ymdh is []:     # No ymdh limit given, taken as all dates.
             return True
         if (start_ymdh is not [] or end_ymdh is not []) and tweet_ymdh is []:
             # Once start or end hes been given, then tweet should be provided as well.

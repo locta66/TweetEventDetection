@@ -3,7 +3,8 @@ import re
 
 from Synset import get_synset
 from Pattern import get_pattern
-from DateCalculator import DateCalculator
+# from DateCalculator import DateCalculator
+import DateUtils as du
 
 
 class SeedQuery:
@@ -12,7 +13,7 @@ class SeedQuery:
         self.keywords = keywords if keywords is not None else {}
         self.since = since if since is not None else []
         self.until = until if since is not None else []
-        self.date_calculator = DateCalculator()
+        # self.date_calculator = DateCalculator()
         self.month_dict = {'Jan': '1', 'Feb': '2', 'Mar': '3', 'Apr': '4', 'May': '5', 'June': '6',
                            'July': '7', 'Aug': '8', 'Sept': '9', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
         self.query_results = list()
@@ -64,7 +65,8 @@ class SeedQuery:
             return [time_split[-1], self.month_dict[time_split[1]], time_split[2]]
     
     def is_time_desired(self, tw_ymd):
-        return self.date_calculator.is_target_ymdh(tw_ymd, self.since, self.until)
+        # return self.date_calculator.is_target_ymdh(tw_ymd, self.since, self.until)
+        return du.is_target_ymdh(tw_ymd, self.since, self.until)
     
     def is_text_desired(self, text):
         if (self.all is []) and (self.any is []) and (self.none is []):

@@ -91,13 +91,13 @@ class CacheBack:
             if not self.freqcounter.is_valid_keyword(word):
                 del wordlabels[i]
         for i in range(len(wordlabels)):
-            if self.entities_geo.is_word_in_dict(word):
+            if self.entities_geo.has_word(word):
                 prob *= (self.entities_geo.dictionary[word][self.key_count] + beta) / \
                           (num_en_geo + g_beta0 + i)
-            elif self.entities_non_geo.is_word_in_dict(word):
+            elif self.entities_non_geo.has_word(word):
                 prob *= (self.entities_non_geo.dictionary[word][self.key_count] + beta) / \
                           (num_en_non_geo + ng_beta0 + i)
-            elif self.keywords.is_word_in_dict(word):
+            elif self.keywords.has_word(word):
                 prob *= (self.keywords.dictionary[word][self.key_count] + beta) / \
                           (num_keyword + k_beta0 + i)
         return prob

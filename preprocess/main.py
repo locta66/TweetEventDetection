@@ -8,26 +8,27 @@ def main(args):
     import time
     s = time.time()
     
-    # FileIterator.set_commands(args.unzip_cmd, args.pos_cmd, args.ner_cmd)
     if args.summary:
-        FileIterator.iterate_file_tree(args.data_path, FileIterator.summary_files_in_path,
-                                       summary_path=args.summary_path)
+        FileIterator.iterate_file_tree(getconfig().data_path, FileIterator.summary_files_in_path,
+                                       summary_path=getconfig().origin_path)
     if args.temp:
-        FileIterator.iterate_file_tree(args.data_path, FileIterator.summary_files_in_path,
+        FileIterator.iterate_file_tree(getconfig().data_path, FileIterator.summary_files_in_path,
                                        summary_path=getconfig().test_data_path + 'yying')
+    if args.simp:
+        FileIterator.simplify_files_multi(getconfig().origin_path, getconfig().summary_path)
     print('time elapsed:', time.time() - s, 's')
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Preprocess tw streaming data")
-    parser.add_argument('--data_path', nargs='?', default=getconfig().data_path,
-                        help='Input tweet streaming data path of all months')
-    parser.add_argument('--summary_path', nargs='?', default=getconfig().summary_path,
-                        help='Filtered tweets organized in days as file XX_XX_XX.txt under this path')
+    # parser.add_argument('--data_path', nargs='?', default=getconfig().data_path,
+    #                     help='Input tweet streaming data path of all months')
+    # parser.add_argument('--summary_path', nargs='?', default=getconfig().summary_path,
+    #                     help='Filtered tweets organized into file XX_XX_XX.txt under this path')
     parser.add_argument('--summary', action='store_true', default=False,
                         help='If summary filtered tweets into files under summary_path')
-    parser.add_argument('--temp', action='store_true', default=False,
-                        help='temp fuction')
+    parser.add_argument('--temp', action='store_true', default=False, help='temp fuction')
+    parser.add_argument('--simp', action='store_true', default=False, help='simplify_files_multi')
     
     # parser.add_argument('--unzip_cmd', nargs='?', default='bunzip2 -fv ', help='command of unzip')
     # parser.add_argument('--pos_cmd', nargs='?',

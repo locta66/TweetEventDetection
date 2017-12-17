@@ -8,6 +8,7 @@ from Configure import getconfig
 seed_parser = SeedParser(query_list=[], theme='Terrorist', description='')
 test_parser_1 = TestParser([
     # [{'all_of': ['', '', ], 'any_of':['', '', ], }, ['2016', '', ''], ['2016', '', '']],
+    
     [{'all_of': ['Kabul', ], 'any_of':['University', 'bomb', 'shoot', 'attack', '\Wkill', '\Wtoll', ], },
      ['2016', '8', '23'], ['2016', '8', '28']],
     [{'all_of': ['\WAden\W', ], 'any_of': ['military', '\Wbomb', 'suicide', 'attack', '\Wkill', '\Wtoll', ], },
@@ -32,22 +33,58 @@ test_parser_1 = TestParser([
      ['2016', '12', '17'], ['2016', '12', '22']],
     [{'all_of': ['Karak', ], 'any_of':['bomb', 'suicide', 'attack', '\Wkill', '\Wtoll', 'security', ], },
      ['2016', '12', '17'], ['2016', '12', '22']],
+    
+    [{'all_of': ['Indonesia', 'earthquake', ], 'any_of':['hit', 'magnitude', 'strike', ], },
+     ['2016', '12', '6'], ['2016', '12', '10']],
+    [{'all_of': ['India', 'earthquake', ], 'any_of':['hit', 'magnitude', 'strike', 'intensity', ], },
+     ['2016', '1', '2'], ['2016', '1', '7']],
+    [{'any_of': ['Romania', 'Belgium', 'France', 'Seine\W', 'Germany', 'disaster',
+                 '\Wdead\W', 'death', 'missing', 'rainfall', 'rescue', ],
+      'all_of': ['flood', ], }, ['2016', '5', '27'], ['2016', '6', '7']],
+    [{'any_of': ['catastrophic', '\Wdead\W', 'death', 'FEMA', 'flooding', 'rainfall', 'state of emergency', ],
+      'all_of': ['Louisiana', 'flood', ], }, ['2016', '8', '10'], ['2016', '8', '17']],
+    [{'any_of': ['wildfire', 'Great Smoky Mountain', 'damage', 'destroy', 'burn', '\Wacre\W', 'evacuat', ],
+      'all_of': ['National Park', ], }, ['2016', '11', '23'], ['2016', '11', '30']],
+    [{'any_of': ['\Wfire', 'wildfire', 'damage', 'burned', '\Wburn\W', '\Wacre\W', 'evacuat', ],
+      'all_of': ['Hayden', ], }, ['2016', '7', '7'], ['2016', '7', '15']],
+    [{'all_of': ['earthquake', 'Ecuador'], 'any_of':['hit', 'magnitude', 'strike', 'toll', 'Esmeraldas'], },
+     ['2016', '4', '15'], ['2016', '4', '19']],
+    [{'all_of': ['earthquake', 'Italy', ], 'any_of':['hit', 'magnitude', 'strike', 'toll', ], },
+     ['2016', '8', '24'], ['2016', '8', '29']],
+    
+    [{'any_of': ['gunman', 'hostage', 'shoot', '\Wshot', ],
+      'all_of': ['Orlando', 'nightclub', 'attack', ], }, ['2016', '6', '11'], ['2016', '6', '16']],
+    [{'any_of': ['attack', '\Wbomb', 'explode', 'hostage', '\Wkill', 'injured', ],
+      'all_of': ['Mogadishu', ], }, ['2016', '6', '24'], ['2016', '6', '29']],
+    [{'any_of': ['attack', '\Wbomb', 'headquarter', 'security', '\Wkill'],
+      'all_of': ['\WAden\W', 'airport'], }, ['2016', '7', '5'], ['2016', '7', '11']],
+    [{'all_of': ['Nice', 'truck'], 'any_of': ['Bastille', 'crowd', 'gunfire', ], },
+     ['2016', '7', '13'], ['2016', '7', '18']],
+    [{'all_of': ['Mogadishu', ], 'any_of': ['\Wkill', '\Wbomb', 'suicide', 'Shabaab', ], },
+     ['2016', '7', '25'], ['2016', '7', '31']],
+    [{'all_of': ['Kokrajhar', ], 'any_of': ['Assam', 'Bodo', '\Wgun\W', 'grenade', '\Wkill', 'shoot', ], },
+     ['2016', '8', '4'], ['2016', '8', '9']],
+    [{'all_of': ['Quetta', ], 'any_of': ['attack', '\Wbomb', 'hospital', '\Wkill', 'suicide', ], },
+     ['2016', '8', '7'], ['2016', '8', '10']],
+    [{'all_of': ['PKK', 'Turkey', ], 'any_of': ['attack', '\Wbomb', 'soldier', ]},
+     ['2016', '8', '9'], ['2016', '8', '14']],
+
 ], theme='Terrorist', description='', outterid='1')
 
 
 def main(args):
     parser = test_parser_1
-    # if args.test:
-    #     parser = test_parser_1
-    
     for p in [seed_parser, test_parser_1]:
         p.set_base_path(args.seed_path)
+    
     if args.query:
         exec_query(args.summary_path, parser)
     if args.pred:
         exec_classification(seed_parser, test_parser_1)
     if args.ner:
         exec_ner(parser)
+    if args.clu:
+        exec_cluster(parser)
     if args.temp:
         exec_temp(parser)
 
@@ -59,18 +96,12 @@ def parse_args():
     parser.add_argument('--seed_path', nargs='?', default=getconfig().seed_path,
                         help='Path for queried seed instance, trained parameters and corresponding dict.')
     
-    parser.add_argument('--test', action='store_true', default=False,
-                        help='If perform actions upon test data.')
-    parser.add_argument('--query', action='store_true', default=False,
-                        help='If query tweets from summarized tw files.')
-    parser.add_argument('--ner', action='store_true', default=False,
-                        help='If perform ner on queried file.')
-    parser.add_argument('--pred', action='store_true', default=False,
-                        help='If perform prediction on the test data.')
-    # parser.add_argument('--cluster', action='store_true', default=False,
-    #                     help='If perform clustering on some tweet stream.')
-    parser.add_argument('--temp', action='store_true', default=False,
-                        help='Just a temp function.')
+    parser.add_argument('--test', action='store_true', default=False, help='If perform actions upon test data.')
+    parser.add_argument('--query', action='store_true', default=False, help='If query tweets from summarized tw files.')
+    parser.add_argument('--ner', action='store_true', default=False, help='If perform ner on queried file.')
+    parser.add_argument('--pred', action='store_true', default=False, help='If perform prediction on the test data.')
+    parser.add_argument('--clu', action='store_true', default=False, help='If perform clustering on some tweet stream.')
+    parser.add_argument('--temp', action='store_true', default=False, help='Just a temp function, maybe for making data.')
     return parser.parse_args()
 
 

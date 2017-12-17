@@ -1,4 +1,6 @@
 import FunctionUtils as fu
+import DateUtils as du
+import TweetKeys
 
 import numpy as np
 from sklearn.cluster import dbscan
@@ -106,3 +108,11 @@ def text_dist_less_than(text1, text2, threshold=0.2):
 #         if c == i:
 #             print(idx, end=' ')
 #     print()
+
+
+def twarr_timestamp_array(twarr):
+    return [du.get_timestamp_form_created_at(tw['created_at']) for tw in twarr]
+
+
+def rearrange_idx_by_time(twarr):
+    return np.argsort([du.get_timestamp_form_created_at(tw[TweetKeys.key_created_at].strip()) for tw in twarr])

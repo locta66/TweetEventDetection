@@ -3,6 +3,7 @@ import TweetKeys
 from FunctionUtils import slash_appender
 from JsonParser import JsonParser
 from SeedQuery import SeedQuery
+import FunctionUtils as fu
 
 
 class SeedParser(JsonParser):
@@ -22,7 +23,7 @@ class SeedParser(JsonParser):
     def read_tweet_from_json_file(self, file, filtering=False):
         if not self.is_file_of_query_date(file):
             return
-        for tw in FileIterator.load_array(file):
+        for tw in fu.load_array(file):
             tw = self.attribute_filter(tw, self.tweet_desired_attrs)
             if 'user' in tw:
                 tw['user'] = self.attribute_filter(tw['user'], self.user_desired_attrs)
@@ -97,9 +98,6 @@ class CounterParser(SeedParser):
     
     def get_query_result_file_name(self):
         return self.get_queried_path() + self.theme + '_counter.sum'
-    
-    # def get_to_tag_file_name(self):
-    #     raise ValueError('Unimplemented yet')
 
 
 class TestParser(SeedParser):

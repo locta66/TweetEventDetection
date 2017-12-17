@@ -3,7 +3,7 @@ import re
 import numpy as np
 from sklearn import metrics
 
-import FileIterator
+import FunctionUtils as fu
 import TweetKeys
 from EventClassifier import LREventClassifier
 from NerServiceProxy import get_ner_service_pool
@@ -23,9 +23,6 @@ class EventTrainer:
         get_ner_service_pool().end()
     
     def train_and_test(self, seed_twarr, unlb_twarr, cntr_twarr, seed_test, cntr_test):
-        # part_arr = (9, 1)
-        # seed_train, seed_valid = ArrayUtils.array_partition(seed_twarr, part_arr)
-        # cntr_train, cntr_valid = ArrayUtils.array_partition(cntr_twarr, part_arr)
         seed_train = seed_twarr
         seed_valid = seed_test
         cntr_train = cntr_twarr
@@ -74,24 +71,31 @@ class EventTrainer:
         classifier.save_params('/home/nfs/cdong/tw/seeding/temp/nonsense')
         
         loss = 0
-        for unlbreg_lambda in [0.01, 0.02, 0.04, 0.08]:
-            for l2reg_lambda in [0.01, 0.02, 0.04, 0.08]:
-                # for l2reg_lambda in [0.01]:
-                #     for unlbreg_lambda in [0]:
-                print('\n\nunlbreg_lambda:', unlbreg_lambda, 'l2reg_lambda:', l2reg_lambda)
-                classifier.load_params('/home/nfs/cdong/tw/seeding/temp/nonsense')
-                classifier.construct_graph(unlbreg_lambda=unlbreg_lambda, l2reg_lambda=l2reg_lambda)
-                stepnum = 400
-                auc = 0
-                for i in range(stepnum):
-                    loss = classifier.train_per_step(train_mtx, train_lbl, unlb_mtx, unlb_lbl)
-                    if i % int(stepnum / 15) == 0:
-                        print('{:<4}th ,loss {:<10} '.format(i, int(loss * 1e6) / 1e6), end='')
-                        tup = self.test_using_matrix(classifier, seed_valid_mtx, cntr_valid_mtx)
-                        if auc < tup[0]:
-                            auc = tup[0]
-                        else:
+        # for unlbreg_lambda in [0.01, 0.02, 0.04, 0.08]:
+        #     for l2reg_lambda in [0.01, 0.02, 0.04, 0.08]:
+        l2reg_lambda_range = unlbreg_lambda_range = [0.01]
+        param_range = [(l2reg, unlbreg) for l2reg in l2reg_lambda_range for unlbreg in unlbreg_lambda_range]
+        for l2reg_lambda, unlbreg_lambda in param_range:
+            print('\n\nunlbreg_lambda:', unlbreg_lambda, 'l2reg_lambda:', l2reg_lambda)
+            classifier.load_params('/home/nfs/cdong/tw/seeding/temp/nonsense')
+            classifier.construct_graph(unlbreg_lambda=unlbreg_lambda, l2reg_lambda=l2reg_lambda)
+            stepnum = 380
+            min_auc = 1e10
+            stop_accu = 0
+            stop_step = 5
+            for i in range(stepnum):
+                loss = classifier.train_per_step(train_mtx, train_lbl, unlb_mtx, unlb_lbl)
+                # if i % int(stepnum / 15) == 0:
+                if i % 10 == 0:
+                    print('{:<4}th ,loss {:<10} '.format(i, int(loss * 1e6) / 1e6), end='')
+                    tup = self.test_using_matrix(classifier, seed_valid_mtx, cntr_valid_mtx)
+                    if min_auc <= tup[0]:
+                        stop_accu += 1
+                        if stop_accu > stop_step:
                             break
+                        min_auc = tup[0]
+                    else:
+                        stop_accu = max(stop_accu - 1, 0)
         return classifier, loss
     
     def test_using_twarr(self, freqcounter, classifier, pos_twarr, neg_twarr):
@@ -151,13 +155,13 @@ class EventTrainer:
         return twarr
     
     def perform_ner_on_tw_file(self, tw_file, output_to_another_file=False, another_file='./deafult.sum'):
-        twarr = FileIterator.load_array(tw_file)
+        twarr = fu.load_array(tw_file)
         if not twarr:
             print('No tweets read from file', tw_file)
             return twarr
         twarr = self.twarr_ner(twarr)
         output_file = another_file if output_to_another_file else tw_file
-        FileIterator.dump_array(output_file, twarr)
+        fu.dump_array(output_file, twarr)
         print('Ner result written into', output_file, ',', len(twarr), 'tweets processed.')
         return twarr
     

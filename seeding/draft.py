@@ -150,7 +150,6 @@ print(len([('#', 'B-NP'), ('$', 'B-NP'), ("''", 'O'), ('(', 'O'), (')', 'O'),
            ('WP', 'B-NP'), ('WP$', 'B-NP'), ('WRB', 'O'), ('``', 'O')]))
 
 import nltk
-
 nltk.help.upenn_tagset()
 
 import numpy as np
