@@ -13,7 +13,8 @@ query_process_num = 16
 
 @fu.sync_real_time_counter('query')
 def exec_query(data_path, parser):
-    data_path = fi.append_slash_if_necessary(data_path)
+    print('seeding query')
+    data_path = fi.add_sep_if_needed(data_path)
     subfiles = fi.listchildren(data_path, children_type='file')
     file_list = [(data_path + file_name) for file_name in subfiles if
                  file_name.endswith('.sum') and parser.is_file_of_query_date(file_name)]
@@ -32,13 +33,16 @@ def exec_query(data_path, parser):
     print(len(parser.added_twarr), 'accepted.\n')
     # for tw in parser.added_twarr:
     #     print(tw[TweetKeys.key_origintext], '\n---\n')
-    print(parser.get_query_result_file_name(), 'written.\n')
-    fu.dump_array(parser.get_query_result_file_name() + '1', parser.added_twarr)
+    # file_name = parser.get_query_result_file_name()
+    file_name = '/home/nfs/cdong/tw/testdata/yying/queried/NaturalDisaster.sum'
+    fu.dump_array(file_name, parser.added_twarr)
+    print(file_name, 'written.\n')
+    exec_ner(file_name)
 
 
 @fu.sync_real_time_counter('unlabelled')
 def exec_query_unlabelled(data_path, parser):
-    data_path = fi.append_slash_if_necessary(data_path)
+    data_path = fi.add_sep_if_needed(data_path)
     file_list = [file_name for file_name in fi.listchildren(data_path, children_type='file') if
                  file_name.endswith('.sum') and parser.is_file_of_query_date(file_name)]
     date_group = au.group_array_by_condition(file_list, lambda item: item[:11])
@@ -75,7 +79,7 @@ def exec_query_unlabelled(data_path, parser):
 
 @fu.sync_real_time_counter('counter')
 def exec_query_counter(data_path, parser):
-    data_path = fi.append_slash_if_necessary(data_path)
+    data_path = fi.add_sep_if_needed(data_path)
     file_list = [(data_path + file_name) for file_name in
                  fi.listchildren(data_path, children_type='file') if
                  file_name.endswith('.sum') and parser.is_file_of_query_date(file_name)]
@@ -89,8 +93,11 @@ def exec_query_counter(data_path, parser):
     print('Queried', len(parser.added_twarr), 'tweets,')
     parser.added_twarr = au.random_array_items(parser.added_twarr, 40000)
     # remove_similar_tws(parser.added_twarr)
-    print(len(parser.added_twarr), 'accepted.\n', parser.get_query_result_file_name(), 'written.\n')
-    fu.dump_array(parser.get_query_result_file_name() + '1', parser.added_twarr)
+    # file_name = parser.get_query_result_file_name()
+    file_name = '/home/nfs/cdong/tw/testdata/yying/queried/MyNegative.sum'
+    fu.dump_array(file_name, parser.added_twarr)
+    print(len(parser.added_twarr), 'accepted.\n', file_name, 'written.\n')
+    exec_ner(file_name)
 
 
 def query_tw_file_multi(file_list, parser_class, query_list, theme, description):
@@ -130,8 +137,8 @@ def per_query(data_path, query):
 def remove_similar_tws(twarr):
     for i in range(len(twarr) - 1, -1, -1):
         for j in range(len(twarr) - 1, i, -1):
-            istr = twarr[i][TweetKeys.key_cleantext].lower()
-            jstr = twarr[j][TweetKeys.key_cleantext].lower()
+            istr = twarr[i][TweetKeys.key_text].lower()
+            jstr = twarr[j][TweetKeys.key_text].lower()
             dist = Levenshtein.distance(istr, jstr) + 1
             if max(len(istr), len(jstr)) / dist >= 5:
                 # print('[', twarr[j][TweetKeys.key_cleantext], ']')
@@ -174,11 +181,10 @@ def remove_similar_tws(twarr):
 #         tw_arr_dict[twid][TweetKeys.key_tagtimes] += 1
 
 
-def exec_ner(parser):
+def exec_ner(file_name):
     efe = EventTrainer()
     efe.start_ner_service()
-    efe.perform_ner_on_tw_file(parser.get_query_result_file_name() + '1')
-    # efe.perform_ner_on_tw_file('/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_counter.sum1')
+    efe.perform_ner_on_tw_file(file_name)
     efe.end_ner_service()
 
 
@@ -277,8 +283,7 @@ def construct_feature_matrix(seed_parser, unlb_parser, cntr_parser):
                                      cntr_twarr + dzs_neg_train,
                                      dzs_pos_test, dzs_neg_test)
     print('vocabulary_size', localcounter.vocabulary_size())
-    
-    import numpy as np
+
     from scipy import sparse, io
     def create_matrix_and_dump(localcounter, twarr, prefix, filename):
         mtx = localcounter.feature_matrix_of_twarr(twarr)
@@ -331,5 +336,7 @@ def exec_pre_test(test_data_path):
         elif twid in non_pos_ids:
             non_pos_twarr.append(tw)
 
-    fu.dump_array(getconfig().pos_data_file, pos_twarr)
-    fu.dump_array(getconfig().non_pos_data_file, non_pos_twarr)
+    # fu.dump_array(getconfig().pos_data_file, pos_twarr)
+    # fu.dump_array(getconfig().non_pos_data_file, non_pos_twarr)
+    fu.dump_array('/home/nfs/cdong/tw/testdata/yying/queried/pos_tweets.sum', pos_twarr)
+    fu.dump_array('/home/nfs/cdong/tw/testdata/yying/queried/non_pos_tweets.sum', non_pos_twarr)

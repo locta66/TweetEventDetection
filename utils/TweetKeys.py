@@ -1,0 +1,15 @@
+key_id = 'id'
+key_user = 'user'
+key_origintext = 'orgn'
+key_text = 'text'
+key_lang = 'lang'
+
+key_wordlabels = 'pos'
+key_created_at = 'created_at'
+key_ark = 'ark'
+
+# key_normed_timestamp = 'n_tstmp'
+# key_ptagtime = 'ptt'
+# key_ntagtime = 'ntt'
+# key_tagtimes = 'ttms'
+# key_idf = 'idf'

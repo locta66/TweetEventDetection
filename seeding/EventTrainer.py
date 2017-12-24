@@ -14,14 +14,6 @@ class EventTrainer:
     def __init__(self):
         self.classifier = self.freqcounter = None
     
-    @staticmethod
-    def start_ner_service(pool_size=8, classify=True, pos=True):
-        get_ner_service_pool().start(pool_size, classify, pos)
-    
-    @staticmethod
-    def end_ner_service():
-        get_ner_service_pool().end()
-    
     def train_and_test(self, seed_twarr, unlb_twarr, cntr_twarr, seed_test, cntr_test):
         seed_train = seed_twarr
         seed_valid = seed_test
@@ -118,7 +110,15 @@ class EventTrainer:
                       'recall {:<8}'.format(round(recall[idx], 5)))
                 break
         return auc, precision, recall, thresholds
-    
+
+    @staticmethod
+    def start_ner_service(pool_size=8, classify=True, pos=True):
+        get_ner_service_pool().start(pool_size, classify, pos)
+
+    @staticmethod
+    def end_ner_service():
+        get_ner_service_pool().end()
+
     @staticmethod
     def extract_tw_with_high_freq_entity(twarr, entity_freq=3):
         # extracts tweets which holds high frequency entity from twarr(which is of one day time)
@@ -164,33 +164,32 @@ class EventTrainer:
         fu.dump_array(output_file, twarr)
         print('Ner result written into', output_file, ',', len(twarr), 'tweets processed.')
         return twarr
-    
-    def twarr_ner(self, twarr):
-        """
-        Perform NER and POS task upon the twarr, inplace.
-        :param twarr:
-        :return:
-        """
+
+    @staticmethod
+    def twarr_ner(twarr):
+        """ Perform NER and POS task upon the twarr, inplace. """
         ner_text_arr = get_ner_service_pool().execute_ner_multiple([tw['text'] for tw in twarr])
         if not len(ner_text_arr) == len(twarr):
             raise ValueError("Return line number inconsistent; Error occurs during NER")
         for idx, ner_text in enumerate(ner_text_arr):
-            wordlabels = self.parse_ner_text_into_wordlabels(ner_text)
-            wordlabels = self.remove_noneword_from_wordlabels(wordlabels)
+            wordlabels = EventTrainer.parse_ner_text_into_wordlabels(ner_text)
+            wordlabels = EventTrainer.remove_noneword_from_wordlabels(wordlabels)
             twarr[idx][TweetKeys.key_wordlabels] = wordlabels
         return twarr
-    
-    def parse_ner_text_into_wordlabels(self, ner_text):
+
+    @staticmethod
+    def parse_ner_text_into_wordlabels(ner_text):
         # wordlabels = [('word_0', 'entity extraction word_0', 'pos word_0'), ('word_1', ...), ...]
         words = re.split('\s', ner_text)
         wordlabels = list()
         for word in words:
             if word == '':
                 continue
-            wordlabels.append(self.parse_ner_word_into_labels(word, slash_num=2))
+            wordlabels.append(EventTrainer.parse_ner_word_into_labels(word, slash_num=2))
         return wordlabels
-    
-    def parse_ner_word_into_labels(self, ner_word, slash_num):
+
+    @staticmethod
+    def parse_ner_word_into_labels(ner_word, slash_num):
         """
         Split a word into array by '/' searched from the end of the word to its begin.
         :param ner_word: With pos labels.
@@ -211,7 +210,8 @@ class EventTrainer:
             res.insert(0, ner_word)
         return res
     
-    def remove_noneword_from_wordlabels(self, wordlabels):
+    @staticmethod
+    def remove_noneword_from_wordlabels(wordlabels):
         for idx, wordlabel in enumerate(wordlabels):
             if re.search('^[^a-zA-Z0-9]+$', wordlabel[0]) is not None:
                 del wordlabels[idx]

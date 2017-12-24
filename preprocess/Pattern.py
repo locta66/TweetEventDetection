@@ -17,27 +17,27 @@ class PatternHolder:
     
     def update_list(self, exp_sub_list, renew=False):
         if renew:
-            self.pattern_list = list()
+            self.pattern_list.clear()
         for exp, sub in exp_sub_list:
             flags = re.I if self.capignore else 0
             self.pattern_list.append(self.PatternItem(exp, re.compile(exp, flags=flags), sub))
     
     def apply_pattern(self, text):
-        for ptn in self.pattern_list:
-            text = ptn.pattern.sub(ptn.substitute, text)
+        for pattern in self.pattern_list:
+            text = pattern.pattern.sub(pattern.substitute, text)
         return text
 
 
-class Singleton(object):
-    _instance = None
-    
-    def __new__(cls, *args, **kw):
-        if not cls._instance:
-            cls._instance = super(Singleton, cls).__new__(cls)
-        return cls._instance
+# class Singleton(object):
+#     _instance = None
+#
+#     def __new__(cls, *args, **kw):
+#         if not cls._instance:
+#             cls._instance = super(Singleton, cls).__new__(cls)
+#         return cls._instance
 
 
-class Pattern(Singleton):
+class Pattern:
     def __init__(self):
         self.special_char_pattern = self.rule_pattern = self.abbr_pattern = self.emo_pattern = None
         # self.file_dir = os.path.split(os.path.realpath(__file__))[0] + os.path.sep
@@ -48,7 +48,7 @@ class Pattern(Singleton):
         self.breakline_pattern = re.compile(r'[\n\r]+')
         self.redundant_space_pattern = re.compile('\s\s+')
         self.nonascii_pattern = re.compile(r'[^\x00-\x7f]')
-        self.htmltrans_pattern = re.compile('&\w{2,8};')
+        # self.htmltrans_pattern = re.compile('&\w{2,8};')
         # self.ymdh_pattern = re.compile(r'^(\d{4})(\d{2})?(\d{2})?(\d{2})?$')
         self.update()
     
@@ -125,10 +125,6 @@ class Pattern(Singleton):
         text = self.remove_endline(text)
         return self.breakline_pattern.sub('.', text)
     
-    def get_parent_path(self, path):
-        # Given the absolute path of a file/directory, return its parent path
-        return os.path.dirname(path)
-    
     def full_split_nondigit(self, text):
         split = []
         for s in re.split('[^\d]', text):
@@ -145,15 +141,20 @@ def get_pattern():
 
 
 # s = 'RT @bugwannostra: @Louuu_ thx		#FFFFs People power -_-      works	❤signing…		https://t.co/pl2bquE5Az'
+# s = 'RT @bugwannostra: @Louuu_ thx		#FFFFs People power -_-  https:/    works	❤signing… http:   https:'
+# re.findall(r'[a-zA-Z_\-\']{3,}', s)
+# ptn = re.compile(r'https+:\W*/\.*?(\s|$)|https+:(\s|$)')
+# ptn.sub('_', s)
+
 # Pattern().normalization(s)
 # s1 = '@Louuu_ People power see u works❤signing… :-D (https://t.o/pl2u5Az @Louuu_) e.u as me &amp; &amp; \U0001f310'
 # Pattern().normalization(s1)
 
-# s1 = '@Louuu_ People power works❤signing… https://t.co/pl2bquE5Az @Louuu_ as me &amp; &amp; \U0001f310'
-# reg = re.compile(u'[\U00010000-\U0010ffff]')
-# t = reg.sub('~', s1)
-# print('origin:', s1)
-# print('result:', t)
+# s1 = '@Louuu_ People power works❤signing… https://t.co/pl2bquE5Az @Louuu_ as me &amp; &amp; '
+# reg = re.compile(r'(ig|ing)')
+# t = reg.sub(' \\1 ', s1)
+# s1
+# t
 
 # s="Hit de r()emise  -+_=|/? en forme en France . 「Zumba Fitness」's 『Santa| Que Cumbia』·༺☾ ★ ☽༻"
 # ss1 = '@Louuu_ People power see u works❤signing… :-D (https://t.o/pl2u5Az @Louuu_) e.u☹ as me &amp; &amp; \U0001f310'

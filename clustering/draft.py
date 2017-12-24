@@ -31,16 +31,6 @@ for i in range(3):
 
 print(results)
 
-
-
-
-
-
-
-
-
-
-
 import FileIterator as fi
 from FunctionUtils import multi_process, merge_list
 from sklearn.cluster import dbscan
@@ -71,10 +61,6 @@ for i in [2, 64, 23]:
             print(idx, end=' ')
     print()
 
-
-
-
-
 ndim = twarr.__len__()
 mmm = np.ones([ndim, ndim])
 
@@ -99,10 +85,11 @@ def dist_pairs(twarr, points):
 
 def text_dist_less_than(text1, text2, threshold=0.2):
     dist = Levenshtein.distance(text1, text2) + 1
-    if dist / max(len(text1), len(text2)) <= threshold:     # text 1 & 2 are similar
+    if dist / max(len(text1), len(text2)) <= threshold:  # text 1 & 2 are similar
         return 0
     else:
         return 1
+
 
 pairs = twarr_dist_pairs_multi(twarr)
 for p in pairs:
@@ -118,21 +105,18 @@ for i in [2, 64, 23]:
             print(idx, end=' ')
     print()
 
-
-
-
 from sklearn.metrics import normalized_mutual_info_score
 
 # y_pred = [0,0,1,1,2,2]
 # y_true = [1,1,2,2,3,3]
-y_pred = [1,2,1,1,1,]
-y_true = [5,3,5,5,5]
-
+y_pred = [1, 2, 1, 1, 1, ]
+y_true = [5, 3, 5, 5, 5]
 
 nmi = normalized_mutual_info_score(y_true, y_pred)
 nmi
 
 import pandas as pd
+
 # pd.DataFrame(columns=['qwe', 'a', 'weqr','yt'], data=[[1,2,3,4], [0,0,0,0]])
 data = np.array([[1, 2, 3],
                  [3, 4, 5],
@@ -142,9 +126,61 @@ data = np.array([[1, 2, 3],
                  ])
 df = pd.DataFrame(data=data)
 df.sort_values(by=[2, 0], ascending=False)
-df.loc[:,1]
+df.loc[:, 1]
 
-for i, j in [1,2,3], [3,4]:
+for i, j in [1, 2, 3], [3, 4]:
     print(i, j)
+
+# import re
+# def preprocess(doc):
+#     # pattern = re.compile(r'(\d\s\.\s\d)')
+#     return re.sub(r'(\d\s\.\s\d)', '.', doc)
+#
+# for text in textarr[100:300]:
+#     print(preprocess(text))
+
+
+import sys
+sys.path.append('../utils')
+import FunctionUtils as fu
+import FileIterator as fi
+twarr = fu.load_array('/home/nfs/cdong/tw/seeding/NaturalDisaster/queried/NaturalDisaster.sum')
+arr1=twarr[:2000]
+arr2=twarr[2000:]
+cv = CV(analyzer='word', token_pattern=r'([a-zA-Z_-]+|\d+\.\d+|\d+)',
+        stop_words=stop_words, max_df=0.8, min_df=1e-5)
+
+
+subfiles = fi.listchildren('/home/nfs/cdong/tw/origin/', children_type='file')
+for filr in subfiles:
+
+
+
+for text in textarr[0:200]:
+    print(text)
+    print(re.findall(r'([a-zA-Z_-]+|\d+\.\d+|\d+)', text))
+    print('\n')
+
+from nltk.corpus import stopwords
+stop_words = set(stopwords.words('english'))
+
+
+
+
+
+import re
+# s = 'RT @bugwannostra: @Louuu_ thx		#FFFFs People power -_-      works	❤signing…		https://t.co/pl2bquE5Az'
+s = 'RT @bugwannostra: @Louuu_432 thx 6.3 #FF-FFs, People power -_-  https:/ 2.34  234w.orks	❤signing… ht.tp:   https:'
+re.findall(r'([a-zA-Z_-]+|\d+\.\d+|\d+)', s)
+
+
+
+from sklearn.feature_extraction.text import CountVectorizer as CV
+cv = CV(analyzer='word', token_pattern=r'([a-zA-Z_-]+|\d+\.\d+|\d+)',
+        stop_words=stop_words, max_df=0.8, min_df=1e-5)
+
+cv.fit_transform(textarr)
+import sklearn
+
 
 

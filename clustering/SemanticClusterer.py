@@ -2,12 +2,12 @@ import math
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
 from Configure import getconfig
 import TweetKeys
 import ArrayUtils as au
 import FunctionUtils as fu
+from IdFreqDict import IdFreqDict
 from WordFreqCounter import WordFreqCounter
 
 
@@ -90,10 +90,10 @@ class SemanticClusterer:
                     pos_tag = tokens[i][2] = 'HT'
                 if pos_tag in pos_tag2dict_map:
                     pos_tag2dict_map[pos_tag].count_word(word)
-        self.prop_n_dict.drop_words_freq_less_than(3)
-        self.comm_n_dict.drop_words_freq_less_than(4)
-        self.verb_dict.drop_words_freq_less_than(4)
-        self.ht_dict.drop_words_freq_less_than(3)
+        self.prop_n_dict.drop_words_by_condition(3)
+        self.comm_n_dict.drop_words_by_condition(4)
+        self.verb_dict.drop_words_by_condition(4)
+        self.ht_dict.drop_words_by_condition(3)
         for tw in twarr:
             tw[self.key_prop_n], tw[self.key_comm_n], tw[self.key_verb], tw[self.key_ht] = \
                 IdFreqDict(), IdFreqDict(), IdFreqDict(), IdFreqDict()
@@ -163,7 +163,7 @@ class SemanticClusterer:
                 tw_topic_arr = self.create_clusters_with_labels(twarr, res_list[idx][1])
                 for i, _twarr in enumerate(tw_topic_arr):
                     if not len(_twarr) == 0:
-                        fu.dump_array(res_dir + str(i) + '.txt', [tw[TweetKeys.key_cleantext] for tw in _twarr])
+                        fu.dump_array(res_dir + str(i) + '.txt', [tw[TweetKeys.key_text] for tw in _twarr])
                 cluster_table = tbl_recall_list[idx][0]
                 cluster_table.to_csv(res_dir + 'table.csv')
         
@@ -189,8 +189,8 @@ class SemanticClusterer:
         alpha0 = alpha * K
         etap0 = VP * etap
         etac0 = VC * etac
-        etav0 = VC * etav
-        etah0 = VC * etah
+        etav0 = VV * etav
+        etah0 = VH * etah
         
         z = [0] * D
         m_z = [0] * K
@@ -244,7 +244,7 @@ class SemanticClusterer:
                 return np.argmax(prob)
             else:
                 return au.sample_index_by_array_value(np.array(prob))
-
+        
         """start iteration"""
         iter_x = list()
         nmi_y = list()
@@ -268,47 +268,3 @@ class SemanticClusterer:
             return m_z, z, iter_x, nmi_y
         else:
             return m_z, z
-
-
-class IdFreqDict:
-    key_id = 'id'
-    key_freq = 'freq'
-    
-    def __init__(self):
-        self._word2id = dict()
-        self._id2word = dict()
-        self.word_freq_enum = None
-    
-    def vocabulary_size(self):
-        return self._word2id.__len__()
-    
-    def count_word(self, word):
-        if word in self._word2id:
-            self._word2id[word][self.key_freq] += 1
-        else:
-            self._word2id[word] = {self.key_freq: 1}
-    
-    def drop_words_freq_less_than(self, min_freq):
-        for word in list(self._word2id.keys()):
-            if self._word2id[word][self.key_freq] < min_freq:
-                del self._word2id[word]
-        self.reset_id()
-    
-    def reset_id(self):
-        for idx, word in enumerate(sorted(self._word2id.keys())):
-            self._word2id[word][self.key_id] = idx
-            self._id2word[idx] = word
-    
-    def has_word(self, word):
-        return word in self._word2id
-    
-    def word2id(self, word):
-        return self._word2id[word][self.key_id]
-    
-    def id2word(self, _id):
-        return self._id2word[_id]
-    
-    def word_freq_enumerate(self, newest=False):
-        if newest or self.word_freq_enum is None:
-            self.word_freq_enum = [(word, self._word2id[word][self.key_freq]) for word in self._word2id.keys()]
-        return self.word_freq_enum

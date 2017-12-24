@@ -11,11 +11,11 @@ def main(args):
     if args.summary:
         FileIterator.iterate_file_tree(getconfig().data_path, FileIterator.summary_files_in_path,
                                        summary_path=getconfig().origin_path)
-    if args.temp:
-        FileIterator.iterate_file_tree(getconfig().data_path, FileIterator.summary_files_in_path,
-                                       summary_path=getconfig().test_data_path + 'yying')
-    if args.simp:
-        FileIterator.simplify_files_multi(getconfig().origin_path, getconfig().summary_path)
+    # if args.temp:
+    #     FileIterator.iterate_file_tree(getconfig().data_path, FileIterator.summary_files_in_path,
+    #                                    summary_path=getconfig().test_data_path + 'yying')
+    # if args.simp:
+    #     FileIterator.simplify_files_multi(getconfig().origin_path, getconfig().summary_path)
     print('time elapsed:', time.time() - s, 's')
 
 

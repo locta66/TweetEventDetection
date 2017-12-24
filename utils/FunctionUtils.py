@@ -4,13 +4,13 @@ import json
 import shutil
 import multiprocessing as mp
 import math
-from scipy.special import gamma
 
 
-def B_function(m, n):
-    if m <= 0 or n <= 0:
-        raise ValueError('incorrect m=' + str(m) + ' , n=' + str(n))
-    return gamma(m) * gamma(n) / gamma(m + n)
+# from scipy.special import gamma
+# def B_function(m, n):
+#     if m <= 0 or n <= 0:
+#         raise ValueError('incorrect m=' + str(m) + ' , n=' + str(n))
+#     return gamma(m) * gamma(n) / gamma(m + n)
 
 
 def rmtree(path):
@@ -48,6 +48,14 @@ def merge_list(array):
 
 
 def split_multi_format(array, process_num):
+    block_size = math.ceil(len(array) / process_num)
+    formatted_array = list()
+    for i in range(process_num):
+        formatted_array.append(array[i * block_size: (i + 1) * block_size])
+    return formatted_array
+
+
+def split_multi_format_test(array, process_num):
     block_size = math.ceil(len(array) / process_num)
     formatted_array = list()
     for i in range(process_num):

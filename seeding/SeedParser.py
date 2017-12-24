@@ -45,7 +45,7 @@ class SeedParser(JsonParser):
         return False
     
     def set_base_path(self, base_path):
-        self.base_path = FileIterator.append_slash_if_necessary(base_path)
+        self.base_path = FileIterator.add_sep_if_needed(base_path)
         for path in [self.get_base_path(), self.get_theme_path(), self.get_queried_path(), self.get_param_path(), ]:
             FileIterator.make_dirs_if_not_exists(path)
     

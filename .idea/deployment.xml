@@ -9,6 +9,7 @@
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/query_results" />
+            <excludedPath local="true" path="$PROJECT_DIR$/utils/synset.json" />
           </excludedPaths>
         </serverdata>
       </paths>

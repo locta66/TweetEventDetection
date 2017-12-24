@@ -148,12 +148,12 @@ class CacheBack:
         :param threshold:
         :return:
         """
-        outerstr = outertw[TweetKeys.key_cleantext].lower()
+        outerstr = outertw[TweetKeys.key_text].lower()
         if not outerstr:
             return True
         for innertw_and_stamp in self.twdict.values():
             innertw = innertw_and_stamp[self.key_tw]
-            innerstr = innertw[TweetKeys.key_cleantext].lower()
+            innerstr = innertw[TweetKeys.key_text].lower()
             if FunctionUtils.plagiarize_score(outerstr, innerstr) > threshold:
                 return True
         return False

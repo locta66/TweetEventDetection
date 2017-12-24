@@ -7,7 +7,7 @@ import FunctionUtils as fu
 unzip_cmd = pos_cmd = ner_cmd = ''
 
 
-def append_slash_if_necessary(path):
+def add_sep_if_needed(path):
     if not path.endswith(os.path.sep):
         path += os.path.sep
     return path
@@ -47,7 +47,6 @@ def remove_files(files):
 def remove_file(file):
     if type(file) is str:
         if os.path.exists(file):
-            # print('removing file', file)
             os.remove(file)
     else:
         raise TypeError("File descriptor not an expected type")
@@ -57,7 +56,7 @@ def listchildren(directory, children_type='dir'):
     if children_type not in ['dir', 'file', 'all']:
         print('listchildren() : Incorrect children type')
         return list()
-    directory = append_slash_if_necessary(directory)
+    directory = add_sep_if_needed(directory)
     children = sorted(os.listdir(directory))
     if children_type == 'all':
         return children
@@ -121,21 +120,22 @@ def summary_files_in_path(file_path, *args, **kwargs):
     """
     # granularity: [-13:]--hour [-13:-3]--day [-13:-5]--month
     # ymdh refers to the short of "year-month-date-hour"
-    json_ymdh_str = get_pattern().get_parent_path(file_path)[-13:]
+    json_ymdh_str = get_parent_path(file_path)[-13:]
     json_ymdh_arr = get_pattern().full_split_nondigit(json_ymdh_str)
     if not is_target_ymdh(json_ymdh_arr):
         return
     
-    file_path = append_slash_if_necessary(file_path)
-    summary_path = append_slash_if_necessary(kwargs['summary_path'])
+    file_path = add_sep_if_needed(file_path)
+    summary_path = add_sep_if_needed(kwargs['summary_path'])
     summary_name = '_'.join(json_ymdh_arr)
     summary_file = summary_path + summary_name + '.sum'
-    remove_ymdh_from_path(summary_path, summary_name)
+    remove_file(summary_file)
+    # remove_ymdh_from_path(summary_path, summary_name)
     subfiles = listchildren(file_path, children_type='file')
     
     file_list = fu.split_multi_format([(file_path + subfile) for subfile in subfiles], process_num=15)
     twarr_blocks = fu.multi_process(summary_zipped_tweets_multi,
-                                 [(file_list_slice,) for file_list_slice in file_list])
+                                    [(file_list_slice,) for file_list_slice in file_list])
     twarr = fu.merge_list(twarr_blocks)
     
     if twarr:
@@ -164,7 +164,7 @@ def summary_unzipped_tweets_multi(file_list):
 
 
 def remove_ymdh_from_path(summary_path, ymdh_file_name):
-    summary_path = append_slash_if_necessary(summary_path)
+    summary_path = add_sep_if_needed(summary_path)
     subfiles = listchildren(summary_path, children_type='file')
     for subfile in subfiles:
         if ymdh_file_name in subfile:

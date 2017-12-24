@@ -458,7 +458,7 @@ class EventExtractor:
                 tw_topic_arr = self.create_clusters_with_labels(twarr, summary[tw_cluster_pred_idx])
                 for i, _twarr in enumerate(tw_topic_arr):
                     if not len(_twarr) == 0:
-                        fu.dump_array(res_dir + str(i) + '.txt', [tw[TweetKeys.key_cleantext] for tw in _twarr])
+                        fu.dump_array(res_dir + str(i) + '.txt', [tw[TweetKeys.key_text] for tw in _twarr])
                 table = summary[table_idx]
                 table.to_csv(res_dir + 'table.csv')
         
@@ -649,7 +649,7 @@ class EventExtractor:
                 tw_topic_arr = self.create_clusters_with_labels(twarr, summary[tw_cluster_pred_idx])
                 for i, _twarr in enumerate(tw_topic_arr):
                     if not len(_twarr) == 0:
-                        fu.dump_array(res_dir + str(i) + '.txt', [tw[TweetKeys.key_cleantext] for tw in _twarr])
+                        fu.dump_array(res_dir + str(i) + '.txt', [tw[TweetKeys.key_text] for tw in _twarr])
                 table = summary[table_idx]
                 table.to_csv(res_dir + 'table.csv')
         
@@ -1244,8 +1244,8 @@ class EventExtractor:
     
     def stream_semantic_cluster_with_label(self, tw_batches, lb_batches):
         print('batch num', len(tw_batches), 'average batch size', np.mean([len(tw) for tw in tw_batches]))
-        K = 20
-        hold_batch_num = 4
+        K = 40
+        hold_batch_num = 5
         s = SemanticStreamClusterer(hold_batch_num=hold_batch_num)
         s.set_hyperparams(alpha=0.05, etap=0.1, etac=0.1, etav=0.05, etah=0.1, K=K)
         z_batch, lb_batch = list(), list()
@@ -1260,23 +1260,29 @@ class EventExtractor:
         print()
         """evaluate the procedure"""
         lb = fu.merge_list(lb_batches)
+        non_event_ids = [max(lb)]
         evolution = pd.DataFrame(columns=range(K))
         for batch_id in range(len(z_batch)):
             df = self.cluster_label_prediction_table(lb_batch[batch_id], z_batch[batch_id],
                                                      lbl_range=range(max(lb) + 1), pred_range=range(K))
             evolution.loc[batch_id, range(K)] = [df.columns[np.argmax(df.values[i])] if max(df.values[i]) > 0
-                                                 else '' for i in range(len(df.values))]
+                and df.columns[np.argmax(df.values[i])] not in non_event_ids else '' for i in range(len(df.values))]
             evolution.loc[batch_id, ' '] = ' '
             for event_id, event_cnt in dict(Counter(lb_batch[batch_id])).items():
-                evolution.loc[batch_id, 'e' + str(event_id)] = event_cnt
+                if event_id not in non_event_ids:
+                    evolution.loc[batch_id, 'e' + str(event_id)] = event_cnt
+        for batch_id in range(len(z_batch)):
+            for event_id, event_cnt in dict(Counter(lb_batch[batch_id])).items():
+                if event_id in non_event_ids:
+                    evolution.loc[batch_id, 'e' + str(event_id)] = event_cnt
         
         evolution_ = evolution.loc[:, range(K)]
         detected = sorted(set(fu.merge_list(evolution_.values.tolist())).difference({''}))
         detected = [int(d) for d in detected]
         num_detected = len(detected)
-        totalevent = sorted(set(lb))
+        totalevent = sorted(set(lb).difference(set(non_event_ids)))
         num_total = len(totalevent)
-
+        
         evolution.loc[' '] = ' '
         evolution.loc['info', evolution.columns[0]] = 'K={}, batch_size={}, batch_num={}, hold_batch={}, ' \
                                                       'total tweet num={}'.\

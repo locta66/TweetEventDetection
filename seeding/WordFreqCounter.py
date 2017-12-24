@@ -1,19 +1,19 @@
 import re
 import os
 
-import __init__
 from MyDict import MyDict
 import TweetKeys
+import PatternUtils as pu
+
 import numpy as np
 from nltk.corpus import stopwords
-from Synset import get_root_word
+stopdict = set(stopwords.words('english'))
 
 
 class WordFreqCounter:
     def __init__(self, capignore=True, worddict=None):
         self.doc_num = 0
         self.capignore = capignore
-        self.stopworddict = self.create_stopword_dict()
         
         self.worddict = worddict if worddict else MyDict()
         pos_dict_file = os.path.abspath(os.path.dirname(__file__)) + os.path.sep + 'posdict.txt'
@@ -28,20 +28,13 @@ class WordFreqCounter:
         # return self.worddict.vocabulary_size() + self.posdict.vocabulary_size()
         return self.worddict.vocabulary_size()
     
-    @staticmethod
-    def create_stopword_dict():
-        stopdict = {}
-        for stopword in stopwords.words('english'):
-            stopdict[stopword] = True
-        return stopdict
-    
     def is_valid_keyword(self, word):
         if not word:
             return False
         # Assume that word has been properly processed.
         startswithchar = re.search('^[^a-zA-Z#]', word) is None
         notsinglechar = re.search('^\w$', word) is None
-        notstopword = word not in self.stopworddict
+        notstopword = word not in pu.stop_words
         return startswithchar and notsinglechar and notstopword
     
     def is_valid_wordlabel(self, wordlabel):

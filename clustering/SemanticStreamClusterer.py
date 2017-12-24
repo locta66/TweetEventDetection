@@ -1,8 +1,7 @@
 import numpy as np
 
-import TweetKeys
 import ArrayUtils as au
-from SemanticClusterer import SemanticClusterer, IdFreqDict
+from SemanticClusterer import SemanticClusterer
 
 
 class SemanticStreamClusterer(SemanticClusterer):
@@ -13,6 +12,7 @@ class SemanticStreamClusterer(SemanticClusterer):
         self.label = list()
         self.hold_batch_num = hold_batch_num
         self.batch_twnum_list = list()
+        self.iternum = 50
     
     def set_hyperparams(self, alpha, etap, etac, etav, etah, K):
         self.alpha = alpha
@@ -22,16 +22,16 @@ class SemanticStreamClusterer(SemanticClusterer):
         self.etah = etah
         self.K = K
         self.hyperparams = (self.alpha, self.etap, self.etac, self.etav, self.etah, self.K)
-
+    
     def input_batch_with_label(self, tw_batch, lb_batch):
         self.batch_twnum_list.append(len(tw_batch))
         self.label += lb_batch
         self.twarr += tw_batch
-        if len(self.batch_twnum_list) <= self.hold_batch_num:
+        if len(self.batch_twnum_list) < self.hold_batch_num:
             return None, None, None
         if not self.init_batch_ready:
             self.preprocess_twarr(twarr=self.twarr)
-            self.m_z, self.z = self.GSDMM_twarr(*self.hyperparams, 50)
+            self.m_z, self.z = self.GSDMM_twarr(*self.hyperparams, iter_num=self.iternum)
             self.init_batch_ready = True
             if not len(self.z) == len(self.label):
                 raise ValueError('init z & label length inconsistent')
@@ -59,7 +59,7 @@ class SemanticStreamClusterer(SemanticClusterer):
         """normal process of new twarr"""
         if not self.init_batch_ready:
             self.preprocess_twarr(twarr=self.twarr)
-            self.m_z, self.z = self.GSDMM_twarr(*self.hyperparams, 50)
+            self.m_z, self.z = self.GSDMM_twarr(*self.hyperparams, iter_num=self.iternum)
             self.init_batch_ready = True
             return [], self.z[:]
         self.preprocess_twarr(twarr=self.twarr)

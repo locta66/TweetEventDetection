@@ -1,12 +1,7 @@
-from collections import Counter
-
-import numpy as np
 import Main2Parser
-import TweetKeys
 import FunctionUtils as fu
 import ArrayUtils as au
 import TweetUtils as tu
-import DateUtils as du
 from ArrayUtils import roc_auc
 from Configure import getconfig
 from EventExtractor import EventExtractor
@@ -47,17 +42,15 @@ def exec_cluster(parser):
     # print('Label distribution ', list(Counter(label).values()), 'total cluster', Counter(label).__len__(),
     #       '\ntotal tweet num ', len(twarr))
     
-    ee = EventExtractor(parser.get_dict_file_name(), parser.get_param_file_name())
+    # ee = EventExtractor(parser.get_dict_file_name(), parser.get_param_file_name())
     # tw_topic_arr, cluster_pred = ee.LECM_twarr_with_label(twarr, label)
     # tw_topic_arr, cluster_pred = ee.GSDMM_twarr_with_label(twarr, label)
     # tw_topic_arr, cluster_pred = ee.GSDPMM_twarr_with_label(twarr, label)
     # tw_topic_arr, cluster_pred = ee.GSDMM_twarr_hashtag_with_label(twarr, label)
     # ee.semantic_cluster_with_label(twarr, label)
     
-    tw_batches, lb_batches = create_batches_through_time()
-    print('Label distribution ', list(Counter(fu.merge_list(lb_batches)).values()),
-          'total cluster', Counter(fu.merge_list(lb_batches)).__len__(),
-          '\ntotal tweet num ', len(fu.merge_list(tw_batches)))
+    ee = EventExtractor(parser.get_dict_file_name(), parser.get_param_file_name())
+    tw_batches, lb_batches = create_batches_through_time(batch_size=100)
     ee.stream_semantic_cluster_with_label(tw_batches, lb_batches)
     
     # import TweetKeys
@@ -112,19 +105,26 @@ def exec_temp(parser):
     
     """query for pos events into blocks"""
     data_path = getconfig().summary_path
-    log_path = '/home/nfs/cdong/tw/seeding/temp/'
+    log_path = '/home/nfs/cdong/tw/testdata/yli/queried_events_with_keyword/'
     twarr_blocks = Main2Parser.query_per_query_multi(data_path, parser.seed_query_list)
-    print('query over')
+    print('query done, {} events, {} tws'.format(len(twarr_blocks), sum([len(arr) for arr in twarr_blocks])))
+    event_id2info = dict()
     et = EventTrainer()
     et.start_ner_service(pool_size=16, classify=True, pos=True)
     for i in range(len(parser.seed_query_list)):
+        event_id2info[i] = dict()
         twarr_blocks[i] = et.twarr_ner(twarr_blocks[i])
         query_i = parser.seed_query_list[i]
         file_name_i = query_i.all[0].strip('\W') + '_' + '-'.join(query_i.since) + '.sum'
+        event_id2info[i]['filename'] = file_name_i
+        event_id2info[i]['all'] = [w.strip('\W') for w in query_i.all]
+        event_id2info[i]['any'] = [w.strip('\W') for w in query_i.any]
         fu.dump_array(log_path + file_name_i, twarr_blocks[i])
+    fu.dump_array(log_path + 'event_id2info.txt', [event_id2info])
     et.end_ner_service()
-    print('ner over, event num queried ', len(twarr_blocks))
-    fu.dump_array('events.txt', twarr_blocks, overwrite=False)
+    print(event_id2info)
+    print('ner done')
+    fu.dump_array('events.txt', twarr_blocks)
     
     # """splitting dzs_neg_data into blocks"""
     # twarr_blocks = list()
@@ -159,11 +159,16 @@ def load_clusters_and_labels():
     return twarr, label
 
 
-def create_batches_through_time():
+def create_batches_through_time(batch_size=400):
+    false_event_twarr = fu.load_array('falseevents.txt')
     event_blocks = fu.load_array('events.txt')
+    print('pre false - event num:', len(event_blocks), 'total tw:', sum([len(twarr) for twarr in event_blocks]))
+    event_blocks.append(false_event_twarr)
+    print('post false - event num:', len(event_blocks), 'total tw:', sum([len(twarr) for twarr in event_blocks]))
+    
     twarr = fu.merge_list(event_blocks)
     label = fu.merge_list([[i for _ in range(len(event_blocks[i]))] for i in range(len(event_blocks))])
-    
+
     idx_time_order = tu.rearrange_idx_by_time(twarr)
     twarr = [twarr[idx] for idx in idx_time_order]
     label = [label[idx] for idx in idx_time_order]
@@ -173,7 +178,38 @@ def create_batches_through_time():
     #             du.get_timestamp_form_created_at(twarr[idx + 1][TweetKeys.key_created_at].strip()):
     #         raise ValueError('wrong')
     
-    idx_parts = au.index_partition(twarr, [1] * int(len(twarr) / 400), random=False)
+    def random_idx_for_item(item_arr, dest_item):
+        from numpy import random
+        
+        def sample(prob):
+            return random.rand() < prob
+        non_dest_item_idx = [idx for idx in range(len(item_arr)) if item_arr[idx] not in dest_item]
+        dest_item_idx = [idx for idx in range(len(item_arr)) if item_arr[idx] in dest_item]
+        # dest_item_idx = [item for item in item_arr if item in dest_item]
+        non_dest_cnt = dest_cnt = 0
+        res = list()
+        while len(non_dest_item_idx) > non_dest_cnt and len(dest_item_idx) > dest_cnt:
+            if sample((len(dest_item_idx) - dest_cnt) /
+                      (len(dest_item_idx) - dest_cnt + len(non_dest_item_idx) - non_dest_cnt)):
+                res.append(dest_item_idx[dest_cnt])
+                dest_cnt += 1
+            else:
+                res.append(non_dest_item_idx[non_dest_cnt])
+                non_dest_cnt += 1
+        while len(non_dest_item_idx) > non_dest_cnt:
+            res.append(non_dest_item_idx[non_dest_cnt])
+            non_dest_cnt += 1
+        while len(dest_item_idx) > dest_cnt:
+            res.append(dest_item_idx[dest_cnt])
+            dest_cnt += 1
+        return res
+    
+    idx_rearrange = random_idx_for_item(label, {len(event_blocks) - 1})
+    twarr = [twarr[idx] for idx in idx_rearrange]
+    label = [label[idx] for idx in idx_rearrange]
+    print(set(label))
+    idx_parts = au.index_partition(twarr, [1] * int(len(twarr) / batch_size), random=False)
     tw_batches = [[twarr[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
     lb_batches = [[label[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
+    
     return tw_batches, lb_batches

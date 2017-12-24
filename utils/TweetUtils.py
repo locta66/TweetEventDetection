@@ -1,3 +1,6 @@
+import re
+
+from NerServiceProxy import get_ner_service_pool
 import FunctionUtils as fu
 import DateUtils as du
 import TweetKeys
@@ -39,10 +42,7 @@ def cluster_similar_tweets(twarr):
         return twarr
     ndim = len(twarr)
     mat = np.ones([ndim, ndim])
-    if len(twarr) <= 128:
-        pairs = twarr_dist_pairs(twarr)
-    else:
-        pairs = twarr_dist_pairs_multi(twarr)
+    pairs = twarr_dist_pairs(twarr) if len(twarr) <= 128 else twarr_dist_pairs_multi(twarr)
     for p in pairs:
         mat[p[0]][p[1]] = mat[p[1]][p[0]] = p[2]
     label, cluster = dbscan(mat, 0.5, 2, metric='precomputed')
@@ -51,19 +51,15 @@ def cluster_similar_tweets(twarr):
 
 
 def twarr_dist_pairs(twarr):
-    for tw in twarr:
-        tw['nouse'] = tw['text'].lower()
+    textarr = [tw['text'].lower() for tw in twarr]
     ndim = len(twarr)
     pairs = list()
     for i in range(ndim - 1):
         for j in range(i + 1, ndim):
-            istr = twarr[i]['nouse']
-            jstr = twarr[j]['nouse']
+            istr, jstr = textarr[i], textarr[j]
             dist = Levenshtein.distance(istr, jstr) + 1
             if max(len(istr), len(jstr)) / dist <= 0.2:
                 pairs.append((i, j, 0))
-    for tw in twarr:
-        del tw['nouse']
     return pairs
 
 
@@ -116,3 +112,55 @@ def twarr_timestamp_array(twarr):
 
 def rearrange_idx_by_time(twarr):
     return np.argsort([du.get_timestamp_form_created_at(tw[TweetKeys.key_created_at].strip()) for tw in twarr])
+
+
+def twarr_ner(twarr):
+    """ Perform NER and POS task upon the twarr, inplace. """
+    ner_text_arr = get_ner_service_pool().execute_ner_multiple([tw['text'] for tw in twarr])
+    if not len(ner_text_arr) == len(twarr):
+        raise ValueError("Return line number inconsistent; Error occurs during NER")
+    for idx, ner_text in enumerate(ner_text_arr):
+        wordlabels = parse_ner_text_into_wordlabels(ner_text)
+        wordlabels = remove_badword_from_wordlabels(wordlabels)
+        twarr[idx][TweetKeys.key_wordlabels] = wordlabels
+    return twarr
+
+
+def parse_ner_text_into_wordlabels(ner_text):
+    # wordlabels = [('word_0', 'entity extraction word_0', 'pos word_0'), ('word_1', ...), ...]
+    words = re.split('\s', ner_text)
+    wordlabels = list()
+    for word in words:
+        if word == '':
+            continue
+        wordlabels.append(parse_ner_word_into_labels(word, slash_num=2))
+    return wordlabels
+
+
+def parse_ner_word_into_labels(ner_word, slash_num):
+    """
+    Split a word into array by '/' searched from the end of the word to its begin.
+    :param ner_word: With pos labels.
+    :param slash_num: Specifies the number of "/" in the pos word.
+    :return: Assume that slash_num=2, "qwe/123"->["qwe","123"], "qwe/123/zxc"->["qwe","123","zxc"],
+                              "qwe/123/zxc/456"->["qwe/123","zxc","456"],
+    """
+    res = list()
+    over = False
+    for i in range(slash_num):
+        idx = ner_word.rfind('/') + 1
+        res.insert(0, ner_word[idx:])
+        ner_word = ner_word[0:idx - 1]
+        if idx == 0:
+            over = True
+            break
+    if not over:
+        res.insert(0, ner_word)
+    return res
+
+
+def remove_badword_from_wordlabels(wordlabels):
+    for idx, wordlabel in enumerate(wordlabels):
+        if re.search('^[^a-zA-Z0-9]+$', wordlabel[0]) is not None:
+            del wordlabels[idx]
+    return wordlabels

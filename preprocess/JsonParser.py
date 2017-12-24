@@ -1,4 +1,3 @@
-import os
 import re
 import json
 import bz2file
@@ -11,7 +10,7 @@ import TweetKeys
 class JsonParser:
     def __init__(self):
         self.tweet_desired_attrs = ['created_at', 'timestamp_ms', 'id', 'text', 'place', 'user',
-                                    'retweet_count', 'favorite_count', 'entities',
+                                    'retweet_count', 'favorite_count', 'entities', 'source',
                                     'filter_level', 'truncated', 'is_quote_status',
                                     'in_reply_to_status_id', 'in_reply_to_user_id']
         self.user_desired_attrs = ['id', 'created_at', 'time_zone', 'location', 'favourites_count',
@@ -83,18 +82,7 @@ class JsonParser:
             if attr not in attr_list:
                 target_dict.pop(attr)
         return target_dict
-    
-    # @staticmethod
-    # def dump_json_arr_into_file(json_arr, file_path, mode='append'):
-    #     if mode is 'append':
-    #         pass
-    #     elif mode is 'renew':
-    #         if os.path.exists(file_path):
-    #             os.remove(file_path)
-    #     with open(file_path, 'a') as fp:
-    #         for obj in json_arr:
-    #             line = json.dumps(obj, sort_keys=True) + '\n'
-    #             fp.write(line)
+
 
 # ######## 推文属性 ########
 # text
