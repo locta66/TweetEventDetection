@@ -77,16 +77,18 @@ def main(args):
     for p in [seed_parser, test_parser_1]:
         p.set_base_path(args.seed_path)
     
-    if args.query:
-        exec_query(args.summary_path, parser)
-    if args.pred:
-        exec_classification(seed_parser, test_parser_1)
+    # if args.query:
+    #     exec_query(args.summary_path, parser)
+    # if args.pred:
+    #     exec_classification(seed_parser, test_parser_1)
     if args.ner:
         exec_ner(parser)
     if args.clu:
         exec_cluster(parser)
     if args.temp:
         exec_temp(parser)
+    if args.anly:
+        exec_analyze(parser)
 
 
 def parse_args():
@@ -102,6 +104,7 @@ def parse_args():
     parser.add_argument('--pred', action='store_true', default=False, help='If perform prediction on the test data.')
     parser.add_argument('--clu', action='store_true', default=False, help='If perform clustering on some tweet stream.')
     parser.add_argument('--temp', action='store_true', default=False, help='Just a temp function, maybe for making data.')
+    parser.add_argument('--anly', action='store_true', default=False, help='analyze the clustering results.')
     return parser.parse_args()
 
 

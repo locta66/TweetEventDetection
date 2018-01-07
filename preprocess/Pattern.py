@@ -141,9 +141,9 @@ def get_pattern():
 
 
 # s = 'RT @bugwannostra: @Louuu_ thx		#FFFFs People power -_-      works	❤signing…		https://t.co/pl2bquE5Az'
-# s = 'RT @bugwannostra: @Louuu_ thx		#FFFFs People power -_-  https:/    works	❤signing… http:   https:'
-# re.findall(r'[a-zA-Z_\-\']{3,}', s)
-# ptn = re.compile(r'https+:\W*/\.*?(\s|$)|https+:(\s|$)')
+# s = 'RT @bugwannost https://baidu.com ra: @Louuu_ thx		#FFFFs People power -_-  https:/    works	❤signing… http:   https:'
+# # re.findall(r'[a-zA-Z_\-\']{3,}', s)
+# ptn = re.compile(r'https?:\W*/.*?(\s|$)|https?:(\s|$)')
 # ptn.sub('_', s)
 
 # Pattern().normalization(s)

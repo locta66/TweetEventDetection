@@ -44,54 +44,6 @@ def shuffle(array, new_arr=False):
     return array
 
 
-# def roc(score_label_pairs, curve_points=150):
-#     scoreidx = 0
-#     score_label_pairs = sorted(score_label_pairs, key=lambda item: item[scoreidx], reverse=True)
-#     max_threshold = score_label_pairs[0][scoreidx]
-#     min_threshold = score_label_pairs[-1][scoreidx]
-#     interval = (max_threshold - min_threshold) / curve_points
-#     threshold_list = [min_threshold + i * interval for i in range(1, curve_points - 1)]
-#
-#     thresholds_per_process = fI.split_multi_format(threshold_list, 15)
-#     param_list = [(score_label_pairs, process_threshold) for process_threshold in thresholds_per_process]
-#     roc_curve_arr = fI.multi_process(roc_through_thresholds, param_list)
-#     roc_curve = fI.merge_list(roc_curve_arr)
-#     roc_curve.insert(0, (0.0, 0.0))
-#     roc_curve.append((1.0, 1.0))
-#     return auc(roc_curve)
-#
-#
-# def roc_through_thresholds(score_label_pairs, threshold_list):
-#     scoreidx = 0
-#     labelidx = 1
-#     look_up = {(True, 1): 'tp', (True, 0): 'fp', (False, 1): 'fn', (False, 0): 'tn'}
-#     curve = list()
-#     for threshold in threshold_list:
-#         counter = {'tp': 0, 'fp': 0, 'fn': 0, 'tn': 0}
-#         for score_label_pair in score_label_pairs:
-#             c = (score_label_pair[scoreidx] >= threshold, score_label_pair[labelidx])
-#             counter[look_up[c]] += 1
-#         tp = counter['tp']
-#         fp = counter['fp']
-#         fn = counter['fn']
-#         tn = counter['tn']
-#         fpr = fp / (fp + tn)
-#         tpr = tp / (tp + fn)
-#         curve.append((fpr, tpr))
-#     return curve
-#
-#
-# def auc(curve, exec_sort=True):
-#     if exec_sort:
-#         curve = sorted(curve)
-#     area = 0.0
-#     for idx in range(len(curve) - 1):
-#         x1, y1 = curve[idx]
-#         x2, y2 = curve[idx + 1]
-#         area += (y1 + y2) * (x2 - x1) / 2
-#     return area
-
-
 def roc_auc(labels_true, scores):
     return metrics.roc_auc_score(labels_true, scores)
 
@@ -115,9 +67,6 @@ def group_array_by_condition(array, item_key):
             dictionary[item_key] = [item]
         else:
             dictionary[item_key].append(item)
-    # dictionary = dict(zip([item_key(item) for item in array], [[] for _ in array]))
-    # for item in array:
-    #     dictionary[item_key(item)].append(item)
     return [dictionary[key] for key in sorted(dictionary.keys())]
 
 
@@ -132,12 +81,7 @@ def sample_index_by_array_value(array):
 
 def element_over_half(array):
     total = len(array)
-    for element, count in dict(Counter(array)).items():
+    for element, count in Counter(array).items():
         if count << 1 >= total:
             return element
     return None
-
-
-def element_max_count(array):
-    return list(pd.Series(array).mode())
-

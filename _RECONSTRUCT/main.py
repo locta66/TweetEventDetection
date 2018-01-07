@@ -10,7 +10,7 @@ def main():
     # fi.iterate_file_tree(getconfig().data_path, summary_files_in_path,
     #                      summary_path='/home/nfs/cdong/tw/testdata/cdong/non')
     # convert_files_multi(getconfig().origin_path, getconfig().summary_path)
-    get_tokens_multi(getconfig().origin_path)
+    get_semantic_tokens_multi(getconfig().origin_path)
 
 
 def parse_args():

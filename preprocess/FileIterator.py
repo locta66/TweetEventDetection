@@ -52,13 +52,18 @@ def remove_file(file):
         raise TypeError("File descriptor not an expected type")
 
 
-def listchildren(directory, children_type='dir'):
-    if children_type not in ['dir', 'file', 'all']:
+TYPE_DIR = 'dir'
+TYPE_FILE = 'file'
+TYPE_ALL = 'all'
+
+
+def listchildren(directory, children_type=TYPE_DIR):
+    if children_type not in [TYPE_DIR, TYPE_FILE, TYPE_ALL]:
         print('listchildren() : Incorrect children type')
         return list()
     directory = add_sep_if_needed(directory)
     children = sorted(os.listdir(directory))
-    if children_type == 'all':
+    if children_type == TYPE_ALL:
         return children
     res = list()
     for child in children:
@@ -67,9 +72,9 @@ def listchildren(directory, children_type='dir'):
             print('listchildren() : Invalid path')
             continue
         is_dir = os.path.isdir(child_path)
-        if children_type == 'dir' and is_dir:
+        if children_type == TYPE_DIR and is_dir:
             res.append(child)
-        elif children_type == 'file' and not is_dir:
+        elif children_type == TYPE_FILE and not is_dir:
             res.append(child)
     return res
 

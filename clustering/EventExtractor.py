@@ -6,14 +6,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from Configure import getconfig
-import TweetKeys
+import TweetKeys as tk
 import ArrayUtils as au
 import FunctionUtils as fu
 from Cache import CacheBack
 from EventClassifier import LREventClassifier
-from WordFreqCounter import WordFreqCounter
+from WordFreqCounter import WordFreqCounter as wfc
 from SemanticClusterer import SemanticClusterer
 from SemanticStreamClusterer import SemanticStreamClusterer
+from GSDPMMStreamClusterer import GSDPMMStreamClusterer
 
 pos_cluster_num = 12
 
@@ -28,7 +29,7 @@ class EventExtractor:
         self.tmp_list = list()
     
     def construct(self, dict_file, model_file):
-        self.freqcounter = WordFreqCounter()
+        self.freqcounter = wfc()
         self.freqcounter.load_worddict(dict_file)
         vocab_size = self.freqcounter.vocabulary_size()
         self.classifier = LREventClassifier(vocab_size=vocab_size, learning_rate=0,
@@ -42,77 +43,6 @@ class EventExtractor:
     def filter_twarr(self, twarr, cond=lambda x: x >= 0.5):
         predicts = self.make_classification(twarr)
         return [twarr[idx] for idx, pred in enumerate(predicts) if cond(pred)]
-    
-    def merge_tw_into_cache_back(self, tw):
-        if not self.inited:
-            if not len(self.tmp_list) >= 15:
-                self.tmp_list.append(tw)
-            else:
-                twarr_per_cache = au.array_partition(self.tmp_list, (1, 1, 1))
-                for twarr in twarr_per_cache:
-                    cache = CacheBack(self.freqcounter)
-                    for tw in twarr:
-                        cache.update_from_tw(tw)
-                    self.cache_back.append(cache)
-                self.inited = True
-            return
-        
-        g_dict = dict()
-        ng_dict = dict()
-        k_dict = dict()
-        for cache in self.cache_back:
-            g_dict.update(cache.entities_geo.dictionary)
-            ng_dict.update(cache.entities_non_geo.dictionary)
-            k_dict.update(cache.keywords.dictionary)
-        g_vocab = len(g_dict.keys())
-        ng_vocab = len(ng_dict.keys())
-        k_vocab = len(k_dict.keys())
-        doc_num = sum([cache.tweet_number() for cache in self.cache_back])
-        event_num = len(self.cache_back)
-        alpha = 0.1
-        beta = 0.1
-        
-        score_list = [cache.score_with_tw(tw, doc_num, event_num, g_vocab, ng_vocab, k_vocab, alpha, beta)
-                      for cache in self.cache_back]
-        max_score = np.max(score_list)
-        max_score_idx = np.argmax(score_list)
-        print(max_score_idx, '\t', max_score)
-        
-        if not max_score > 0.2:
-            self.create_cache_with_tw(tw)
-            return
-        else:
-            self.cache_back[max_score_idx].update_from_tw(tw)
-            # print(tw[TweetKeys.key_cleantext])
-            # print(score_list)
-            # print('----\n')
-            # self.cache_back[0].update_from_tw(tw)
-    
-    # def merge_tw_into_cache_back(self, tw):
-    #     if not self.cache_back:
-    #         self.create_cache_with_tw(tw)
-    #         return
-    #
-    #     g_dict = dict()
-    #     ng_dict = dict()
-    #     k_dict = dict()
-    #     for cache in self.cache_back:
-    #         g_dict.update(cache.entities_geo.dictionary)
-    #         ng_dict.update(cache.entities_non_geo.dictionary)
-    #         k_dict.update(cache.keywords.dictionary)
-    #     vocab = len(g_dict.keys()) + len(ng_dict.keys()) + len(k_dict.keys())
-    #     doc_num = sum([cache.tweet_number() for cache in self.cache_back])
-    #     event_num = len(self.cache_back)
-    #     alpha = 0.1
-    #     beta = 0.1
-    #
-    #     score_list = [cache.score_with_tw(tw, doc_num, event_num, vocab, alpha, beta)
-    #                   for cache in self.cache_back]
-    #     print(tw[TweetKeys.key_cleantext])
-    #     print(score_list)
-    #     print('----\n')
-    #
-    #     self.cache_back[0].update_from_tw(tw)
     
     def create_cache_with_tw(self, tw):
         cache = CacheBack(self.freqcounter)
@@ -129,6 +59,7 @@ class EventExtractor:
         print(table)
     
     def cluster_label_prediction_table(self, tw_clu_lbl, tw_clu_pred, lbl_range=None, pred_range=None):
+        """ the rows are predicted cluster id, and the columns are ground truth labels """
         cluster_table = pd.DataFrame(index=set(tw_clu_pred) if pred_range is None else pred_range,
                                      columns=set(tw_clu_lbl) if lbl_range is None else lbl_range, data=0)
         for i in range(len(tw_clu_lbl)):
@@ -179,7 +110,6 @@ class EventExtractor:
     def GSDMM_twarr_with_label(self, twarr, tw_cluster_label):
         a, b, c, d = self.GSDMM_twarr(twarr, 0.01, 0.05, 40, 60, tw_cluster_label)
         print(self.cluster_label_prediction_table(tw_cluster_label, b))
-        return
         # line_style = ['-', '^-', '+-', 'x-', '<-', '-.']
         line_color = ['#FF0000', '#FFAA00', '#FFFF00', '#00FF00', '#00FFFF', '#0000FF', '#FF00FF',
                       '#BFBFBF', '#A020F0', '#8B5A00', '#C71585', '#87CEFF', '#4B0082', '']
@@ -189,11 +119,10 @@ class EventExtractor:
         """cluster using different hyperparams in multiprocess way"""
         iter_num = 100
         process_num = 18
-        tempobj = TempObject(self.freqcounter)
         hyperparams = [(a, b, K) for a in alpha_range for b in beta_range for K in K_range]
         res_list = list()
         for i in range(int(math.ceil(len(hyperparams) / process_num))):
-            param_list = [(tempobj, twarr, *param, iter_num, tw_cluster_label) for param in
+            param_list = [(None, twarr, *param, iter_num, tw_cluster_label) for param in
                           hyperparams[i * process_num: (i + 1) * process_num]]
             res_list += fu.multi_process(EventExtractor.GSDMM_twarr, param_list)
             print('{:<4} /'.format((i + 1) * process_num), len(hyperparams), 'params processed')
@@ -262,7 +191,7 @@ class EventExtractor:
         return None, None
     
     def GSDMM_twarr(self, twarr, alpha, beta, K, iter_num, ref_labels=None):
-        ner_pos_token = TweetKeys.key_wordlabels
+        ner_pos_token = tk.key_wordlabels
         twarr = twarr[:]
         words = dict()
         """pre-process the tweet text, including dropping non-common terms"""
@@ -272,9 +201,7 @@ class EventExtractor:
             wordlabels = tw[ner_pos_token]
             for i in range(len(wordlabels) - 1, -1, -1):
                 wordlabels[i][0] = wordlabels[i][0].lower().strip('#').strip()
-                # wordlabels[i][0] = get_root_word(wordlabels[i][0]) if wordlabels[i][2] in verb else \
-                #     wordlabels[i][0]
-                if not self.freqcounter.is_valid_keyword(wordlabels[i][0]):
+                if not wfc.is_valid_keyword(wordlabels[i][0]):
                     del wordlabels[i]
             for wordlabel in wordlabels:
                 word = wordlabel[0]
@@ -383,15 +310,12 @@ class EventExtractor:
             return n_zw, z
     
     def GSDPMM_twarr_with_label(self, twarr, tw_cluster_label):
-        line_color = ['#FF0000', '#FFAA00', '#FFFF00', '#00FF00', '#00FFFF', '#0000FF', '#FF00FF',
-                      '#BFBFBF', '#A020F0', '#8B5A00', '#C71585', '#87CEFF', '#4B0082', ]
         alpha_range = beta_range = [i / 100 for i in range(1, 10, 2)] + [i / 10 for i in range(1, 10, 2)]
         """cluster using different hyperparams in multiprocess way"""
         iter_num = 100
         process_num = 19
-        tempobj = TempObject(self.freqcounter)
         hyperparams = [(a, b) for a in alpha_range for b in beta_range]
-        params = [(tempobj, twarr, *param, iter_num, tw_cluster_label) for param in hyperparams]
+        params = [(None, twarr, *param, iter_num, tw_cluster_label) for param in hyperparams]
         res_list = self.clustering_multi(EventExtractor.GSDPMM_twarr, params, process_num)
         param_num = len(hyperparams)
         """group the data by alpha"""
@@ -467,7 +391,7 @@ class EventExtractor:
         return None, None
     
     def GSDPMM_twarr(self, twarr, alpha, beta, iter_num, ref_labels=None):
-        ner_pos_token = TweetKeys.key_wordlabels
+        ner_pos_token = tk.key_wordlabels
         twarr = twarr[:]
         words = dict()
         """pre-process the tweet text, including dropping non-common terms"""
@@ -475,7 +399,7 @@ class EventExtractor:
             wordlabels = tw[ner_pos_token]
             for i in range(len(wordlabels) - 1, -1, -1):
                 wordlabels[i][0] = wordlabels[i][0].lower().strip('#').strip()
-                if not self.freqcounter.is_valid_keyword(wordlabels[i][0]):
+                if not wfc.is_valid_keyword(wordlabels[i][0]):
                     del wordlabels[i]
             for wordlabel in wordlabels:
                 word = wordlabel[0]
@@ -589,8 +513,7 @@ class EventExtractor:
         param_num = len(hyperparams)
         res_list = list()
         for i in range(int(math.ceil(param_num / process_num))):
-            tempobj = TempObject(self.freqcounter)
-            param_list = [(tempobj, twarr, *param, iter_num, tw_cluster_label) for param in
+            param_list = [(None, twarr, *param, iter_num, tw_cluster_label) for param in
                           hyperparams[i * process_num: (i + 1) * process_num]]
             res_list += fu.multi_process(EventExtractor.GSDMM_twarr_hashtag, param_list)
             print('{:<3} /'.format(min((i + 1) * process_num, param_num)), param_num, 'params processed')
@@ -662,7 +585,7 @@ class EventExtractor:
         return None, None
     
     def GSDMM_twarr_hashtag(self, twarr, alpha, beta, gamma, K, iter_num, ref_labels=None):
-        ner_pos_token = TweetKeys.key_wordlabels
+        ner_pos_token = tk.key_wordlabels
         twarr = twarr[:]
         key_dict = dict()
         ht_dict = dict()
@@ -687,7 +610,7 @@ class EventExtractor:
             wordlabels = tw[ner_pos_token]
             for i in range(len(wordlabels) - 1, -1, -1):
                 key = wordlabels[i][0] = wordlabels[i][0].lower().strip()     # hashtags are reserved here
-                if not self.freqcounter.is_valid_keyword(key):
+                if not wfc.is_valid_keyword(key):
                     del wordlabels[i]
                 else:
                     if key.startswith('#'):
@@ -1293,8 +1216,63 @@ class EventExtractor:
         evolution.loc['recall', evolution.columns[0]] = str(num_detected) + '/' + str(num_total) + \
                                                         '=' + str(num_detected / num_total)
         evolution.to_csv('table.csv')
-
-
-class TempObject:
-    def __init__(self, freqcounter):
-        self.freqcounter = freqcounter
+    
+    def GSDPMM_Stream_Clusterer_with_label(self, tw_batches, lb_batches):
+        # from GSDPMMStreamClusterer_first import GSDPMMStreamClusterer
+        g = GSDPMMStreamClusterer(hold_batch_num=4)
+        g.set_hyperparams(1000, 0.1, 0.1, 0.05, 0.1)
+        z_evo, l_evo = list(), list()
+        history_z = set()
+        for pred_cluid in range(len(tw_batches)):
+            print('\r{}\r{}/{} groups, {} tws processed'.format(' ' * 30, pred_cluid + 1, len(tw_batches),
+                  sum([len(t) for t in tw_batches[:pred_cluid + 1]])), end='', flush=True)
+            z, label = g.input_batch(tw_batches[pred_cluid], lb_batches[pred_cluid])
+            if not z: continue
+            if not len(label) == len(z): raise ValueError('length inconsistent')
+            z_evo += z
+            l_evo += label
+            history_z = history_z.union(set(z))
+        print(history_z)
+        fu.dump_array('z_evolution', z_evo)
+        fu.dump_array('lb_evolution', l_evo)
+        self.analyze_stream()
+    
+    def analyze_stream(self):
+        K_EMPTY = ''
+        """ evaluate the clustering procedure """
+        z_evo = fu.load_array('z_evolution')
+        l_evo = fu.load_array('lb_evolution')
+        all_labels = fu.merge_list(l_evo)
+        non_event_cluids = {max(all_labels), K_EMPTY, }
+        evolution = pd.DataFrame()
+        for batch_id in range(len(z_evo)):
+            z_batch, lb_batch = z_evo[batch_id], l_evo[batch_id]
+            df = self.cluster_label_prediction_table([int(item) for item in lb_batch],
+                                                     [int(item) for item in z_batch])
+            for pred_cluid, row in df.iterrows():
+                row_max_idx, row_sum = np.argmax(row.values), sum(row.values)
+                max_cluid = row.index[row_max_idx]
+                if row[max_cluid] == 0 or (row[max_cluid] * 1.7) < row_sum or max_cluid in non_event_cluids:
+                    evolution.loc[batch_id, pred_cluid] = K_EMPTY
+                else:
+                    evolution.loc[batch_id, pred_cluid] = int(max_cluid)
+        
+        evolution.fillna(K_EMPTY, inplace=True)
+        real_event_ids = fu.merge_list(l_evo)
+        real_event_num = Counter(real_event_ids)
+        detected_event_ids = [item for item in fu.merge_list(evolution.values.tolist()) if item not in non_event_cluids]
+        detected_event_num = Counter(detected_event_ids)
+        detected_event_id = [d for d in sorted(set(detected_event_ids))]
+        num_detected = len(detected_event_id)
+        event_id_corpus = sorted(set(all_labels).difference(non_event_cluids))
+        num_corpus = len(event_id_corpus)
+        
+        first_col = evolution.columns[0]
+        evolution.loc['realdistrb', first_col] = '  '.join(['{}:{}'.format(eventid, real_event_num[eventid])
+                                                            for eventid in sorted(real_event_num.keys())])
+        evolution.loc['eventdistrb', first_col] = '  '.join(['{}:{}'.format(eventid, detected_event_num[eventid])
+                                                             for eventid in sorted(detected_event_num.keys())])
+        evolution.loc['detectedid', first_col] = str(detected_event_id)
+        evolution.loc['totalevent', first_col] = str(event_id_corpus)
+        evolution.loc['recall', first_col] = '{}/{}={}'.format(num_detected, num_corpus, num_detected / num_corpus)
+        evolution.to_csv('table.csv')

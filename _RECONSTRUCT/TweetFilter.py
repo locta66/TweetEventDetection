@@ -1,8 +1,11 @@
 import re
 import TweetKeys as tk
+import PatternUtils as pu
 from Pattern import get_pattern
 from MyDict import MyDict
 
+FILTER_LEVEL_LOW = 'low'
+FILTER_LEVEL_HIGH = 'high'
 
 low_tw_attr = ['created_at', 'timestamp_ms', 'id', 'text', 'place', 'user',
                        'retweet_count', 'favorite_count', 'entities', 'source',
@@ -41,6 +44,20 @@ def filter_twarr(twarr, filter_level='low'):
             tw[tk.key_text] = sentence_filter(normalized_text)
     for idx in removal_idx[::-1]:
         del twarr[idx]
+    return twarr
+
+
+def eliminate_dup_id(twarr):
+    id_set, dup_idx = set(), set()
+    for idx, tw in enumerate(twarr):
+        tw_id = tw[tk.key_id]
+        if tw_id not in id_set:
+            id_set.add(tw_id)
+        else:
+            dup_idx.add(idx)
+    for idx in range(len(twarr)-1, -1, -1):
+        if idx in dup_idx:
+            del twarr[idx]
     return twarr
 
 

@@ -156,6 +156,7 @@ for filr in subfiles:
 
 
 
+
 for text in textarr[0:200]:
     print(text)
     print(re.findall(r'([a-zA-Z_-]+|\d+\.\d+|\d+)', text))
@@ -164,7 +165,9 @@ for text in textarr[0:200]:
 from nltk.corpus import stopwords
 stop_words = set(stopwords.words('english'))
 
-
+for idx, row in a.iterrows():
+    # print(type(row))
+    print(row.index['a'])
 
 
 
@@ -181,6 +184,29 @@ cv = CV(analyzer='word', token_pattern=r'([a-zA-Z_-]+|\d+\.\d+|\d+)',
 
 cv.fit_transform(textarr)
 import sklearn
+
+
+
+def iterator():
+    d = {1:2, 'asdf':5, 3:'qwr'}
+    for w in d.keys():
+        yield w, d[w]
+
+iterator()
+for x in iterator():
+    print(x)
+
+# 这一行的效果和直接运行cProfile.run("foo()")的显示效果是一样的
+# p.strip_dirs().sort_stats(-1).print_stats()
+# strip_dirs():从所有模块名中去掉无关的路径信息
+# sort_stats():把打印信息按照标准的module/name/line字符串进行排序
+# print_stats():打印出所有分析信息
+
+# 按照在一个函数中累积的运行时间进行排序
+# print_stats(3):只打印前3行函数的信息,参数还可为小数,表示前百分之几的函数信息
+import pstats
+p = pstats.Stats("res")
+p.strip_dirs( ).sort_stats("cumulative").print_stats(50)
 
 
 

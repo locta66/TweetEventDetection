@@ -31,6 +31,8 @@ class SubPatternHolder:
             self.cache_dict[exp][self.key_substitute] = sub
     
     def apply_patterns(self, text):
+        # if len(self.exp_list) == 1:
+        #     return self.cache_dict[0][self.key_pattern].sub(self.cache_dict[0][self.key_substitute], text)
         for exp in self.exp_list:
             pattern = self.cache_dict[exp][self.key_pattern]
             sub = self.cache_dict[exp][self.key_substitute]
@@ -39,7 +41,7 @@ class SubPatternHolder:
 
 
 tw_rule_list = [(r'RT\s@?.*?:(\s|$)', ' '), (r'@\w+', ' '), (r'(#.+?)(\s|$)', ' \\1 '),
-                (r'https+:\W*/\.*?(\s|$)|https+:(\s|$)', ' '), ]
+                (r'https?:\W*/.*?(\s|$)|https?:(\s|$)', ' '), ]
 special_char_list = [('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&ndash;', ' '),
                      ('&mdash;', ' '), ('’', '\''), (r'[~`$%^()\-_=+\[\]{}"/|\\:;]', ' ')]
 word_rule_list = [('^[^A-Za-z0-9]+$', ''), ('^\W*', ''), ('\W*$', ''), ("'[sS]?\W*$", ''),
@@ -67,6 +69,7 @@ def remove_endline(text): return endline_pattern.apply_patterns(text)
 def remove_breakline(text): return brkline_pattern.apply_patterns(remove_endline(text))
 def split_digit_arr(string): return [s for s in re.split('[^\d]', string, flags=re.I) if re.findall('^\d+$', s)]
 def has_azAZ(string): return len(re.findall(r'^[^a-zA-Z]+$', string.strip())) == 0
+def is_empty_string(string): return string == '' or len(re.findall(r'^\s+$', string)) > 0
 def is_stop_word(string): return string.strip().lower() in stop_words
 def is_char(string): return len(string) == 1
 

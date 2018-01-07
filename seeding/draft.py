@@ -285,3 +285,19 @@ read_contract_mtx = io.mmread('shit.sss')
 dense_mtx = read_contract_mtx.todense()
 print(np.sum(np.matrix(mtx) - np.matrix(dense_mtx)))
 
+
+import pandas as pd
+a=pd.DataFrame(columns=[1, 'a'])
+a.loc['123']=[{2:0}, [2,3,]]
+a.loc[432]=[{'a':3}, ['s', {1}]]
+for idx, row in a.iterrows():
+    print(idx)
+    print('-')
+    print(row.iloc[1])
+    print('--')
+
+
+
+
+
+

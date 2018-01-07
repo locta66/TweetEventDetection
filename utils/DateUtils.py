@@ -32,18 +32,13 @@ def timestamp_of_string(time_str):
 
 
 def get_timestamp_form_created_at(created_at_str):
-    # "created_at": "Thu Jul 14 23:33:57 +0000 2016" "Wed Feb 17 17:14:14 +0000 2016"
+    # "created_at": "Thu Jul 14 23:33:57 +0000 2016" / "Wed Feb 17 17:14:14 +0000 2016"
     year, month_of_year, date_of_month, day_of_week, time_of_day = parse_created_at(created_at_str)
     return timestamp_of_string('-'.join([year, month_of_year, date_of_month]) + ' ' + time_of_day)
 
 
 def get_timestamp_form_string(time_string):
     return timestamp_of_string('-'.join(re.split('[^\d]', time_string)))
-
-
-# print(get_timestamp_form_created_at("Wed Feb 17 17:14:14 +0000 2016"))
-# print(get_timestamp_form_created_at("Thu Jul 14 23:33:57 +0000 2016"))
-# print(timestamp_of('2015.01.5'))
 
 
 def normalize_ymdh(ymdh_str_arr):

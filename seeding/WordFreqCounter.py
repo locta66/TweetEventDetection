@@ -28,7 +28,8 @@ class WordFreqCounter:
         # return self.worddict.vocabulary_size() + self.posdict.vocabulary_size()
         return self.worddict.vocabulary_size()
     
-    def is_valid_keyword(self, word):
+    @staticmethod
+    def is_valid_keyword(word):
         if not word:
             return False
         # Assume that word has been properly processed.
@@ -131,7 +132,7 @@ class WordFreqCounter:
             raise ValueError('rank is not a valid number' + str(rank))
         dic = self.worddict.dictionary
         return sorted(dic.keys(), key=lambda w: dic[w]['idf'])[:top_k]
-
+    
     def dump_worddict(self, dict_file, overwrite=True):
         self.worddict.dump_worddict(dict_file, overwrite)
     

@@ -4,8 +4,6 @@ import subprocess
 import multiprocessing as mp
 from Configure import getconfig
 
-
-# service_command = "python /home/nfs/cdong/tw/nlptools/twitter_nlp-master/python/ner/extractEntitiesMod.py"
 service_command = getconfig().ner_service_command
 
 

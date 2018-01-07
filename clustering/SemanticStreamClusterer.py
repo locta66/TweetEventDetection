@@ -44,11 +44,7 @@ class SemanticStreamClusterer(SemanticClusterer):
         self.z += new_z
         oldest_twarr_len = self.batch_twnum_list.pop(0)
         for d in range(oldest_twarr_len):
-            self.z.pop(0)
-            self.twarr.pop(0)
-            self.label.pop(0)
-        if not len(self.z) == len(self.label):
-            raise ValueError('z & label length inconsistent')
+            self.z.pop(0), self.twarr.pop(0), self.label.pop(0)
         return self.z[:], new_z, self.label[:]
 
     def input_batch(self, tw_batch):
@@ -70,8 +66,7 @@ class SemanticStreamClusterer(SemanticClusterer):
         self.z += new_z
         oldest_twarr_len = self.batch_twnum_list.pop(0)
         for d in range(oldest_twarr_len):
-            self.z.pop(0)
-            self.twarr.pop(0)
+            self.z.pop(0), self.twarr.pop(0)
         return self.z[:], new_z
 
     def GSDMM_new_twarr(self, old_twarr, old_z, new_twarr, alpha, etap, etac, etav, etah, K):
@@ -124,8 +119,6 @@ class SemanticStreamClusterer(SemanticClusterer):
             m_z[k] += 1
             update_clu_dicts_by_tw(new_twarr[d], k, factor=1)
         """make sampling using current counting information"""
-        iter_num = 5
-        
         def rule_value_of(tw_freq_dict_, word_id_dict_, n_z_, n_zw_, p, p0, clu_id):
             i_ = value = 1.0
             for word, freq in tw_freq_dict_.word_freq_enumerate():
@@ -133,6 +126,7 @@ class SemanticStreamClusterer(SemanticClusterer):
                     value *= (n_zw_[clu_id][word_id_dict_.word2id(word)] + ii + p) / (n_z_[clu_id] + i_ + p0)
                     i_ += 1
             return value
+        iter_num = 3
         
         def sample_cluster(tw, cur_iter):
             prob = [0] * K

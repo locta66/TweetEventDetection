@@ -7,6 +7,8 @@ from Configure import getconfig
 from EventExtractor import EventExtractor
 from EventTrainer import EventTrainer
 from FunctionUtils import sync_real_time_counter
+import ArkServiceProxy as ark
+import TweetKeys as tk
 
 
 @sync_real_time_counter('query')
@@ -50,47 +52,13 @@ def exec_cluster(parser):
     # ee.semantic_cluster_with_label(twarr, label)
     
     ee = EventExtractor(parser.get_dict_file_name(), parser.get_param_file_name())
-    tw_batches, lb_batches = create_batches_through_time(batch_size=100)
-    ee.stream_semantic_cluster_with_label(tw_batches, lb_batches)
-    
-    # import TweetKeys
-    # fI.remove_files([log_path + file for file in fI.listchildren(log_path, children_type='file')
-    #                  if file.endswith('.txt')])
-    # for i, _twarr in enumerate(tw_topic_arr):
-    #     if not len(_twarr) == 0:
-    #         fI.dump_array(log_path + str(i) + '.txt', [tw[TweetKeys.key_cleantext] for tw in _twarr])
-    
-    # for tw in twarr:
-    #     ee.merge_tw_into_cache_back(tw)
-    #
-    # print('Cluster number', len(ee.cache_back))
-    # print('Total tweet number', sum([cache.tweet_number() for cache in ee.cache_back]))
-    # topidx = np.argsort([cache.tweet_number() for cache in ee.cache_back])[::-1]
-    # print(topidx[0: 30])
-    # topvalue = np.array([cache.tweet_number() for cache in ee.cache_back])[topidx]
-    # print(topvalue[0: 30])
-    #
-    # for i in range(len(ee.cache_back)):
-    #     if not ee.cache_back[i].tweet_number() > 4:
-    #         continue
-    #     fI.dump_array(log_path + str(i) + '.txt',
-    #                   [dic['tw'][TweetKeys.key_cleantext] for dic in
-    #                    ee.cache_back[i].twdict.values()])
-    #     fI.dump_array(log_path + str(i) + '.txt',
-    #                   [sorted([(k, v) for k, v in
-    #                            ee.cache_back[i].keywords.dictionary.items()],
-    #                           key=lambda item: item[1]['count'], reverse=True)[:20],
-    #                    '----',
-    #                    sorted([(k, v) for k, v in
-    #                            ee.cache_back[i].entities_non_geo.dictionary.items()],
-    #                           key=lambda item: item[1]['count'], reverse=True),
-    #                    '----',
-    #                    sorted([(k, v) for k, v in
-    #                            ee.cache_back[i].entities_geo.dictionary.items()],
-    #                           key=lambda item: item[1]['count'], reverse=True),
-    #                    '----',
-    #                    ee.cache_back[i].tweet_number()
-    #                    ], overwrite=False)
+    tw_batches, lb_batches = create_batches_through_time(batch_size=300)
+    ee.GSDPMM_Stream_Clusterer_with_label(tw_batches, lb_batches)
+
+
+def exec_analyze(parser):
+    ee = EventExtractor(parser.get_dict_file_name(), parser.get_param_file_name())
+    ee.analyze_stream()
 
 
 def exec_temp(parser):
@@ -162,13 +130,25 @@ def load_clusters_and_labels():
 def create_batches_through_time(batch_size=400):
     false_event_twarr = fu.load_array('falseevents.txt')
     event_blocks = fu.load_array('events.txt')
-    print('pre false - event num:', len(event_blocks), 'total tw:', sum([len(twarr) for twarr in event_blocks]))
+    # if tk.key_ark not in false_event_twarr[0]:
+    #     print('ark false_event_twarr')
+    #     fu.dump_array('falseevents.txt', ark.twarr_ark(false_event_twarr))
+    # if tk.key_ark not in event_blocks[0][0]:
+    #     print('ark event_blocks')
+    #     for twarr in event_blocks:
+    #         ark.twarr_ark(twarr) if tk.key_ark not in twarr[0] else None
+    #     fu.dump_array('events.txt', event_blocks)
     event_blocks.append(false_event_twarr)
-    print('post false - event num:', len(event_blocks), 'total tw:', sum([len(twarr) for twarr in event_blocks]))
     
     twarr = fu.merge_list(event_blocks)
     label = fu.merge_list([[i for _ in range(len(event_blocks[i]))] for i in range(len(event_blocks))])
-
+    
+    print('post false - event num:', len(event_blocks), 'total tw:', sum([len(twarr) for twarr in event_blocks]))
+    from collections import Counter
+    label_distrb = dict(Counter(label))
+    for cluid in sorted(label_distrb):
+        print(cluid, label_distrb[cluid])
+    
     idx_time_order = tu.rearrange_idx_by_time(twarr)
     twarr = [twarr[idx] for idx in idx_time_order]
     label = [label[idx] for idx in idx_time_order]
@@ -180,12 +160,10 @@ def create_batches_through_time(batch_size=400):
     
     def random_idx_for_item(item_arr, dest_item):
         from numpy import random
-        
         def sample(prob):
             return random.rand() < prob
         non_dest_item_idx = [idx for idx in range(len(item_arr)) if item_arr[idx] not in dest_item]
         dest_item_idx = [idx for idx in range(len(item_arr)) if item_arr[idx] in dest_item]
-        # dest_item_idx = [item for item in item_arr if item in dest_item]
         non_dest_cnt = dest_cnt = 0
         res = list()
         while len(non_dest_item_idx) > non_dest_cnt and len(dest_item_idx) > dest_cnt:
@@ -207,9 +185,7 @@ def create_batches_through_time(batch_size=400):
     idx_rearrange = random_idx_for_item(label, {len(event_blocks) - 1})
     twarr = [twarr[idx] for idx in idx_rearrange]
     label = [label[idx] for idx in idx_rearrange]
-    print(set(label))
     idx_parts = au.index_partition(twarr, [1] * int(len(twarr) / batch_size), random=False)
     tw_batches = [[twarr[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
     lb_batches = [[label[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
-    
     return tw_batches, lb_batches

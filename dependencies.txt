@@ -1,4 +1,4 @@
-# echo 1 > /proc/sys/vm/drop_caches
+﻿# echo 1 > /proc/sys/vm/drop_caches
 
 pip install nltk
 pip install wordsegment
@@ -15,27 +15,27 @@ pip install python-Levenshtein
 
 
 
-* ����Ԥ������
-    * ��������Ͳ��淶����Ĺ淶������
-        * Lexical Normalisation for English Tweets�����������������»��ܣ�
+* 数据预处理：
+    * 网络用语和不规范用语的规范化处理
+        * Lexical Normalisation for English Tweets—评测任务和相关文章汇总：
             * https://noisy-text.github.io/norm-shared-task.html
         * Twitter Text Normalization:
             * https://github.com/gouwsmeister/TextCleanser
-    * �ִʡ����Ա�ע������ʵ��ʶ��ȣ�
-        * CMU��TweetNLP:
+    * 分词、词性标注、命名实体识别等：
+        * CMU的TweetNLP:
             * http://www.cs.cmu.edu/~ark/TweetNLP/
-            * �ṩ�˷ִʡ����Ա�ע���﷨����
-        * ��ʢ�ٴ�ѧ��Twitter_NLP��
+            * 提供了分词、词性标注、语法分析
+        * 华盛顿大学的Twitter_NLP：
             * https://github.com/aritter/twitter_nlp
-            * �ṩ����ʵ��ʶ��
-* �¼�������
-    * ͻ���¼�����������������6�֣�
-        * ���ʱ�䡢�ص㡢�¼��ȼ�������ʡ��ȶ�
-        * ����ʱ�侫��ΪСʱ�����ص㾫ȷΪ���м�
-        * �¼��ּ�������4��
-    * ������¼��������4�֣�
-        * �ֲ�Ϯ������Ȼ�ֺ�����ȫ�¹ʡ������ж�
-    * ֧���¼����͵Ķ����޸ĺ�����
-    * �ο����ף�
-        * ��Weakly Supervised Extraction of Computer Security Events from Twitter��, (WWW, 2017)
-            * �ж�һ��tweet�Ƿ�ָ��һ���¼����Լ����������¼�
+            * 提供命名实体识别
+* 事件描述：
+    * 突发事件的属性描述不少于6种：
+        * 类别、时间、地点、事件等级、主题词、热度
+        * 发生时间精度为小时级，地点精确为城市级
+        * 事件分级不少于4种
+    * 定义的事件类别不少于4种：
+        * 恐怖袭击、自然灾害、安全事故、军事行动
+    * 支持事件类型的定制修改和添加
+    * 参考文献：
+        * 《Weakly Supervised Extraction of Computer Security Events from Twitter》, (WWW, 2017)
+            * 判定一条tweet是否指向一种事件，以及属于哪种事件
