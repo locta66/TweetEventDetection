@@ -2,26 +2,51 @@ from collections import Counter
 
 import numpy as np
 
-import ArrayUtils as au
-import TweetKeys as tk
-import ArkServiceProxy as ark
-from WordFreqCounter import WordFreqCounter as wfc
+import utils.array_utils as au
+import utils.tweet_keys as tk
+from clustering.cluster_service import ClusterService
+
 
 np.random.seed(233)
 
-K_IFD, K_PARAM, K_CLUID, K_CLU_COL = 'ifd', 'param', 'cluid', 'cluster'
-K_ALPHA, K_FREQ_SUM, K_VALID_IFD = 'alpha', 'freqsum', 'valid'
-K_TW_TABLE = 'table'
-LABEL_COLS = [ark.proper_noun_label, ark.common_noun_label, ark.verb_label, ark.hashtag_label]
-
 
 class GSDPMMStreamClusterer:
-    def __init__(self, hold_batch_num=10):
-        self.alpha, self.beta = 0.1, 0.01
+    def __init__(self, hold_batch_num):
+        print('using GSDPMMStreamClusterer')
+        self.alpha, self.beta = 0.5, 0.01
         self.init_batch_ready = False
         self.hold_batch_num = hold_batch_num
         self.twarr, self.label, self.batch_twnum_list, self.z = list(), list(), list(), list()
         self.max_clu_id = 0
+    
+    def input_batch_with_label(self, tw_batch, lb_batch=None):
+        self.batch_twnum_list.append(len(tw_batch))
+        """insufficient tweets"""
+        if len(self.batch_twnum_list) < self.hold_batch_num:
+            self.twarr += tw_batch
+            self.label += lb_batch
+            return None, None
+        """the first time when len(self.batch_twnum_list) == self.hold_batch_num, may get merged"""
+        if not self.init_batch_ready:
+            self.init_batch_ready = True
+            self.twarr += tw_batch
+            self.label += lb_batch
+            self.z = self.GSDPMM_twarr(list(), list(), self.twarr, iter_num=60)
+            self.z = [int(item) for item in self.z]
+            # print(' ', dict(Counter(self.z)), len(Counter(self.z)))
+            return [int(item) for item in self.z], self.label[:]
+        """normal process of new twarr"""
+        new_z = self.GSDPMM_twarr(self.twarr, self.z, tw_batch, iter_num=4)
+        oldest_twarr_len = self.batch_twnum_list.pop(0)
+        popped = list()
+        for d in range(oldest_twarr_len):
+            popped.append(self.z.pop(0)), self.twarr.pop(0), self.label.pop(0)
+        self.twarr += tw_batch
+        self.label += lb_batch
+        self.z += new_z
+        # print(' current', dict(Counter(self.z)), len(Counter(self.z)))
+        # print(len(self.z))
+        return [int(i) for i in self.z], self.label[:]
     
     def GSDPMM_twarr(self, old_twarr, old_z, new_twarr, iter_num):
         pos_token = tk.key_ark
@@ -32,7 +57,7 @@ class GSDPMMStreamClusterer:
             tokens = tw[pos_token]
             for i in range(len(tokens) - 1, -1, -1):
                 tokens[i][0] = tokens[i][0].lower().strip('#').strip()
-                if not wfc.is_valid_keyword(tokens[i][0]): del tokens[i]
+                if not ClusterService.is_valid_keyword(tokens[i][0]): del tokens[i]
             for wordlabel in tokens:
                 word = wordlabel[0]
                 if word in words: words[word]['freq'] += 1
@@ -85,7 +110,7 @@ class GSDPMMStreamClusterer:
                 for j_ in range(freq):
                     new_cluster_prob *= (beta + j_) / (beta0 + i_)
                     i_ += 1
-            if cur_iter is not None and cur_iter > iter_num - 2:
+            if cur_iter is not None and cur_iter >= iter_num - 1:
                 return np.argmax(prob + [new_cluster_prob])
             else:
                 return au.sample_index_by_array_value(np.array(prob + [new_cluster_prob]))
@@ -125,31 +150,3 @@ class GSDPMMStreamClusterer:
                     n_zw[cluster][words[word]['id']] += freq
         
         return new_z
-    
-    def input_batch(self, tw_batch, lb_batch=None):
-        self.batch_twnum_list.append(len(tw_batch))
-        """insufficient tweets"""
-        if len(self.batch_twnum_list) < self.hold_batch_num:
-            self.twarr += tw_batch
-            self.label += lb_batch
-            return None, None
-        """the first time when len(self.batch_twnum_list) == self.hold_batch_num, may get merged"""
-        if not self.init_batch_ready:
-            self.init_batch_ready = True
-            self.twarr += tw_batch
-            self.label += lb_batch
-            self.z = self.GSDPMM_twarr(list(), list(), self.twarr, iter_num=60)
-            print(' ', dict(Counter(self.z)), len(Counter(self.z)))
-            return self.z[:], self.label[:]
-        """normal process of new twarr"""
-        new_z = self.GSDPMM_twarr(self.twarr, self.z, tw_batch, iter_num=4)
-        oldest_twarr_len = self.batch_twnum_list.pop(0)
-        popped = list()
-        for d in range(oldest_twarr_len):
-            popped.append(self.z.pop(0)), self.twarr.pop(0), self.label.pop(0)
-        self.twarr += tw_batch
-        self.label += lb_batch
-        self.z += new_z
-        # print(' current', dict(Counter(self.z)), len(Counter(self.z)))
-        # print(len(self.z))
-        return self.z[:], self.label[:]

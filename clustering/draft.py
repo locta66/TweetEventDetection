@@ -1,22 +1,6 @@
 import multiprocessing as mp
 
 
-class DC:
-    def __init__(self):
-        pass
-
-
-class M:
-    def __init__(self, value):
-        self.value = value
-    
-    def printmyself(self, string, dc):
-        return str(self.value) + string + str(type(dc))
-
-
-m = M(233)
-dc = DC()
-
 pool = mp.Pool(processes=1)
 res_getter = list()
 for i in range(3):
@@ -31,8 +15,8 @@ for i in range(3):
 
 print(results)
 
-import FileIterator as fi
-from FunctionUtils import multi_process, merge_list
+import utils.file_iterator as fi
+from utils.function_utils import multi_process, merge_list
 from sklearn.cluster import dbscan
 import numpy as np
 import Levenshtein
@@ -142,33 +126,19 @@ for i, j in [1, 2, 3], [3, 4]:
 
 import sys
 sys.path.append('../utils')
-import FunctionUtils as fu
-import FileIterator as fi
+import utils.function_utils as fu
 twarr = fu.load_array('/home/nfs/cdong/tw/seeding/NaturalDisaster/queried/NaturalDisaster.sum')
 arr1=twarr[:2000]
 arr2=twarr[2000:]
-cv = CV(analyzer='word', token_pattern=r'([a-zA-Z_-]+|\d+\.\d+|\d+)',
-        stop_words=stop_words, max_df=0.8, min_df=1e-5)
+# cv = CV(analyzer='word', token_pattern=r'([a-zA-Z_-]+|\d+\.\d+|\d+)',
+#         stop_words=stop_words, max_df=0.8, min_df=1e-5)
 
 
-subfiles = fi.listchildren('/home/nfs/cdong/tw/origin/', children_type='file')
-for filr in subfiles:
-
-
-
-
-for text in textarr[0:200]:
-    print(text)
-    print(re.findall(r'([a-zA-Z_-]+|\d+\.\d+|\d+)', text))
-    print('\n')
+import re
+print(re.findall(r'([a-zA-Z_-]+|\d+\.\d+|\d+)', ))
 
 from nltk.corpus import stopwords
 stop_words = set(stopwords.words('english'))
-
-for idx, row in a.iterrows():
-    # print(type(row))
-    print(row.index['a'])
-
 
 
 import re
@@ -181,20 +151,8 @@ re.findall(r'([a-zA-Z_-]+|\d+\.\d+|\d+)', s)
 from sklearn.feature_extraction.text import CountVectorizer as CV
 cv = CV(analyzer='word', token_pattern=r'([a-zA-Z_-]+|\d+\.\d+|\d+)',
         stop_words=stop_words, max_df=0.8, min_df=1e-5)
-
 cv.fit_transform(textarr)
-import sklearn
 
-
-
-def iterator():
-    d = {1:2, 'asdf':5, 3:'qwr'}
-    for w in d.keys():
-        yield w, d[w]
-
-iterator()
-for x in iterator():
-    print(x)
 
 # 这一行的效果和直接运行cProfile.run("foo()")的显示效果是一样的
 # p.strip_dirs().sort_stats(-1).print_stats()

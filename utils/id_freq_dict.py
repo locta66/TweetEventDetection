@@ -1,6 +1,9 @@
+from copy import deepcopy
 import pandas as pd
+import utils.function_utils as fu
 
-K_ID, K_FREQ = 'ID', 'FREQ'
+
+K_ID, K_FREQ, K_DELIMITER = 'ID', 'FREQ', ','
 
 
 class IdFreqDict:
@@ -15,7 +18,7 @@ class IdFreqDict:
     
     def has_word(self, word): return word in self._word2id
     
-    def vocabulary(self): return self._word2id.keys()
+    def vocabulary(self): return list(self._word2id.keys())
     
     def vocabulary_size(self): return self._word2id.__len__()
     
@@ -94,8 +97,27 @@ class IdFreqDict:
         return df
     
     def dump_dict(self, file_name):
-        self.word_table().to_csv(file_name)
+        # for word in self.vocabulary():
+        #     if not type(word) is str:
+        #         print(word, self._word2id[word])
+        for word in self.vocabulary():
+            if type(word) is not str:
+                self.drop_word(word)
+        fu.dump_array(file_name,
+            [K_DELIMITER.join(['{}'] * 3).format(word.strip(), str(self.freq_of_word(word)), str(self.word2id(word)))
+             for word in sorted(self.vocabulary()) if type(word) is str])
     
     def load_dict(self, file_name):
-        self._word2id = pd.DataFrame().from_csv(file_name).to_dict()
-        self.reset_id()
+        self.clear()
+        for line in fu.load_array(file_name):
+            word, freq, _id = line.split(K_DELIMITER)
+            self._word2id[word] = {K_FREQ: int(freq), K_ID: int(_id)}
+    
+    def _old_load_dict(self, file_name):
+        self._word2id = pd.DataFrame().from_csv(file_name).T.to_dict()
+    
+    def _old_dump_dict(self, file_name):
+        self.word_table().to_csv(file_name, chunksize=self.vocabulary_size())
+    
+    def copy(self):
+        return deepcopy(self)

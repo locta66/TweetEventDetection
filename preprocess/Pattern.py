@@ -133,11 +133,11 @@ class Pattern:
         return split
 
 
-pattern = Pattern()
+pattern_obj = Pattern()
 
 
 def get_pattern():
-    return pattern
+    return pattern_obj
 
 
 # s = 'RT @bugwannostra: @Louuu_ thx		#FFFFs People power -_-      works	❤signing…		https://t.co/pl2bquE5Az'

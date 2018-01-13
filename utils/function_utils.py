@@ -1,25 +1,10 @@
 import os
 import time
 import json
-import shutil
+from json import JSONDecodeError
 import multiprocessing as mp
 import math
-
-
-# from scipy.special import gamma
-# def B_function(m, n):
-#     if m <= 0 or n <= 0:
-#         raise ValueError('incorrect m=' + str(m) + ' , n=' + str(n))
-#     return gamma(m) * gamma(n) / gamma(m + n)
-
-
-def rmtree(path):
-    if os.path.exists(path):
-        shutil.rmtree(path)
-
-
-def makedirs(path):
-    os.makedirs(path)
+import bz2file
 
 
 def slash_appender(func):
@@ -40,10 +25,20 @@ def sync_real_time_counter(info):
     return time_counter
 
 
-def merge_list(array):
+METHOD_EXTEND = 'extend'
+METHOD_APPEND = 'append'
+_SUPPORTED_MERGE_METHODS = {METHOD_EXTEND, METHOD_APPEND}
+
+
+def merge_list(array, method=METHOD_EXTEND):
+    if method not in _SUPPORTED_MERGE_METHODS:
+        raise ValueError('param method incorrect: {}'.format(method))
     res = list()
     for item in array:
-        res.extend(item)
+        if method == METHOD_EXTEND:
+            res.extend(item)
+        elif method == METHOD_APPEND:
+            res.append(item)
     return res
 
 
@@ -55,19 +50,12 @@ def split_multi_format(array, process_num):
     return formatted_array
 
 
-def split_multi_format_test(array, process_num):
-    block_size = math.ceil(len(array) / process_num)
-    formatted_array = list()
-    for i in range(process_num):
-        formatted_array.append(array[i * block_size: (i + 1) * block_size])
-    return formatted_array
-
-
 def multi_process(func, args_list=None, kwargs_list=None):
     """
     Do func in multiprocess way.
-    :param func: To be executed within every
-    :param args_list:
+    :param func: To be executed within every process
+    :param args_list: default () as param for apply_async if not given
+    :param kwargs_list:
     :return:
     """
     process_num = len(args_list)
@@ -99,3 +87,29 @@ def load_array(file):
         for line in fp.readlines():
             array.append(json.loads(line.strip()))
     return array
+
+
+def load_array_catch(file):
+    array = list()
+    with open(file, 'r') as fp:
+        for idx, line in enumerate(fp.readlines()):
+            try:
+                array.append(json.loads(line.strip()))
+            except JSONDecodeError as e:
+                print('file:{}, line:{}, col:{}'.format(file,  e.lineno, e.colno, ))
+                continue
+    return array
+
+
+def load_twarr_from_bz2(bz2_file):
+    fp = bz2file.open(bz2_file, 'r')
+    twarr = list()
+    for line in fp.readlines():
+        try:
+            json_obj = json.loads(line.decode('utf8'))
+            twarr.append(json_obj)
+        except:
+            print('Error when parsing ' + bz2_file + ': ' + line)
+            continue
+    fp.close()
+    return twarr

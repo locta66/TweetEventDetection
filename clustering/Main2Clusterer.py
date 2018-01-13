@@ -1,23 +1,22 @@
-import Main2Parser
-import FunctionUtils as fu
-import ArrayUtils as au
-import TweetUtils as tu
-from ArrayUtils import roc_auc
-from Configure import getconfig
-from EventExtractor import EventExtractor
-from EventTrainer import EventTrainer
-from FunctionUtils import sync_real_time_counter
-import ArkServiceProxy as ark
-import TweetKeys as tk
+from collections import Counter
+
+import seeding.main2parser as main2parser
+from config.configure import getcfg
+import utils.function_utils as fu
+import utils.array_utils as au
+import utils.tweet_utils as tu
+import utils.tweet_keys as tk
+import utils.ark_service_proxy as ark
+from clustering.event_extractor import EventExtractor
 
 
-@sync_real_time_counter('query')
+@fu.sync_real_time_counter('query')
 def exec_query(data_path, parser):
-    Main2Parser.exec_query(data_path, parser)
+    main2parser.exec_query(data_path, parser)
 
 
 def exec_ner(parser):
-    Main2Parser.exec_ner(parser)
+    main2parser.exec_ner(parser)
 
 
 def exec_classification(seed_parser, test_parser):
@@ -27,13 +26,13 @@ def exec_classification(seed_parser, test_parser):
     # pos_pred = event_extractor.make_classification(twarr)
     # print(recall([(pred[0], 1) for pred in pos_pred], [i / 10 for i in range(1, 10)]))
     
-    pos_twarr = fu.load_array(getconfig().pos_data_file)
-    non_pos_twarr = fu.load_array(getconfig().non_pos_data_file)
+    pos_twarr = fu.load_array(getcfg().pos_data_file)
+    non_pos_twarr = fu.load_array(getcfg().non_pos_data_file)
     pos_pred = event_extractor.make_classification(pos_twarr)
     non_pos_pred = event_extractor.make_classification(non_pos_twarr)
     scores = [pred[0] for pred in pos_pred] + [pred[0] for pred in non_pos_pred]
     labels = [1 for _ in pos_pred] + [0 for _ in non_pos_pred]
-    print(roc_auc(labels, scores))
+    print(au.score(labels, scores, 'auc'))
     # for idx, pred in enumerate(pos_pred):
     #     if pred < 0.2:
     #         print(pos_twarr[idx][TweetKeys.key_origintext], '\n---\n')
@@ -41,19 +40,17 @@ def exec_classification(seed_parser, test_parser):
 
 def exec_cluster(parser):
     # twarr, label = load_clusters_and_labels()
-    # print('Label distribution ', list(Counter(label).values()), 'total cluster', Counter(label).__len__(),
-    #       '\ntotal tweet num ', len(twarr))
     
     # ee = EventExtractor(parser.get_dict_file_name(), parser.get_param_file_name())
     # tw_topic_arr, cluster_pred = ee.LECM_twarr_with_label(twarr, label)
     # tw_topic_arr, cluster_pred = ee.GSDMM_twarr_with_label(twarr, label)
     # tw_topic_arr, cluster_pred = ee.GSDPMM_twarr_with_label(twarr, label)
     # tw_topic_arr, cluster_pred = ee.GSDMM_twarr_hashtag_with_label(twarr, label)
-    # ee.semantic_cluster_with_label(twarr, label)
     
     ee = EventExtractor(parser.get_dict_file_name(), parser.get_param_file_name())
-    tw_batches, lb_batches = create_batches_through_time(batch_size=300)
+    tw_batches, lb_batches = create_batches_through_time(batch_size=600)
     ee.GSDPMM_Stream_Clusterer_with_label(tw_batches, lb_batches)
+    ee.analyze_stream()
 
 
 def exec_analyze(parser):
@@ -72,16 +69,15 @@ def exec_temp(parser):
     # fu.dump_array('falseevents.txt', false_pos_twarr)
     
     """query for pos events into blocks"""
-    data_path = getconfig().summary_path
+    data_path = getcfg().summary_path
     log_path = '/home/nfs/cdong/tw/testdata/yli/queried_events_with_keyword/'
-    twarr_blocks = Main2Parser.query_per_query_multi(data_path, parser.seed_query_list)
+    twarr_blocks = main2parser.query_per_query_multi(data_path, parser.seed_query_list)
     print('query done, {} events, {} tws'.format(len(twarr_blocks), sum([len(arr) for arr in twarr_blocks])))
     event_id2info = dict()
-    et = EventTrainer()
-    et.start_ner_service(pool_size=16, classify=True, pos=True)
+    tu.start_ner_service(pool_size=16, classify=True, pos=True)
     for i in range(len(parser.seed_query_list)):
         event_id2info[i] = dict()
-        twarr_blocks[i] = et.twarr_ner(twarr_blocks[i])
+        twarr_blocks[i] = tu.twarr_ner(twarr_blocks[i])
         query_i = parser.seed_query_list[i]
         file_name_i = query_i.all[0].strip('\W') + '_' + '-'.join(query_i.since) + '.sum'
         event_id2info[i]['filename'] = file_name_i
@@ -89,7 +85,7 @@ def exec_temp(parser):
         event_id2info[i]['any'] = [w.strip('\W') for w in query_i.any]
         fu.dump_array(log_path + file_name_i, twarr_blocks[i])
     fu.dump_array(log_path + 'event_id2info.txt', [event_id2info])
-    et.end_ner_service()
+    tu.end_ner_service()
     print(event_id2info)
     print('ner done')
     fu.dump_array('events.txt', twarr_blocks)
@@ -110,16 +106,6 @@ def exec_temp(parser):
 
 
 def load_clusters_and_labels():
-    # event_twarr_blocks = fu.load_array('events.txt')
-    # false_pos_twarr_blocks = fu.load_array('falseevents.txt')
-    # non_event_twarr_blocks = fu.load_array('nonevents.txt')
-    # print('pos event group num:', len(event_twarr_blocks),
-    #       'false pos event group num:', len(false_pos_twarr_blocks),
-    #       'non event group num:', len(non_event_twarr_blocks))
-    # blocks = event_twarr_blocks[0:12] + false_pos_twarr_blocks[::2] + non_event_twarr_blocks[::2]
-    # twarr = fu.merge_list(blocks)
-    # label = fu.merge_list([[i for _ in range(len(blocks[i]))] for i in range(len(blocks))])
-    # return twarr, label
     event_twarr_blocks = fu.load_array('events.txt')
     blocks = event_twarr_blocks[0:12]
     twarr = fu.merge_list(blocks)
@@ -127,27 +113,19 @@ def load_clusters_and_labels():
     return twarr, label
 
 
-def create_batches_through_time(batch_size=400):
+def create_batches_through_time(batch_size):
     false_event_twarr = fu.load_array('falseevents.txt')
     event_blocks = fu.load_array('events.txt')
-    # if tk.key_ark not in false_event_twarr[0]:
-    #     print('ark false_event_twarr')
-    #     fu.dump_array('falseevents.txt', ark.twarr_ark(false_event_twarr))
-    # if tk.key_ark not in event_blocks[0][0]:
-    #     print('ark event_blocks')
-    #     for twarr in event_blocks:
-    #         ark.twarr_ark(twarr) if tk.key_ark not in twarr[0] else None
-    #     fu.dump_array('events.txt', event_blocks)
     event_blocks.append(false_event_twarr)
     
     twarr = fu.merge_list(event_blocks)
     label = fu.merge_list([[i for _ in range(len(event_blocks[i]))] for i in range(len(event_blocks))])
     
-    print('post false - event num:', len(event_blocks), 'total tw:', sum([len(twarr) for twarr in event_blocks]))
-    from collections import Counter
-    label_distrb = dict(Counter(label))
-    for cluid in sorted(label_distrb):
-        print(cluid, label_distrb[cluid])
+    label_distrb = Counter(label)
+    print('Topic num:{}, total tw:{}'.format(len(label_distrb), len(twarr)))
+    for idx, cluid in enumerate(sorted(label_distrb.keys())):
+        print('{:<2}:{:<6}'.format(cluid, label_distrb[cluid]), end='\n' if (idx + 1) % 7 == 0 else ' ')
+    print()
     
     idx_time_order = tu.rearrange_idx_by_time(twarr)
     twarr = [twarr[idx] for idx in idx_time_order]
@@ -189,3 +167,14 @@ def create_batches_through_time(batch_size=400):
     tw_batches = [[twarr[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
     lb_batches = [[label[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
     return tw_batches, lb_batches
+
+
+if __name__ == '__main__':
+    files = ['events2012.txt', ]
+    for file in files:
+        blocks = fu.load_array(file)
+        for _twarr in blocks:
+            ark.twarr_ark(_twarr) if tk.key_ark not in _twarr[0] else None
+        print(sorted([('id' + str(idx), len(twarr)) for idx, twarr in enumerate(blocks)], key=lambda x: x[1]))
+        print('file:{}'.format(file))
+        fu.dump_array(file, blocks)

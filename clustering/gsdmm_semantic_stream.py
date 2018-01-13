@@ -1,7 +1,7 @@
 import numpy as np
 
-import ArrayUtils as au
-from SemanticClusterer import SemanticClusterer
+import utils.array_utils as au
+from clustering.gsdmm_semantic import SemanticClusterer
 
 
 class SemanticStreamClusterer(SemanticClusterer):
@@ -45,6 +45,8 @@ class SemanticStreamClusterer(SemanticClusterer):
         oldest_twarr_len = self.batch_twnum_list.pop(0)
         for d in range(oldest_twarr_len):
             self.z.pop(0), self.twarr.pop(0), self.label.pop(0)
+        if not len(self.z) == len(self.label):
+            raise ValueError('z & label length inconsistent')
         return self.z[:], new_z, self.label[:]
 
     def input_batch(self, tw_batch):
@@ -68,7 +70,7 @@ class SemanticStreamClusterer(SemanticClusterer):
         for d in range(oldest_twarr_len):
             self.z.pop(0), self.twarr.pop(0)
         return self.z[:], new_z
-
+    
     def GSDMM_new_twarr(self, old_twarr, old_z, new_twarr, alpha, etap, etac, etav, etah, K):
         prop_n_dict, comm_n_dict, verb_dict, ht_dict = self.prop_n_dict, self.comm_n_dict, self.verb_dict, self.ht_dict
         D_old, D_new = len(old_twarr), len(new_twarr)

@@ -1,10 +1,10 @@
-import __init__
 import argparse
 
-from SeedParser import *
-from Main2Parser import *
-import FunctionUtils as fu
-from Configure import getconfig
+from seeding.seed_parser import *
+from seeding.main2parser import *
+import utils.function_utils as fu
+from config.configure import getcfg
+
 
 seed_parser = SeedParser([
     # [{'any_of': ['', '', ], 'all_of': ['', '', ], }, ['2016', '', ''], ['2016', '', '']],
@@ -156,7 +156,7 @@ def main(args):
     if args.ner:
         exec_ner(parser)
     if args.train:
-        exec_train(seed_parser, unlb_parser, cntr_parser)
+        exec_train_with_outer(seed_parser, unlb_parser, cntr_parser)
     if args.temp:
         temp(cntr_parser)
     if args.matrix:
@@ -164,15 +164,13 @@ def main(args):
     
     if args.pre_test:
         exec_pre_test(args.test_data_path)
-    if args.train_outer:
-        exec_train_with_outer(seed_parser, unlb_parser, cntr_parser)
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Seeding information")
-    parser.add_argument('--summary_path', default=getconfig().origin_path,
+    parser.add_argument('--summary_path', default=getcfg().origin_path,
                         help='Filtered tweets organized in days as file XX_XX_XX_XX.sum under this path.')
-    parser.add_argument('--seed_path', default=getconfig().seed_path,
+    parser.add_argument('--seed_path', default=getcfg().seed_path,
                         help='Path for extracted seed instances according to particular query.')
     
     parser.add_argument('--unlb', action='store_true', default=False,
@@ -191,12 +189,10 @@ def parse_args():
     parser.add_argument('--matrix', action='store_true', default=False,
                         help='To obtain the matrix for both train and test twarr.')
     
-    parser.add_argument('--test_data_path', default=getconfig().test_data_path,
+    parser.add_argument('--test_data_path', default=getcfg().test_data_path,
                         help='Path for test data from dzs.')
     parser.add_argument('--pre_test', action='store_true', default=False,
                         help='Just a temp function to preprocess data from dzs.')
-    parser.add_argument('--train_outer', action='store_true', default=False,
-                        help='If train and test the model with data from dzs.')
     return parser.parse_args()
 
 

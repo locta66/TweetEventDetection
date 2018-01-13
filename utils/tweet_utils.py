@@ -1,47 +1,20 @@
 import re
 
-from NerServiceProxy import get_ner_service_pool
-import FunctionUtils as fu
-import DateUtils as du
-import TweetKeys as tk
+import utils.function_utils as fu
+import utils.date_utils as du
+import utils.tweet_keys as tk
+from utils.ner_service_proxy import get_ner_service_pool
 
 import numpy as np
 from sklearn.cluster import dbscan
 import Levenshtein
 
-# twarr = fu.load_array('/home/nfs/cdong/tw/testdata/pos_tweets.sum')
-# for tw in twarr:
-#     tw['temp'] = tw['text'].lower()
-
-# ndim = twarr.__len__()
-# mat = np.ones([ndim, ndim])
-# for i in range(ndim - 1):
-#     for j in range(i + 1, ndim):
-#         istr = twarr[i]['temp']
-#         jstr = twarr[j]['temp']
-#         dist = Levenshtein.distance(istr, jstr) + 1
-#         if max(len(istr), len(jstr)) / dist >= 5:
-#             mat[i, j] = mat[j, i] = 0
-#
-# sum(sum(mat))
-# label, cluster = dbscan(mat, 0.5, 2, metric='precomputed')
-#
-# for i in [2, 64, 23]:
-#     print(i, end=':')
-#     for idx, c in enumerate(cluster):
-#         if c == i:
-#             print(idx, end=' ')
-#     print()
-#
-# ndim = twarr.__len__()
-# mmm = np.ones([ndim, ndim])
-
 
 def cluster_similar_tweets(twarr):
     if not twarr:
         return twarr
-    ndim = len(twarr)
-    mat = np.ones([ndim, ndim])
+    twarr_length = len(twarr)
+    mat = np.ones([twarr_length, twarr_length])
     pairs = twarr_dist_pairs(twarr) if len(twarr) <= 128 else twarr_dist_pairs_multi(twarr)
     for p in pairs:
         mat[p[0]][p[1]] = mat[p[1]][p[0]] = p[2]
@@ -51,7 +24,7 @@ def cluster_similar_tweets(twarr):
 
 
 def twarr_dist_pairs(twarr):
-    textarr = [tw['text'].lower() for tw in twarr]
+    textarr = [tw[tk.key_text].lower() for tw in twarr]
     ndim = len(twarr)
     pairs = list()
     for i in range(ndim - 1):
@@ -65,7 +38,7 @@ def twarr_dist_pairs(twarr):
 
 def twarr_dist_pairs_multi(twarr):
     for tw in twarr:
-        tw['nouse'] = tw['text'].lower()
+        tw['nouse'] = tw[tk.key_text].lower()
     total = len(twarr) - 1
     process_num = 16
     point_lists = [[i + 16 * j for j in range(int(total / process_num) + 1)
@@ -90,12 +63,20 @@ def edit_distance(text1, text2):
     return Levenshtein.distance(text1, text2)
 
 
-def twarr_timestamp_array(twarr):
-    return [du.get_timestamp_form_created_at(tw['created_at']) for tw in twarr]
+# def twarr_timestamp_array(twarr):
+#     return [du.get_timestamp_form_created_at(tw['created_at']) for tw in twarr]
 
 
 def rearrange_idx_by_time(twarr):
     return np.argsort([du.get_timestamp_form_created_at(tw[tk.key_created_at].strip()) for tw in twarr])
+
+
+def start_ner_service(pool_size=8, classify=True, pos=True):
+    get_ner_service_pool().start(pool_size, classify, pos)
+
+
+def end_ner_service():
+    get_ner_service_pool().end()
 
 
 def twarr_ner(twarr, using_field=tk.key_text):

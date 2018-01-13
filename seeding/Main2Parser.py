@@ -1,12 +1,15 @@
 import Levenshtein
 from sklearn import metrics
 
-import ArrayUtils as au
-import FileIterator as fi
-import FunctionUtils as fu
-import TweetKeys
-from Configure import getconfig
-from EventTrainer import EventTrainer
+from preprocess.tweet_filter import filter_twarr
+import utils.array_utils as au
+import utils.file_iterator as fi
+import utils.function_utils as fu
+import utils.tweet_utils as tu
+import utils.tweet_keys as tk
+from config.configure import getcfg
+from seeding.event_trainer import EventTrainer
+
 
 query_process_num = 16
 
@@ -64,17 +67,16 @@ def exec_query_unlabelled(data_path, parser):
     print('Queried', sum([len(twarr) for twarr in twarr_block]), 'tweets.')
     for twarr in twarr_block:
         remove_similar_tws(twarr)
-    et = EventTrainer()
-    et.start_ner_service(pool_size=16)
+    tu.start_ner_service(pool_size=16)
     for twarr in twarr_block:
-        et.twarr_ner(twarr)
-        et.extract_tw_with_high_freq_entity(twarr)
+        tu.twarr_ner(twarr)
+        EventTrainer.extract_tw_with_high_freq_entity(twarr)
     print(sum([len(twarr) for twarr in twarr_block]), 'tweets with high freq entities.')
     # twarr = remove_similar_tws(fI.merge_list(twarr_block))
     twarr = fu.merge_list(twarr_block)
     print(len(twarr), 'accepted.')
     fu.dump_array(parser.get_query_result_file_name() + '1', twarr)
-    et.end_ner_service()
+    tu.end_ner_service()
 
 
 @fu.sync_real_time_counter('counter')
@@ -137,65 +139,20 @@ def per_query(data_path, query):
 def remove_similar_tws(twarr):
     for i in range(len(twarr) - 1, -1, -1):
         for j in range(len(twarr) - 1, i, -1):
-            istr = twarr[i][TweetKeys.key_text].lower()
-            jstr = twarr[j][TweetKeys.key_text].lower()
+            istr = twarr[i][tk.key_text].lower()
+            jstr = twarr[j][tk.key_text].lower()
             dist = Levenshtein.distance(istr, jstr) + 1
             if max(len(istr), len(jstr)) / dist >= 5:
-                # print('[', twarr[j][TweetKeys.key_cleantext], ']')
                 del twarr[j]
     return twarr
 
 
-# def reset_tag_of_tw_file(tw_file):
-#     tw_arr = fI.load_array(tw_file)
-#     for tw in tw_arr:
-#         tw[TweetKeys.key_ptagtime] = 0
-#         tw[TweetKeys.key_ntagtime] = 0
-#         tw[TweetKeys.key_tagtimes] = 0
-#     fI.dump_array(tw_file, tw_arr)
-# def exec_totag(parser):
-#     tw_file = parser.get_query_result_file_name()
-#     reset_tag_of_tw_file(tw_file)
-#     to_tag_dict = dict()
-#     for tw in ArrayUtils.random_array_items(fI.load_array(tw_file), item_num=500):
-#         to_tag_dict[tw[TweetKeys.key_id]] = tw[TweetKeys.key_origintext]
-#     fI.dump_array(parser.get_to_tag_file_name(),
-#                             [parser.get_queried_path(), to_tag_dict], sort_keys=True)
-# def exec_untag(parser):
-#     reset_tag_of_tw_file(parser.get_query_result_file_name())
-#     update_tw_file_from_tag_in_path(parser.get_query_result_file_name(), parser.get_queried_path())
-# def update_tw_file_from_tag_in_path(tw_file, tagged_file_path, file='final.json',
-#                                     output_to_another_file=False, another_file='./deafult.sum'):
-#     twarr = fI.load_array(tw_file)
-#     tw_arr_dict = dict(zip((tw[TweetKeys.key_id] for tw in twarr), (tw for tw in twarr)))
-#     tagged_dict = fI.load_array(tagged_file_path + file)[0]
-#     update_tw_arr_dict_from_tagged_file(tw_arr_dict, tagged_dict)
-#     fI.dump_array(another_file if output_to_another_file else tw_file, twarr)
-# def update_tw_arr_dict_from_tagged_file(tw_arr_dict, tagged_dict):
-#     for twid, tag in tagged_dict.items():
-#         if twid not in tw_arr_dict:
-#             print(twid)
-#             continue
-#         tw_arr_dict[twid][TweetKeys.key_ptagtime] += 1 if tag == 1 else 0
-#         tw_arr_dict[twid][TweetKeys.key_ntagtime] += 1 if tag == -1 else 0
-#         tw_arr_dict[twid][TweetKeys.key_tagtimes] += 1
-
-
 def exec_ner(file_name):
-    efe = EventTrainer()
-    efe.start_ner_service()
-    efe.perform_ner_on_tw_file(file_name)
-    efe.end_ner_service()
-
-
-def exec_train(seed_parser, unlb_parser, cntr_parser):
-    et = EventTrainer()
-    seed_twarr = fu.load_array(seed_parser.get_query_result_file_name())
-    unlb_twarr = fu.load_array(unlb_parser.get_query_result_file_name())
-    cntr_twarr = fu.load_array(cntr_parser.get_query_result_file_name())
-    localcounter, event_classifier = et.train_and_test(seed_twarr, unlb_twarr, cntr_twarr)
-    localcounter.dump_worddict(seed_parser.get_dict_file_name())
-    event_classifier.save_params(seed_parser.get_param_file_name())
+    tu.start_ner_service()
+    twarr = fu.load_array(file_name)
+    twarr = tu.twarr_ner(twarr)
+    fu.dump_array(file_name, twarr)
+    tu.end_ner_service()
 
 
 def exec_train_with_outer(seed_parser, unlb_parser, cntr_parser):
@@ -204,15 +161,15 @@ def exec_train_with_outer(seed_parser, unlb_parser, cntr_parser):
     unlb_twarr = fu.load_array(unlb_parser.get_query_result_file_name())
     cntr_twarr = fu.load_array(cntr_parser.get_query_result_file_name())
     
-    dzs_pos_twarr = fu.load_array(getconfig().pos_data_file)
-    dzs_non_pos_twarr = fu.load_array(getconfig().non_pos_data_file)
+    dzs_pos_twarr = fu.load_array(getcfg().pos_data_file)
+    dzs_non_pos_twarr = fu.load_array(getcfg().non_pos_data_file)
     dzs_pos_train, dzs_pos_test = au.array_partition(dzs_pos_twarr, (1, 1))
     dzs_non_pos_train, dzs_non_pos_test = au.array_partition(dzs_non_pos_twarr, (1, 1))
     pos_twarr = seed_twarr + dzs_pos_train * 5
     neg_twarr = cntr_twarr + dzs_non_pos_train
     
-    localcounter, event_classifier = et.train_and_test(pos_twarr, unlb_twarr, neg_twarr,
-                                                       dzs_pos_test, dzs_non_pos_test)
+    localcounter, event_classifier = et.train_and_test(
+        pos_twarr, unlb_twarr, neg_twarr, dzs_pos_test, dzs_non_pos_test)
     
     pos_pred = event_classifier.predict(localcounter.feature_matrix_of_twarr(dzs_pos_test))
     non_pos_pred = event_classifier.predict(localcounter.feature_matrix_of_twarr(dzs_non_pos_test))
@@ -245,18 +202,18 @@ def temp(parser):
     #     print(tw[TweetKeys.key_origintext], '\n--------------------')
     #     print(tw[TweetKeys.key_cleantext], '\n--------------------')
     #     print(tw[TweetKeys.key_wordlabels], '\n')
-        
-        # import numpy as np
-        # twarr = fI.load_array('/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_unlabelled.sum')
-        # fI.dump_array('/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_unlabelled.origin', twarr)
-        # while True:
-        #     for i in range(len(twarr)-1, -1, -1):
-        #         length = len(twarr)
-        #         if length <= 2500:
-        #             fI.dump_array('/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_unlabelled.sum', twarr)
-        #             return
-        #         if 1/length >= np.random.random():
-        #             del twarr[i]
+    
+    # import numpy as np
+    # twarr = fI.load_array('/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_unlabelled.sum')
+    # fI.dump_array('/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_unlabelled.origin', twarr)
+    # while True:
+    #     for i in range(len(twarr)-1, -1, -1):
+    #         length = len(twarr)
+    #         if length <= 2500:
+    #             fI.dump_array('/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_unlabelled.sum', twarr)
+    #             return
+    #         if 1/length >= np.random.random():
+    #             del twarr[i]
 
 
 def construct_feature_matrix(seed_parser, unlb_parser, cntr_parser):
@@ -269,8 +226,8 @@ def construct_feature_matrix(seed_parser, unlb_parser, cntr_parser):
     cntr_twarr = fu.load_array(cntr_parser.get_query_result_file_name())
     print('cntr_twarr:', len(cntr_twarr))
     
-    dzs_pos_twarr = fu.load_array(getconfig().pos_data_file)
-    dzs_neg_twarr = fu.load_array(getconfig().non_pos_data_file)
+    dzs_pos_twarr = fu.load_array(getcfg().pos_data_file)
+    dzs_neg_twarr = fu.load_array(getcfg().non_pos_data_file)
     print('dzs_pos_twarr:', len(cntr_twarr))
     dzs_pos_train, dzs_pos_test = au.array_partition(dzs_pos_twarr, (1, 1))
     print('dzs_pos_train:', len(dzs_pos_train))
@@ -284,44 +241,45 @@ def construct_feature_matrix(seed_parser, unlb_parser, cntr_parser):
                                      dzs_pos_test, dzs_neg_test)
     print('vocabulary_size', localcounter.vocabulary_size())
 
+    # import numpy as np
     from scipy import sparse, io
-    def create_matrix_and_dump(localcounter, twarr, prefix, filename):
-        mtx = localcounter.feature_matrix_of_twarr(twarr)
+    def create_matrix_and_dump(_localcounter, twarr, filename):
+        mtx = _localcounter.feature_matrix_of_twarr(twarr)
         print(len(mtx), type(mtx))
         print(len(mtx[0]), type(mtx[0]))
         contract_mtx = sparse.csr_matrix(mtx)
-        file = getconfig().dc_test + filename
+        file = getcfg().dc_test + filename
         io.mmwrite(file, contract_mtx, field='real')
-        read_contract_mtx = io.mmread(file)
-        dense_mtx = read_contract_mtx.todense()
+        # read_contract_mtx = io.mmread(file)
+        # dense_mtx = read_contract_mtx.todense()
         # print(np.sum(np.matrix(mtx) - np.matrix(dense_mtx)))
     
-    def read_matrix(filename):
-        from scipy import io
-        mtx_from_file = io.mmread(filename)
-        return mtx_from_file.todense()
+    # def read_matrix(filename):
+    #     from scipy import io
+    #     mtx_from_file = io.mmread(filename)
+    #     return mtx_from_file.todense()
     
-    create_matrix_and_dump(localcounter, seed_twarr, 'my pos', 'my_pos.txt')
-    create_matrix_and_dump(localcounter, cntr_twarr, 'my neg', 'my_neg.txt')
-
-    create_matrix_and_dump(localcounter, dzs_pos_train, 'dzs pos train', 'dzs_pos_train.txt')
-    create_matrix_and_dump(localcounter, dzs_neg_train, 'dzs neg train', 'dzs_neg_train.txt')
-    create_matrix_and_dump(localcounter, dzs_pos_test, 'dzs pos test', 'dzs_pos_test.txt')
-    create_matrix_and_dump(localcounter, dzs_neg_test, 'dzs neg test', 'dzs_neg_test.txt')
+    create_matrix_and_dump(localcounter, seed_twarr, 'my_pos.txt')
+    create_matrix_and_dump(localcounter, cntr_twarr, 'my_neg.txt')
+    
+    create_matrix_and_dump(localcounter, dzs_pos_train, 'dzs_pos_train.txt')
+    create_matrix_and_dump(localcounter, dzs_neg_train, 'dzs_neg_train.txt')
+    create_matrix_and_dump(localcounter, dzs_pos_test, 'dzs_pos_test.txt')
+    create_matrix_and_dump(localcounter, dzs_neg_test, 'dzs_neg_test.txt')
 
 
 def exec_pre_test(test_data_path):
     subfiles = fi.listchildren(test_data_path, children_type='file')
-    file_list = fu.split_multi_format(
-        [(test_data_path + file) for file in subfiles if file.endswith('.json')], process_num=6)
-    twarr_blocks = fu.multi_process(fi.summary_unzipped_tweets_multi,
-                                    [(file_list_slice,) for file_list_slice in file_list])
+    # file_list = fu.split_multi_format(
+    #     [(test_data_path + file) for file in subfiles if file.endswith('.json')], process_num=6)
+    # twarr_blocks = fu.multi_process(fi.summary_unzipped_tweets_multi,
+    #                                 [(file_list_slice,) for file_list_slice in file_list])
+    twarr_blocks = filter_twarr([fu.load_array(file) for file in subfiles if file.endswith('.json')])
     twarr = fu.merge_list(twarr_blocks)
     
-    et = EventTrainer()
-    et.start_ner_service(pool_size=16)
-    et.twarr_ner(twarr)
-    et.end_ner_service()
+    tu.start_ner_service(pool_size=16)
+    tu.twarr_ner(twarr)
+    tu.end_ner_service()
     
     all_ids = set(fu.load_array(test_data_path + 'test_ids_all.csv'))
     pos_ids = set(fu.load_array(test_data_path + 'test_ids_pos.csv'))
@@ -330,13 +288,13 @@ def exec_pre_test(test_data_path):
     pos_twarr = list()
     non_pos_twarr = list()
     for tw in twarr:
-        twid = tw[TweetKeys.key_id]
+        twid = tw[tk.key_id]
         if twid in pos_ids:
             pos_twarr.append(tw)
         elif twid in non_pos_ids:
             non_pos_twarr.append(tw)
-
-    # fu.dump_array(getconfig().pos_data_file, pos_twarr)
-    # fu.dump_array(getconfig().non_pos_data_file, non_pos_twarr)
-    fu.dump_array('/home/nfs/cdong/tw/testdata/yying/queried/pos_tweets.sum', pos_twarr)
-    fu.dump_array('/home/nfs/cdong/tw/testdata/yying/queried/non_pos_tweets.sum', non_pos_twarr)
+    
+    fu.dump_array(getcfg().pos_data_file, pos_twarr)
+    fu.dump_array(getcfg().non_pos_data_file, non_pos_twarr)
+    # fu.dump_array('/home/nfs/cdong/tw/testdata/yying/queried/pos_tweets.sum', pos_twarr)
+    # fu.dump_array('/home/nfs/cdong/tw/testdata/yying/queried/non_pos_tweets.sum', non_pos_twarr)

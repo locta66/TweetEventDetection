@@ -51,14 +51,6 @@ class LREventClassifier:
         log_loss = labels * tf.log(logits) + (tf.constant(1, dtype=tf.float32) - labels) * tf.log(1 - logits)
         return - log_loss
     
-    # def train_steps(self, stepnum, seedx, seedy, unlbx, unlby, print_loss=True):
-    #     loss = 0
-    #     for i in range(stepnum):
-    #         loss = self.train_per_step(seedx, seedy, unlbx, unlby)
-    #         if i % int(stepnum / 20) == 0 and print_loss:
-    #             print(i, 'th ,loss', loss)
-    #     return loss
-    
     def train_per_step(self, sx, sy, ux, uy):
         _, loss = self.sess.run(fetches=[self.trainop, self.loss],
                                 feed_dict={self.seedxe: sx, self.seedye: sy, self.unlbxe: ux,

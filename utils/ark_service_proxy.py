@@ -5,15 +5,12 @@ Usage:
 results=runtagger_parse(['example tweet 1', 'example tweet 2'])
 results will contain a list of lists (one per tweet) of triples, each triple represents (term, type, confidence)
 """
-import __init__
-import re
 import shlex
 import subprocess
 
-import PatternUtils as pu
-import TweetKeys as tk
-import TweetUtils as tu
-from Configure import getconfig
+import utils.pattern_utils as pu
+import utils.tweet_keys as tk
+from config.configure import getcfg
 
 
 # The only relavent source I've found is here:
@@ -22,7 +19,7 @@ from Configure import getconfig
 
 # NOTE this command is directly lifted from runTagger.sh
 # RUN_TAGGER_CMD = "java -XX:ParallelGCThreads=2 -Xmx500m -jar {}".format(getconfig().ark_service_command)
-RUN_TAGGER_CMD = getconfig().ark_service_command
+RUN_TAGGER_CMD = getcfg().ark_service_command
 
 
 def _split_results(wordtags):
@@ -105,14 +102,22 @@ def check_script_is_present(run_tagger_cmd=RUN_TAGGER_CMD):
 
 
 def twarr_ark(twarr, from_field=tk.key_text, to_field=tk.key_ark):
-    textarr = [tw[from_field].strip() for tw in twarr]
-    empty_idxes = set([idx for idx in range(len(textarr)) if pu.is_empty_string(textarr[idx])])
-    posarr = runtagger_parse([textarr[idx] for idx in range(len(textarr)) if idx not in empty_idxes])
-    for idx in range(len(twarr)):
-        twarr[idx][to_field] = [] if idx in empty_idxes else posarr[idx]
-    if len(textarr) != len(posarr) + len(empty_idxes):
-        raise ValueError('len(textarr):{},len(posarr):{},len(empty_idxes):{}. Error occur during pos'.
-                         format(len(textarr), len(posarr), len(empty_idxes)))
+    empty_idxes, non_empty_idxes = list(), list()
+    textarr = list()
+    for idx, tw in enumerate(twarr):
+        text = tw[from_field]
+        if pu.is_empty_string(text):
+            empty_idxes.append(idx)
+        else:
+            textarr.append(text)
+            non_empty_idxes.append(idx)
+    
+    posarr = runtagger_parse(textarr)
+    
+    for tw_idx in empty_idxes:
+        twarr[tw_idx][to_field] = []
+    for pos_idx, tw_idx in enumerate(non_empty_idxes):
+        twarr[tw_idx][to_field] = posarr[pos_idx]
     return twarr
 
 
@@ -121,31 +126,43 @@ tags_common_noun = {'N', }
 tags_verb = {'V', 'T', }
 tags_hashtag = {'#', }
 
-proper_noun_label, common_noun_label, verb_label, hashtag_label = 'proper', 'common', 'verb', 'hashtag'
-label_dict = dict([(t, proper_noun_label) for t in tags_proper_noun] +
-                  [(t, common_noun_label) for t in tags_common_noun] +
+prop_label, comm_label, verb_label, hstg_label = 'proper', 'common', 'verb', 'hashtag'
+label_dict = dict([(t, prop_label) for t in tags_proper_noun] +
+                  [(t, comm_label) for t in tags_common_noun] +
                   [(t, verb_label) for t in tags_verb] +
-                  [(t, hashtag_label) for t in tags_hashtag])
+                  [(t, hstg_label) for t in tags_hashtag])
 
 
 # pos_token resembles ('word', 'pos tag', 0.91)
 def is_proper_noun(pos_token): return pos_token[1] in tags_proper_noun and not is_hashtag(pos_token)
-def is_common_noun(pos_token): return pos_token[1] in tags_common_noun and not is_hashtag(pos_token)
-def is_verb(pos_token): return pos_token[1] in tags_verb and not is_hashtag(pos_token)
-def is_hashtag(pos_token): return pos_token[0].startswith('#') and pu.has_azAZ(pos_token[0])
 
-def pos_token2label(pos_token):
-    if is_proper_noun(pos_token): return proper_noun_label
-    elif is_common_noun(pos_token): return common_noun_label
-    elif is_verb(pos_token): return verb_label
-    elif is_hashtag(pos_token): return hashtag_label
-    else: return None
+
+def is_common_noun(pos_token): return pos_token[1] in tags_common_noun and not is_hashtag(pos_token)
+
+
+def is_verb(pos_token): return pos_token[1] in tags_verb and not is_hashtag(pos_token)
+
+
+def is_hashtag(pos_token): return pos_token[0].strip().startswith('#') and pu.has_azAZ(pos_token[0])
+
+
+def pos_token2semantic_label(pos_token):
+    if is_hashtag(pos_token):
+        return hstg_label
+    elif is_proper_noun(pos_token):
+        return prop_label
+    elif is_common_noun(pos_token):
+        return comm_label
+    elif is_verb(pos_token):
+        return verb_label
+    else:
+        return None
 
 
 if __name__ == "__main__":
     print("Checking that we can see \"{}\", this will crash if we can't." .format(RUN_TAGGER_CMD))
-    success = check_script_is_present()
-    if success:
+    _success = check_script_is_present()
+    if _success:
         print("Success.")
         print("Now pass in two messages, get a list of tuples back:")
         tweets = ['this is a message', 'and a second message']

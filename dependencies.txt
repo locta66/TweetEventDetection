@@ -2,17 +2,14 @@
 
 pip install nltk
 pip install wordsegment
+pip install python-Levenshtein
 # nltk_data	E:\DOWNLOADS\BaiduYun\nltk_data.tar.gz
 # http://python.jobbole.com/81675/
-
-pip install python-Levenshtein
-
 
 
 # bzip2 -z FileName
 # for file in *.gz; do gunzip -xf $file; done
 # for file in *.json; do bzip2 -z $file; done
-
 
 
 * 数据预处理：
@@ -28,14 +25,5 @@ pip install python-Levenshtein
         * 华盛顿大学的Twitter_NLP：
             * https://github.com/aritter/twitter_nlp
             * 提供命名实体识别
-* 事件描述：
-    * 突发事件的属性描述不少于6种：
-        * 类别、时间、地点、事件等级、主题词、热度
-        * 发生时间精度为小时级，地点精确为城市级
-        * 事件分级不少于4种
-    * 定义的事件类别不少于4种：
-        * 恐怖袭击、自然灾害、安全事故、军事行动
-    * 支持事件类型的定制修改和添加
-    * 参考文献：
-        * 《Weakly Supervised Extraction of Computer Security Events from Twitter》, (WWW, 2017)
-            * 判定一条tweet是否指向一种事件，以及属于哪种事件
+
+

@@ -1,10 +1,9 @@
-import __init__
 import math
 import subprocess
 import multiprocessing as mp
-from Configure import getconfig
+from config.configure import getcfg
 
-service_command = getconfig().ner_service_command
+service_command = getcfg().ner_service_command
 
 
 class ServiceException(Exception):

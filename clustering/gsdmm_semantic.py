@@ -1,17 +1,17 @@
-import math
-
 import numpy as np
 import pandas as pd
 
-from Configure import getconfig
-import TweetKeys
-import ArrayUtils as au
-import FunctionUtils as fu
-from IdFreqDict import IdFreqDict
-from WordFreqCounter import WordFreqCounter
+from config.configure import getcfg
+import utils.tweet_keys as tk
+import utils.array_utils as au
+import utils.file_iterator as fi
+import utils.function_utils as fu
+from utils.id_freq_dict import IdFreqDict
+from clustering.cluster_service import ClusterService
 
 
 class SemanticClusterer:
+    """ Use GSDMM as basic, no streaming """
     prop_n_tags = {'NNP', 'NNPS', }
     comm_n_tags = {'NN', }
     verb_tags = {'VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ', }
@@ -23,55 +23,12 @@ class SemanticClusterer:
     
     def __init__(self, twarr=None):
         self.twarr = self.prop_n_dict = self.comm_n_dict = self.verb_dict = self.ht_dict = self.pos_tag2dict_map = None
-        self.counter = WordFreqCounter()
         if twarr:
             self.preprocess_twarr(twarr)
     
-    @staticmethod
-    def clustering_multi(func, params, process_num=16):
-        param_num = len(params)
-        res_list = list()
-        for i in range(int(math.ceil(param_num / process_num))):
-            res_list += fu.multi_process(func, params[i * process_num: (i + 1) * process_num])
-            print('{:<4} /'.format(min((i + 1) * process_num, param_num)), param_num, 'params processed')
-        if not len(res_list) == len(params):
-            raise ValueError('Error occur in clustering')
-        return res_list
-    
-    @staticmethod
-    def cluster_label_prediction_table(tw_cluster_label, tw_cluster_pred):
-        cluster_table = pd.DataFrame(index=set(tw_cluster_pred), columns=set(tw_cluster_label), data=0)
-        for i in range(len(tw_cluster_label)):
-            cluster_table.loc[tw_cluster_pred[i]][tw_cluster_label[i]] += 1
-        return cluster_table
-    
-    @staticmethod
-    def create_clusters_with_labels(twarr, tw_cluster_label):
-        if not len(twarr) == len(tw_cluster_label):
-            raise ValueError('Wrong cluster labels for twarr')
-        tw_topic_arr = [[] for _ in range(max(tw_cluster_label) + 1)]
-        for d in range(len(tw_cluster_label)):
-            tw_topic_arr[tw_cluster_label[d]].append(twarr[d])
-        return tw_topic_arr
-    
-    @staticmethod
-    def event_table_recall(tw_cluster_label, tw_cluster_pred, true_cluster_label=None):
-        cluster_table = SemanticClusterer.cluster_label_prediction_table(tw_cluster_label, tw_cluster_pred)
-        predict_cluster = np.argmax(cluster_table.values, axis=1)
-        if true_cluster_label is not None:
-            predict_cluster_set = set(predict_cluster).intersection(set(true_cluster_label))
-            ground_cluster_set = set(tw_cluster_label).intersection(set(true_cluster_label))
-            cluster_table['PRED'] = [maxid if maxid in true_cluster_label else '' for maxid in predict_cluster]
-        else:
-            predict_cluster_set = set(predict_cluster)
-            ground_cluster_set = set(tw_cluster_label)
-            cluster_table['PRED'] = [maxid for maxid in predict_cluster]
-        recall = len(predict_cluster_set) / len(ground_cluster_set)
-        return cluster_table, recall
-    
     def preprocess_twarr(self, twarr):
         """pre-process the tweet text, including dropping non-common terms"""
-        key_tokens = TweetKeys.key_wordlabels
+        key_tokens = tk.key_wordlabels
         self.twarr = twarr
         self.prop_n_dict, self.comm_n_dict, self.verb_dict, self.ht_dict = \
             IdFreqDict(), IdFreqDict(), IdFreqDict(), IdFreqDict()
@@ -84,7 +41,7 @@ class SemanticClusterer:
             for i in range(len(tokens) - 1, -1, -1):
                 tokens[i][0] = tokens[i][0].lower().strip()
                 word, _, pos_tag = tokens[i]
-                if not self.counter.is_valid_keyword(word):
+                if not ClusterService.is_valid_keyword(word):
                     del tokens[i]
                 if word.startswith('#') and not pos_tag.lower() == 'ht':
                     pos_tag = tokens[i][2] = 'HT'
@@ -106,10 +63,10 @@ class SemanticClusterer:
                 if pos_tag in tw_pos_tag2dict_map and pos_tag2dict_map[pos_tag].has_word(word):
                         tw_pos_tag2dict_map[pos_tag].count_word(word)
     
-    def GSDMM_twarr_with_label(self, twarr, label):
+    def input_twarr_with_label(self, twarr, label):
         # def GSDMM_twarr(self, alpha, etap, etac, etav, etah, K, iter_num, ref_labels=None)
         # self.GSDMM_twarr(0.01, 0.01, 0.01, 0.01, 0.01, 5, 30)
-        base_path = getconfig().dc_test + 'SEMANTIC/'
+        base_path = getcfg().dc_test + 'SEMANTIC/'
         a_range = etap_range = etac_range = etav_range = etah_range = [0.01, 0.05, 0.1]
         K_range = [30, 40]
         iter_num = 50
@@ -118,8 +75,8 @@ class SemanticClusterer:
         hyperparams = [(a, ep, ec, ev, eh, k) for a in a_range for ep in etap_range for ec in etac_range
                        for ev in etav_range for eh in etah_range for k in K_range]
         param_num = len(hyperparams)
-        res_list = self.clustering_multi(SemanticClusterer.GSDMM_twarr,
-                                         [(self, *param, iter_num, label) for param in hyperparams], process_num)
+        res_list = ClusterService.clustering_multi(SemanticClusterer.GSDMM_twarr,
+                        [(self, *param, iter_num, label) for param in hyperparams], process_num)
         column_name = ['alpha', 'etap', 'etac', 'etav', 'etah', 'K']
         # """start plotting figures"""
         # frame = pd.DataFrame(index=np.arange(0, param_num), columns=column_name, data=hyperparams)
@@ -147,41 +104,41 @@ class SemanticClusterer:
                 raise ValueError('inconsistent param number')
             return '_'.join(['{}_{:<3}'.format(param_names[i], param_values[i]) for i in range(len(param_names))])
         
-        top_ramk = 30
+        top_rank = 30
         true_cluster = [i for i in range(12)]
-        tbl_recall_list = [self.event_table_recall(label, res_list[i][1], true_cluster) for i in range(param_num)]
+        tbl_recall_list = [ClusterService.event_table_recall(label, res_list[i][1], true_cluster) for i in range(param_num)]
         top_recall_idx = pd.DataFrame(data=[(i, tbl_recall_list[i][1], res_list[i][3][-1]) for i in range(param_num)])\
-            .sort_values(by=[1, 2], ascending=False).loc[:, 0][:top_ramk]
-        top_nmi_idx = np.argsort([res_list[i][3][-1] for i in range(param_num)])[-1:-top_ramk-1:-1]
+            .sort_values(by=[1, 2], ascending=False).loc[:, 0][:top_rank]
+        top_nmi_idx = np.argsort([res_list[i][3][-1] for i in range(param_num)])[-1:-top_rank-1:-1]
         
         def dump_cluster_info(top_idx_list_, base_path_):
             for rank, idx in enumerate(top_idx_list_):
                 res_dir = '{}{}_recall_{:0<6}_nmi_{:0<6}_{}/'.\
                     format(base_path_, rank, round(tbl_recall_list[idx][1], 4), round(res_list[idx][3][-1], 4),
                            concat_param_name_values(column_name, hyperparams[idx]))
-                fu.makedirs(res_dir)
-                tw_topic_arr = self.create_clusters_with_labels(twarr, res_list[idx][1])
+                fi.makedirs(res_dir)
+                tw_topic_arr = ClusterService.create_clusters_with_labels(twarr, res_list[idx][1])
                 for i, _twarr in enumerate(tw_topic_arr):
                     if not len(_twarr) == 0:
-                        fu.dump_array(res_dir + str(i) + '.txt', [tw[TweetKeys.key_text] for tw in _twarr])
+                        fu.dump_array(res_dir + str(i) + '.txt', [tw[tk.key_text] for tw in _twarr])
                 cluster_table = tbl_recall_list[idx][0]
                 cluster_table.to_csv(res_dir + 'table.csv')
         
         top_recall_path = base_path + 'max_recalls/'
-        fu.rmtree(top_recall_path)
+        fi.rmtree(top_recall_path)
         dump_cluster_info(top_recall_idx, top_recall_path)
         top_nmi_path = base_path + 'max_nmis/'
-        fu.rmtree(top_nmi_path)
+        fi.rmtree(top_nmi_path)
         dump_cluster_info(top_nmi_idx, top_nmi_path)
         return 0, 0
     
-    def GSDMM_twarr(self, alpha, etap, etac, etav, etah, K, iter_num, ref_labels=None):
+    def GSDMM_twarr(self, alpha, etap, etac, etav, etah, K, iter_num):
         twarr = self.twarr
         prop_n_dict = self.prop_n_dict
         comm_n_dict = self.comm_n_dict
         verb_dict = self.verb_dict
         ht_dict = self.ht_dict
-        D = twarr.__len__()
+        D = len(twarr)
         VP = prop_n_dict.vocabulary_size()
         VC = comm_n_dict.vocabulary_size()
         VV = verb_dict.vocabulary_size()
@@ -246,9 +203,10 @@ class SemanticClusterer:
                 return au.sample_index_by_array_value(np.array(prob))
         
         """start iteration"""
-        iter_x = list()
-        nmi_y = list()
+        z_iter = list()
         for i in range(iter_num):
+            z_iter.append(z[:])
+            
             for d in range(D):
                 k = z[d]
                 m_z[k] -= 1
@@ -259,12 +217,6 @@ class SemanticClusterer:
                 z[d] = k
                 m_z[k] += 1
                 update_clu_dicts_by_tw(twarr[d], k, factor=1)
-            
-            if ref_labels is not None:
-                iter_x.append(i)
-                nmi_y.append(au.score(z, ref_labels, score_type='nmi'))
         
-        if ref_labels is not None:
-            return m_z, z, iter_x, nmi_y
-        else:
-            return m_z, z
+        z_iter.append(z[:])
+        return z_iter

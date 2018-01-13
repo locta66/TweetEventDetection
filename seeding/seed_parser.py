@@ -1,32 +1,25 @@
-import FileIterator
-import TweetKeys
-from FunctionUtils import slash_appender
-from JsonParser import JsonParser
-from SeedQuery import SeedQuery
-import FunctionUtils as fu
+import utils.file_iterator as fi
+from seeding.seed_query import SeedQuery
+import utils.function_utils as fu
+from utils.function_utils import slash_appender
 
 
-class SeedParser(JsonParser):
+class SeedParser:
     def __init__(self, query_list, theme, description):
-        JsonParser.__init__(self)
         self.base_path = './'
         self.theme = theme
         self.description = description
         
         self.query_list = query_list
         self.seed_query_list = [SeedQuery(*query) for query in query_list]
-        self.tweet_desired_attrs.append(TweetKeys.key_origintext)
         
-        self.added_ids = dict()
+        self.added_ids = set()
         self.added_twarr = list()
     
-    def read_tweet_from_json_file(self, file, filtering=False):
+    def read_tweet_from_json_file(self, file):
         if not self.is_file_of_query_date(file):
             return
         for tw in fu.load_array(file):
-            tw = self.attribute_filter(tw, self.tweet_desired_attrs)
-            if 'user' in tw:
-                tw['user'] = self.attribute_filter(tw['user'], self.user_desired_attrs)
             tw_added = False
             for seed_query in self.seed_query_list:
                 tw_added = seed_query.append_desired_tweet(tw, usingtwtime=False) or tw_added
@@ -34,7 +27,7 @@ class SeedParser(JsonParser):
                 if tw['id'] in self.added_ids:
                     continue
                 else:
-                    self.added_ids[tw['id']] = True
+                    self.added_ids.add(tw['id'])
                 self.added_twarr.append(tw)
     
     def is_file_of_query_date(self, file_name):
@@ -44,41 +37,30 @@ class SeedParser(JsonParser):
                 return True
         return False
     
+    def get_query_results(self): return self.added_twarr
+    
     def set_base_path(self, base_path):
-        self.base_path = FileIterator.add_sep_if_needed(base_path)
+        self.base_path = fi.add_sep_if_needed(base_path)
         for path in [self.get_base_path(), self.get_theme_path(), self.get_queried_path(), self.get_param_path(), ]:
-            FileIterator.make_dirs_if_not_exists(path)
-    
-    def get_query_results(self):
-        return self.added_twarr
+            fi.make_dirs(path)
     
     @slash_appender
-    def get_base_path(self):
-        return self.base_path
+    def get_base_path(self): return self.base_path
     
     @slash_appender
-    def get_theme_path(self):
-        return self.get_base_path() + self.theme
+    def get_theme_path(self): return self.get_base_path() + self.theme
     
     @slash_appender
-    def get_queried_path(self):
-        return self.get_theme_path() + 'queried'
+    def get_queried_path(self): return self.get_theme_path() + 'queried'
     
     @slash_appender
-    def get_param_path(self):
-        return self.get_theme_path() + 'params'
+    def get_param_path(self): return self.get_theme_path() + 'params'
     
-    def get_query_result_file_name(self):
-        return self.get_queried_path() + self.theme + '.sum'
+    def get_query_result_file_name(self): return self.get_queried_path() + self.theme + '.sum'
     
-    # def get_to_tag_file_name(self):
-    #     raise ValueError('Unimplemented yet')
+    def get_param_file_name(self): return self.get_param_path() + self.theme
     
-    def get_param_file_name(self):
-        return self.get_param_path() + self.theme
-    
-    def get_dict_file_name(self):
-        return self.get_param_path() + self.theme + '.dic'
+    def get_dict_file_name(self): return self.get_param_path() + self.theme + '.dic'
 
 
 class UnlbParser(SeedParser):
@@ -87,9 +69,6 @@ class UnlbParser(SeedParser):
     
     def get_query_result_file_name(self):
         return self.get_queried_path() + self.theme + '_unlabelled.sum'
-    
-    # def get_to_tag_file_name(self):
-    #     return self.get_queried_path() + self.theme + '_unlabelled.utg'
 
 
 class CounterParser(SeedParser):

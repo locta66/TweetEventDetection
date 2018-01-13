@@ -1,25 +1,26 @@
 from copy import deepcopy
-from collections import Counter
 
 import numpy as np
 
-import ArrayUtils as au
-import TweetKeys as tk
-import ArkServiceProxy as ark
-from IdFreqDict import IdFreqDict
-from WordFreqCounter import WordFreqCounter as wfc
+import utils.array_utils as au
+import utils.tweet_keys as tk
+import utils.ark_service_proxy as ark
+from utils.id_freq_dict import IdFreqDict
+from clustering.cluster_service import ClusterService
 
-np.random.seed(234470501)
+
+np.random.seed(233)
 
 K_IFD, K_PARAM, K_CLUID, K_CLU_COL = 'ifd', 'param', 'cluid', 'cluster'
 K_ALPHA, K_FREQ_SUM, K_VALID_IFD = 'alpha', 'freqsum', 'valid'
 K_TW_TABLE = 'table'
-LABEL_COLS_LIST = [ark.proper_noun_label, ark.common_noun_label, ark.verb_label, ark.hashtag_label]
+LABEL_COLS_LIST = [ark.prop_label, ark.comm_label, ark.verb_label, ark.hstg_label]
 LABEL_COLS = set(LABEL_COLS_LIST)
 
 
-class GSDPMMStreamClusterer:
-    def __init__(self, hold_batch_num=10):
+class GSDPMMSemanticStreamClusterer:
+    def __init__(self, hold_batch_num):
+        print('using GSDPMMSemanticStreamClusterer')
         self.init_batch_ready = False
         self.hold_batch_num = hold_batch_num
         self.twarr, self.label, self.batch_twnum_list, self.z = list(), list(), list(), list()
@@ -27,12 +28,63 @@ class GSDPMMStreamClusterer:
         self.global_info_table = dict([(label, IdFreqDict()) for label in LABEL_COLS])
         self.global_valid_table = dict([(label, IdFreqDict()) for label in LABEL_COLS])
         self.cluster_table = {self.max_clu_id: ClusterHolder(self.max_clu_id)}
-        self.params_table = None
+        self.params_table = dict()
     
     def set_hyperparams(self, alpha, etap, etac, etav, etah):
         self.params_table = dict(zip([K_ALPHA] + LABEL_COLS_LIST,
-                                     [ParamHolder(alpha), ParamHolder(etap), ParamHolder(etac),
-                                      ParamHolder(etav), ParamHolder(etah)]))
+            [ParamHolder(alpha), ParamHolder(etap), ParamHolder(etac), ParamHolder(etav), ParamHolder(etah)]))
+    
+    def input_batch_with_label(self, tw_batch, lb_batch):
+        self.count_new_batch(tw_batch)
+        self.batch_twnum_list.append(len(tw_batch))
+        """insufficient tweets"""
+        if len(self.batch_twnum_list) < self.hold_batch_num:
+            self.twarr += tw_batch
+            self.label += lb_batch
+            return None, None
+        """the first time when len(self.batch_twnum_list) == self.hold_batch_num, may get merged"""
+        if not self.init_batch_ready:
+            self.init_batch_ready = True
+            self.twarr += tw_batch
+            self.label += lb_batch
+            self.z = self.GSDPMM_twarr(list(), self.twarr, iter_num=60)
+            # print(' ', dict(Counter(self.z)), len(Counter(self.z)))
+            return self.z[:], self.label[:]
+        """normal process of new twarr"""
+        new_z = self.GSDPMM_twarr(self.twarr, tw_batch, iter_num=8)
+        oldest_twarr_len = self.batch_twnum_list.pop(0)
+        popped_z = list()
+        for d in range(oldest_twarr_len):
+            self.update_cluster_with_tw(self.twarr[0][K_CLUID], self.twarr[0], factor=-1)
+            popped_z.append(self.z.pop(0)), self.twarr.pop(0), self.label.pop(0)
+        self.z += new_z
+        self.twarr += tw_batch
+        self.label += lb_batch
+        # print('popped ', dict(Counter(popped_z)), len(popped_z))
+        # print(' current', dict(Counter(self.z)), len(Counter(self.z)))
+        return self.z[:], self.label[:]
+    
+    def GSDPMM_twarr(self, old_twarr, new_twarr, iter_num):
+        for i in range(iter_num):
+            for idx, tw in enumerate(new_twarr):
+                old_cluid = tw[K_CLUID]
+                self.update_cluster_sum_valid_with_tw(old_cluid, tw, factor=-1)
+                self.update_cluster_with_tw(old_cluid, tw, factor=-1)
+                if self.cluster_table[old_cluid].m == 0:
+                    self.cluster_table.pop(old_cluid)
+                
+                new_cluid = self.sample_cluid(tw, len(old_twarr) + len(new_twarr))
+                if new_cluid > self.max_clu_id:
+                    self.max_clu_id += 1
+                    self.cluster_table[self.max_clu_id] = ClusterHolder(self.max_clu_id)
+                    self.update_cluster_with_tw(new_cluid, tw, factor=1)
+                    self.recount_cluster_sum_valid(new_cluid)
+                else:
+                    self.update_cluster_sum_valid_with_tw(new_cluid, tw, factor=1)
+                    self.update_cluster_with_tw(new_cluid, tw, factor=1)
+        
+        new_z = [tw[K_CLUID] for tw in new_twarr]
+        return new_z
     
     def list_cluid(self): return [idx for idx in self.cluster_table.keys()]
     
@@ -45,9 +97,9 @@ class GSDPMMStreamClusterer:
             tw.update(dict([(label, IdFreqDict()) for label in LABEL_COLS]))
             pos_tokens = tw[tk.key_ark]
             for pos_token in pos_tokens:
-                if not wfc.is_valid_keyword(pos_token[0]):
+                if not ClusterService.is_valid_keyword(pos_token[0]):
                     continue
-                real_label = ark.pos_token2label(pos_token)
+                real_label = ark.pos_token2semantic_label(pos_token)
                 if real_label in LABEL_COLS:
                     tw[real_label].count_word(pos_token[0].lower().strip())
         return twarr
@@ -145,59 +197,6 @@ class GSDPMMStreamClusterer:
         prob.append(new_clu_prob)
         sample_result = cluids[au.sample_index_by_array_value(np.array(prob))]
         return sample_result
-    
-    def GSDPMM_twarr(self, old_twarr, new_twarr, iter_num):
-        old_z = [tw[K_CLUID] for tw in old_twarr] if len(old_twarr) > 0 else list()
-        for i in range(iter_num):
-            for idx, tw in enumerate(new_twarr):
-                old_cluid = tw[K_CLUID]
-                self.update_cluster_sum_valid_with_tw(old_cluid, tw, factor=-1)
-                self.update_cluster_with_tw(old_cluid, tw, factor=-1)
-                if self.cluster_table[old_cluid].m == 0:
-                    self.cluster_table.pop(old_cluid)
-                
-                new_cluid = self.sample_cluid(tw, len(old_twarr) + len(new_twarr))
-                if new_cluid > self.max_clu_id:
-                    self.max_clu_id += 1
-                    self.cluster_table[self.max_clu_id] = ClusterHolder(self.max_clu_id)
-                    self.update_cluster_with_tw(new_cluid, tw, factor=1)
-                    self.recount_cluster_sum_valid(new_cluid)
-                else:
-                    self.update_cluster_sum_valid_with_tw(new_cluid, tw, factor=1)
-                    self.update_cluster_with_tw(new_cluid, tw, factor=1)
-        
-        new_z = [tw[K_CLUID] for tw in new_twarr]
-        return old_z, new_z
-    
-    def input_batch(self, tw_batch, lb_batch=None):
-        self.count_new_batch(tw_batch)
-        self.batch_twnum_list.append(len(tw_batch))
-        """insufficient tweets"""
-        if len(self.batch_twnum_list) < self.hold_batch_num:
-            self.twarr += tw_batch
-            self.label += lb_batch
-            return None, None
-        """the first time when len(self.batch_twnum_list) == self.hold_batch_num, may get merged"""
-        if not self.init_batch_ready:
-            self.init_batch_ready = True
-            self.twarr += tw_batch
-            self.label += lb_batch
-            _, self.z = self.GSDPMM_twarr(list(), self.twarr, iter_num=60)
-            print(' ', dict(Counter(self.z)), len(Counter(self.z)))
-            return self.z[:], self.label[:]
-        """normal process of new twarr"""
-        old_z, new_z = self.GSDPMM_twarr(self.twarr, tw_batch, iter_num=4)
-        oldest_twarr_len = self.batch_twnum_list.pop(0)
-        popped_z = list()
-        for d in range(oldest_twarr_len):
-            self.update_cluster_with_tw(self.twarr[0][K_CLUID], self.twarr[0], factor=-1)
-            popped_z.append(self.z.pop(0)), self.twarr.pop(0), old_z.pop(0), self.label.pop(0)
-        self.twarr += tw_batch
-        self.label += lb_batch
-        self.z += new_z
-        # print('popped ', dict(Counter(popped_z)), len(popped_z))
-        print(' current', dict(Counter(self.z)), len(Counter(self.z)))
-        return self.z[:], self.label[:]
 
 
 class ClusterHolder:
@@ -207,17 +206,13 @@ class ClusterHolder:
         self.cluster_info_table = dict([(label, IdFreqDict()) for label in LABEL_COLS])
         self.sum_info_table = dict([(label, 0) for label in LABEL_COLS])
     
-    def get_ifd_by_label(self, label):
-        return self.cluster_info_table[label]
+    def get_ifd_by_label(self, label): return self.cluster_info_table[label]
     
-    def get_sum_by_label(self, label):
-        return self.sum_info_table[label]
+    def get_sum_by_label(self, label): return self.sum_info_table[label]
     
-    def set_sum_by_label(self, label, value):
-        self.sum_info_table[label] = value
+    def set_sum_by_label(self, label, value): self.sum_info_table[label] = value
     
-    def set_sum_increment_by_label(self, label, increment):
-        self.sum_info_table[label] += increment
+    def set_sum_increment_by_label(self, label, increment): self.sum_info_table[label] += increment
 
 
 class ParamHolder:
@@ -225,11 +220,8 @@ class ParamHolder:
         self._param_value = param_value
         self._param0_value = 0
     
-    def param(self):
-        return self._param_value
+    def param(self): return self._param_value
     
-    def update_param0(self, factor):
-        self._param0_value = self.param() * factor
+    def update_param0(self, factor): self._param0_value = self.param() * factor
     
-    def param0(self):
-        return self._param0_value
+    def param0(self): return self._param0_value

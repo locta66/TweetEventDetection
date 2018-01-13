@@ -1,15 +1,14 @@
 import re
-import json
-import bz2file
 
-from IdFreqDict import IdFreqDict
-import TweetFilter as tflt
-import TweetKeys as tk
-import ArrayUtils as au
-import FunctionUtils as fu
-import FileIterator as fi
-import PatternUtils as pu
-import ArkServiceProxy as ark
+from utils.id_freq_dict import IdFreqDict
+import utils.tweet_keys as tk
+import utils.array_utils as au
+import utils.function_utils as fu
+import utils.file_iterator as fi
+import utils.pattern_utils as pu
+import utils.ark_service_proxy as ark
+import preprocess.tweet_filter as tflt
+from config.configure import getcfg
 
 
 def summary_files_in_path(from_path, into_path=None):
@@ -20,8 +19,7 @@ def summary_files_in_path(from_path, into_path=None):
     if not is_target_ymdh(file_ymdh_arr):
         return
     
-    into_file = '{file_path}{file_name}'.format(
-        file_path=fi.add_sep_if_needed(into_path), file_name='_'.join(file_ymdh_arr) + '.sum')
+    into_file = '{}{}'.format(fi.add_sep_if_needed(into_path), '_'.join(file_ymdh_arr) + '.sum')
     fi.remove_file(into_file)
     subfiles = fi.listchildren(from_path, children_type=fi.TYPE_FILE)
     file_block = fu.split_multi_format([(from_path + subfile) for subfile in subfiles], process_num=20)
@@ -34,25 +32,27 @@ def summary_files_in_path(from_path, into_path=None):
 def sum_files(file_list, filter_level):
     res_twarr = list()
     for file in file_list:
-        twarr = load_twarr_from_bz2(file) if file.endswith('.bz2') else \
-                fu.load_array(file) if file.endswith('.json') else None
+        twarr = fu.load_twarr_from_bz2(file) if file.endswith('.bz2') else fu.load_array(file)
         twarr = tflt.filter_twarr(twarr, filter_level)
         res_twarr.extend(twarr)
     return res_twarr
 
 
-def load_twarr_from_bz2(bz2_file):
-    fp = bz2file.open(bz2_file, 'r')
-    twarr = list()
-    for line in fp.readlines():
-        try:
-            json_obj = json.loads(line.decode('utf8'))
-            twarr.append(json_obj)
-        except:
-            print('Error when parsing ' + bz2_file + ': ' + line)
+def summary_files_in_path_into_blocks(from_path, into_path, file_name):
+    from_path = fi.add_sep_if_needed(from_path)
+    sub_files = fi.listchildren(from_path, children_type=fi.TYPE_FILE, pattern='.json$')
+    into_file = fi.add_sep_if_needed(into_path) + file_name
+    twarr_block = list()
+    for idx, file in enumerate(sub_files):
+        from_file = from_path + file
+        twarr = fu.load_array_catch(from_file)
+        if len(twarr) <= 0:
             continue
-    fp.close()
-    return twarr
+        twarr = tflt.filter_twarr(twarr, tflt.FILTER_LEVEL_HIGH)
+        twarr_block.append(twarr)
+    print(sorted([('id'+str(idx), len(twarr)) for idx, twarr in enumerate(twarr_block)], key=lambda x: x[1]))
+    print('event number in total: {}'.format(len(twarr_block)))
+    fu.dump_array(into_file, twarr_block)
 
 
 def is_target_ymdh(ymdh_arr):
@@ -71,7 +71,7 @@ def is_target_ymdh(ymdh_arr):
 
 def get_tokens_multi(file_path):
     file_path = fi.add_sep_if_needed(file_path)
-    subfiles = au.random_array_items(fi.listchildren(file_path, children_type=fi.TYPE_FILE), 400)
+    subfiles = au.random_array_items(fi.listchildren(file_path, children_type=fi.TYPE_FILE), 40)
     file_list_block = fu.split_multi_format([(file_path + subfile) for subfile in subfiles], process_num=20)
     res_list = fu.multi_process(get_tokens, [(file_list, ) for file_list in file_list_block])
     id_freq_dict, total_doc_num = IdFreqDict(), 0
@@ -92,60 +92,62 @@ def get_tokens(file_list):
             tokens = re.findall(r'[a-zA-Z_#\-]{3,}', tw[tk.key_text].lower())
             real_tokens = list()
             for token in tokens:
-                real_tokens.extend(pu.segment(token)) if len(token) >= 16 else [token]
+                real_tokens.extend(pu.word_segment(token)) if len(token) >= 16 else [token]
             for token in real_tokens:
                 if not pu.is_stop_word(token) and pu.has_azAZ(token) and 3 <= len(token) <= 16:
                     id_freq_dict.count_word(token)
     return id_freq_dict, total_doc_num
 
 
+K_IFD, K_FILE = 'ifd', 'file'
+
+
 def get_semantic_tokens_multi(file_path):
     pos_type_info = {
-        ark.is_proper_noun: {'ifd': IdFreqDict(), 'file': 'prop_noun'},
-        ark.is_common_noun: {'ifd': IdFreqDict(), 'file': 'common_noun'},
-        ark.is_verb: {'ifd': IdFreqDict(), 'file': 'verb'},
-        ark.is_hashtag: {'ifd': IdFreqDict(), 'file': 'hashtag'},
+        ark.prop_label: {K_IFD: IdFreqDict(), K_FILE: getcfg().pre_prop_dict_file},
+        ark.comm_label: {K_IFD: IdFreqDict(), K_FILE: getcfg().pre_comm_dict_file},
+        ark.verb_label: {K_IFD: IdFreqDict(), K_FILE: getcfg().pre_verb_dict_file},
+        ark.hstg_label: {K_IFD: IdFreqDict(), K_FILE: getcfg().pre_hstg_dict_file},
     }
     total_doc_num = 0
     file_path = fi.add_sep_if_needed(file_path)
-    subfiles = au.random_array_items(fi.listchildren(file_path, children_type=fi.TYPE_FILE), 400)
+    # subfiles = au.random_array_items(fi.listchildren(file_path, children_type=fi.TYPE_FILE), 40)
+    subfiles = fi.listchildren(file_path, children_type=fi.TYPE_FILE)
     file_list_block = fu.split_multi_format([(file_path + subfile) for subfile in subfiles], process_num=20)
     res_list = fu.multi_process(get_semantic_tokens, [(file_list, ) for file_list in file_list_block])
-    for func2ifd, doc_num in res_list:
+    for res_type_info, doc_num in res_list:
         total_doc_num += doc_num
-        for func in func2ifd.keys():
-            pos_type_info[func]['ifd'].merge_freq_from(func2ifd[func]['ifd'])
+        for label in res_type_info.keys():
+            pos_type_info[label][K_IFD].merge_freq_from(res_type_info[label][K_IFD])
     print('total_doc_num', total_doc_num)
-    for func in pos_type_info.keys():
-        ifd, file_name = pos_type_info[func]['ifd'],  pos_type_info[func]['file']
+    for label in pos_type_info.keys():
+        ifd, file_name = pos_type_info[label][K_IFD], pos_type_info[label][K_FILE]
         ifd.drop_words_by_condition(3)
-        ifd.dump_dict(file_name + '.csv')
-        print(file_name, ifd.vocabulary_size())
+        if label != ark.hstg_label:
+            ifd.drop_words_by_condition(lambda word, _: word.startswith('#'))
+        ifd.dump_dict(file_name)
+        print('{}; vocab size:{}'.format(file_name, ifd.vocabulary_size()))
 
 
 def get_semantic_tokens(file_list):
     pos_type_info = {
-        ark.is_proper_noun: {'ifd': IdFreqDict()},
-        ark.is_common_noun: {'ifd': IdFreqDict()},
-        ark.is_verb: {'ifd': IdFreqDict()},
-        ark.is_hashtag: {'ifd': IdFreqDict()},
+        ark.prop_label: {K_IFD: IdFreqDict()},
+        ark.comm_label: {K_IFD: IdFreqDict()},
+        ark.verb_label: {K_IFD: IdFreqDict()},
+        ark.hstg_label: {K_IFD: IdFreqDict()},
     }
     total_doc_num = 0
     for file in file_list:
         twarr = ark.twarr_ark(fu.load_array(file))
         total_doc_num += len(twarr)
-        pos_tokens = list()
-        for tw in twarr:
-            pos_tokens += tw[tk.key_ark]
+        pos_tokens = fu.merge_list([tw[tk.key_ark] for tw in twarr])
         for pos_token in pos_tokens:
-            print(pos_token)
-            for func in pos_type_info.keys():
-                word = pos_token[0]
-                if len(word) <= 2 or pu.is_stop_word(word) or not pu.has_azAZ(word):
-                    continue
-                if func(pos_token):
-                    pos_type_info[func]['ifd'].count_word(pos_token[0].lower())
-                    continue
+            word = pos_token[0].strip().lower()
+            if len(word) <= 2 or not pu.is_valid_keyword(word):
+                continue
+            real_label = ark.pos_token2semantic_label(pos_token)
+            if real_label:
+                pos_type_info[real_label][K_IFD].count_word(word)
     return pos_type_info, total_doc_num
 
 

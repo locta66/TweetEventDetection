@@ -3,13 +3,6 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/preprocess" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/seeding" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/query_results" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/clustering" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/config" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/utils" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/_RECONSTRUCT" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Remote Python 3.5.2 (ssh://cdong@202.120.80.35:24922/usr/bin/python3.5)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

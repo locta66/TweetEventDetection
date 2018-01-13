@@ -1,8 +1,7 @@
-import __init__
 import argparse
-from SeedParser import SeedParser, TestParser
-from Main2Clusterer import *
-from Configure import getconfig
+from seeding.seed_parser import SeedParser, TestParser
+from clustering.main2clusterer import *
+from config.configure import getcfg
 
 
 seed_parser = SeedParser(query_list=[], theme='Terrorist', description='')
@@ -75,7 +74,7 @@ test_parser_1 = TestParser([
 def main(args):
     parser = test_parser_1
     for p in [seed_parser, test_parser_1]:
-        p.set_base_path(args.seed_path)
+        p.set_base_path(getcfg().seed_path)
     
     # if args.query:
     #     exec_query(args.summary_path, parser)
@@ -93,9 +92,9 @@ def main(args):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Clustering operation")
-    parser.add_argument('--summary_path', nargs='?', default=getconfig().summary_path,
+    parser.add_argument('--summary_path', nargs='?', default=getcfg().summary_path,
                         help='Filtered tweets organized in days as file XX_XX_XX_XX.sum under this path.')
-    parser.add_argument('--seed_path', nargs='?', default=getconfig().seed_path,
+    parser.add_argument('--seed_path', nargs='?', default=getcfg().seed_path,
                         help='Path for queried seed instance, trained parameters and corresponding dict.')
     
     parser.add_argument('--test', action='store_true', default=False, help='If perform actions upon test data.')

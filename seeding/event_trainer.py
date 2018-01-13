@@ -1,19 +1,12 @@
-import re
-
 import numpy as np
 from sklearn import metrics
 
-import FunctionUtils as fu
-import TweetKeys
-from EventClassifier import LREventClassifier
-from NerServiceProxy import get_ner_service_pool
-from WordFreqCounter import WordFreqCounter
+import utils.tweet_keys as tk
+from seeding.event_classifier import LREventClassifier
+from seeding.word_freq_counter import WordFreqCounter
 
 
 class EventTrainer:
-    def __init__(self):
-        self.classifier = self.freqcounter = None
-    
     def train_and_test(self, seed_twarr, unlb_twarr, cntr_twarr, seed_test, cntr_test):
         seed_train = seed_twarr
         seed_valid = seed_test
@@ -23,9 +16,9 @@ class EventTrainer:
         hyperparam = 1.15
         localcounter = WordFreqCounter()
         globalcounter = WordFreqCounter()
-        localcounter.expand_from_wordlabel_array([tw[TweetKeys.key_wordlabels] for tw in seed_twarr])
-        globalcounter.expand_from_wordlabel_array([tw[TweetKeys.key_wordlabels] for tw in unlb_twarr])
-        globalcounter.expand_from_wordlabel_array([tw[TweetKeys.key_wordlabels] for tw in cntr_twarr])
+        localcounter.expand_from_wordlabel_array([tw[tk.key_wordlabels] for tw in seed_twarr])
+        globalcounter.expand_from_wordlabel_array([tw[tk.key_wordlabels] for tw in unlb_twarr])
+        globalcounter.expand_from_wordlabel_array([tw[tk.key_wordlabels] for tw in cntr_twarr])
         print('\npos pre vocab', localcounter.vocabulary_size(), end=', ')
         localcounter.reserve_word_by_idf_condition(rsv_cond=lambda idf: idf > hyperparam)
         print('pos post vocab', localcounter.vocabulary_size())
@@ -110,24 +103,16 @@ class EventTrainer:
                       'recall {:<8}'.format(round(recall[idx], 5)))
                 break
         return auc, precision, recall, thresholds
-
-    @staticmethod
-    def start_ner_service(pool_size=8, classify=True, pos=True):
-        get_ner_service_pool().start(pool_size, classify, pos)
-
-    @staticmethod
-    def end_ner_service():
-        get_ner_service_pool().end()
-
+    
     @staticmethod
     def extract_tw_with_high_freq_entity(twarr, entity_freq=3):
         # extracts tweets which holds high frequency entity from twarr(which is of one day time)
-        if TweetKeys.key_wordlabels not in twarr[0]:
+        if tk.key_wordlabels not in twarr[0]:
             raise ValueError('NER not performed on the twarr.')
         entity_dict = dict()
         for tw in twarr:
             tw['entities'] = dict()
-            for wrdlbl in tw[TweetKeys.key_wordlabels]:
+            for wrdlbl in tw[tk.key_wordlabels]:
                 if wrdlbl[1].startswith('O'):
                     continue
                 entity_name = wrdlbl[0].strip().lower()
@@ -153,66 +138,3 @@ class EventTrainer:
                 # print(tw['entities'], '\n')
                 tw.pop('entities')
         return twarr
-    
-    def perform_ner_on_tw_file(self, tw_file, output_to_another_file=False, another_file='./deafult.sum'):
-        twarr = fu.load_array(tw_file)
-        if not twarr:
-            print('No tweets read from file', tw_file)
-            return twarr
-        twarr = self.twarr_ner(twarr)
-        output_file = another_file if output_to_another_file else tw_file
-        fu.dump_array(output_file, twarr)
-        print('Ner result written into', output_file, ',', len(twarr), 'tweets processed.')
-        return twarr
-
-    @staticmethod
-    def twarr_ner(twarr):
-        """ Perform NER and POS task upon the twarr, inplace. """
-        ner_text_arr = get_ner_service_pool().execute_ner_multiple([tw['text'] for tw in twarr])
-        if not len(ner_text_arr) == len(twarr):
-            raise ValueError("Return line number inconsistent; Error occurs during NER")
-        for idx, ner_text in enumerate(ner_text_arr):
-            wordlabels = EventTrainer.parse_ner_text_into_wordlabels(ner_text)
-            wordlabels = EventTrainer.remove_noneword_from_wordlabels(wordlabels)
-            twarr[idx][TweetKeys.key_wordlabels] = wordlabels
-        return twarr
-
-    @staticmethod
-    def parse_ner_text_into_wordlabels(ner_text):
-        # wordlabels = [('word_0', 'entity extraction word_0', 'pos word_0'), ('word_1', ...), ...]
-        words = re.split('\s', ner_text)
-        wordlabels = list()
-        for word in words:
-            if word == '':
-                continue
-            wordlabels.append(EventTrainer.parse_ner_word_into_labels(word, slash_num=2))
-        return wordlabels
-
-    @staticmethod
-    def parse_ner_word_into_labels(ner_word, slash_num):
-        """
-        Split a word into array by '/' searched from the end of the word to its begin.
-        :param ner_word: With pos labels.
-        :param slash_num: Specifies the number of "/" in the pos word.
-        :return: Assume that slash_num=2, "qwe/123"->["qwe","123"], "qwe/123/zxc"->["qwe","123","zxc"],
-                                  "qwe/123/zxc/456"->["qwe/123","zxc","456"],
-        """
-        res = list()
-        over = False
-        for i in range(slash_num):
-            idx = ner_word.rfind('/') + 1
-            res.insert(0, ner_word[idx:])
-            ner_word = ner_word[0:idx - 1]
-            if idx == 0:
-                over = True
-                break
-        if not over:
-            res.insert(0, ner_word)
-        return res
-    
-    @staticmethod
-    def remove_noneword_from_wordlabels(wordlabels):
-        for idx, wordlabel in enumerate(wordlabels):
-            if re.search('^[^a-zA-Z0-9]+$', wordlabel[0]) is not None:
-                del wordlabels[idx]
-        return wordlabels
