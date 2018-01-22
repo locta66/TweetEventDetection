@@ -7,12 +7,10 @@ import utils.function_utils as fu
 from seeding.event_classifier import LREventClassifier
 from clustering.cluster_service import ClusterService
 from utils.id_freq_dict import IdFreqDict
-from clustering.gsdpmm_semantic_stream import GSDPMMSemanticStreamClusterer
 from clustering.gsdmm_semantic_stream import SemanticStreamClusterer
 from clustering.gsdpmm_stream import GSDPMMStreamClusterer
-
-
-pos_cluster_num = 12
+from clustering.gsdpmm_semantic_stream import GSDPMMSemanticStreamClusterer
+# from clustering.gsdpmm_semantic_stream_static import GSDPMMSemanticStreamStatic
 
 
 class EventExtractor:
@@ -256,109 +254,202 @@ class EventExtractor:
     #     else:
     #         return n_zw, z
     
-    def stream_semantic_cluster_with_label(self, tw_batches, lb_batches):
-        print('batch num', len(tw_batches), 'average batch size', np.mean([len(tw) for tw in tw_batches]))
-        K = 40
-        hold_batch_num = 5
-        s = SemanticStreamClusterer(hold_batch_num=hold_batch_num)
-        s.set_hyperparams(alpha=0.05, etap=0.1, etac=0.1, etav=0.05, etah=0.1, K=K)
-        z_batch, lb_batch = list(), list()
-        """stream & online clustering"""
-        for idx, tw_batch in enumerate(tw_batches):
-            cur_z, new_z, cur_lb = s.input_batch_with_label(tw_batches[idx], lb_batches[idx])
-            if cur_z and new_z:
-                z_batch.append(cur_z)
-                lb_batch.append(cur_lb)
-            print('\r' + ' ' * 20 + '\r', idx + 1, '/', len(tw_batches), 'groups, with totally',
-                  sum([len(t) for t in tw_batches[:idx + 1]]), 'tws processed', end='', flush=True)
-        print()
-        """evaluate the procedure"""
-        lb = fu.merge_list(lb_batches)
-        non_event_ids = [max(lb)]
-        evolution = pd.DataFrame(columns=range(K))
-        for batch_id in range(len(z_batch)):
-            df = ClusterService.cluster_label_prediction_table(lb_batch[batch_id], z_batch[batch_id],
-                                                               lbl_range=range(max(lb) + 1), pred_range=range(K))
-            evolution.loc[batch_id, range(K)] = [df.columns[np.argmax(df.values[i])] if max(df.values[i]) > 0
-                and df.columns[np.argmax(df.values[i])] not in non_event_ids else '' for i in range(len(df.values))]
-            evolution.loc[batch_id, ' '] = ' '
-            for event_id, event_cnt in dict(Counter(lb_batch[batch_id])).items():
-                if event_id not in non_event_ids:
-                    evolution.loc[batch_id, 'e' + str(event_id)] = event_cnt
-        for batch_id in range(len(z_batch)):
-            for event_id, event_cnt in dict(Counter(lb_batch[batch_id])).items():
-                if event_id in non_event_ids:
-                    evolution.loc[batch_id, 'e' + str(event_id)] = event_cnt
-        
-        evolution_ = evolution.loc[:, range(K)]
-        detected = sorted(set(fu.merge_list(evolution_.values.tolist())).difference({''}))
-        detected = [int(d) for d in detected]
-        num_detected = len(detected)
-        totalevent = sorted(set(lb).difference(set(non_event_ids)))
-        num_total = len(totalevent)
-        
-        evolution.loc[' '] = ' '
-        evolution.loc['info', evolution.columns[0]] = 'K={}, batch_size={}, batch_num={}, hold_batch={}, ' \
-                                                      'total tweet num={}'.\
-            format(K, round(np.mean([len(tw) for tw in tw_batches]), 2), len(tw_batches),
-                   hold_batch_num, len(fu.merge_list(tw_batches)))
-        evolution.loc['detected', evolution.columns[0]] = detected
-        evolution.loc['totalevent', evolution.columns[0]] = totalevent
-        evolution.loc['recall', evolution.columns[0]] = str(num_detected) + '/' + str(num_total) + \
-                                                        '=' + str(num_detected / num_total)
-        evolution.to_csv('table.csv')
+    # @staticmethod
+    # def batch_cluster_with_label(twarr, label):
+    #     from clustering.gsdmm import GSDMM
+    #     GSDMM.input_twarr_with_label(twarr, label)
+    #     # print('batch num', len(tw_batches), 'average batch size', np.mean([len(tw) for tw in tw_batches]))
+    #     # K = 40
+    #     # hold_batch_num = 5
+    #     # s = SemanticStreamClusterer(hold_batch_num=hold_batch_num)
+    #     # s.set_hyperparams(alpha=0.05, etap=0.1, etac=0.1, etav=0.05, etah=0.1, K=K)
+    #     # z_batch, lb_batch = list(), list()
+    #     # """stream & online clustering"""
+    #     # for idx, tw_batch in enumerate(tw_batches):
+    #     #     cur_z, new_z, cur_lb = s.input_batch_with_label(tw_batches[idx], lb_batches[idx])
+    #     #     if cur_z and new_z:
+    #     #         z_batch.append(cur_z)
+    #     #         lb_batch.append(cur_lb)
+    #     #     print('\r' + ' ' * 20 + '\r', idx + 1, '/', len(tw_batches), 'groups, with totally',
+    #     #           sum([len(t) for t in tw_batches[:idx + 1]]), 'tws processed', end='', flush=True)
+    #     # print()
+    #     # """evaluate the procedure"""
+    #     # lb = fu.merge_list(lb_batches)
+    #     # non_event_ids = [max(lb)]
+    #     # evolution = pd.DataFrame(columns=range(K))
+    #     # for batch_id in range(len(z_batch)):
+    #     #     df = ClusterService.cluster_label_prediction_table(lb_batch[batch_id], z_batch[batch_id],
+    #     #                                                        lbl_range=range(max(lb) + 1), pred_range=range(K))
+    #     #     evolution.loc[batch_id, range(K)] = [df.columns[np.argmax(df.values[i])] if max(df.values[i]) > 0
+    #     #         and df.columns[np.argmax(df.values[i])] not in non_event_ids else '' for i in range(len(df.values))]
+    #     #     evolution.loc[batch_id, ' '] = ' '
+    #     #     for event_id, event_cnt in dict(Counter(lb_batch[batch_id])).items():
+    #     #         if event_id not in non_event_ids:
+    #     #             evolution.loc[batch_id, 'e' + str(event_id)] = event_cnt
+    #     # for batch_id in range(len(z_batch)):
+    #     #     for event_id, event_cnt in dict(Counter(lb_batch[batch_id])).items():
+    #     #         if event_id in non_event_ids:
+    #     #             evolution.loc[batch_id, 'e' + str(event_id)] = event_cnt
+    #     #
+    #     # evolution_ = evolution.loc[:, range(K)]
+    #     # detected = sorted(set(fu.merge_list(evolution_.values.tolist())).difference({''}))
+    #     # detected = [int(d) for d in detected]
+    #     # num_detected = len(detected)
+    #     # totalevent = sorted(set(lb).difference(set(non_event_ids)))
+    #     # num_total = len(totalevent)
+    #     #
+    #     # evolution.loc[' '] = ' '
+    #     # evolution.loc['info', evolution.columns[0]] = 'K={}, batch_size={}, batch_num={}, hold_batch={}, ' \
+    #     #                                               'total tweet num={}'.\
+    #     #     format(K, round(np.mean([len(tw) for tw in tw_batches]), 2), len(tw_batches),
+    #     #            hold_batch_num, len(fu.merge_list(tw_batches)))
+    #     # evolution.loc['detected', evolution.columns[0]] = detected
+    #     # evolution.loc['totalevent', evolution.columns[0]] = totalevent
+    #     # evolution.loc['recall', evolution.columns[0]] = str(num_detected) + '/' + str(num_total) + \
+    #     #                                                 '=' + str(num_detected / num_total)
+    #     # evolution.to_csv('table.csv')
+    
+    # @staticmethod
+    # def analyze_batch():
+    #     z_iter = fu.load_array('z_static_iter.txt')
+    #     l_iter = fu.load_array('lb_static_iter.txt')
     
     @staticmethod
-    def analyze_batch():
-        pass
-    
-    def GSDPMM_Stream_Clusterer_with_label(self, tw_batches, lb_batches):
-        # from clustering.gsdpmm_semantic_stream_static import GSDPMMSemanticStreamStatic
+    def stream_cluster_with_label(tw_batches, lb_batches):
         # g = GSDPMMSemanticStreamStatic(hold_batch_num=4)
         # g = GSDPMMSemanticStreamClusterer(hold_batch_num=4)
-        # g.set_hyperparams(15, 0.1, 0.1, 0.1, 0.1)
-        from clustering.gsdpmm_stream import GSDPMMStreamClusterer
-        g = GSDPMMStreamClusterer(hold_batch_num=4)
+        # g.set_hyperparams(900, 0.1, 0.1, 0.1, 0.1)
         
-        z_evo, l_evo = list(), list()
+        g = GSDPMMStreamClusterer(hold_batch_num=4)
+        g.set_hyperparams(100, 0.05)
+        
+        # g = SemanticStreamClusterer(hold_batch_num=4)
+        # g.set_hyperparams(1, 0.05, 0.05, 0.05, 0.05, 80)
+        
+        z_evo, l_evo, s_evo = list(), list(), list()
         for pred_cluid in range(len(tw_batches)):
             print('\r{}\r{}/{} groups, {} tws processed'.format(' ' * 30, pred_cluid + 1, len(tw_batches),
                   sum([len(t) for t in tw_batches[:pred_cluid + 1]])), end='', flush=True)
             z, label = g.input_batch_with_label(tw_batches[pred_cluid], lb_batches[pred_cluid])
-            if not z: continue
-            if not len(label) == len(z): raise ValueError('length inconsistent')
-            z_evo.append(z)
-            l_evo.append(label)
-        fu.dump_array('z_evolution.txt', z_evo)
-        fu.dump_array('lb_evolution.txt', l_evo)
+            if not z:
+                continue
+            if not len(label) == len(z):
+                raise ValueError('length inconsistent')
+            z_evo.append([int(i) for i in z])
+            l_evo.append([int(i) for i in label])
+            s = g.clusters_similarity()
+            s_evo.append(s)
+            # print('differ:', set(s.keys()).difference(set(z)))
+        fu.dump_array('evolution.txt', [z_evo, l_evo, s_evo])
+        print(g.get_hyperparams_info())
+        return z_evo, l_evo, s_evo
     
     @staticmethod
-    def analyze_stream():
+    def analyze_stream(z_evo=None, l_evo=None, s_evo=None, rep_score=0.7):
         """ evaluate the clustering results """
-        z_evo = fu.load_array('z_evolution.txt')
-        l_evo = fu.load_array('lb_evolution.txt')
+        if not z_evo or not l_evo or not s_evo:
+            z_evo, l_evo, s_evo = fu.load_array('evolution.txt')
         
         history_z = set([z for z in fu.merge_list(z_evo)])
         print('\nhistory_z {}, effective cluster number {}'.format(sorted(history_z), len(history_z)))
         
         all_labels = fu.merge_list(l_evo)
+        ne_cluid = int(max(all_labels))
+        evo = pd.DataFrame(dtype=int)
+        for batch_id in range(len(z_evo)):
+            # s_batch is the similarity of every predicted cluster in an iteration
+            z_batch, lb_batch, s_batch = z_evo[batch_id], l_evo[batch_id], s_evo[batch_id]
+            for k in list(s_batch.keys()):
+                s_batch[int(k)] = s_batch[k]
+                s_batch.pop(k)
+            df = ClusterService.cluster_prediction_table([int(i) for i in lb_batch], [int(i) for i in z_batch])
+            for pred_cluid, row in df.iterrows():
+                row_max_idx, row_sum = np.argmax(row.values), sum(row.values)
+                rep_cluid = int(row.index[row_max_idx])
+                rep_twnum = int(row[rep_cluid])
+                similarity = round(s_batch[pred_cluid], 3)
+                if row.loc[rep_cluid] == 0 or row.loc[rep_cluid] < row_sum * rep_score or rep_cluid == ne_cluid:
+                    evo.loc[batch_id, pred_cluid] = '{: <4},{:0<5},{}'.format(ne_cluid, similarity, rep_twnum)
+                else:
+                    evo.loc[batch_id, pred_cluid] = '{: <4},{:0<3},{}'.format(rep_cluid, similarity, rep_twnum)
+        
+        evo.fillna('', inplace=True)
+        real_event_ids = fu.merge_list(l_evo)
+        real_event_num = Counter(real_event_ids)
+        detected_event_ids = [int(item.split(',')[0]) for item in fu.merge_list(evo.values.tolist())
+                              if item != '' and int(item.split(',')[0]) != ne_cluid]
+        detected_event_num = Counter(detected_event_ids)
+        detected_event_id = [d for d in sorted(set(detected_event_ids))]
+        num_detected = len(detected_event_id)
+        event_id_corpus = sorted(set(all_labels).difference({ne_cluid}))
+        num_corpus = len(event_id_corpus)
+        
+        first_col = evo.columns[0]
+        evo.loc['eventdistrb', first_col] = '  '.join(['{}:{}'.format(eventid, detected_event_num[eventid])
+                                                             for eventid in sorted(detected_event_num.keys())])
+        evo.loc['realdistrb', first_col] = '  '.join(['{}:{}'.format(eventid, real_event_num[eventid])
+                                                            for eventid in sorted(real_event_num.keys())])
+        evo.loc['detectedid', first_col] = str(detected_event_id)
+        evo.loc['totalevent', first_col] = str(event_id_corpus)
+        evo.loc['recall', first_col] = '{}/{}={}'.format(num_detected, num_corpus, num_detected / num_corpus)
+        evo.fillna('', inplace=True)
+        evo.to_csv('table.csv')
+        print(detected_event_id, num_detected / num_corpus)
+    
+    @staticmethod
+    def grid_stream_cluster_with_label_multi(tw_batches, lb_batches):
+        print('batch num:{}, batch size:{}'.format(len(tw_batches), len(tw_batches[0])))
+        
+        a_range = [i for i in range(1, 10, 5)] + [i*10 for i in range(1, 10, 3)] + [i*100 for i in range(1, 10, 2)]
+        b_range = [i/1000 for i in range(1, 10, 2)] + [i/100 for i in range(1, 10, 2)]
+        params = [(a, b) for a in a_range for b in b_range]
+        res_list = ClusterService.clustering_multi(EventExtractor.stream_cluster_with_label_multi,
+                       [(tw_batches, lb_batches, GSDPMMStreamClusterer(4), p) for p in params])
+        
+        # a_range = [1, 0.1]
+        # k_range = [30, 50]
+        # p_range = c_range = v_range = h_range = [0.01, 0.1, 1]
+        # params = [(a, p, c, v, h, k) for a in a_range for p in p_range
+        #           for c in c_range for v in v_range for h in h_range for k in k_range]
+        # res_list = ClusterService.clustering_multi(EventExtractor.stream_cluster_with_label_multi,
+        #                 [(tw_batches, lb_batches, SemanticStreamClusterer(4), *p) for p in params])
+        
+        for idx, res in enumerate(sorted(res_list, key=lambda x: x[-1], reverse=True)):
+            print(res[2:5])
+    
+    @staticmethod
+    def stream_cluster_with_label_multi(tw_batches, lb_batches, clusterer, params):
+        clusterer.set_hyperparams(*params)
+        
+        z_evo, l_evo = list(), list()
+        for pred_cluid in range(len(tw_batches)):
+            z, label = clusterer.input_batch_with_label(tw_batches[pred_cluid], lb_batches[pred_cluid])
+            if not z:
+                continue
+            if not len(label) == len(z):
+                raise ValueError('length inconsistent')
+            z_evo.append([int(i) for i in z])
+            l_evo.append([int(i) for i in label])
+        
+        """ evaluation """
+        all_labels = fu.merge_list(l_evo)
+        rep_score = 0.7
         non_event_label = int(max(all_labels))
         evolution = pd.DataFrame(dtype=int)
         for batch_id in range(len(z_evo)):
             z_batch, lb_batch = z_evo[batch_id], l_evo[batch_id]
-            df = ClusterService.cluster_label_prediction_table([int(item) for item in lb_batch],
-                                                               [int(item) for item in z_batch])
+            df = ClusterService.cluster_prediction_table([int(item) for item in lb_batch],
+                                                         [int(item) for item in z_batch])
             for pred_cluid, row in df.iterrows():
                 row_max_idx, row_sum = np.argmax(row.values), sum(row.values)
                 max_cluid = int(row.index[row_max_idx])
-                if row[max_cluid] == 0 or (row[max_cluid] * 1.6) < row_sum or max_cluid == non_event_label:
+                if row[max_cluid] == 0 or row[max_cluid] < row_sum * rep_score or max_cluid == non_event_label:
                     evolution.loc[batch_id, pred_cluid] = non_event_label
                 else:
                     evolution.loc[batch_id, pred_cluid] = max_cluid
         
         evolution.fillna(non_event_label, inplace=True)
-        real_event_ids = fu.merge_list(l_evo)
-        real_event_num = Counter(real_event_ids)
+        real_event_num = Counter(all_labels)
         detected_event_ids = [int(item) for item in fu.merge_list(evolution.values.tolist())
                               if item != non_event_label]
         detected_event_num = Counter(detected_event_ids)
@@ -367,14 +458,16 @@ class EventExtractor:
         event_id_corpus = sorted(set(all_labels).difference({non_event_label}))
         num_corpus = len(event_id_corpus)
         
-        first_col = evolution.columns[0]
-        evolution.loc['eventdistrb', first_col] = '  '.join(['{}:{}'.format(eventid, detected_event_num[eventid])
-                                                             for eventid in sorted(detected_event_num.keys())])
-        evolution.loc['realdistrb', first_col] = '  '.join(['{}:{}'.format(eventid, real_event_num[eventid])
-                                                            for eventid in sorted(real_event_num.keys())])
-        evolution.loc['detectedid', first_col] = str(detected_event_id)
-        evolution.loc['totalevent', first_col] = str(event_id_corpus)
-        evolution.loc['recall', first_col] = '{}/{}={}'.format(num_detected, num_corpus, num_detected / num_corpus)
-        evolution.fillna('', inplace=True)
-        evolution.to_csv('table.csv')
-        print(detected_event_id, num_detected / num_corpus)
+        # first_col = evolution.columns[0]
+        # evolution.loc['eventdistrb', first_col] = '  '.join(
+        #     ['{}:{}'.format(eventid, detected_event_num[eventid])
+        #      for eventid in sorted(detected_event_num.keys())])
+        # evolution.loc['realdistrb', first_col] = '  '.join(['{}:{}'.format(eventid, real_event_num[eventid])
+        #                                                     for eventid in sorted(real_event_num.keys())])
+        # evolution.loc['detectedid', first_col] = str(detected_event_id)
+        # evolution.loc['totalevent', first_col] = str(event_id_corpus)
+        # evolution.loc['recall', first_col] = '{}/{}={}'.format(num_detected, num_corpus, num_detected / num_corpus)
+        # evolution.fillna('', inplace=True)
+        
+        info = clusterer.get_hyperparams_info()
+        return z_evo, l_evo, info, num_detected / num_corpus

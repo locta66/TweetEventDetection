@@ -220,7 +220,7 @@ class NerServicePool:
             output = dae.get_text_arr()
             res.extend(output)
         return res
-    
+
 
 def ner_service_daemon(inq, outq):
     ner_service = NerServiceProxy()

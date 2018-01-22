@@ -21,17 +21,19 @@ class SemanticClusterer:
     key_verb = 'verb'
     key_ht = 'ht'
     
-    def __init__(self, twarr=None):
-        self.twarr = self.prop_n_dict = self.comm_n_dict = self.verb_dict = self.ht_dict = self.pos_tag2dict_map = None
-        if twarr:
-            self.preprocess_twarr(twarr)
+    def __init__(self):
+        self.twarr = None
+        self.word_dicts = (self.prop_n_dict, self.comm_n_dict, self.verb_dict, self.ht_dict) = \
+            (IdFreqDict(), IdFreqDict(), IdFreqDict(), IdFreqDict())
     
     def preprocess_twarr(self, twarr):
         """pre-process the tweet text, including dropping non-common terms"""
         key_tokens = tk.key_wordlabels
         self.twarr = twarr
-        self.prop_n_dict, self.comm_n_dict, self.verb_dict, self.ht_dict = \
-            IdFreqDict(), IdFreqDict(), IdFreqDict(), IdFreqDict()
+        for word_dict in self.word_dicts:
+            word_dict.clear()
+        # self.prop_n_dict, self.comm_n_dict, self.verb_dict, self.ht_dict = \
+        #     IdFreqDict(), IdFreqDict(), IdFreqDict(), IdFreqDict()
         pos_tag2dict_map = dict([(tag, self.prop_n_dict) for tag in self.prop_n_tags] +
                                 [(tag, self.comm_n_dict) for tag in self.comm_n_tags] +
                                 [(tag, self.verb_dict) for tag in self.verb_tags] +

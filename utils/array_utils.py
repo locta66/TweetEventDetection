@@ -1,11 +1,9 @@
 import numpy as np
-from collections import Counter
 from sklearn import metrics
 
 
 def random_array_items(array, item_num, keep_order=True):
-    """
-    Get random items from array.
+    """ Get random items from array.
     :param array: From which items are extracted.
     :param item_num: Number of items to be extracted.
     :param keep_order: If remains the relative order within array in the result.
@@ -13,9 +11,9 @@ def random_array_items(array, item_num, keep_order=True):
     """
     array_len = len(array)
     item_num = array_len if item_num >= array_len else item_num
-    indexes = np.random.choice(array_len, item_num, replace=False)
-    indexes = sorted(indexes) if keep_order else indexes
-    return [array[i] for i in indexes]
+    item_index = np.random.choice(array_len, item_num, replace=False)
+    item_index = sorted(item_index) if keep_order else item_index
+    return [array[i] for i in item_index]
 
 
 def array_partition(array, partition_arr=(1, 1, 1), random=True, ordered=False):
@@ -37,14 +35,10 @@ def index_partition(array, partition_arr=(1, 1, 1), random=True, ordered=False):
     return [indexes[sum_idx[i]: sum_idx[i + 1]] for i in range(len(partition_arr))]
 
 
-def shuffle(array, new_arr=False):
-    array = array[:] if new_arr else array
+def shuffle(array, inplace=True):
+    array = array if inplace else array[:]
     np.random.shuffle(array)
     return array
-
-
-def roc_auc(labels_true, scores):
-    return metrics.roc_auc_score(labels_true, scores)
 
 
 def score(labels_true, labels_pred, score_type):
@@ -71,3 +65,12 @@ def group_array_by_condition(array, item_key):
 
 def sample_index_by_array_value(array):
     return np.random.choice(a=[i for i in range(len(array))], p=np.array(array) / np.sum(array))
+
+
+def cosine_similarity(x, y):
+    return metrics.pairwise.cosine_similarity(x, y)
+
+
+if __name__ == '__main__':
+    print(cosine_similarity(np.array([1, 2, 5, 4]).reshape((1, -1)), [[1, 2, 3, 4.1], [5, 1.2, 5, 1.2]]))
+

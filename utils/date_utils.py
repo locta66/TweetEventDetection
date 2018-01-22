@@ -10,6 +10,10 @@ month_dict = {'Jan': '1', 'Feb': '2', 'Mar': '3', 'Apr': '4', 'May': '5', 'Jun':
 
 
 def parse_created_at(created_at_str):
+    """
+    :param created_at_str:
+    :return:  array of string, indicating the time components
+    """
     time_split = created_at_str.strip().split(' ')
     year = time_split[5]
     month_of_year = month_dict[time_split[1]]
@@ -23,12 +27,12 @@ def timestamp_of_string(time_str):
     try:
         d = datetime.datetime.strptime(time_str, "%Y-%m-%d %H:%M:%S")
         return int(time.mktime(d.timetuple()))
-    except Exception:
+    except:
         try:
             d = datetime.datetime.strptime(time_str, "%Y-%m-%d")
             return int(time.mktime(d.timetuple()))
-        except Exception:
-            raise ValueError('Incorrect format')
+        except:
+            raise ValueError('Incorrect format: {}'.format(time_str))
 
 
 def get_timestamp_form_created_at(created_at_str):

@@ -78,3 +78,6 @@ class SeedQuery:
             if re.search(w3, text, re.IGNORECASE):
                 return True
         return False
+    
+    def to_string(self):
+        return '_'.join([self.all[0].strip('\W'), self.any[0].strip('\W'), '-'.join(self.since), '-'.join(self.until)])

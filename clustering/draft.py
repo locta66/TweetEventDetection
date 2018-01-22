@@ -166,5 +166,22 @@ import pstats
 p = pstats.Stats("res")
 p.strip_dirs( ).sort_stats("cumulative").print_stats(50)
 
+def b(f,g):
+    print(f,g)
 
+def a(p):
+    b(*p)
+
+a([1,2])
+
+
+串联
+内容 功能 效果 可视化
+
+
+
+import spacy
+nlp = spacy.load('en_core_web_lg')
+doc = nlp('Large parts of this manual originate from Travis E. Oliphant’s book Guide to NumPy (which generously entered Public Domain in August 2008). The reference documentation for many of the functions are written by numerous contributors and developers of NumPy, both prior to and during the NumPy Documentation Marathon.')
+print([(t.text, t.ent_type_, t.tag_) for t in doc])
 

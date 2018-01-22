@@ -9,6 +9,41 @@ import utils.tweet_utils as tu
 import utils.tweet_keys as tk
 from config.configure import getcfg
 from seeding.event_trainer import EventTrainer
+from seeding.seed_query import SeedQuery
+
+
+def parse_query_list(from_path, into_path, query_list, n_process=20):
+    from_path = fi.add_sep_if_needed(from_path)
+    into_path = fi.add_sep_if_needed(into_path)
+    all_sub_files = [file for file in fi.listchildren(from_path, children_type=fi.TYPE_FILE, pattern='.sum$')]
+    for query in query_list:
+        query = SeedQuery(*query)
+        query_sub_files = [(from_path + file) for file in all_sub_files
+                           if query.is_time_desired(tw_ymd=query.time_of_tweet(file, source='filename'))]
+        print('{} files from {} to {}'.format(len(query_sub_files),
+                                              query_sub_files[0][query_sub_files[0].rfind('/')+1:],
+                                              query_sub_files[-1][query_sub_files[-1].rfind('/')+1:], ))
+        file_blocks = fu.split_multi_format(query_sub_files, n_process)
+        res_list = fu.multi_process(query_from_files, args_list=[(block, query) for block in file_blocks])
+        twarr = fu.merge_list(res_list)
+        print('len(res_list)', len(res_list), 'len(twarr)', len(twarr))
+        twarr = remove_similar_tws(twarr)
+        print('post filter len(twarr)', len(twarr))
+        for tw in twarr:
+            print(tw[tk.key_origintext], '\n---\n')
+        # file_name = query.to_string() + '.txt'
+        # print('file_name', file_name, '\n')
+        # fu.dump_array(into_path + file_name, twarr)
+
+
+def query_from_files(files, query):
+    res_twarr = []
+    for file in files:
+        twarr = fu.load_array(file)
+        for tw in twarr:
+            if query.is_text_desired(tw.get(tk.key_text)):
+                res_twarr.append(tw)
+    return res_twarr
 
 
 query_process_num = 16
@@ -34,13 +69,13 @@ def exec_query(data_path, parser):
     print('Queried', len(parser.added_twarr), 'tweets,')
     remove_similar_tws(parser.added_twarr)
     print(len(parser.added_twarr), 'accepted.\n')
-    # for tw in parser.added_twarr:
-    #     print(tw[TweetKeys.key_origintext], '\n---\n')
+    for tw in parser.added_twarr:
+        print(tw[tk.key_origintext], '\n---\n')
     # file_name = parser.get_query_result_file_name()
-    file_name = '/home/nfs/cdong/tw/testdata/yying/queried/NaturalDisaster.sum'
-    fu.dump_array(file_name, parser.added_twarr)
-    print(file_name, 'written.\n')
-    exec_ner(file_name)
+    # file_name = '/home/nfs/cdong/tw/testdata/yying/queried/NaturalDisaster.sum'
+    # fu.dump_array(file_name, parser.added_twarr)
+    # print(file_name, 'written.\n')
+    # exec_ner(file_name)
 
 
 @fu.sync_real_time_counter('unlabelled')

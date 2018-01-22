@@ -2,6 +2,7 @@ import math
 
 import utils.function_utils as fu
 import utils.pattern_utils as pu
+import utils.tweet_utils as tu
 
 import numpy as np
 import pandas as pd
@@ -13,24 +14,18 @@ class ClusterService:
         return pu.is_valid_keyword(word)
     
     @staticmethod
-    def cluster_label_prediction_table(tw_clu_real, tw_clu_pred, lbl_range=None, pred_range=None):
+    def cluster_prediction_table(tw_clu_real, tw_clu_pred, lbl_range=None, pred_range=None):
         """ the rows are predicted cluster id, and the columns are ground truth labels """
-        cluster_table = pd.DataFrame(index=set(tw_clu_pred) if pred_range is None else pred_range,
-                                     columns=set(tw_clu_real) if lbl_range is None else lbl_range,
+        cluster_table = pd.DataFrame(index=sorted(set(tw_clu_pred)) if pred_range is None else pred_range,
+                                     columns=sorted(set(tw_clu_real)) if lbl_range is None else lbl_range,
                                      data=0, dtype=int)
         for i in range(len(tw_clu_real)):
-            row = tw_clu_pred[i]
-            col = tw_clu_real[i]
-            cluster_table.loc[row, col] += 1
+            cluster_table.loc[tw_clu_pred[i], tw_clu_real[i]] += 1
         return cluster_table
-    
-    # @staticmethod
-    # def print_cluster_prediction_table(tw_cluster_label, tw_cluster_pred):
-    #     print(ClusterService.cluster_label_prediction_table(tw_cluster_label, tw_cluster_pred))
     
     @staticmethod
     def event_table_recall(tw_cluster_label, tw_cluster_pred, event_cluster_label=None):
-        cluster_table = ClusterService.cluster_label_prediction_table(tw_cluster_label, tw_cluster_pred)
+        cluster_table = ClusterService.cluster_prediction_table(tw_cluster_label, tw_cluster_pred)
         if event_cluster_label is not None:
             predict_cluster = set([maxid for maxid in np.argmax(cluster_table.values, axis=1)
                                    if maxid in event_cluster_label])
@@ -45,13 +40,23 @@ class ClusterService:
         return cluster_table, recall, predict_cluster, ground_cluster
     
     @staticmethod
-    def create_clusters_with_labels(twarr, tw_cluster_label):
-        if not len(twarr) == len(tw_cluster_label):
+    def create_clusters_with_labels(twarr, label):
+        label = [int(i) for i in label]
+        if not len(twarr) == len(label):
             raise ValueError('Wrong cluster labels for twarr')
-        tw_topic_arr = [[] for _ in range(max(tw_cluster_label) + 1)]
-        for d in range(len(tw_cluster_label)):
-            tw_topic_arr[tw_cluster_label[d]].append(twarr[d])
-        return tw_topic_arr
+        tw_topic_dict = {}
+        for idx in range(len(twarr)):
+            tw, lb = twarr[idx], label[idx]
+            if lb not in tw_topic_dict:
+                tw_topic_dict[lb] = [tw]
+            else:
+                tw_topic_dict[lb].append(tw)
+        return tw_topic_dict
+    
+    @staticmethod
+    def clusters_similarity(twarr, label):
+        topic_dict = ClusterService.create_clusters_with_labels(twarr, label)
+        return dict([(int(cluid), float(tu.twarr_similarity(_twarr))) for cluid, _twarr in topic_dict.items()])
     
     @staticmethod
     def clustering_multi(func, params, process_num=16):

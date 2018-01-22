@@ -47,15 +47,17 @@ def exec_cluster(parser):
     # tw_topic_arr, cluster_pred = ee.GSDPMM_twarr_with_label(twarr, label)
     # tw_topic_arr, cluster_pred = ee.GSDMM_twarr_hashtag_with_label(twarr, label)
     
-    ee = EventExtractor(parser.get_dict_file_name(), parser.get_param_file_name())
-    tw_batches, lb_batches = create_batches_through_time(batch_size=600)
-    ee.GSDPMM_Stream_Clusterer_with_label(tw_batches, lb_batches)
-    ee.analyze_stream()
+    tw_batches, lb_batches = create_batches_through_time(batch_size=1000)
+    z_evo, l_evo, s_evo = EventExtractor.stream_cluster_with_label(tw_batches, lb_batches)
+    EventExtractor.analyze_stream(z_evo, l_evo, s_evo)
+    # EventExtractor.grid_stream_cluster_with_label_multi(tw_batches, lb_batches)
+    
+    # twarr, label = load_clusters_and_labels()
+    # EventExtractor.batch_cluster_with_label(twarr, label)
 
 
 def exec_analyze(parser):
-    ee = EventExtractor(parser.get_dict_file_name(), parser.get_param_file_name())
-    ee.analyze_stream()
+    EventExtractor.analyze_stream()
 
 
 def exec_temp(parser):
@@ -105,17 +107,24 @@ def exec_temp(parser):
     # fu.dump_array('nonevents.txt', twarr_blocks)
 
 
-def load_clusters_and_labels():
-    event_twarr_blocks = fu.load_array('events.txt')
-    blocks = event_twarr_blocks[0:12]
-    twarr = fu.merge_list(blocks)
-    label = fu.merge_list([[i for _ in range(len(blocks[i]))] for i in range(len(blocks))])
-    return twarr, label
+# def load_clusters_and_labels():
+#     event_twarr_blocks = fu.load_array('./events2016.txt')
+#     blocks = event_twarr_blocks
+#     twarr = fu.merge_list(blocks)
+#     label = fu.merge_list([[i for _ in range(len(blocks[i]))] for i in range(len(blocks))])
+#
+#     label_distrb = Counter(label)
+#     print('Topic num:{}, total tw:{}'.format(len(label_distrb), len(twarr)))
+#     for idx, cluid in enumerate(sorted(label_distrb.keys())):
+#         print('{:<3}:{:<6}'.format(cluid, label_distrb[cluid]), end='\n' if (idx + 1) % 10 == 0 else '')
+#     print()
+#
+#     return twarr, label
 
 
 def create_batches_through_time(batch_size):
-    false_event_twarr = fu.load_array('falseevents.txt')
-    event_blocks = fu.load_array('events.txt')
+    false_event_twarr = fu.load_array('./data/falseevents.txt')
+    event_blocks = fu.load_array('./data/events.txt')
     event_blocks.append(false_event_twarr)
     
     twarr = fu.merge_list(event_blocks)
@@ -124,7 +133,7 @@ def create_batches_through_time(batch_size):
     label_distrb = Counter(label)
     print('Topic num:{}, total tw:{}'.format(len(label_distrb), len(twarr)))
     for idx, cluid in enumerate(sorted(label_distrb.keys())):
-        print('{:<2}:{:<6}'.format(cluid, label_distrb[cluid]), end='\n' if (idx + 1) % 7 == 0 else ' ')
+        print('{:<3}:{:<6}'.format(cluid, label_distrb[cluid]), end='\n' if (idx + 1) % 10 == 0 else '')
     print()
     
     idx_time_order = tu.rearrange_idx_by_time(twarr)
@@ -171,10 +180,12 @@ def create_batches_through_time(batch_size):
 
 if __name__ == '__main__':
     files = ['events2012.txt', ]
+    tu.start_ner_service(16)
     for file in files:
         blocks = fu.load_array(file)
         for _twarr in blocks:
-            ark.twarr_ark(_twarr) if tk.key_ark not in _twarr[0] else None
-        print(sorted([('id' + str(idx), len(twarr)) for idx, twarr in enumerate(blocks)], key=lambda x: x[1]))
+            # ark.twarr_ark(_twarr) if tk.key_ark not in _twarr[0] else None
+            tu.twarr_ner(_twarr) if tk.key_wordlabels not in _twarr[0] else None
+        print(sorted([('id' + str(idx), len(_twarr)) for idx, _twarr in enumerate(blocks)], key=lambda x: x[1]))
         print('file:{}'.format(file))
         fu.dump_array(file, blocks)

@@ -18,47 +18,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/preprocess/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="11" column="54" lean-forward="true" selection-start-line="11" selection-start-column="54" selection-end-line="11" selection-end-column="54" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main2clusterer.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/clustering/main2clusterer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="137" column="4" lean-forward="true" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="4" />
-              <folding>
-                <element signature="e#406#447#0" expanded="false" />
-                <element signature="e#476#504#0" expanded="false" />
-                <element signature="e#562#1469#0" expanded="false" />
-                <element signature="e#1502#1545#0" expanded="false" />
-                <element signature="e#2359#4934#0" expanded="false" />
-                <element signature="e#4973#5209#0" expanded="false" />
-                <element signature="e#6017#6052#0" expanded="false" />
-                <element signature="e#6354#7403#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="event_extractor.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/clustering/event_extractor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="257" column="4" lean-forward="true" selection-start-line="257" selection-start-column="4" selection-end-line="257" selection-end-column="4" />
+            <state relative-caret-position="740">
+              <caret line="367" column="55" lean-forward="true" selection-start-line="367" selection-start-column="55" selection-end-line="367" selection-end-column="55" />
               <folding>
-                <element signature="e#564#671#0" expanded="false" />
-                <element signature="e#733#1086#0" expanded="false" />
-                <element signature="e#1142#1255#0" expanded="false" />
-                <element signature="e#1329#1450#0" expanded="false" />
-                <element signature="e#1500#1878#0" expanded="false" />
-                <element signature="e#1888#1946#0" expanded="false" />
+                <element signature="e#623#730#0" expanded="false" />
+                <element signature="e#792#1145#0" expanded="false" />
+                <element signature="e#1201#1314#0" expanded="false" />
+                <element signature="e#1388#1509#0" expanded="false" />
+                <element signature="e#1559#1937#0" expanded="false" />
+                <element signature="e#1947#2005#0" expanded="false" />
+                <element signature="e#20446#21615#0" expanded="false" />
+                <element signature="e#21011#21031#0" expanded="false" />
+                <element signature="e#21731#24603#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -67,21 +41,59 @@
       <file leaf-file-name="gsdpmm_stream.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/clustering/gsdpmm_stream.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
-              <caret line="150" column="8" lean-forward="true" selection-start-line="150" selection-start-column="8" selection-end-line="150" selection-end-column="8" />
-              <folding />
+            <state relative-caret-position="407">
+              <caret line="295" column="53" lean-forward="true" selection-start-line="295" selection-start-column="53" selection-end-line="295" selection-end-column="53" />
+              <folding>
+                <element signature="e#2206#2270#0" expanded="false" />
+                <element signature="e#6744#6808#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gsdpmm_semantic_stream_static.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/clustering/gsdpmm_semantic_stream_static.py">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/seeding/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="174" column="4" lean-forward="true" selection-start-line="174" selection-start-column="4" selection-end-line="174" selection-end-column="4" />
+            <state relative-caret-position="481">
+              <caret line="13" column="73" lean-forward="true" selection-start-line="13" selection-start-column="73" selection-end-line="13" selection-end-column="73" />
               <folding>
-                <element signature="e#7976#8268#0" expanded="false" />
+                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#8803#9090#0" expanded="false" />
+                <element signature="e#9219#11382#0" expanded="false" />
+                <element signature="e#11490#11518#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main2parser.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/seeding/main2parser.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="481">
+              <caret line="27" column="39" lean-forward="true" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+              <folding>
+                <element signature="e#3619#5328#0" expanded="false" />
+                <element signature="e#5416#6662#0" expanded="false" />
+                <element signature="e#6751#6984#0" expanded="false" />
+                <element signature="e#6987#7044#0" expanded="false" />
+                <element signature="e#7392#7563#0" expanded="false" />
+                <element signature="e#7603#8035#0" expanded="false" />
+                <element signature="e#8445#8597#0" expanded="false" />
+                <element signature="e#8670#10459#0" expanded="false" />
+                <element signature="e#10484#11451#0" expanded="false" />
+                <element signature="e#11527#13838#0" expanded="false" />
+                <element signature="e#13880#15221#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="seed_parser.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/seeding/seed_parser.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="518">
+              <caret line="17" column="4" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -97,8 +109,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>beq</find>
-      <find>BEQ R5, R0,</find>
       <find>J #324</find>
       <find>cli</find>
       <find>ccc</find>
@@ -127,6 +137,8 @@
       <find>_dict_</find>
       <find>_dict</find>
       <find>collection</find>
+      <find>get_text_arr</find>
+      <find>query_list</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -138,57 +150,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/clustering/gsdpmm_stream_clusterer_first.py" />
-        <option value="$PROJECT_DIR$/clustering/gsdmm_hashtag.py" />
-        <option value="$PROJECT_DIR$/clustering/gsdmm_semantic_stream.py" />
-        <option value="$PROJECT_DIR$/_RECONSTRUCT/main.py" />
-        <option value="$PROJECT_DIR$/_RECONSTRUCT/summarization.py" />
         <option value="$PROJECT_DIR$/../../LDA/src/utils/pattern_utils.py" />
         <option value="$PROJECT_DIR$/_RECONSTRUCT/tweet_filter.py" />
-        <option value="$PROJECT_DIR$/utils/ner_service_proxy.py" />
         <option value="$PROJECT_DIR$/_RECONSTRUCT/__init__.py" />
         <option value="$PROJECT_DIR$/clustering/__init__.py" />
         <option value="$PROJECT_DIR$/seeding/event_classifier.py" />
         <option value="$PROJECT_DIR$/clustering/lecm.py" />
         <option value="$PROJECT_DIR$/seeding/draft.py" />
-        <option value="$PROJECT_DIR$/clustering/draft.py" />
-        <option value="$PROJECT_DIR$/clustering/gsdmm_semantic.py" />
-        <option value="$PROJECT_DIR$/seeding/seed_query.py" />
         <option value="$PROJECT_DIR$/preprocess/pattern.py" />
-        <option value="$PROJECT_DIR$/seeding/main.py" />
         <option value="$PROJECT_DIR$/utils/__init__.py" />
         <option value="$PROJECT_DIR$/seeding/__init__.py" />
-        <option value="$PROJECT_DIR$/utils/tweet_utils.py" />
-        <option value="$PROJECT_DIR$/clustering/gsdmm.py" />
         <option value="$PROJECT_DIR$/seeding/word_freq_counter.py" />
-        <option value="$PROJECT_DIR$/utils/array_utils.py" />
         <option value="$PROJECT_DIR$/utils/synset.py" />
-        <option value="$PROJECT_DIR$/utils/tweet_keys.py" />
         <option value="$PROJECT_DIR$/seeding/seed_parser.py" />
         <option value="$PROJECT_DIR$/clustering/main.py" />
-        <option value="$PROJECT_DIR$/seeding/main2parser.py" />
         <option value="$PROJECT_DIR$/seeding/event_trainer.py" />
         <option value="$PROJECT_DIR$/clustering/gsdpmm_semantic_stream.py" />
-        <option value="$PROJECT_DIR$/utils/ark_service_proxy.py" />
-        <option value="$PROJECT_DIR$/clustering/cluster_service.py" />
         <option value="E:/ONEDRIVE/文档/Postgraduate/研一上/推特项目/进度周报/20180111 进度总结.txt" />
         <option value="E:/ONEDRIVE/文档/Postgraduate/研一上/推特项目/进度周报/完成进度总结.txt" />
         <option value="$PROJECT_DIR$/config/configure.py" />
         <option value="$PROJECT_DIR$/config/conf.ini" />
         <option value="$PROJECT_DIR$/utils/id_freq_dict.py" />
         <option value="$PROJECT_DIR$/config/dict_loader.py" />
-        <option value="$PROJECT_DIR$/clustering/event_extractor.py" />
-        <option value="$PROJECT_DIR$/clustering/gsdpmm_semantic_stream_static.py" />
-        <option value="$PROJECT_DIR$/clustering/gsdpmm_stream.py" />
         <option value="$PROJECT_DIR$/summary_list.py" />
-        <option value="$PROJECT_DIR$/utils/pattern_utils.py" />
-        <option value="$PROJECT_DIR$/preprocess/tweet_filter.py" />
-        <option value="$PROJECT_DIR$/sum.py" />
-        <option value="$PROJECT_DIR$/utils/file_iterator.py" />
         <option value="$PROJECT_DIR$/preprocess/summarization.py" />
         <option value="$PROJECT_DIR$/preprocess/main.py" />
+        <option value="$PROJECT_DIR$/utils/date_utils.py" />
+        <option value="$PROJECT_DIR$/utils/ark_service_proxy.py" />
+        <option value="$PROJECT_DIR$/clustering/gsdmm.py" />
+        <option value="$PROJECT_DIR$/clustering/gsdmm_semantic_stream.py" />
+        <option value="$PROJECT_DIR$/clustering/gsdpmm_semantic_stream_static.py" />
+        <option value="$PROJECT_DIR$/utils/pattern_utils.py" />
+        <option value="$PROJECT_DIR$/clustering/gsdmm_semantic.py" />
+        <option value="$PROJECT_DIR$/utils/tweet_keys.py" />
+        <option value="$PROJECT_DIR$/clustering/draft.py" />
         <option value="$PROJECT_DIR$/clustering/main2clusterer.py" />
+        <option value="$PROJECT_DIR$/utils/array_utils.py" />
+        <option value="$PROJECT_DIR$/clustering/cluster_service.py" />
+        <option value="$PROJECT_DIR$/clustering/event_extractor.py" />
+        <option value="$PROJECT_DIR$/utils/ner_service_proxy.py" />
+        <option value="$PROJECT_DIR$/utils/spacy_utils.py" />
+        <option value="$PROJECT_DIR$/sum.py" />
+        <option value="$PROJECT_DIR$/utils/tweet_utils.py" />
+        <option value="$PROJECT_DIR$/temp.py" />
+        <option value="E:/ONEDRIVE/文档/Postgraduate/研一上/大规模非线性规划/nbsvm.txt" />
+        <option value="$PROJECT_DIR$/utils/file_iterator.py" />
+        <option value="$PROJECT_DIR$/preprocess/tweet_filter.py" />
+        <option value="$PROJECT_DIR$/seeding/seed_query.py" />
         <option value="$PROJECT_DIR$/utils/function_utils.py" />
+        <option value="$PROJECT_DIR$/clustering/gsdpmm_stream.py" />
+        <option value="$PROJECT_DIR$/seeding/main.py" />
+        <option value="$PROJECT_DIR$/seeding/main2parser.py" />
       </list>
     </option>
   </component>
@@ -198,9 +210,10 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
     <option name="width" value="1071" />
-    <option name="height" value="1020" />
+    <option name="height" value="825" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -236,6 +249,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -267,8 +282,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -278,19 +291,19 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://E:/DOCUMENTS/ECNUpost/项目/src/clustering/SemanticClusterer.py" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\dicts" />
-      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\preprocess" />
-      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\utils" />
-      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\clustering" />
-      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\seeding" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\DOCUMENTS\ECNUpost\项目\src\clustering" />
       <recent name="E:\DOCUMENTS\ECNUpost\项目\src\config" />
       <recent name="E:\DOCUMENTS\ECNUpost\项目\src\_RECONSTRUCT" />
       <recent name="E:\DOCUMENTS\ECNUpost\项目\src\utils" />
       <recent name="E:\DOCUMENTS\ECNU post\项目\src\preprocess" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\dicts" />
+      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\preprocess" />
+      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\utils" />
+      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\clustering" />
+      <recent name="E:\DOCUMENTS\ECNUpost\项目\src\seeding" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -387,6 +400,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="PYDEVD_LOAD_VALUES_ASYNC" value="True" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/preprocess" />
@@ -537,18 +551,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1042" extended-state="7" />
+    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284091" sideWeight="0.50208336" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32864583" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="0" y="0" width="435" height="842" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17916666" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="0" y="0" width="435" height="842" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284091" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284091" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3181818" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.121875" sideWeight="0.4909091" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10208333" sideWeight="0.4909091" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284091" sideWeight="0.49791667" order="5" side_tool="false" content_ui="tabs" />
@@ -580,260 +594,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="107" />
+      <option name="time" value="112" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/clustering/gsdmm_semantic_stream.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="15" column="4" lean-forward="true" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seeding/seed_query.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="4" column="29" lean-forward="true" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/pattern.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="163" column="0" lean-forward="true" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clustering/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/ner_service_proxy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="261" column="35" lean-forward="true" selection-start-line="261" selection-start-column="35" selection-end-line="261" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/synset.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="81" lean-forward="false" selection-start-line="0" selection-start-column="72" selection-end-line="0" selection-end-column="81" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/synset.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/ChatFilter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2442">
-          <caret line="70" column="53" lean-forward="true" selection-start-line="70" selection-start-column="53" selection-end-line="70" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/tweet_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/tweet_keys.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/array_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seeding/main2parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="125" column="0" lean-forward="true" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
-          <folding>
-            <element signature="e#441#1825#0" expanded="false" />
-            <element signature="e#1919#3628#0" expanded="false" />
-            <element signature="e#3716#4962#0" expanded="false" />
-            <element signature="e#8784#9751#0" expanded="false" />
-            <marker date="1515730397821" expanded="true" signature="0:13521" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seeding/event_trainer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="740">
-          <caret line="28" column="64" lean-forward="true" selection-start-line="28" selection-start-column="64" selection-end-line="28" selection-end-column="64" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/date_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2220">
-          <caret line="62" column="4" lean-forward="true" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seeding/word_freq_counter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="7" column="22" lean-forward="true" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clustering/gsdmm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="14" column="12" lean-forward="true" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clustering/gsdpmm_semantic_stream.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1480">
-          <caret line="48" column="34" lean-forward="true" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
-          <folding>
-            <element signature="e#9616#10200#0" expanded="false" />
-            <element signature="e#10226#10518#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/1392806077/1405239563/pandas/core/dtypes/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="1865" column="20" lean-forward="true" selection-start-line="1865" selection-start-column="20" selection-end-line="1865" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/1392806077/1405239563/pandas/core/generic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="148" column="26" lean-forward="true" selection-start-line="148" selection-start-column="26" selection-end-line="148" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clustering/cluster_service.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://E:/ONEDRIVE/文档/Postgraduate/研一上/推特项目/进度周报/20180111 进度总结.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://E:/ONEDRIVE/文档/Postgraduate/研一上/推特项目/进度周报/完成进度总结.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/1392806077/201545290/multiprocessing/pool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="608" column="0" lean-forward="true" selection-start-line="608" selection-start-column="0" selection-end-line="608" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/emoticons.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="5" column="3" lean-forward="true" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/1392806077/201545290/re.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2504">
-          <caret line="277" column="4" lean-forward="false" selection-start-line="277" selection-start-column="4" selection-end-line="277" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/ark_service_proxy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="141" column="0" lean-forward="true" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/configure.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="24" column="14" lean-forward="true" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/1392806077/1405239563/pandas/core/frame.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
@@ -846,7 +611,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="2724" column="0" lean-forward="true" selection-start-line="2724" selection-start-column="0" selection-end-line="2724" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -854,17 +618,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
           <caret line="662" column="0" lean-forward="false" selection-start-line="662" selection-start-column="0" selection-end-line="662" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/dict_loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#32#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -873,7 +626,7 @@
         <state relative-caret-position="3589">
           <caret line="97" column="4" lean-forward="true" selection-start-line="97" selection-start-column="4" selection-end-line="97" selection-end-column="4" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#0#25#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -882,19 +635,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seeding/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding>
-            <element signature="e#182#3917#0" expanded="false" />
-            <element signature="e#4015#4302#0" expanded="false" />
-            <element signature="e#4406#6569#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -906,80 +646,280 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/clustering/main.py">
+    <entry file="file://$PROJECT_DIR$/utils/date_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1517">
-          <caret line="107" column="0" lean-forward="true" selection-start-line="92" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
-          <folding>
-            <element signature="e#251#4960#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/pattern_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="66" column="0" lean-forward="true" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/tweet_filter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="29" column="24" lean-forward="true" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/file_iterator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="61" column="0" lean-forward="true" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sum.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/conf.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state relative-caret-position="259">
+          <caret line="36" column="0" lean-forward="true" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/preprocess/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="11" column="54" lean-forward="true" selection-start-line="11" selection-start-column="54" selection-end-line="11" selection-end-column="54" />
+        <state relative-caret-position="259">
+          <caret line="10" column="65" lean-forward="true" selection-start-line="10" selection-start-column="65" selection-end-line="10" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/gsdmm_hashtag.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#11#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../documents/triovecevent/release/preprocess/params.py" />
+    <entry file="file://$PROJECT_DIR$/config/conf.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="21" column="60" lean-forward="true" selection-start-line="21" selection-start-column="60" selection-end-line="21" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/ark_service_proxy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="128" column="0" lean-forward="false" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../documents/triovecevent/release/preprocess/extract_noun.py" />
+    <entry file="file://$PROJECT_DIR$/clustering/gsdpmm_semantic_stream.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6254">
+          <caret line="20" column="6" lean-forward="false" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+          <folding>
+            <element signature="e#9616#10200#0" expanded="false" />
+            <element signature="e#10226#10518#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/gsdmm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-186">
+          <caret line="133" column="17" lean-forward="true" selection-start-line="133" selection-start-column="17" selection-end-line="133" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/seeding/seed_parser.py">
+    <entry file="file://$PROJECT_DIR$/clustering/gsdmm_semantic_stream.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="151" column="4" lean-forward="true" selection-start-line="151" selection-start-column="4" selection-end-line="151" selection-end-column="4" />
+          <folding>
+            <element signature="e#523#543#0" expanded="false" />
+            <element signature="e#1866#1900#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/synset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/1392806077/201545290/re.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="174" column="4" lean-forward="false" selection-start-line="174" selection-start-column="4" selection-end-line="174" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/dict_loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/gsdpmm_semantic_stream_static.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="61" column="23" lean-forward="true" selection-start-line="61" selection-start-column="23" selection-end-line="61" selection-end-column="23" />
+          <folding>
+            <element signature="e#7673#8255#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/1392806077/1405239563/spacy/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-496">
+          <caret line="99" column="4" lean-forward="false" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/1392806077/1405239563/spacy/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="18" column="19" lean-forward="false" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/1392806077/1405239563/numpy/linalg/linalg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37">
+          <caret line="2102" column="4" lean-forward="false" selection-start-line="2102" selection-start-column="4" selection-end-line="2102" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/1392806077/1405239563/sklearn/metrics/pairwise.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="885" column="0" lean-forward="true" selection-start-line="885" selection-start-column="0" selection-end-line="885" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/python_stubs/1392806077/numpy/core/multiarray.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59">
+          <caret line="115" column="4" lean-forward="false" selection-start-line="115" selection-start-column="4" selection-end-line="115" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/gsdmm_semantic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3500">
+          <caret line="114" column="8" lean-forward="true" selection-start-line="114" selection-start-column="8" selection-end-line="114" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/draft.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="153" column="25" lean-forward="true" selection-start-line="153" selection-start-column="25" selection-end-line="153" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/tweet_keys.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/pattern_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="119" column="4" lean-forward="false" selection-start-line="119" selection-start-column="4" selection-end-line="119" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/python_stubs/1392806077/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
-          <caret line="46" column="12" lean-forward="true" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="12" />
+          <caret line="4388" column="8" lean-forward="false" selection-start-line="4388" selection-start-column="8" selection-end-line="4388" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/array_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="67" column="0" lean-forward="true" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/cluster_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="54" column="4" lean-forward="true" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/main2clusterer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="51" column="54" lean-forward="true" selection-start-line="51" selection-start-column="54" selection-end-line="51" selection-end-column="54" />
+          <folding>
+            <element signature="e#406#447#0" expanded="false" />
+            <element signature="e#476#504#0" expanded="false" />
+            <element signature="e#562#1469#0" expanded="false" />
+            <element signature="e#1502#1545#0" expanded="false" />
+            <element signature="e#2457#5032#0" expanded="false" />
+            <element signature="e#5035#5068#0" expanded="false" />
+            <element signature="e#5675#8300#0" expanded="false" />
+            <element signature="e#6445#6480#0" expanded="false" />
+            <element signature="e#6782#7831#0" expanded="false" />
+            <element signature="e#8334#8826#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/ner_service_proxy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="177" column="4" lean-forward="true" selection-start-line="177" selection-start-column="4" selection-end-line="177" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sum.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="41" column="4" lean-forward="true" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="4" />
+          <folding>
+            <element signature="e#366#390#0" expanded="false" />
+            <element signature="e#2123#2141#0" expanded="false" />
+            <element signature="e#3497#3528#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/ONEDRIVE/文档/Postgraduate/研一上/大规模非线性规划/nbsvm.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="57" column="3" lean-forward="true" selection-start-line="57" selection-start-column="3" selection-end-line="57" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/temp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="517">
+          <caret line="77" column="0" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/configure.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="5" column="23" lean-forward="true" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/file_iterator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="69" column="33" lean-forward="true" selection-start-line="69" selection-start-column="33" selection-end-line="69" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/preprocess/summarization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="47" column="19" lean-forward="false" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
+        <state relative-caret-position="370">
+          <caret line="35" column="25" lean-forward="false" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
           <folding>
             <element signature="e#387#1293#0" expanded="false" />
             <element signature="e#2412#2846#0" expanded="false" />
@@ -992,60 +932,122 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/function_utils.py">
+    <entry file="file://$PROJECT_DIR$/utils/spacy_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="36" column="22" lean-forward="true" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clustering/gsdpmm_semantic_stream_static.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="174" column="4" lean-forward="true" selection-start-line="174" selection-start-column="4" selection-end-line="174" selection-end-column="4" />
+        <state relative-caret-position="555">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
-            <element signature="e#7976#8268#0" expanded="false" />
+            <element signature="e#436#461#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/clustering/gsdpmm_stream.py">
+    <entry file="file://$PROJECT_DIR$/preprocess/tweet_filter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="150" column="8" lean-forward="true" selection-start-line="150" selection-start-column="8" selection-end-line="150" selection-end-column="8" />
+        <state relative-caret-position="185">
+          <caret line="6" column="26" lean-forward="true" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/tweet_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2257">
+          <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/function_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="47" column="32" lean-forward="true" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/seeding/seed_query.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2553">
+          <caret line="74" column="23" lean-forward="true" selection-start-line="74" selection-start-column="23" selection-end-line="74" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="7" column="16" lean-forward="false" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/clustering/event_extractor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="257" column="4" lean-forward="true" selection-start-line="257" selection-start-column="4" selection-end-line="257" selection-end-column="4" />
+        <state relative-caret-position="740">
+          <caret line="367" column="55" lean-forward="true" selection-start-line="367" selection-start-column="55" selection-end-line="367" selection-end-column="55" />
           <folding>
-            <element signature="e#564#671#0" expanded="false" />
-            <element signature="e#733#1086#0" expanded="false" />
-            <element signature="e#1142#1255#0" expanded="false" />
-            <element signature="e#1329#1450#0" expanded="false" />
-            <element signature="e#1500#1878#0" expanded="false" />
-            <element signature="e#1888#1946#0" expanded="false" />
+            <element signature="e#623#730#0" expanded="false" />
+            <element signature="e#792#1145#0" expanded="false" />
+            <element signature="e#1201#1314#0" expanded="false" />
+            <element signature="e#1388#1509#0" expanded="false" />
+            <element signature="e#1559#1937#0" expanded="false" />
+            <element signature="e#1947#2005#0" expanded="false" />
+            <element signature="e#20446#21615#0" expanded="false" />
+            <element signature="e#21011#21031#0" expanded="false" />
+            <element signature="e#21731#24603#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/clustering/main2clusterer.py">
+    <entry file="file://$PROJECT_DIR$/seeding/seed_parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="137" column="4" lean-forward="true" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="4" />
+        <state relative-caret-position="518">
+          <caret line="17" column="4" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering/gsdpmm_stream.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="295" column="53" lean-forward="true" selection-start-line="295" selection-start-column="53" selection-end-line="295" selection-end-column="53" />
           <folding>
-            <element signature="e#406#447#0" expanded="false" />
-            <element signature="e#476#504#0" expanded="false" />
-            <element signature="e#562#1469#0" expanded="false" />
-            <element signature="e#1502#1545#0" expanded="false" />
-            <element signature="e#2359#4934#0" expanded="false" />
-            <element signature="e#4973#5209#0" expanded="false" />
-            <element signature="e#6017#6052#0" expanded="false" />
-            <element signature="e#6354#7403#0" expanded="false" />
+            <element signature="e#2206#2270#0" expanded="false" />
+            <element signature="e#6744#6808#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/seeding/main2parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="27" column="39" lean-forward="true" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+          <folding>
+            <element signature="e#3619#5328#0" expanded="false" />
+            <element signature="e#5416#6662#0" expanded="false" />
+            <element signature="e#6751#6984#0" expanded="false" />
+            <element signature="e#6987#7044#0" expanded="false" />
+            <element signature="e#7392#7563#0" expanded="false" />
+            <element signature="e#7603#8035#0" expanded="false" />
+            <element signature="e#8445#8597#0" expanded="false" />
+            <element signature="e#8670#10459#0" expanded="false" />
+            <element signature="e#10484#11451#0" expanded="false" />
+            <element signature="e#11527#13838#0" expanded="false" />
+            <element signature="e#13880#15221#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/seeding/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="13" column="73" lean-forward="true" selection-start-line="13" selection-start-column="73" selection-end-line="13" selection-end-column="73" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#8803#9090#0" expanded="false" />
+            <element signature="e#9219#11382#0" expanded="false" />
+            <element signature="e#11490#11518#0" expanded="false" />
           </folding>
         </state>
       </provider>

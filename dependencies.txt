@@ -1,11 +1,15 @@
 ﻿# echo 1 > /proc/sys/vm/drop_caches
 
-pip install nltk
-pip install wordsegment
-pip install python-Levenshtein
+pip3 install nltk
+pip3 install wordsegment
+pip3 install python-Levenshtein
 # nltk_data	E:\DOWNLOADS\BaiduYun\nltk_data.tar.gz
 # http://python.jobbole.com/81675/
 
+pip3 install spacy
+pip3 install ..../en_core_web_lg-2.0.0.tar.gz
+(python -m spacy download en_core_web_lg) OR
+(https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.0.0/en_core_web_lg-2.0.0.tar.gz)
 
 # bzip2 -z FileName
 # for file in *.gz; do gunzip -xf $file; done
@@ -25,5 +29,3 @@ pip install python-Levenshtein
         * 华盛顿大学的Twitter_NLP：
             * https://github.com/aritter/twitter_nlp
             * 提供命名实体识别
-
-

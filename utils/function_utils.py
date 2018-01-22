@@ -46,7 +46,9 @@ def split_multi_format(array, process_num):
     block_size = math.ceil(len(array) / process_num)
     formatted_array = list()
     for i in range(process_num):
-        formatted_array.append(array[i * block_size: (i + 1) * block_size])
+        arr_slice = array[i * block_size: (i + 1) * block_size]
+        if arr_slice:
+            formatted_array.append(arr_slice)
     return formatted_array
 
 

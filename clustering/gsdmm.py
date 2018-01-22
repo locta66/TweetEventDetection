@@ -14,21 +14,24 @@ import matplotlib.pyplot as plt
 
 class GSDMM:
     @staticmethod
+    @fu.sync_real_time_counter('GSDMM input_twarr_with_label')
     def input_twarr_with_label(twarr, label):
-        alpha_range = beta_range = [i/100 for i in range(1, 10, 3)] + [i/10 for i in range(1, 10, 3)] + \
-                                   [i for i in range(1, 10, 3)]
-        K_range = [20, 30, 40, 50]
+        # alpha_range = beta_range = [i/100 for i in range(1, 10, 3)] + [i/10 for i in range(1, 10, 3)] + \
+        #                            [i for i in range(1, 10, 3)]
+        # K_range = [30, 40, 50]
+        alpha_range = beta_range = [i/100 for i in range(1, 10, 4)] + [i/10 for i in range(1, 10, 4)]
+        K_range = [30, 40, 50]
         """cluster using different hyperparams in multiprocess way"""
         iter_num = 100
         process_num = 20
         hyperparams = [(a, b, K) for a in alpha_range for b in beta_range for K in K_range]
         res_list = list()
         for i in range(int(math.ceil(len(hyperparams) / process_num))):
-            param_list = [(None, twarr, *param, iter_num, label) for param in
+            param_list = [(twarr, *param, iter_num) for param in
                           hyperparams[i * process_num: (i + 1) * process_num]]
             res_list += fu.multi_process(GSDMM.GSDMM_twarr, param_list)
             print('{:<4} /'.format((i + 1) * process_num), len(hyperparams), 'params processed')
-        """group the data by alpha and K"""
+        """group the data by K"""
         frame = pd.DataFrame(index=np.arange(0, len(hyperparams)), columns=['alpha', 'beta', 'K'])
         for i in range(len(hyperparams)):
             frame.loc[i] = hyperparams[i]
@@ -38,22 +41,25 @@ class GSDMM:
             fig = plt.figure()
             fig.set_figheight(8)
             fig.set_figwidth(8)
+            all_nmi = list()
             for i in indices:
                 beta = frame.loc[i]['beta']
-                topic_word_dstrb, tw_cluster_pred, iter_x, nmi_y, homo_y, cmplt_y = res_list[i]
-                # print(alpha, beta, K, ':', np.array(indices))
-                plt.plot(iter_x, nmi_y, '-', lw=1.5, label='beta=' + str(round(beta, 2)))
+                tw_cluster_pred_iter = res_list[i]
+                iter_x = range(len(tw_cluster_pred_iter))
+                nmi_y = [au.score(label, pred, 'nmi') for pred in tw_cluster_pred_iter]
+                all_nmi.append(nmi_y)
+                plt.plot(iter_x, nmi_y, '-', lw=1.5, label='beta={}'.format(round(beta, 2)))
             plt.xlabel('iteration')
             plt.ylabel('NMI')
-            plt.ylim(0.25, 0.75)
-            plt.title('alpha=' + str(round(alpha, 2)) + ',K=' + str(K))
+            plt.ylim(0.0, 0.75)
+            plt.title('K=' + str(K))
             plt.legend(loc='lower right')
             plt.grid(True, '-', color='#333333', lw=0.8)
-            plt.text(iter_num - 20, 0.70, 'final nmi: ' + str(round(max([res_list[i][3][-1] for i in indices]), 6)),
-                     fontsize=15, verticalalignment='bottom', horizontalalignment='left')
-            plt.savefig(getcfg().dc_test + 'alpha=' + str(round(alpha, 2)) + '_K=' + str(K) + '.png')
-        return None, None
-    
+            plt.text(iter_num - 40, 0.70, 'final nmi: ' + str(round(max([nmi[-1] for nmi in all_nmi]), 6)),
+                     fontsize=14, verticalalignment='bottom', horizontalalignment='left')
+            plt.savefig(getcfg().dc_test + 'GSDMM/' + 'alpha={},K={}.png'.format(round(alpha, 2), K))
+        # fu.dump_array('GSDMM_result.txt', res_list)
+        
     @staticmethod
     def GSDMM_twarr(twarr, alpha, beta, K, iter_num):
         ner_pos_token = tk.key_wordlabels
@@ -123,7 +129,7 @@ class GSDMM:
                 prob[k] *= rule_value
             
             prob = recompute(prob, underflowcount)
-            if iter is not None and iter > 90:
+            if iter is not None and iter > 95:
                 return np.argmax(prob)
             else:
                 return au.sample_index_by_array_value(np.array(prob))

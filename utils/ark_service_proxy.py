@@ -121,23 +121,23 @@ def twarr_ark(twarr, from_field=tk.key_text, to_field=tk.key_ark):
     return twarr
 
 
-tags_proper_noun = {'^', 'M', 'Z', }
-tags_common_noun = {'N', }
+tags_prop = {'^', 'M', 'Z', }
+tags_comm = {'N', }
 tags_verb = {'V', 'T', }
-tags_hashtag = {'#', }
+tags_hstg = {'#', }
 
 prop_label, comm_label, verb_label, hstg_label = 'proper', 'common', 'verb', 'hashtag'
-label_dict = dict([(t, prop_label) for t in tags_proper_noun] +
-                  [(t, comm_label) for t in tags_common_noun] +
+label_dict = dict([(t, prop_label) for t in tags_prop] +
+                  [(t, comm_label) for t in tags_comm] +
                   [(t, verb_label) for t in tags_verb] +
-                  [(t, hstg_label) for t in tags_hashtag])
+                  [(t, hstg_label) for t in tags_hstg])
 
 
 # pos_token resembles ('word', 'pos tag', 0.91)
-def is_proper_noun(pos_token): return pos_token[1] in tags_proper_noun and not is_hashtag(pos_token)
+def is_proper_noun(pos_token): return pos_token[1] in tags_prop and not is_hashtag(pos_token)
 
 
-def is_common_noun(pos_token): return pos_token[1] in tags_common_noun and not is_hashtag(pos_token)
+def is_common_noun(pos_token): return pos_token[1] in tags_comm and not is_hashtag(pos_token)
 
 
 def is_verb(pos_token): return pos_token[1] in tags_verb and not is_hashtag(pos_token)
@@ -163,8 +163,13 @@ if __name__ == "__main__":
     print("Checking that we can see \"{}\", this will crash if we can't." .format(RUN_TAGGER_CMD))
     _success = check_script_is_present()
     if _success:
-        print("Success.")
-        print("Now pass in two messages, get a list of tuples back:")
-        tweets = ['this is a message', 'and a second message']
-        print(runtagger_parse(tweets))
+        # print("Success.")
+        # print("Now pass in two messages, get a list of tuples back:")
+        # tweets = ['this is a message', 'and a second message', '']
+        # print(runtagger_parse(tweets))
+        twarr_ark([
+            {tk.key_text: 'this is a message'},
+            {tk.key_text: 'Checking that we can see this will crash if we can\'t.'},
+            {tk.key_text: ''},
+        ])
     # runtagger_parse(['I am DC', 'Who are you.', ''])

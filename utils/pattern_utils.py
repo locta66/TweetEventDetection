@@ -45,7 +45,8 @@ class PatternHolder:
 tw_rule_list = [(r'RT\s@?.*?:(\s|$)', ' '), (r'@\w+', ' '), (r'(#.+?)(\s|$)', ' \\1 '),
                 (r'https?:\W*/.*?(\s|$)|https?:(\s|$)', ' '), ]
 special_char_list = [('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&ndash;', ' '),
-                     ('&mdash;', ' '), ('[’‘]', '\''), (r'[~`$%^()\-_=+\[\]{}"/|\\:;]', ' ')]
+                     ('&mdash;', ' '), ('[’‘]', '\''), ]
+puctuation_list = [(r'[~`$^()\-_=\+\[\]{}"|:;]', ' '), ]
 word_rule_list = [('^[^A-Za-z0-9]+$', ''), ('^\W*', ''), ('\W*$', ''), ("'[sS]?\W*$", ''),
                   ('(.+?)\\1{3,}', '\\1'), ('^(.+?)\\1{3,}$', ''), ]
 contraction_list = [(r'won\'t', 'will not'), (r'can\'t', 'cannot'), (r'i\'m', 'i am'),
@@ -58,10 +59,11 @@ tw_rule_patterns = PatternHolder(tw_rule_list)
 special_patterns = PatternHolder(special_char_list)
 word_patterns = PatternHolder(word_rule_list)
 contraction_patterns = PatternHolder(contraction_list)
+punc_pattern = PatternHolder(puctuation_list)
 
 endline_pattern = PatternHolder([(r'[\n\r]+$', ''), ])
 brkline_pattern = PatternHolder([(r'[\n\r]+', '.'), ])
-dupspace_pattern = PatternHolder([(r'\s\s+', '.'), ])
+dupspace_pattern = PatternHolder([(r'\s\s+', ' '), ])
 nonascii_pattern = PatternHolder([(r'[^\x00-\x7f]', '.'), ])
 
 
@@ -122,3 +124,10 @@ def is_valid_keyword(word):
     notsinglechar = not is_char(word)
     notstopword = word not in stop_words
     return startswithchar and notsinglechar and notstopword
+
+
+if __name__ == '__main__':
+    # s = 'Bahrain bans all protests in new crackdown. http://t.co/l0AQNtmB'
+    # ss = re.sub(r'https?:\W*/.*?(\s|$)|https?:(\s|$)', ' ', s)
+    # print(ss)
+    print(text_normalization('Bahrain bans all protests in new crackdown. http://t.co/l0AQNtmB'))

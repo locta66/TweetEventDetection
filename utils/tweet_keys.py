@@ -7,3 +7,6 @@ key_lang = 'lang'
 key_wordlabels = 'pos'
 key_created_at = 'created_at'
 key_ark = 'ark'
+key_ner_pos = 'nerpos'
+
+key_spacy = 'spacy'

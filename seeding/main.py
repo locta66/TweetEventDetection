@@ -6,69 +6,132 @@ import utils.function_utils as fu
 from config.configure import getcfg
 
 
-seed_parser = SeedParser([
-    # [{'any_of': ['', '', ], 'all_of': ['', '', ], }, ['2016', '', ''], ['2016', '', '']],
-    [{'all_of': ['Paris', 'police', 'station', ], 'any_of': ['attack', 'knife', ], },
-     ['2016', '1', '6'], ['2016', '1', '10']],
-    [{'all_of': ['Quetta', ], 'any_of': ['\Wbomb', 'security ', 'suicide', 'polio', 'policemen', ], },
-     ['2016', '1', '12'], ['2016', '1', '17']],
-    [{'all_of': ['\WAdde\W', ], 'any_of': ['Union', 'attack', 'massive', 'siege', ], },
-     ['2016', '1', '14'], ['2016', '1', '19']],
-    [{'all_of': ['Dalori', 'Boko', ], 'any_of': ['attack', '\Wkill', ], },
-     ['2016', '1', '29'], ['2016', '2', '3']],
-    [{'all_of': ['Ankara', 'explosion', ], 'any_of': ['attack', '\Wbomb', 'military', ], },
-     ['2016', '2', '16'], ['2016', '2', '21']],
-    [{'all_of': ['Cameroon\W', ], 'any_of': ['\Wbomb', 'blast', '\Wkill', 'suicide', ], },
-     ['2016', '2', '18'], ['2016', '2', '23']],
-    [{'any_of': ['attack', '\Wbomb', '\Wkill', 'suicide', ],
-      'all_of': ['Homs', ], 'none_of': ['airstrike', ]}, ['2016', '2', '20'], ['2016', '2', '25']],
-    [{'any_of': ['Grand', 'AQIM', 'attack', 'gunmen', '\Wkill', '\Wshot', 'shoot', ],
-      'all_of': ['Bassam', ], }, ['2016', '3', '12'], ['2016', '3', '17']],
-    [{'all_of': ['Brussels', 'attack', ], 'any_of': ['\Wbomb', '\Wkill', 'suicide', ], },
-     ['2016', '3', '22'], ['2016', '3', '26']],
-    [{'all_of': ['Chhattisgarh', 'CRPF', ], 'any_of': ['attack', 'Dantewada', ], },
-     ['2016', '3', '29'], ['2016', '4', '3']],
-    [{'any_of': ['\WAbu\W', 'Sayyaf', 'clash', '\Wgun\W', 'militant', ],
-      'all_of': ['Philippine', 'soldier', ], }, ['2016', '4', '8'], ['2016', '4', '13']],
-    [{'all_of': ['Kabul', 'attack', ], 'any_of': ['Afghanistan', '\Wbomb', '\Wgun\W', 'security', ], },
-     ['2016', '4', '18'], ['2016', '4', '23']],
-    [{'any_of': ['murder', 'raid', 'injure', 'suicide', '\Wbomb', 'explosion', '\Wkill', 'wound',
-                 'troop', 'Boko Haram', 'terrorist'],
-      'all_of': ['Borno', ], }, ['2016', '4', '23'], ['2016', '4', '29']],
-    [{'all_of': ['Somalia', ], 'any_of': ['attack', '\Wbomb', 'military', 'recapture', 'Shabaab', ], },
-     ['2016', '4', '30'], ['2016', '5', '5']],
-    [{'all_of': ['Munich', 'attack', ], 'any_of': ['knife', 'railway', ], },
-     ['2016', '5', '9'], ['2016', '5', '14']],
-    [{'all_of': ['Jableh', ], 'any_of': ['attack', '\Wbomb', 'military', 'suicide', ], },
-     ['2016', '5', '22'], ['2016', '5', '27']],
-    [{'all_of': ['Boko', 'Bosso', ], },
-     ['2016', '6', '3'], ['2016', '6', '9']],
-    [{'any_of': ['gunman', 'hostage', 'shoot', '\Wshot', ],
-      'all_of': ['Orlando', 'nightclub', 'attack', ], }, ['2016', '6', '11'], ['2016', '6', '16']],
-    [{'any_of': ['attack', '\Wbomb', 'explode', 'hostage', '\Wkill', 'injured', ],
-      'all_of': ['Mogadishu', ], }, ['2016', '6', '24'], ['2016', '6', '29']],
-    [{'any_of': ['attack', '\Wbomb', 'headquarter', 'security', '\Wkill'],
-      'all_of': ['\WAden\W', 'airport'], }, ['2016', '7', '5'], ['2016', '7', '11']],
-    [{'all_of': ['Nice', 'truck'], 'any_of': ['Bastille', 'crowd', 'gunfire', ], },
-     ['2016', '7', '13'], ['2016', '7', '18']],
-    [{'all_of': ['Mogadishu', ], 'any_of': ['\Wkill', '\Wbomb', 'suicide', 'Shabaab', ], },
-     ['2016', '7', '25'], ['2016', '7', '31']],
-    [{'all_of': ['Kokrajhar', ], 'any_of': ['Assam', 'Bodo', '\Wgun\W', 'grenade', '\Wkill', 'shoot', ], },
-     ['2016', '8', '4'], ['2016', '8', '9']],
-    [{'all_of': ['Quetta', ], 'any_of': ['attack', '\Wbomb', 'hospital', '\Wkill', 'suicide', ], },
-     ['2016', '8', '7'], ['2016', '8', '10']],
-    [{'all_of': ['PKK', 'Turkey', ], 'any_of': ['attack', '\Wbomb', 'soldier', ]},
-     ['2016', '8', '9'], ['2016', '8', '14']],
-], theme='Terrorist', description='Describes event of terrorist attack')
+seed_queries = [
+    # [{'any_of': ['', '', '', '', '', '', '', ],
+    #   'all_of': ['', '', ], }, ['2016', '', ''], ['2016', '', '']],
+    
+    [{'any_of': ['explosion', 'suicide bomb', 'Mosque', 'historic symbol', '\Wwound', ],
+      'all_of': ['Bursa', ], }, ['2016', '4', '26'], ['2016', '5', '2']],
+    
+    
+    # [{'any_of': ['shoot', 'gunman', 'fire', '\Wpub\W', 'attack', 'shot', 'death', 'kill\W'],
+    #   'all_of': ['Aviv', ], }, ['2016', '1', '1'], ['2016', '1', '6']],
+    # [{'any_of': ['knife', 'attack', ],
+    #   'all_of': ['Paris', 'police', 'station', ], }, ['2016', '1', '6'], ['2016', '1', '10']],
+    # [{'any_of': ['explode', 'shopping', 'gunmen', 'car bomb', 'attack', 'injure', ],
+    #   'all_of': ['\WBaghdad\W', ], }, ['2016', '1', '10'], ['2016', '1', '15']],
+    # [{'any_of': ['blast', 'suicide bomb', 'wound', 'attack', 'foreign tourist', ],
+    #   'all_of': ['Istanbul', ], }, ['2016', '1', '11'], ['2016', '1', '16']],
+    # [{'any_of': ['\Wbomb', 'security ', 'suicide', 'polio', 'policemen', ],
+    #   'all_of': ['Quetta', ], }, ['2016', '1', '12'], ['2016', '1', '17']],
+    # [{'any_of': ['siege', 'Union', 'attack', 'massive', ],
+    #   'all_of': ['\WAdde\W', ], }, ['2016', '1', '14'], ['2016', '1', '19']],
+    # [{'any_of': ['offensive', 'ez-Zor', 'militant', 'murder', 'execut', 'soldier', 'civilian', ],
+    #   'all_of': ['Deir', ], }, ['2016', '1', '15'], ['2016', '1', '20']],
+    # [{'any_of': ['gunfire', 'militant', 'restaurant', 'attack', 'civilian', 'Al-Shabaab', 'kill', 'car bomb'],
+    #   'all_of': ['Mogadishu', ], }, ['2016', '1', '21'], ['2016', '1', '26']],
+    # [{'any_of': ['attack', 'car bomb', 'army division', 'soldier', 'tribal fighter', 'offensive', 'kill', ],
+    #   'all_of': ['Ramadi', ], }, ['2016', '1', '26'], ['2016', '1', '31']],
+    # [{'any_of': ['attack', '\Wkill', ],
+    #   'all_of': ['Dalori', 'Boko', ], }, ['2016', '1', '29'], ['2016', '2', '4']],
+    # [{'any_of': ['twin blasts', 'double bomb', 'kill', 'wound', 'Sayeda Zeinab', ],
+    #   'all_of': ['Damascus', ], }, ['2016', '1', '30'], ['2016', '2', '4']],
+    # [{'any_of': ['suicide bomb', 'suicide attack', 'headquarter', 'casualt', 'blast', 'kill', 'injure'],
+    #   'all_of': ['Kabul', ], }, ['2016', '1', '31'], ['2016', '2', '5']],
+    #
+    # [{'any_of': ['Daallo Airline', 'take\s*off', 'emergency land', 'perpetrator', 'injure', ],
+    #   'all_of': ['Somalia', ], }, ['2016', '2', '1'], ['2016', '2', '6']],
+    # [{'any_of': ['machete', 'attack', 'shot\W', 'shoot', 'kill', 'car chase', 'restaurant', 'injure', 'stormed', ],
+    #   'all_of': ['Ohio', ], }, ['2016', '2', '10'], ['2016', '2', '16']],
+    # [{'any_of': ['attack', '\Wbomb', 'military', ],
+    #   'all_of': ['Ankara', 'explosion', ], }, ['2016', '2', '16'], ['2016', '2', '21']],
+    # [{'any_of': ['attack ', 'army bus', 'central square', 'military vehicle', 'fire\W', 'explosion', 'parliament'],
+    #   'all_of': ['Ankara', ], }, ['2016', '2', '16'], ['2016', '2', '21']],
+    # [{'any_of': ['\Wbomb', 'blast', '\Wkill', 'suicide', ],
+    #   'all_of': ['Cameroon\W', ], }, ['2016', '2', '18'], ['2016', '2', '23']],
+    # [{'any_of': ['attack', '\Wbomb', '\Wkill', 'suicide', ], 'none_of': ['airstrike', ],
+    #   'all_of': ['Homs', ], }, ['2016', '2', '20'], ['2016', '2', '25']],
+    # [{'any_of': ['explosion', 'suicide bomb', 'SYL hotel', 'Al-Shabaab', 'gunmen', 'kill', 'wound', 'attack', ],
+    #   'all_of': ['Mogadishu', ], }, ['2016', '2', '25'], ['2016', '3', '2']],
+    #
+    # [{'any_of': ['stab', 'shot dead', 'knife', 'attack', 'restaurant', 'Jaffa Port', 'tourist', 'wound', ],
+    #   'all_of': ['Aviv', ], }, ['2016', '3', '7'], ['2016', '3', '12']],
+    # [{'any_of': ['car bomb', 'shooting', 'kill', 'wound', 'gunfire', 'blast explode', 'casualt', '\Wtoll\W', ],
+    #   'all_of': ['Ankara', ], }, ['2016', '3', '12'], ['2016', '3', '17']],
+    # [{'any_of': ['shoot', 'casualt', 'AQIM', '\Wtoll\W', 'gunmen', '\Wkill', 'attack', 'hotel', 'Ivory Coast', 'tourist', 'beach resort', ],
+    #   'all_of': ['Bassam', ], }, ['2016', '3', '12'], ['2016', '3', '18']],
+    # [{'any_of': ['\Wbomb\W', 'bus bomb', 'detonate', '\Wkill', 'injure', 'government employee', ],
+    #   'all_of': ['Peshawar', ], }, ['2016', '3', '15'], ['2016', '3', '20']],
+    # [{'any_of': ['suicide bomb', 'suicide attack', '\Wkill', 'injure', 'explode', 'explosive', 'outskirt', 'Mosque', '\Wbomb'],
+    #   'all_of': ['Maiduguri', ], }, ['2016', '3', '15'], ['2016', '3', '20']],
+    # [{'any_of': ['suicide bomb', 'tourist', '\Wkill', '\Winjure', '\Wblast', '\Wtoll', 'blast', 'explode', ],
+    #   'all_of': ['Istanbul', ], }, ['2016', '3', '18'], ['2016', '3', '23']],
+    # [{'any_of': ['\Wbomb', '\Wkill', 'suicide', ],
+    #   'all_of': ['Brussels', 'attack', ], }, ['2016', '3', '22'], ['2016', '3', '27']],
+    # [{'any_of': ['car bomb', 'suicide bomb', 'explode', 'blast', 'explosion', 'checkpoint', '\Wkill', '\Wwound', ],
+    #   'all_of': ['\WAden\W', ], }, ['2016', '3', '24'], ['2016', '3', '29']],
+    # [{'any_of': ['suicide bomb', 'blast', 'explosion', 'Gulshane Iqbal park', '\Wwound', 'entrance', '\Wtoll'],
+    #   'all_of': ['\WLahore', ], }, ['2016', '3', '26'], ['2016', '3', '31']],
+    # [{'any_of': ['attack', 'Dantewada', ],
+    #   'all_of': ['Chhattisgarh', 'CRPF', ], }, ['2016', '3', '29'], ['2016', '4', '3']],
+    #
+    # [{'any_of': ['\WAbu\W', 'Sayyaf', 'clash', '\Wgun\W', 'militant', ],
+    #   'all_of': ['Philippine', 'soldier', ], }, ['2016', '4', '8'], ['2016', '4', '13']],
+    # [{'any_of': ['explosion', '\Wbomb', '\Wattack', '\Wbus\W', ],
+    #   'all_of': ['Jerusalem', ], }, ['2016', '4', '17'], ['2016', '4', '22']],
+    # [{'any_of': ['Afghanistan', '\Wbomb', '\Wgun\W', 'security', ],
+    #   'all_of': ['Kabul', 'attack', ], }, ['2016', '4', '18'], ['2016', '4', '23']],
+    # [{'any_of': ['murder', 'raid', 'injure', 'suicide', '\Wbomb', 'explosion', '\Wkill', 'wound', 'troop', 'Boko Haram', 'terrorist'],
+    #   'all_of': ['Borno', ], }, ['2016', '4', '23'], ['2016', '4', '29']],
+    # [{'any_of': ['attack', '\Wbomb', 'military', 'recapture', 'Shabaab', ],
+    #   'all_of': ['Somalia', ], }, ['2016', '4', '30'], ['2016', '5', '5']],
+    #
+    # [{'any_of': ['knife', 'railway', ],
+    #   'all_of': ['Munich', 'attack', ], }, ['2016', '5', '9'], ['2016', '5', '14']],
+    # [{'any_of': ['attack', '\Wbomb', 'military', 'suicide', ],
+    #   'all_of': ['Jableh', ], }, ['2016', '5', '22'], ['2016', '5', '27']],
+    #
+    # [{'any_of': ['gunman', 'hostage', 'shoot', '\Wshot', ],
+    #   'all_of': ['Orlando', 'nightclub', 'attack', ], }, ['2016', '6', '11'], ['2016', '6', '16']],
+    # [{'any_of': ['attack', '\Wbomb', 'explode', 'hostage', '\Wkill', 'injured', ],
+    #   'all_of': ['Mogadishu', ], }, ['2016', '6', '24'], ['2016', '6', '29']],
+    #
+    # [{'any_of': ['attack', '\Wbomb', 'headquarter', 'security', '\Wkill'],
+    #   'all_of': ['\WAden\W', 'airport'], }, ['2016', '7', '5'], ['2016', '7', '11']],
+    # [{'any_of': ['Bastille', 'crowd', 'gunfire', ],
+    #   'all_of': ['Nice', 'truck'], }, ['2016', '7', '13'], ['2016', '7', '18']],
+    # [{'any_of': ['\Wkill', '\Wbomb', 'suicide', 'Shabaab', ],
+    #   'all_of': ['Mogadishu', ], }, ['2016', '7', '25'], ['2016', '7', '31']],
+    #
+    # [{'any_of': ['Assam', 'Bodo', '\Wgun\W', 'grenade', '\Wkill', 'shoot', ],
+    #   'all_of': ['Kokrajhar', ], }, ['2016', '8', '4'], ['2016', '8', '9']],
+    # [{'any_of': ['attack', '\Wbomb', 'hospital', '\Wkill', 'suicide', ],
+    #   'all_of': ['Quetta', ], }, ['2016', '8', '7'], ['2016', '8', '10']],
+    # [{'any_of': ['attack', '\Wbomb', 'soldier', ],
+    #   'all_of': ['PKK', 'Turkey', ], }, ['2016', '8', '9'], ['2016', '8', '14']],
+    #
+    # [{'any_of': ['attack', 'suicide', 'Ministry', 'Defence', 'injure', 'explosion', 'death', ],
+    #   'all_of': ['Kabul', ], }, ['2016', '9', '4'], ['2016', '9', '9']],
+    # [{'any_of': ['bomb', 'explosion', 'shopping center', 'blast', 'attack', 'explode', 'car\W', ],
+    #   'all_of': ['Baghdad', ], }, ['2016', '9', '9'], ['2016', '9', '14']],
+    # [{'any_of': ['soldier', 'Insurgent', 'attack', 'Shabaab', ],
+    #   'all_of': ['Somalia', ], }, ['2016', '9', '16'], ['2016', '9', '21']],
+    # [{'any_of': ['attack', 'kill', 'Kashmir', 'soldier', ],
+    #   'all_of': ['\WUri\W', ], }, ['2016', '9', '17'], ['2016', '9', '22']],
+    # [{'any_of': ['rocket', 'kill ', 'Daesh', 'wound', ],
+    #   'all_of': ['Kilis', ], }, ['2016', '9', '21'], ['2016', '9', '26']],
+]
+seed_parser = SeedParser(seed_queries, theme='Terrorist', description='Describes event of terrorist attack')
 
-unlb_parser = UnlbParser([
+unlb_queries = [
     [{'all_of': ['attack', ],
       'any_of': ['terror', 'attack', 'fight', 'assault', 'death', '\Wgun\W', '\Wfire\W', '\Wbomb',
                  'battle', '\Wkill', 'explode', 'explosion', 'wound', 'injure', 'deadly', 'shoot', ],
       }, ['2016', '8', '15'], ['2016', '10', '31']],
-], theme='Terrorist', description='Unidentified event of terrorist attack')
+]
+unlb_parser = UnlbParser(unlb_queries, theme='Terrorist', description='Unidentified event of terrorist attack')
 
-cntr_parser = CounterParser([
+cntr_queries = [
     [{'any_of': ['happy', 'glad', 'nice', 'party', 'good', 'excellent', 'wonderful', 'magnificent'],
       'none_of': ['terror', 'attack', 'fight', 'assault', 'death', '\Wgun\W', 'fire', 'bomb',
                   'battle', 'kill', 'explode', 'explosion', 'wound', 'injure', 'deadly', 'shoot', ]
@@ -96,7 +159,8 @@ cntr_parser = CounterParser([
       'all_of': ['Louisiana', 'flood', ], }, ['2016', '8', '10'], ['2016', '8', '17']],
     [{'any_of': ['damage', 'disaster', '\Wdead\W', 'death', 'kill', 'missing', 'rainfall', 'rescue', ],
       'all_of': ['Pakistan', 'flood', ], }, ['2016', '4', '2'], ['2016', '4', '8']],
-], theme='Terrorist', description='Not Event of terrorist attack')
+]
+cntr_parser = CounterParser(cntr_queries, theme='Terrorist', description='Not Event of terrorist attack')
 
 # seed_parser = SeedParser([
 #     # [{'any_of': ['', '', ], 'all_of': ['', '', ], }, ['2016', '', ''], ['2016', '', '']],
@@ -138,6 +202,10 @@ cntr_parser = CounterParser([
 
 @fu.sync_real_time_counter('main')
 def main(args):
+    parse_query_list(getcfg().origin_path, '/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/',
+                     seed_queries, n_process=20)
+    return
+    
     if args.unlb:
         args.ner = False
         query_func = exec_query_unlabelled

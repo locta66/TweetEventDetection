@@ -66,8 +66,7 @@ def listchildren(directory, children_type=TYPE_DIR, pattern=None):
         return None
     directory = add_sep_if_needed(directory)
     children = sorted(os.listdir(directory))
-    children = [c for c in children if pu.search_pattern(pattern, c) is not None] \
-        if pattern is not None else children
+    children = [c for c in children if pu.search_pattern(pattern, c) is not None] if pattern else children
     if children_type == TYPE_ALL:
         return children
     res = list()
