@@ -2,8 +2,11 @@ import argparse
 import time
 from collections import Counter
 import numpy as np
+
+import utils.array_utils
 import utils.file_iterator as fi
 import utils.function_utils as fu
+import utils.multiprocess_utils
 import utils.tweet_keys as tk
 import utils.pattern_utils as pu
 import utils.date_utils as du
@@ -14,6 +17,39 @@ import math
 
 
 def main(args):
+    """"""
+    
+    """ retweet chain """
+    file ='/home/nfs/cdong/tw/seeding/Terrorist/queried/event2016.txt'
+    twarr = utils.array_utils.merge_list(fu.load_array(file))
+    rechain_dict = dict()
+    for idx, tw in enumerate(twarr):
+        twid, retwid = tw[tk.key_id], tu.in_reply_to(tw)
+        if retwid is not None:
+            if retwid not in rechain_dict:
+                rechain_dict[retwid] = set()
+            else:
+                rechain_dict[retwid].add(retwid)
+        else:
+            if twid not in rechain_dict:
+                rechain_dict[twid] = set()
+            else:
+                rechain_dict[twid].add(twid)
+    print([len(chain) for chain in rechain_dict.values() if len(chain) >= 3])
+    print(len(rechain_dict), len(twarr))
+    return
+    
+    """  only to extract text """
+    base = '/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/'
+    target = '/home/nfs/cdong/tw/seeding/Terrorist/queried/only_text/'
+    subs = fi.listchildren(base, fi.TYPE_FILE)
+    for sub in subs:
+        twarr = fu.load_array(base + sub)
+        textarr = [tw[tk.key_orgntext] for tw in twarr]
+        fu.dump_array(target + sub, textarr)
+    return
+    
+    """ test the vector similarity """
     # p_range = [1, 2, 4, 8]
     # params = [(p1, p2, p3, p4, p5) for p1 in p_range for p2 in p_range
     #           for p3 in p_range for p4 in p_range for p5 in p_range]
@@ -30,36 +66,62 @@ def main(args):
     # print(sorted(res_list, key=lambda x: x[0]))
     # return
     
-    # import time
-    # real_file = '/home/nfs/cdong/tw/src/clustering/data/events2016.txt'
-    # block = fu.load_array(real_file)
-    # twarr = fu.merge_list(block)[:5000]
-    # print(len(twarr))
-    # s = time.time()
-    # tu.twarr_nlp(twarr)
-    # print(time.time() - s)
+    """ see the similarity between clusters """
+    # blocks = fu.load_array('/home/nfs/cdong/tw/seeding/Terrorist/queried/event2016.txt')
+    # twarr = fu.merge_list(blocks)
+    # label = fu.merge_list([[i for _ in range(len(blocks[i]))] for i in range(len(blocks))])
+    #
+    # label_distrb = Counter(label)
+    # print('Topic num:{}, total tw:{}'.format(len(label_distrb), len(twarr)))
+    # for idx, cluid in enumerate(sorted(label_distrb.keys())):
+    #     print('{:<3}:{:<6}'.format(cluid, label_distrb[cluid]), end='\n' if (idx + 1) % 10 == 0 else '')
+    #
+    # from clustering.cluster_service import ClusterService
+    # twarr = tu.twarr_nlp(twarr)
+    # topic_vec_dict, sim_matrix = ClusterService.create_clusters_and_vectors(twarr, label)
+    #
+    # for idx, row in sim_matrix.iterrows():
+    #     max_idx = np.argmax(row.values)
+    #     max_col = row.index[max_idx]
+    #     max_sim = row[max_col]
+    #     print('maxsim ({}, {})={}'.format(idx, max_col, max_sim))
     # return
     
-    base = args.base
-    files = args.files
-    if not base or not fi.exists(base) or not fi.is_dir(base):
-        base = fi.add_sep_if_needed(fi.pwd())
-    if not files:
-        files = fi.listchildren(base, children_type=fi.TYPE_FILE)
-        
-        real_file = '/home/nfs/cdong/tw/src/clustering/data/nonevents.txt'
-        real_file = '/home/nfs/cdong/tw/src/clustering/data/events2016.txt'
-        arr = fu.load_array(real_file)
-        if type(arr[0]) is dict:
-            block = au.array_partition(arr, [1] * 30)
-        elif type(arr[0]) is list:
-            block = arr
-        else:
-            block = None
-        
-        for twarr in block:
-            twarr = tu.twarr_nlp(twarr)
-            print(len(twarr), tu.twarr_similarity(twarr))
+    """ pre-process the single data file """
+    # real_file = '/home/nfs/cdong/tw/src/clustering/data/events2016.txt'
+    # twarr = fu.merge_list(fu.load_array(real_file))
+    # idx2rechain = [[] for _ in range(len(twarr))]
+    # retwid2idx = dict([(tw[tk.key_id], idx) for idx, tw in enumerate(twarr)])
+    # for idx, tw in enumerate(twarr):
+    #     retwid = tu.in_reply_to(tw)
+    #
+    #     if retwid is None or retwid not in retwid2idx:
+    #         continue
+    #     idx2rechain[retwid2idx[retwid]].append(idx)
+    # print(max([len(chain) for chain in idx2rechain]))
+    # return
+    
+    """  """
+    # base = args.base
+    # files = args.files
+    # if not base or not fi.exists(base) or not fi.is_dir(base):
+    #     base = fi.add_sep_if_needed(fi.pwd())
+    # if not files:
+    #     files = fi.listchildren(base, children_type=fi.TYPE_FILE)
+    #
+    #     real_file = '/home/nfs/cdong/tw/src/clustering/data/nonevents.txt'
+    #     real_file = '/home/nfs/cdong/tw/src/clustering/data/events2016.txt'
+    #     arr = fu.load_array(real_file)
+    #     if type(arr[0]) is dict:
+    #         block = au.array_partition(arr, [1] * 30)
+    #     elif type(arr[0]) is list:
+    #         block = arr
+    #     else:
+    #         block = None
+    #
+    #     for twarr in block:
+    #         twarr = tu.twarr_nlp(twarr)
+    #         print(len(twarr), tu.twarr_vector_info(twarr, info_type='similarity'))
             
             # for tw in twarr:
             #     doc = tw.get(tk.key_spacy)

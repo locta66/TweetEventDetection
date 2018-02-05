@@ -10,6 +10,13 @@
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/query_results" />
             <excludedPath local="true" path="$PROJECT_DIR$/utils/synset.json" />
+            <excludedPath local="true" path="$PROJECT_DIR$/dependencies.txt" />
+            <excludedPath local="true" path="$PROJECT_DIR$/config/ChatFilter.py" />
+            <excludedPath local="true" path="$PROJECT_DIR$/config/dict_loader.py" />
+            <excludedPath local="true" path="$PROJECT_DIR$/preprocess/abbrs.txt" />
+            <excludedPath local="true" path="$PROJECT_DIR$/preprocess/emoticons.txt" />
+            <excludedPath local="true" path="$PROJECT_DIR$/seeding/posdict.txt" />
+            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
           </excludedPaths>
         </serverdata>
       </paths>

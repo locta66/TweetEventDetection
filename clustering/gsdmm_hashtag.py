@@ -1,6 +1,7 @@
 import math
 from collections import Counter
 
+import utils.multiprocess_utils
 import utils.tweet_keys as tk
 import utils.array_utils as au
 import utils.function_utils as fu
@@ -27,7 +28,7 @@ class GSDMMHashtag:
         for i in range(int(math.ceil(param_num / process_num))):
             param_list = [(None, twarr, *param, iter_num, label) for param in
                           hyperparams[i * process_num: (i + 1) * process_num]]
-            res_list += fu.multi_process(GSDMMHashtag.GSDMM_twarr_hashtag, param_list)
+            res_list += utils.multiprocess_utils.multi_process(GSDMMHashtag.GSDMM_twarr_hashtag, param_list)
             print('{:<3} /'.format(min((i + 1) * process_num, param_num)), param_num, 'params processed')
         frame = pd.DataFrame(index=np.arange(0, param_num), columns=['alpha', 'beta', 'gamma', 'K'])
         for i in range(param_num):
@@ -195,7 +196,7 @@ class GSDMMHashtag:
             if iter is not None and iter > iter_num - 5:
                 return np.argmax(prob)
             else:
-                return au.sample_index_by_array_value(np.array(prob))
+                return au.sample_index(np.array(prob))
         
         """start iteration"""
         

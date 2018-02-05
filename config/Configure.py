@@ -26,6 +26,9 @@ class Configure:
         self.pos_data_file = configreader.get(file_module_name, 'pos_data_file')
         self.non_pos_data_file = configreader.get(file_module_name, 'non_pos_data_file')
         
+        self.pre_dict_file = configreader.get(file_module_name, 'pre_dict_file')
+        self.post_dict_file = configreader.get(file_module_name, 'post_dict_file')
+        
         self.pre_prop_file = configreader.get(file_module_name, 'pre_prop_file')
         self.pre_comm_file = configreader.get(file_module_name, 'pre_comm_file')
         self.pre_verb_file = configreader.get(file_module_name, 'pre_verb_file')

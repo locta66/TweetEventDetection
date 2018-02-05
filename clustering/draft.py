@@ -16,7 +16,8 @@ for i in range(3):
 print(results)
 
 import utils.file_iterator as fi
-from utils.function_utils import multi_process, merge_list
+from utils.multiprocess_utils import multi_process
+from utils.array_utils import merge_list
 from sklearn.cluster import dbscan
 import numpy as np
 import Levenshtein
@@ -162,26 +163,50 @@ cv.fit_transform(textarr)
 
 # 按照在一个函数中累积的运行时间进行排序
 # print_stats(3):只打印前3行函数的信息,参数还可为小数,表示前百分之几的函数信息
+
+# python3.5 -m cProfile -o res event_extractor.py
 import pstats
 p = pstats.Stats("res")
 p.strip_dirs( ).sort_stats("cumulative").print_stats(50)
 
-def b(f,g):
-    print(f,g)
 
-def a(p):
-    b(*p)
-
-a([1,2])
-
-
-串联
 内容 功能 效果 可视化
-
 
 
 import spacy
 nlp = spacy.load('en_core_web_lg')
 doc = nlp('Large parts of this manual originate from Travis E. Oliphant’s book Guide to NumPy (which generously entered Public Domain in August 2008). The reference documentation for many of the functions are written by numerous contributors and developers of NumPy, both prior to and during the NumPy Documentation Marathon.')
+[ent.label_ for ent in doc.ents]
 print([(t.text, t.ent_type_, t.tag_) for t in doc])
+
+
+import time
+
+a = 1
+s = time.time()
+count = 0
+for i in range(1 << 20):
+    count += 1
+
+print(time.time() -s)
+s = time.time()
+
+d = dict()
+count = 0
+for i in range(1 << 20):
+    count += 1
+
+print(time.time() -s)
+
+
+class AA:
+    def __init__(self):
+        self.a = 0
+    
+    def __call__(self, *args, **kwargs):
+        print('qwer')
+
+def f(asd = AA()()):
+    print('f')
+
 

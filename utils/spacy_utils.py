@@ -1,10 +1,9 @@
-from copy import deepcopy
 import spacy
-
-import utils.function_utils as fu
+from collections import Counter
 
 
 model = 'en_core_web_lg'
+default_model_id = 'default'
 
 
 def new_nlp(_model):
@@ -15,15 +14,44 @@ def new_nlp(_model):
         return None
 
 
-en_nlp = new_nlp(model)
+class NlpGetter:
+    nlp_dict = {}
+    
+    def __call__(self, _model=model, _model_id=default_model_id):
+        _model_name = 'model:{}, id:{}'.format(_model, _model_id)
+        nlp_dict = NlpGetter.nlp_dict
+        if _model_name not in nlp_dict:
+            nlp_dict.setdefault(_model_name, new_nlp(_model))
+        return nlp_dict.get(_model_name)
 
 
-def text_nlp(text, nlp=en_nlp):
+get_nlp = NlpGetter()
+
+
+def text_nlp(text, nlp=None):
+    if nlp is None:
+        nlp = get_nlp()
     return nlp(text)
 
 
-def textarr_nlp(textarr, nlp=en_nlp, n_threads=4):
+def textarr_nlp(textarr, nlp=None, n_threads=4):
+    if nlp is None:
+        nlp = get_nlp()
     return [doc for doc in nlp.pipe(textarr, n_threads=n_threads)]
+
+
+# doc = su.text_nlp(get_text(tw), nlp)
+# [(token.text, token.ent_type_, token.tag_, token.pos_, ) for token in doc]
+# [ent.label_ for ent in doc.ents]
+
+
+pos_prop = 'PROPN'
+pos_comm = 'NOUN'
+pos_verb = 'VERB'
+pos_hstg = 'HSTG'
+# key_ent = 'ENT'
+# ent_glf = {'FAC', 'GPE', 'LOC'}
+target_types = [pos_hstg, pos_prop, pos_comm, pos_hstg]
 
 
 # class SpacyServicePool:

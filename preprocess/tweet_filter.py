@@ -30,8 +30,8 @@ def filter_twarr(twarr, attr_filt=True, text_filt=True, filter_level=FILTER_LEVE
     _tw_attrs, _usr_attrs = attr_dict[filter_level]
     _removal_idx = list()
     
-    _attr_filter = attr_filt if callable(attr_filt) else attribute_filter if attr_filt else None
-    _text_filter = text_filt if callable(text_filt) else text_filter if text_filt else None
+    _attr_filter = attr_filt if callable(attr_filt) else filter_attribute if attr_filt else None
+    _text_filter = text_filt if callable(text_filt) else filter_text if text_filt else None
     
     for _idx, tw in enumerate(twarr):
         if tk.key_lang not in tw or not tw[tk.key_lang] == 'en' or tk.key_text not in tw:
@@ -39,7 +39,7 @@ def filter_twarr(twarr, attr_filt=True, text_filt=True, filter_level=FILTER_LEVE
             continue
         """ filter attributes """
         if _attr_filter is not None:
-            if _attr_filter is attribute_filter:
+            if _attr_filter is filter_attribute:
                 tw = _attr_filter(tw, _tw_attrs)
                 if tk.key_user in tw:
                     tw[tk.key_user] = _attr_filter(tw[tk.key_user], _usr_attrs)
@@ -47,9 +47,9 @@ def filter_twarr(twarr, attr_filt=True, text_filt=True, filter_level=FILTER_LEVE
                 _attr_filter(tw)
         """ filter text content """
         if tk.key_text in tw and _text_filter is not None:
-            if _text_filter is text_filter:
-                tw[tk.key_origintext] = tw[tk.key_text]
-                normalized_text = text_filter(tw[tk.key_text])
+            if _text_filter is filter_text:
+                tw[tk.key_orgntext] = tw[tk.key_text]
+                normalized_text = filter_text(tw[tk.key_text])
                 if len(pu.tokenize(r'[a-zA-Z_\-\']{3,}', normalized_text)) <= 5:
                     _removal_idx.append(_idx)
                     continue
@@ -62,39 +62,41 @@ def filter_twarr(twarr, attr_filt=True, text_filt=True, filter_level=FILTER_LEVE
     return twarr
 
 
-def filter_twarr_attr(twarr,
-                      tw_cond=lambda tw: not(tk.key_lang in tw and tw[tk.key_lang] == 'en' and tk.key_text in tw),
-                      attr_filter=None, filter_level=FILTER_LEVEL_LOW):
+def filter_twarr_attr(twarr, attr_filter=None,
+                      tw_cond=lambda tw: tk.key_lang in tw and tw[tk.key_lang] == 'en' and tk.key_text in tw,
+                      filter_level=FILTER_LEVEL_LOW):
     if attr_filter is not None:
         for tw in twarr:
             attr_filter(tw)
         return twarr
     else:
-        res_twarr = []
+        res_twarr = list()
         tw_attrs, usr_attrs = attr_dict[filter_level]
         for tw in twarr:
             if tw_cond(tw):
-                tw = attribute_filter(tw, tw_attrs)
+                tw = filter_attribute(tw, tw_attrs)
                 if tk.key_user in tw:
-                    tw[tk.key_user] = attribute_filter(tw[tk.key_user], usr_attrs)
+                    tw[tk.key_user] = filter_attribute(tw[tk.key_user], usr_attrs)
                 res_twarr.append(tw)
         return res_twarr
 
 
 def filter_twarr_text(twarr,
-                      tw_cond=lambda tw: tk.key_text in tw,
-                      get_text=lambda tw: tw.get(tk.key_text),
+                      tw_cond=lambda tw: tk.key_orgntext in tw or tk.key_text in tw,
+                      get_text=lambda tw: tw[tk.key_orgntext] if tk.key_orgntext in tw else tw[tk.key_text],
+                      mov_text=lambda tw, text: tw.setdefault(tk.key_orgntext, text),
                       flt_text=lambda text: pu.text_normalization(text),
                       set_text=lambda tw, text: tw.setdefault(tk.key_text, text)):
     for _tw in twarr:
         if tw_cond(_tw):
             text = get_text(_tw)
+            mov_text(_tw, text)
             text = flt_text(text)
             set_text(_tw, text)
     return twarr
 
 
-def filter_twarr_dup_id(twarr, get_id=lambda tw: tw.get(tk.key_id)):
+def twarr_dup_id(twarr, get_id=lambda tw: tw.get(tk.key_id)):
     id_set, dup_idx_list = set(), list()
     for _idx, _tw in enumerate(twarr):
         tw_id = get_id(_tw)
@@ -102,12 +104,17 @@ def filter_twarr_dup_id(twarr, get_id=lambda tw: tw.get(tk.key_id)):
             id_set.add(tw_id)
         else:
             dup_idx_list.append(_idx)
+    return dup_idx_list
+
+
+def filter_twarr_dup_id(twarr, get_id=lambda tw: tw.get(tk.key_id)):
+    dup_idx_list = sorted(twarr_dup_id(twarr, get_id))
     for _idx in range(len(dup_idx_list)-1, -1, -1):
         del twarr[dup_idx_list[_idx]]
-    return twarr
+    return dup_idx_list
 
 
-def attribute_filter(target_dict, attr_set):
+def filter_attribute(target_dict, attr_set):
     if attr_set is None:
         return target_dict
     for _tw_attr in set(target_dict.keys()):
@@ -116,5 +123,5 @@ def attribute_filter(target_dict, attr_set):
     return target_dict
 
 
-def text_filter(text):
+def filter_text(text):
     return pu.text_normalization(text)

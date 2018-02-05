@@ -1,7 +1,9 @@
 import re
 
+import utils.array_utils
 import utils.function_utils as fu
 import utils.date_utils as du
+import utils.multiprocess_utils
 import utils.tweet_keys as tk
 import utils.array_utils as au
 import utils.spacy_utils as su
@@ -13,85 +15,89 @@ from sklearn.cluster import dbscan
 import Levenshtein
 
 
-def twarr_similarity(twarr):
+def in_reply_to(tw):
+    in_reply_id = tw.get(tk.key_in_reply_to_status_id, None)
+    return in_reply_id if type(in_reply_id) is int else None
+
+
+def twarr_vector_info(twarr, info_type='similarity'):
     if len(twarr) == 0:
         return None
     if len(twarr) == 1:
         return 1.0
-    if tk.key_spacy not in twarr[0]:
-        twarr_nlp(twarr)
-    """ we have different weight for both word and tweet; for word it is defined by its pos,
-        for tweet it is defined by the weight and number of words which have vectors """
-    importance_sum = 0
+    # """ we have different weight for both word and tweet; for word it is defined by its pos,
+    #     for tweet it is defined by the weight and number of words which have vectors """
+    score_sum = 0
     arr_sum_vec = None
-    for tw in twarr:
-        tw_ave_vec, vector_num, tw_importance = weighted_doc_ave_vec(tw.get(tk.key_spacy))
-        if tw_ave_vec is None or vector_num == 0:
+    vec_info_list = [weighted_doc_vec(tw.get(tk.key_spacy)) for tw in twarr]
+    for tw_ave_vec, word_vec_num, tw_score in vec_info_list:
+        if tw_ave_vec is None or word_vec_num == 0:
             continue
-        tw.setdefault('ave_vec', tw_ave_vec)
-        importance_sum += tw_importance
-        imp_tw_ave_vec = tw_importance * tw_ave_vec
-        arr_sum_vec = (arr_sum_vec + imp_tw_ave_vec) if arr_sum_vec is not None else imp_tw_ave_vec
-    
-    if arr_sum_vec is not None:
-        arr_ave_vec = arr_sum_vec / importance_sum
-        return np.mean(au.cosine_similarity(arr_ave_vec.reshape((1, -1)),
-                                            [tw.get('ave_vec') for tw in twarr if 'ave_vec' in tw]))
+        score_sum += tw_score
+        scored_tw_vec = tw_score * tw_ave_vec
+        arr_sum_vec = (arr_sum_vec + scored_tw_vec) if arr_sum_vec is not None else scored_tw_vec
+    if arr_sum_vec is None:
+        if info_type == 'similarity':
+            return 0
+        elif info_type == 'vector':
+            return None
     else:
-        return 0
+        arr_ave_vec = arr_sum_vec / score_sum
+        if info_type == 'similarity':
+            return np.mean(au.cosine_similarity(arr_ave_vec.reshape((1, -1)), [info[0] for info in vec_info_list]))
+        elif info_type == 'vector':
+            return arr_ave_vec
 
 
-def weighted_doc_ave_vec(doc):
+def weighted_doc_vec(doc):
     ent_type_0 = {'NORP', 'FAC', 'GPE', 'LOC', 'ORG', }
     ent_type_1 = {'EVENT', 'PERSON', 'ORDINAL', 'CARDINAL', }
     ent_type_2 = {'DATE', 'TIME', 'PERCENT', }
-    ent_weight = dict([(t, 8.0) for t in ent_type_0] + [(t, 2.0) for t in ent_type_1] + [(t, 1.0) for t in ent_type_2])
+    ent_weight_dict = dict([(t, 8.0) for t in ent_type_0] + [(t, 2.0) for t in ent_type_1] + [(t, 1.0) for t in ent_type_2])
     # ent_weight = dict([(t, 1.0) for t in ent_type_0] + [(t, 1.0) for t in ent_type_1] + [(t, 1.0) for t in ent_type_2])
-    
     tag_type_0 = {'NN', 'NNP', 'NNS', 'NNPS', 'VB', 'VBD', 'VBN', 'VBP', 'VBX', }
     tag_type_1 = {'IN', 'JJ', 'JJR', 'JJS', 'MD', 'RB', 'RBR', 'RBS', 'RP', }
-    tag_weight = dict([(t, 8.0) for t in tag_type_0] + [(t, 1.0) for t in tag_type_1])
+    tag_weight_dict = dict([(t, 8.0) for t in tag_type_0] + [(t, 1.0) for t in tag_type_1])
     # tag_weight = dict([(t, 1.0) for t in tag_type_0] + [(t, 1.0) for t in tag_type_1])
-    
-    doc_vec_num = weight_sum = 0
+    word_vec_num = weight_sum = 0
     doc_sum_vec = None
     for token in doc:
         word, ent_type, tag_type = token.text.lower(), token.ent_type_, token.tag_
-        ent_weight_, tag_weight_ = ent_weight.get(ent_type, 1), tag_weight.get(tag_type, 0.1)
+        ent_weight, tag_weight = ent_weight_dict.get(ent_type, 1), tag_weight_dict.get(tag_type, 0.1)
         # ent_weight_, tag_weight_ = ent_weight.get(ent_type, 1), tag_weight.get(tag_type, 1.0)
-        if not (token.has_vector and pu.is_valid_keyword(word) and
-                (ent_type in ent_weight or tag_type in tag_weight)):
+        if not pu.is_valid_keyword(word) and token.has_vector:
             continue
-        doc_vec_num += 1
-        weight = ent_weight_ * tag_weight_
+        word_vec_num += 1
+        weight = ent_weight * tag_weight
         weight_sum += weight
-        wei_tkn_vec = weight * token.vector
-        doc_sum_vec = (doc_sum_vec + wei_tkn_vec) if doc_sum_vec is not None else wei_tkn_vec
-    
-    doc_ave_vec = (doc_sum_vec / weight_sum) if not doc_vec_num == 0 else None
-    return doc_ave_vec, doc_vec_num, (weight_sum / doc_vec_num) if not doc_vec_num == 0 else 0
+        wei_word_vec = weight * token.vector
+        doc_sum_vec = wei_word_vec if doc_sum_vec is None else (doc_sum_vec + wei_word_vec)
+    doc_ave_vec = (doc_sum_vec / weight_sum) if not word_vec_num == 0 else None
+    # (weight_sum / word_vec_num): average weight of words, these words should have vector
+    return doc_ave_vec, word_vec_num, (weight_sum / word_vec_num) if not word_vec_num == 0 else 0
 
 
 def twarr_nlp(twarr,
-              has_doc=lambda tw: tk.key_spacy in tw,
+              do_nlp=lambda tw: tk.key_spacy not in tw,
               get_text=lambda tw: tw.get(tk.key_text),
-              nlp_text=lambda text: su.text_nlp(text, su.en_nlp),
-              set_doc=lambda tw, doc: tw.setdefault(tk.key_spacy, doc), ):
-    for tw in twarr:
-        if not has_doc(tw):
-            text = get_text(tw)
-            doc = nlp_text(text)
-            set_doc(tw, doc)
+              set_doc=lambda tw, doc: tw.setdefault(tk.key_spacy, doc),
+              nlp=None):
+    do_nlp_idx, textarr = list(), list()
+    for twidx, tw in enumerate(twarr):
+        if do_nlp(tw):
+            do_nlp_idx.append(twidx)
+            textarr.append(get_text(tw))
+    if nlp is None:
+        nlp = su.get_nlp()
+    docarr = su.textarr_nlp(textarr, nlp)
+    for docidx, twidx in enumerate(do_nlp_idx):
+        set_doc(twarr[twidx], docarr[docidx])
     return twarr
 
 
-# def twarr_ner(twarr, get_text=lambda tw: tw.get(tk.key_text),
-#               set_ner=lambda tw, ner: tw.setdefault(tk.key_ner_pos, ner), nlp=su.en_nlp):
-#     for tw in twarr:
-#         doc = su.text_nlp(get_text(tw), nlp)
-#         ner = [(t.text, t.ent_type_, t.tag_) for t in doc]
-#         set_ner(tw, ner)
-#     return twarr
+# doc = su.text_nlp(get_text(tw), nlp)
+# [(token.text, token.ent_type_, token.tag_) for token in doc]
+# [ent.label_ for ent in doc.ents]
 
 
 def cluster_similar_tweets(twarr):
@@ -127,15 +133,15 @@ def twarr_dist_pairs_multi(twarr):
     process_num = 16
     point_lists = [[i + 16 * j for j in range(int(total / process_num) + 1)
                     if (i + process_num * j) < total] for i in range(process_num)]
-    pairs_blocks = fu.multi_process(dist_pairs, [(twarr, point) for point in point_lists])
+    pairs_blocks = utils.multiprocess_utils.multi_process(dist_pairs, [(twarr, point) for point in point_lists])
     for tw in twarr:
         del tw['nouse']
-    return fu.merge_list(pairs_blocks)
+    return utils.array_utils.merge_list(pairs_blocks)
 
 
 def dist_pairs(twarr, points):
-    return fu.merge_list([[(i, j, text_dist_less_than(twarr[i]['nouse'], twarr[j]['nouse']))
-                           for j in range(i + 1, len(twarr))] for i in points])
+    return utils.array_utils.merge_list([[(i, j, text_dist_less_than(twarr[i]['nouse'], twarr[j]['nouse']))
+                                          for j in range(i + 1, len(twarr))] for i in points])
 
 
 def text_dist_less_than(text1, text2, threshold=0.2):
@@ -165,7 +171,7 @@ def end_ner_service():
 
 def twarr_ner(twarr, using_field=tk.key_text):
     """ Perform NER and POS task upon the twarr, inplace. """
-    ner_text_arr = get_ner_service_pool().execute_nlp_multiple([tw[using_field] for tw in twarr])
+    ner_text_arr = get_ner_service_pool().execute_ner_multiple([tw[using_field] for tw in twarr])
     if not len(ner_text_arr) == len(twarr):
         raise ValueError("Return line number inconsistent; Error occurs during NER")
     for idx, ner_text in enumerate(ner_text_arr):

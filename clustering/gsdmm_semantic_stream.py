@@ -1,10 +1,12 @@
 import numpy as np
 
 import utils.array_utils as au
+import utils.tweet_utils as tu
+from clustering.cluster_service import ClusterService
 from clustering.gsdmm_semantic import SemanticClusterer
 
 
-class SemanticStreamClusterer(SemanticClusterer):
+class GSDMMSemanticStream(SemanticClusterer):
     def __init__(self, hold_batch_num=10):
         SemanticClusterer.__init__(self)
         self.init_batch_ready = False
@@ -15,12 +17,6 @@ class SemanticStreamClusterer(SemanticClusterer):
         self.batch_twnum_list = list()
     
     def set_hyperparams(self, alpha, etap, etac, etav, etah, K):
-        # self.alpha = alpha
-        # self.etap = etap
-        # self.etac = etac
-        # self.etav = etav
-        # self.etah = etah
-        # self.K = K
         self.hyperparams = (self.alpha, self.etap, self.etac, self.etav, self.etah, self.K) = \
             (alpha, etap, etac, etav, etah, K)
     
@@ -44,30 +40,9 @@ class SemanticStreamClusterer(SemanticClusterer):
         for d in range(self.batch_twnum_list.pop(0)):
             self.z.pop(0), self.twarr.pop(0), self.label.pop(0)
         return self.z[:], self.label[:]
-
-    # def input_batch(self, tw_batch):
-    #     self.batch_twnum_list.append(len(tw_batch))
-    #     self.twarr += tw_batch
-    #     if len(self.batch_twnum_list) <= self.hold_batch_num:
-    #         return None, None
-    #     """normal process of new twarr"""
-    #     if not self.init_batch_ready:
-    #         self.preprocess_twarr(twarr=self.twarr)
-    #         self.z = self.GSDMM_twarr(*self.hyperparams, iter_num=self.iternum)
-    #         self.init_batch_ready = True
-    #         return [], self.z[:]
-    #     self.preprocess_twarr(twarr=self.twarr)
-    #     old_twarr_len = len(self.twarr) - len(tw_batch)
-    #     old_twarr = self.twarr[:old_twarr_len]
-    #     new_twarr = self.twarr[old_twarr_len:]
-    #     new_z = self.GSDMM_new_twarr(old_twarr, self.z, new_twarr, *self.hyperparams)
-    #     self.z += new_z
-    #     oldest_twarr_len = self.batch_twnum_list.pop(0)
-    #     for d in range(oldest_twarr_len):
-    #         self.z.pop(0), self.twarr.pop(0)
-    #     return self.z[:], new_z
     
     def GSDMM_new_twarr(self, old_twarr, old_z, new_twarr, alpha, etap, etac, etav, etah, K, iter_num):
+        new_twarr = tu.twarr_nlp(new_twarr)
         prop_n_dict, comm_n_dict, verb_dict, ht_dict = \
             self.prop_n_dict, self.comm_n_dict, self.verb_dict, self.ht_dict
         D_old, D_new = len(old_twarr), len(new_twarr)
@@ -137,7 +112,7 @@ class SemanticStreamClusterer(SemanticClusterer):
             if cur_iter >= iter_num - 1:
                 return np.argmax(prob)
             else:
-                return au.sample_index_by_array_value(np.array(prob))
+                return au.sample_index(np.array(prob))
         """start iteration"""
         for i in range(iter_num):
             for d in range(D_new):
@@ -153,3 +128,6 @@ class SemanticStreamClusterer(SemanticClusterer):
     def get_hyperparams_info(self):
         return 'GSDMM,semantic,stream, alpha={},etap={},etac={},etav={},etah={},K={}'.\
             format(self.alpha, self.etap, self.etac, self.etav, self.etah, self.K)
+    
+    def clusters_similarity(self):
+        return ClusterService.cluster_inner_similarity(self.twarr, self.z)

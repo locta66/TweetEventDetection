@@ -8,7 +8,11 @@ from preprocess import summarization
 def main():
     # fi.iterate_file_tree(getconfig().data_path, summary_files_in_path,
     #                      summary_path='/home/nfs/cdong/tw/testdata/cdong/non')
-    summarization.get_semantic_tokens_multi(getcfg().origin_path)
+    
+    # summarization.get_semantic_tokens_multi(getcfg().origin_path)
+    
+    summarization.get_tokens_multi(getcfg().origin_path)
+    
     # summarization.summary_files_in_path_into_blocks(
     #     '/home/nfs/cdong/tw/testdata/cdong/events/event2012origin/cut_by_id', './', 'events2012.txt')
 

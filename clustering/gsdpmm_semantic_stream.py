@@ -18,7 +18,7 @@ LABEL_COLS_LIST = [ark.prop_label, ark.comm_label, ark.verb_label, ark.hstg_labe
 LABEL_COLS = set(LABEL_COLS_LIST)
 
 
-class GSDPMMSemanticStreamClusterer:
+class GSDPMMSemanticStream:
     def __init__(self, hold_batch_num):
         print('using GSDPMMSemanticStreamClusterer')
         self.init_batch_ready = False
@@ -195,7 +195,7 @@ class GSDPMMSemanticStreamClusterer:
         
         cluids.append(self.max_clu_id + 1)
         prob.append(new_clu_prob)
-        sample_result = cluids[au.sample_index_by_array_value(np.array(prob))]
+        sample_result = cluids[au.sample_index(np.array(prob))]
         return sample_result
 
 

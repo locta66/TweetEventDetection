@@ -1,13 +1,16 @@
+import math
 from collections import Counter
 
 import seeding.main2parser as main2parser
+import utils.array_utils
+import utils.multiprocess_utils
 from config.configure import getcfg
 import utils.function_utils as fu
 import utils.array_utils as au
 import utils.tweet_utils as tu
 import utils.tweet_keys as tk
 import utils.ark_service_proxy as ark
-from clustering.event_extractor import EventExtractor
+from clustering.event_extractor import *
 
 
 @fu.sync_real_time_counter('query')
@@ -47,17 +50,17 @@ def exec_cluster(parser):
     # tw_topic_arr, cluster_pred = ee.GSDPMM_twarr_with_label(twarr, label)
     # tw_topic_arr, cluster_pred = ee.GSDMM_twarr_hashtag_with_label(twarr, label)
     
-    tw_batches, lb_batches = create_batches_through_time(batch_size=1000)
-    z_evo, l_evo, s_evo = EventExtractor.stream_cluster_with_label(tw_batches, lb_batches)
-    EventExtractor.analyze_stream(z_evo, l_evo, s_evo)
-    # EventExtractor.grid_stream_cluster_with_label_multi(tw_batches, lb_batches)
+    tw_batches, lb_batches = create_batches_through_time(batch_size=100)
+    # z_evo, l_evo, s_evo = EventExtractor.stream_cluster_with_label(tw_batches, lb_batches)
+    # EventExtractor.analyze_stream(z_evo, l_evo, s_evo)
+    grid_stream_cluster_with_label_multi(tw_batches, lb_batches)
     
     # twarr, label = load_clusters_and_labels()
     # EventExtractor.batch_cluster_with_label(twarr, label)
 
 
 def exec_analyze(parser):
-    EventExtractor.analyze_stream()
+    analyze_stream()
 
 
 def exec_temp(parser):
@@ -124,11 +127,17 @@ def exec_temp(parser):
 
 def create_batches_through_time(batch_size):
     false_event_twarr = fu.load_array('./data/falseevents.txt')
+    # event_blocks = fu.load_array('./data/events.txt')[98:]
     event_blocks = fu.load_array('./data/events.txt')
     event_blocks.append(false_event_twarr)
     
-    twarr = fu.merge_list(event_blocks)
-    label = fu.merge_list([[i for _ in range(len(event_blocks[i]))] for i in range(len(event_blocks))])
+    twarr = utils.array_utils.merge_list(event_blocks)
+    label = utils.array_utils.merge_list([[i for _ in range(len(event_blocks[i]))] for i in range(len(event_blocks))])
+    
+    from preprocess.tweet_filter import twarr_dup_id
+    dup_idx_list = set(twarr_dup_id(twarr))
+    twarr = [twarr[idx] for idx in range(len(twarr)) if idx not in dup_idx_list]
+    label = [label[idx] for idx in range(len(label)) if idx not in dup_idx_list]
     
     label_distrb = Counter(label)
     print('Topic num:{}, total tw:{}'.format(len(label_distrb), len(twarr)))
@@ -172,20 +181,75 @@ def create_batches_through_time(batch_size):
     idx_rearrange = random_idx_for_item(label, {len(event_blocks) - 1})
     twarr = [twarr[idx] for idx in idx_rearrange]
     label = [label[idx] for idx in idx_rearrange]
-    idx_parts = au.index_partition(twarr, [1] * int(len(twarr) / batch_size), random=False)
-    tw_batches = [[twarr[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
-    lb_batches = [[label[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
+    """ cutting twarr and label into batches of batch_size """
+    # idx_parts = au.index_partition(twarr, [1] * int(len(twarr) / batch_size), random=False)
+    # tw_batches = [[twarr[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
+    # lb_batches = [[label[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
+    
+    full_idx = [i for i in range(len(twarr))]
+    batch_num = int(math.ceil(len(twarr) / batch_size))
+    tw_batches = [[twarr[j] for j in full_idx[i*batch_size: (i+1)*batch_size]] for i in range(batch_num)]
+    lb_batches = [[label[j] for j in full_idx[i*batch_size: (i+1)*batch_size]] for i in range(batch_num)]
+    
+    # label = fu.merge_list(lb_batches)
+    # print(len(twarr), len(label))
+    # label_distrb = Counter(label)
+    # print('\n\nTopic num:{}, total tw:{}'.format(len(label_distrb), len(twarr)))
+    # for idx, cluid in enumerate(sorted(label_distrb.keys())):
+    #     print('{:<3}:{:<6}'.format(cluid, label_distrb[cluid]), end='\n' if (idx + 1) % 10 == 0 else '')
+    # print()
+    
     return tw_batches, lb_batches
 
 
 if __name__ == '__main__':
-    files = ['events2012.txt', ]
-    tu.start_ner_service(16)
-    for file in files:
-        blocks = fu.load_array(file)
-        for _twarr in blocks:
-            # ark.twarr_ark(_twarr) if tk.key_ark not in _twarr[0] else None
-            tu.twarr_ner(_twarr) if tk.key_wordlabels not in _twarr[0] else None
-        print(sorted([('id' + str(idx), len(_twarr)) for idx, _twarr in enumerate(blocks)], key=lambda x: x[1]))
-        print('file:{}'.format(file))
-        fu.dump_array(file, blocks)
+    # files = ['events2012.txt', ]
+    # tu.start_ner_service(16)
+    # for file in files:
+    #     blocks = fu.load_array(file)
+    #     for _twarr in blocks:
+    #         # ark.twarr_ark(_twarr) if tk.key_ark not in _twarr[0] else None
+    #         tu.twarr_ner(_twarr) if tk.key_wordlabels not in _twarr[0] else None
+    #     print(sorted([('id' + str(idx), len(_twarr)) for idx, _twarr in enumerate(blocks)], key=lambda x: x[1]))
+    #     print('file:{}'.format(file))
+    #     fu.dump_array(file, blocks)
+    
+    import sklearn
+    import re
+    from sklearn import svm
+    import utils.array_utils as au
+    str_arr = fu.load_array('sim_info.txt')
+    feature = list()
+    labels = list()
+    for string in str_arr:
+        num_arr = [float(s) for s in re.findall('\d\.\d+|\d+', string)]
+        if num_arr[4] < 0.5:
+            continue
+        feature.append([num_arr[1], num_arr[3], num_arr[4]])
+        labels.append(1 if num_arr[0] == num_arr[2] else 0)
+        print(num_arr, feature[-1], labels[-1])
+    
+    split_idx = int(len(feature) * 0.5)
+    trainX, testX = feature[split_idx:], feature[:split_idx]
+    trainY, testY = labels[split_idx:], labels[:split_idx]
+    
+    clf = svm.SVC()
+    clf.fit(trainX, trainY)
+    predY = clf.predict(testX)
+    auc = sklearn.metrics.roc_auc_score(testY, predY)
+    print(auc)
+    for idx in range(len(predY)):
+        print(predY[idx], testY[idx])
+    # all_pred = clf.predict(feature)
+    # print(sum(all_pred), len(feature))
+    # print('--pred--')
+    # wrong = 0
+    # for idx in range(len(predY)):
+    #     p = predY[idx]
+    #     l = labels[idx]
+    #     if not p == l:
+    #         print(feature[idx], p, l)
+    #         wrong += 1
+    # print(len(feature), wrong)
+        # print("pred {}, true {}".format(p, l))
+    # print(clf.predict(feature))

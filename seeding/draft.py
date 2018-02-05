@@ -113,3 +113,13 @@ io.mmwrite('shit.sss', contract_mtx)
 read_contract_mtx = io.mmread('shit.sss')
 dense_mtx = read_contract_mtx.todense()
 print(np.sum(np.matrix(mtx) - np.matrix(dense_mtx)))
+
+
+
+from seeding.main2parser import parse_query_list
+query_list = [
+    [{'any_of': ['shoot', 'gunman', 'fire', '\Wpub\W', 'attack', 'shot', 'death', 'kill\W'],
+      'all_of': ['Aviv', ], }, ['2016', '1', '1'], ['2016', '1', '6']],
+]
+parse_query_list('/home/nfs/cdong/tw/origin', './', query_list)
+

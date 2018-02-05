@@ -1,6 +1,8 @@
 import Levenshtein
 from sklearn import metrics
 
+import utils.array_utils
+import utils.multiprocess_utils
 from preprocess.tweet_filter import filter_twarr
 import utils.array_utils as au
 import utils.file_iterator as fi
@@ -16,6 +18,7 @@ def parse_query_list(from_path, into_path, query_list, n_process=20):
     from_path = fi.add_sep_if_needed(from_path)
     into_path = fi.add_sep_if_needed(into_path)
     all_sub_files = [file for file in fi.listchildren(from_path, children_type=fi.TYPE_FILE, pattern='.sum$')]
+    tw_num_sum = 0
     for query in query_list:
         query = SeedQuery(*query)
         query_sub_files = [(from_path + file) for file in all_sub_files
@@ -23,17 +26,26 @@ def parse_query_list(from_path, into_path, query_list, n_process=20):
         print('{} files from {} to {}'.format(len(query_sub_files),
                                               query_sub_files[0][query_sub_files[0].rfind('/')+1:],
                                               query_sub_files[-1][query_sub_files[-1].rfind('/')+1:], ))
-        file_blocks = fu.split_multi_format(query_sub_files, n_process)
-        res_list = fu.multi_process(query_from_files, args_list=[(block, query) for block in file_blocks])
-        twarr = fu.merge_list(res_list)
-        print('len(res_list)', len(res_list), 'len(twarr)', len(twarr))
-        twarr = remove_similar_tws(twarr)
-        print('post filter len(twarr)', len(twarr))
-        for tw in twarr:
-            print(tw[tk.key_origintext], '\n---\n')
-        # file_name = query.to_string() + '.txt'
-        # print('file_name', file_name, '\n')
-        # fu.dump_array(into_path + file_name, twarr)
+        
+        twarr = query_from_files_multi(query_sub_files, query, n_process)
+        # twarr = remove_similar_tws(twarr)
+        # print('post filter len(twarr):{}'.format(len(twarr)))
+        tw_num_sum += len(twarr)
+        # for tw in twarr:
+        #     # print(tw[tk.key_orgntext], '\n---\n')
+        #     print('is_quote_status' in tw, '\n---\n')
+        file_name = query.to_string() + '.txt'
+        print('file_name{}\n'.format(file_name))
+        fu.dump_array(into_path + file_name, twarr)
+    print('total tweet number: {}'.format(tw_num_sum))
+
+
+def query_from_files_multi(file_list, query, n_process=10):
+    file_blocks = utils.array_utils.split_multi_format(file_list, n_process)
+    res_list = utils.multiprocess_utils.multi_process(query_from_files, args_list=[(block, query) for block in file_blocks])
+    twarr = utils.array_utils.merge_list(res_list)
+    print('len(res_list):{}, len(twarr):{}'.format(len(res_list), len(twarr)), end=', ')
+    return twarr
 
 
 def query_from_files(files, query):
@@ -41,7 +53,7 @@ def query_from_files(files, query):
     for file in files:
         twarr = fu.load_array(file)
         for tw in twarr:
-            if query.is_text_desired(tw.get(tk.key_text)):
+            if tk.key_text in tw and query.is_text_desired(tw.get(tk.key_text)):
                 res_twarr.append(tw)
     return res_twarr
 
@@ -60,17 +72,17 @@ def exec_query(data_path, parser):
         parser.added_twarr = list()
         return
     print(file_list[0], '\n', len(file_list), 'files until', '\n', file_list[-1])
-    file_list = fu.split_multi_format(file_list, process_num=query_process_num)
-    added_twarr_block = fu.multi_process(query_tw_file_multi,
-                                         [(file_list_slice, parser.__class__, parser.query_list,
+    file_list = utils.array_utils.split_multi_format(file_list, process_num=query_process_num)
+    added_twarr_block = utils.multiprocess_utils.multi_process(query_tw_file_multi,
+                                                               [(file_list_slice, parser.__class__, parser.query_list,
                                            parser.theme, parser.description)
                                           for file_list_slice in file_list])
-    parser.added_twarr = fu.merge_list(added_twarr_block)
+    parser.added_twarr = utils.array_utils.merge_list(added_twarr_block)
     print('Queried', len(parser.added_twarr), 'tweets,')
     remove_similar_tws(parser.added_twarr)
     print(len(parser.added_twarr), 'accepted.\n')
     for tw in parser.added_twarr:
-        print(tw[tk.key_origintext], '\n---\n')
+        print(tw[tk.key_orgntext], '\n---\n')
     # file_name = parser.get_query_result_file_name()
     # file_name = '/home/nfs/cdong/tw/testdata/yying/queried/NaturalDisaster.sum'
     # fu.dump_array(file_name, parser.added_twarr)
@@ -90,8 +102,8 @@ def exec_query_unlabelled(data_path, parser):
     process_num = query_process_num
     twarr_block = list()
     while True:
-        added_twarr_block = fu.multi_process(query_tw_file_multi,
-                                             [(file_slice, parser.__class__, parser.query_list,
+        added_twarr_block = utils.multiprocess_utils.multi_process(query_tw_file_multi,
+                                                                   [(file_slice, parser.__class__, parser.query_list,
                                                parser.theme, parser.description) for file_slice in
                                               file_list[start * process_num: (start + 1) * process_num]])
         twarr_block.extend(added_twarr_block)
@@ -108,7 +120,7 @@ def exec_query_unlabelled(data_path, parser):
         EventTrainer.extract_tw_with_high_freq_entity(twarr)
     print(sum([len(twarr) for twarr in twarr_block]), 'tweets with high freq entities.')
     # twarr = remove_similar_tws(fI.merge_list(twarr_block))
-    twarr = fu.merge_list(twarr_block)
+    twarr = utils.array_utils.merge_list(twarr_block)
     print(len(twarr), 'accepted.')
     fu.dump_array(parser.get_query_result_file_name() + '1', twarr)
     tu.end_ner_service()
@@ -121,12 +133,12 @@ def exec_query_counter(data_path, parser):
                  fi.listchildren(data_path, children_type='file') if
                  file_name.endswith('.sum') and parser.is_file_of_query_date(file_name)]
     print(file_list[0], '\n', len(file_list), 'files until', '\n', file_list[-1])
-    file_list = fu.split_multi_format(file_list, process_num=query_process_num)
-    added_twarr_block = fu.multi_process(query_tw_file_multi,
-                                         [(file_list_slice, parser.__class__, parser.query_list,
+    file_list = utils.array_utils.split_multi_format(file_list, process_num=query_process_num)
+    added_twarr_block = utils.multiprocess_utils.multi_process(query_tw_file_multi,
+                                                               [(file_list_slice, parser.__class__, parser.query_list,
                                            parser.theme,
                                            parser.description) for file_list_slice in file_list])
-    parser.added_twarr = fu.merge_list(added_twarr_block)
+    parser.added_twarr = utils.array_utils.merge_list(added_twarr_block)
     print('Queried', len(parser.added_twarr), 'tweets,')
     parser.added_twarr = au.random_array_items(parser.added_twarr, 40000)
     # remove_similar_tws(parser.added_twarr)
@@ -157,7 +169,7 @@ def query_tw_file_multi(file_list, parser_class, query_list, theme, description)
 
 def query_per_query_multi(data_path, query_list):
     """make query and return corresponding twarr in the order of queries"""
-    return fu.multi_process(func=per_query, args_list=[(data_path, query) for query in query_list])
+    return utils.multiprocess_utils.multi_process(func=per_query, args_list=[(data_path, query) for query in query_list])
 
 
 def per_query(data_path, query):
@@ -275,7 +287,7 @@ def construct_feature_matrix(seed_parser, unlb_parser, cntr_parser):
                                      cntr_twarr + dzs_neg_train,
                                      dzs_pos_test, dzs_neg_test)
     print('vocabulary_size', localcounter.vocabulary_size())
-
+    
     # import numpy as np
     from scipy import sparse, io
     def create_matrix_and_dump(_localcounter, twarr, filename):
@@ -310,7 +322,7 @@ def exec_pre_test(test_data_path):
     # twarr_blocks = fu.multi_process(fi.summary_unzipped_tweets_multi,
     #                                 [(file_list_slice,) for file_list_slice in file_list])
     twarr_blocks = filter_twarr([fu.load_array(file) for file in subfiles if file.endswith('.json')])
-    twarr = fu.merge_list(twarr_blocks)
+    twarr = utils.array_utils.merge_list(twarr_blocks)
     
     tu.start_ner_service(pool_size=16)
     tu.twarr_ner(twarr)

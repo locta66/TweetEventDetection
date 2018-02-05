@@ -1,6 +1,7 @@
 import math
 from collections import Counter
 
+import utils.multiprocess_utils
 from config.configure import getcfg
 import utils.tweet_keys as tk
 import utils.array_utils as au
@@ -29,7 +30,7 @@ class GSDMM:
         for i in range(int(math.ceil(len(hyperparams) / process_num))):
             param_list = [(twarr, *param, iter_num) for param in
                           hyperparams[i * process_num: (i + 1) * process_num]]
-            res_list += fu.multi_process(GSDMM.GSDMM_twarr, param_list)
+            res_list += utils.multiprocess_utils.multi_process(GSDMM.GSDMM_twarr, param_list)
             print('{:<4} /'.format((i + 1) * process_num), len(hyperparams), 'params processed')
         """group the data by K"""
         frame = pd.DataFrame(index=np.arange(0, len(hyperparams)), columns=['alpha', 'beta', 'K'])
@@ -132,7 +133,7 @@ class GSDMM:
             if iter is not None and iter > 95:
                 return np.argmax(prob)
             else:
-                return au.sample_index_by_array_value(np.array(prob))
+                return au.sample_index(np.array(prob))
         
         """start iteration"""
         z_iter = list()

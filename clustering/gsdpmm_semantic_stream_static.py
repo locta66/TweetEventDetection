@@ -1,8 +1,10 @@
 import numpy as np
 
 import config.dict_loader as dld
+import utils.array_utils
 import utils.function_utils as fu
 import utils.array_utils as au
+import utils.multiprocess_utils
 import utils.tweet_keys as tk
 import utils.ark_service_proxy as ark
 from utils.id_freq_dict import IdFreqDict
@@ -159,13 +161,13 @@ class GSDPMMSemanticStreamStatic:
         
         cluids.append(self.max_clu_id + 1)
         prob.append(new_clu_prob)
-        sample_result = cluids[au.sample_index_by_array_value(np.array(prob))]
+        sample_result = cluids[au.sample_index(np.array(prob))]
         return sample_result
     
     def get_hyperparams_info(self):
         pt = self.params_table
         return 'GSDPMM,semantic,stream,static, alpha={}, {}={}, {}={}, {}={}, {}={}'.\
-            format(pt[K_ALPHA].param(), *fu.merge_list([(label, pt[label].param()) for label in LABEL_LIST]))
+            format(pt[K_ALPHA].param(), *utils.array_utils.merge_list([(label, pt[label].param()) for label in LABEL_LIST]))
 
 
 class ClusterHolder:

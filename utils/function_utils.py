@@ -2,8 +2,6 @@ import os
 import time
 import json
 from json import JSONDecodeError
-import multiprocessing as mp
-import math
 import bz2file
 
 
@@ -23,56 +21,6 @@ def sync_real_time_counter(info):
             print('function name:', func.__name__, ',', info, 'time elapsed:', time.time() - start_time, 's')
         return decorator
     return time_counter
-
-
-METHOD_EXTEND = 'extend'
-METHOD_APPEND = 'append'
-_SUPPORTED_MERGE_METHODS = {METHOD_EXTEND, METHOD_APPEND}
-
-
-def merge_list(array, method=METHOD_EXTEND):
-    if method not in _SUPPORTED_MERGE_METHODS:
-        raise ValueError('param method incorrect: {}'.format(method))
-    res = list()
-    for item in array:
-        if method == METHOD_EXTEND:
-            res.extend(item)
-        elif method == METHOD_APPEND:
-            res.append(item)
-    return res
-
-
-def split_multi_format(array, process_num):
-    block_size = math.ceil(len(array) / process_num)
-    formatted_array = list()
-    for i in range(process_num):
-        arr_slice = array[i * block_size: (i + 1) * block_size]
-        if arr_slice:
-            formatted_array.append(arr_slice)
-    return formatted_array
-
-
-def multi_process(func, args_list=None, kwargs_list=None):
-    """
-    Do func in multiprocess way.
-    :param func: To be executed within every process
-    :param args_list: default () as param for apply_async if not given
-    :param kwargs_list:
-    :return:
-    """
-    process_num = len(args_list)
-    pool = mp.Pool(processes=process_num)
-    res_getter = list()
-    for i in range(process_num):
-        res = pool.apply_async(func=func, args=args_list[i] if args_list else (),
-                               kwds=kwargs_list[i] if kwargs_list else {})
-        res_getter.append(res)
-    pool.close()
-    pool.join()
-    results = list()
-    for i in range(process_num):
-        results.append(res_getter[i].get())
-    return results
 
 
 def dump_array(file, array, overwrite=True, sort_keys=False):

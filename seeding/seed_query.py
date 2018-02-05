@@ -80,4 +80,8 @@ class SeedQuery:
         return False
     
     def to_string(self):
-        return '_'.join([self.all[0].strip('\W'), self.any[0].strip('\W'), '-'.join(self.since), '-'.join(self.until)])
+        return '_'.join([
+            '-'.join(self.since),
+            '-'.join(self.any[0].strip('\W').split(' ')),
+            '-'.join(self.all[0].strip('\W').split(' ')),
+        ])

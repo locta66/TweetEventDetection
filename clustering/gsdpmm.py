@@ -158,7 +158,7 @@ class GSDPMM:
             if iter is not None and iter > iter_num - 5:
                 return np.argmax(prob + [new_cluster_prob])
             else:
-                return au.sample_index_by_array_value(np.array(prob + [new_cluster_prob]))
+                return au.sample_index(np.array(prob + [new_cluster_prob]))
         
         """start iteration"""
         z_iter = list()

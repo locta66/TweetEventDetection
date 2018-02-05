@@ -72,6 +72,21 @@ test_parser_1 = TestParser([
 
 
 def main(args):
+    import utils.file_iterator as fi
+    import utils.tweet_utils as tu
+    import utils.ark_service_proxy as ark
+    tu.start_ner_service()
+    base = '/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/'
+    subs = fi.listchildren(base, fi.TYPE_FILE)
+    twarr_list = []
+    for sub in subs:
+        twarr = fu.load_array(base + sub)
+        twarr = tu.twarr_ner(twarr)
+        twarr = ark.twarr_ark(twarr)
+        twarr_list.append(twarr)
+    fu.dump_array('/home/nfs/cdong/tw/seeding/Terrorist/queried/event2016.txt', twarr_list)
+    return
+    
     parser = test_parser_1
     for p in [seed_parser, test_parser_1]:
         p.set_base_path(getcfg().seed_path)

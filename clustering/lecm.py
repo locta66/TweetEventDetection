@@ -170,7 +170,7 @@ class LECMClusterer:
                 #     underflowcount[k] -= 1
                 #     rule_value *= largeDouble
                 # prob = recompute(prob, underflowcount)
-            return au.sample_index_by_array_value(np.array(prob))
+            return au.sample_index(np.array(prob))
     
         def update_using_freq_dict(tw_freq_dict_, word_id_dict, n_z_, n_zw_, factor):
             for w, w_freq in tw_freq_dict_.items():

@@ -202,7 +202,7 @@ class SemanticClusterer:
             if cur_iter is not None and cur_iter > iter_num - 5:
                 return np.argmax(prob)
             else:
-                return au.sample_index_by_array_value(np.array(prob))
+                return au.sample_index(np.array(prob))
         
         """start iteration"""
         z_iter = list()

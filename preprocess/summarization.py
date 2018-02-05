@@ -1,5 +1,7 @@
 import re
 
+import utils.array_utils
+import utils.multiprocess_utils
 from utils.id_freq_dict import IdFreqDict
 import utils.tweet_keys as tk
 import utils.array_utils as au
@@ -22,9 +24,9 @@ def summary_files_in_path(from_path, into_path=None):
     into_file = '{}{}'.format(fi.add_sep_if_needed(into_path), '_'.join(file_ymdh_arr) + '.sum')
     fi.remove_file(into_file)
     subfiles = fi.listchildren(from_path, children_type=fi.TYPE_FILE)
-    file_block = fu.split_multi_format([(from_path + subfile) for subfile in subfiles], process_num=20)
-    twarr_blocks = fu.multi_process(sum_files, [(file_list, tflt.FILTER_LEVEL_LOW) for file_list in file_block])
-    twarr = fu.merge_list(twarr_blocks)
+    file_block = utils.array_utils.split_multi_format([(from_path + subfile) for subfile in subfiles], process_num=20)
+    twarr_blocks = utils.multiprocess_utils.multi_process(sum_files, [(file_list, tflt.FILTER_LEVEL_LOW) for file_list in file_block])
+    twarr = utils.array_utils.merge_list(twarr_blocks)
     if twarr:
         fu.dump_array(into_file, twarr, overwrite=True)
 
@@ -71,16 +73,17 @@ def is_target_ymdh(ymdh_arr):
 
 def get_tokens_multi(file_path):
     file_path = fi.add_sep_if_needed(file_path)
-    subfiles = au.random_array_items(fi.listchildren(file_path, children_type=fi.TYPE_FILE), 40)
-    file_list_block = fu.split_multi_format([(file_path + subfile) for subfile in subfiles], process_num=20)
-    res_list = fu.multi_process(get_tokens, [(file_list, ) for file_list in file_list_block])
+    # subfiles = au.random_array_items(fi.listchildren(file_path, children_type=fi.TYPE_FILE), 20)
+    subfiles = fi.listchildren(file_path, children_type=fi.TYPE_FILE)
+    file_list_block = utils.array_utils.split_multi_format([(file_path + subfile) for subfile in subfiles], process_num=20)
+    res_list = utils.multiprocess_utils.multi_process(get_tokens, [(file_list,) for file_list in file_list_block])
     id_freq_dict, total_doc_num = IdFreqDict(), 0
     for ifd, doc_num in res_list:
         total_doc_num += doc_num
         id_freq_dict.merge_freq_from(ifd)
     print('total_doc_num', total_doc_num, 'total vocabulary_size', id_freq_dict.vocabulary_size())
-    id_freq_dict.drop_words_by_condition(2)
-    id_freq_dict.dump_dict('temp.csv')
+    id_freq_dict.drop_words_by_condition(3)
+    id_freq_dict.dump_dict(getcfg().post_dict_file)
 
 
 def get_tokens(file_list):
@@ -92,10 +95,15 @@ def get_tokens(file_list):
             tokens = re.findall(r'[a-zA-Z_#\-]{3,}', tw[tk.key_text].lower())
             real_tokens = list()
             for token in tokens:
-                real_tokens.extend(pu.word_segment(token)) if len(token) >= 16 else [token]
+                if len(token) >= 16:
+                    real_tokens.extend(pu.word_segment(token))
+                else:
+                    real_tokens.append(token)
             for token in real_tokens:
-                if not pu.is_stop_word(token) and pu.has_azAZ(token) and 3 <= len(token) <= 16:
+                if (not pu.is_stop_word(token)) and pu.has_azAZ(token) and 3 <= len(token):
                     id_freq_dict.count_word(token)
+    id_freq_dict.drop_words_by_condition(2)
+    print(id_freq_dict.vocabulary_size())
     return id_freq_dict, total_doc_num
 
 
@@ -113,8 +121,8 @@ def get_semantic_tokens_multi(file_path):
     file_path = fi.add_sep_if_needed(file_path)
     # subfiles = au.random_array_items(fi.listchildren(file_path, children_type=fi.TYPE_FILE), 40)
     subfiles = fi.listchildren(file_path, children_type=fi.TYPE_FILE)
-    file_list_block = fu.split_multi_format([(file_path + subfile) for subfile in subfiles], process_num=20)
-    res_list = fu.multi_process(get_semantic_tokens, [(file_list, ) for file_list in file_list_block])
+    file_list_block = utils.array_utils.split_multi_format([(file_path + subfile) for subfile in subfiles], process_num=20)
+    res_list = utils.multiprocess_utils.multi_process(get_semantic_tokens, [(file_list,) for file_list in file_list_block])
     for res_type_info, doc_num in res_list:
         total_doc_num += doc_num
         for label in res_type_info.keys():
@@ -140,7 +148,7 @@ def get_semantic_tokens(file_list):
     for file in file_list:
         twarr = ark.twarr_ark(fu.load_array(file))
         total_doc_num += len(twarr)
-        pos_tokens = fu.merge_list([tw[tk.key_ark] for tw in twarr])
+        pos_tokens = utils.array_utils.merge_list([tw[tk.key_ark] for tw in twarr])
         for pos_token in pos_tokens:
             word = pos_token[0].strip().lower()
             if len(word) <= 2 or not pu.is_valid_keyword(word):
