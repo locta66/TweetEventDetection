@@ -7,7 +7,7 @@ import utils.array_utils as au
 import utils.file_iterator as fi
 import utils.function_utils as fu
 from utils.id_freq_dict import IdFreqDict
-from clustering.cluster_service import ClusterService
+import clustering.cluster_service as cs
 
 
 class SemanticClusterer:
@@ -43,7 +43,7 @@ class SemanticClusterer:
             for i in range(len(tokens) - 1, -1, -1):
                 tokens[i][0] = tokens[i][0].lower().strip()
                 word, _, pos_tag = tokens[i]
-                if not ClusterService.is_valid_keyword(word):
+                if not cs.is_valid_keyword(word):
                     del tokens[i]
                 if word.startswith('#') and not pos_tag.lower() == 'ht':
                     pos_tag = tokens[i][2] = 'HT'
@@ -77,8 +77,8 @@ class SemanticClusterer:
         hyperparams = [(a, ep, ec, ev, eh, k) for a in a_range for ep in etap_range for ec in etac_range
                        for ev in etav_range for eh in etah_range for k in K_range]
         param_num = len(hyperparams)
-        res_list = ClusterService.clustering_multi(SemanticClusterer.GSDMM_twarr,
-                        [(self, *param, iter_num, label) for param in hyperparams], process_num)
+        res_list = cs.clustering_multi(SemanticClusterer.GSDMM_twarr,
+                                       [(self, *param, iter_num, label) for param in hyperparams], process_num)
         column_name = ['alpha', 'etap', 'etac', 'etav', 'etah', 'K']
         # """start plotting figures"""
         # frame = pd.DataFrame(index=np.arange(0, param_num), columns=column_name, data=hyperparams)
@@ -101,37 +101,37 @@ class SemanticClusterer:
         #     plt.grid(True, '-', color='#333333', lw=0.8)
         #     plt.savefig(base_path + 'SEMANTIC' + title + '.png')
         """start dumping cluster information"""
-        def concat_param_name_values(param_names, param_values):
-            if not len(param_names) == len(param_values):
-                raise ValueError('inconsistent param number')
-            return '_'.join(['{}_{:<3}'.format(param_names[i], param_values[i]) for i in range(len(param_names))])
-        
-        top_rank = 30
-        true_cluster = [i for i in range(12)]
-        tbl_recall_list = [ClusterService.event_table_recall(label, res_list[i][1], true_cluster) for i in range(param_num)]
-        top_recall_idx = pd.DataFrame(data=[(i, tbl_recall_list[i][1], res_list[i][3][-1]) for i in range(param_num)])\
-            .sort_values(by=[1, 2], ascending=False).loc[:, 0][:top_rank]
-        top_nmi_idx = np.argsort([res_list[i][3][-1] for i in range(param_num)])[-1:-top_rank-1:-1]
-        
-        def dump_cluster_info(top_idx_list_, base_path_):
-            for rank, idx in enumerate(top_idx_list_):
-                res_dir = '{}{}_recall_{:0<6}_nmi_{:0<6}_{}/'.\
-                    format(base_path_, rank, round(tbl_recall_list[idx][1], 4), round(res_list[idx][3][-1], 4),
-                           concat_param_name_values(column_name, hyperparams[idx]))
-                fi.makedirs(res_dir)
-                tw_topic_arr = ClusterService.create_clusters_with_labels(twarr, res_list[idx][1])
-                for i, _twarr in enumerate(tw_topic_arr):
-                    if not len(_twarr) == 0:
-                        fu.dump_array(res_dir + str(i) + '.txt', [tw[tk.key_text] for tw in _twarr])
-                cluster_table = tbl_recall_list[idx][0]
-                cluster_table.to_csv(res_dir + 'table.csv')
-        
-        top_recall_path = base_path + 'max_recalls/'
-        fi.rmtree(top_recall_path)
-        dump_cluster_info(top_recall_idx, top_recall_path)
-        top_nmi_path = base_path + 'max_nmis/'
-        fi.rmtree(top_nmi_path)
-        dump_cluster_info(top_nmi_idx, top_nmi_path)
+        # def concat_param_name_values(param_names, param_values):
+        #     if not len(param_names) == len(param_values):
+        #         raise ValueError('inconsistent param number')
+        #     return '_'.join(['{}_{:<3}'.format(param_names[i], param_values[i]) for i in range(len(param_names))])
+        #
+        # top_rank = 30
+        # true_cluster = [i for i in range(12)]
+        # tbl_recall_list = [ClusterService.event_table_recall(label, res_list[i][1], true_cluster) for i in range(param_num)]
+        # top_recall_idx = pd.DataFrame(data=[(i, tbl_recall_list[i][1], res_list[i][3][-1]) for i in range(param_num)])\
+        #     .sort_values(by=[1, 2], ascending=False).loc[:, 0][:top_rank]
+        # top_nmi_idx = np.argsort([res_list[i][3][-1] for i in range(param_num)])[-1:-top_rank-1:-1]
+        #
+        # def dump_cluster_info(top_idx_list_, base_path_):
+        #     for rank, idx in enumerate(top_idx_list_):
+        #         res_dir = '{}{}_recall_{:0<6}_nmi_{:0<6}_{}/'.\
+        #             format(base_path_, rank, round(tbl_recall_list[idx][1], 4), round(res_list[idx][3][-1], 4),
+        #                    concat_param_name_values(column_name, hyperparams[idx]))
+        #         fi.makedirs(res_dir)
+        #         tw_topic_arr = ClusterService.create_clusters_with_labels(twarr, res_list[idx][1])
+        #         for i, _twarr in enumerate(tw_topic_arr):
+        #             if not len(_twarr) == 0:
+        #                 fu.dump_array(res_dir + str(i) + '.txt', [tw[tk.key_text] for tw in _twarr])
+        #         cluster_table = tbl_recall_list[idx][0]
+        #         cluster_table.to_csv(res_dir + 'table.csv')
+        #
+        # top_recall_path = base_path + 'max_recalls/'
+        # fi.rmtree(top_recall_path)
+        # dump_cluster_info(top_recall_idx, top_recall_path)
+        # top_nmi_path = base_path + 'max_nmis/'
+        # fi.rmtree(top_nmi_path)
+        # dump_cluster_info(top_nmi_idx, top_nmi_path)
         return 0, 0
     
     def GSDMM_twarr(self, alpha, etap, etac, etav, etah, K, iter_num):

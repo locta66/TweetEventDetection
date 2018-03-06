@@ -52,44 +52,44 @@ class GSDPMM:
             plt.grid(True, '-', color='#333333', lw=0.8)
             plt.savefig(getcfg().dc_test + 'GSDPMM/GSDPMM_alpha=' + title + '.png')
         
-        top_K = 20
-        alpha_idx = 0
-        beta_idx = 1
-        tw_cluster_pred_idx = 3
-        nmi_idx = 5
-        table_idx = 7
-        recall_idx = 8
-        
-        event_cluster_label = [i for i in range(12)]
-        summary_list = [hyperparams[i] + res_list[i] +
-                        ClusterService.event_table_recall(label, res_list[i][1], event_cluster_label)
-                        for i in range(param_num)]
-        top_recall_summary_list = [summary_list[i] for i in
-                                   np.argsort([summary[recall_idx] for summary in summary_list])[::-1][
-                                   :top_K]]
-        top_nmi_summary_list = [summary_list[i] for i in
-                                np.argsort([summary[nmi_idx][-1] for summary in summary_list])[::-1][:top_K]]
-        
-        top_nmi_path = getcfg().dc_test + 'GSDPMM/max_nmis/'
-        top_recall_path = getcfg().dc_test + 'GSDPMM/max_recalls/'
-        fi.rmtree(top_nmi_path)
-        fi.rmtree(top_recall_path)
-        
-        def dump_cluster_info(summary_list, base_path):
-            for rank, summary in enumerate(summary_list):
-                res_dir = base_path + '{}_recall_{}_nmi_{}_alpha_{}_beta_{}/'. \
-                    format(rank, round(summary[recall_idx], 6), round(summary[nmi_idx][-1], 6),
-                           summary[alpha_idx], summary[beta_idx])
-                fi.makedirs(res_dir)
-                tw_topic_arr = ClusterService.create_clusters_with_labels(twarr, summary[tw_cluster_pred_idx])
-                for i, _twarr in enumerate(tw_topic_arr):
-                    if not len(_twarr) == 0:
-                        fu.dump_array(res_dir + str(i) + '.txt', [tw[tk.key_text] for tw in _twarr])
-                table = summary[table_idx]
-                table.to_csv(res_dir + 'table.csv')
-        
-        dump_cluster_info(top_recall_summary_list, top_recall_path)
-        dump_cluster_info(top_nmi_summary_list, top_nmi_path)
+        # top_K = 20
+        # alpha_idx = 0
+        # beta_idx = 1
+        # tw_cluster_pred_idx = 3
+        # nmi_idx = 5
+        # table_idx = 7
+        # recall_idx = 8
+        #
+        # event_cluster_label = [i for i in range(12)]
+        # summary_list = [hyperparams[i] + res_list[i] +
+        #                 ClusterService.event_table_recall(label, res_list[i][1], event_cluster_label)
+        #                 for i in range(param_num)]
+        # top_recall_summary_list = [summary_list[i] for i in
+        #                            np.argsort([summary[recall_idx] for summary in summary_list])[::-1][
+        #                            :top_K]]
+        # top_nmi_summary_list = [summary_list[i] for i in
+        #                         np.argsort([summary[nmi_idx][-1] for summary in summary_list])[::-1][:top_K]]
+        #
+        # top_nmi_path = getcfg().dc_test + 'GSDPMM/max_nmis/'
+        # top_recall_path = getcfg().dc_test + 'GSDPMM/max_recalls/'
+        # fi.rmtree(top_nmi_path)
+        # fi.rmtree(top_recall_path)
+        #
+        # def dump_cluster_info(summary_list, base_path):
+        #     for rank, summary in enumerate(summary_list):
+        #         res_dir = base_path + '{}_recall_{}_nmi_{}_alpha_{}_beta_{}/'. \
+        #             format(rank, round(summary[recall_idx], 6), round(summary[nmi_idx][-1], 6),
+        #                    summary[alpha_idx], summary[beta_idx])
+        #         fi.makedirs(res_dir)
+        #         tw_topic_arr = ClusterService.create_clusters_with_labels(twarr, summary[tw_cluster_pred_idx])
+        #         for i, _twarr in enumerate(tw_topic_arr):
+        #             if not len(_twarr) == 0:
+        #                 fu.dump_array(res_dir + str(i) + '.txt', [tw[tk.key_text] for tw in _twarr])
+        #         table = summary[table_idx]
+        #         table.to_csv(res_dir + 'table.csv')
+        #
+        # dump_cluster_info(top_recall_summary_list, top_recall_path)
+        # dump_cluster_info(top_nmi_summary_list, top_nmi_path)
         return None, None
     
     @staticmethod

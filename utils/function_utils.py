@@ -23,12 +23,19 @@ def sync_real_time_counter(info):
     return time_counter
 
 
+def write_lines(file, lines, mode='w'):
+    with open(file, mode) as fp:
+        fp.writelines(lines)
+
+
 def dump_array(file, array, overwrite=True, sort_keys=False):
     if type(array) is not list:
-        raise TypeError("Dict array not of valid type.")
+        raise TypeError("Input should be a list.")
+    lines = list()
+    for element in array:
+        lines.append(json.dumps(element, sort_keys=sort_keys) + '\n')
     with open(file, 'w' if overwrite else 'a') as fp:
-        for element in array:
-            fp.write(json.dumps(element, sort_keys=sort_keys) + '\n')
+        fp.writelines(lines)
 
 
 def load_array(file):

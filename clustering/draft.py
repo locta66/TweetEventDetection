@@ -3,9 +3,9 @@ import multiprocessing as mp
 
 pool = mp.Pool(processes=1)
 res_getter = list()
-for i in range(3):
-    res = pool.apply_async(func=M.printmyself, args=(m, 'shit', dc))
-    res_getter.append(res)
+# for i in range(3):
+#     res = pool.apply_async(func=M.printmyself, args=(m, 'shit', dc))
+#     res_getter.append(res)
 
 pool.close()
 pool.join()
@@ -17,7 +17,7 @@ print(results)
 
 import utils.file_iterator as fi
 from utils.multiprocess_utils import multi_process
-from utils.array_utils import merge_list
+from utils.array_utils import merge_array
 from sklearn.cluster import dbscan
 import numpy as np
 import Levenshtein
@@ -60,12 +60,12 @@ def twarr_dist_pairs_multi(twarr):
     pairs_blocks = multi_process(dist_pairs, [(twarr, point) for point in point_lists])
     for tw in twarr:
         del tw['nouse']
-    return merge_list(pairs_blocks)
+    return merge_array(pairs_blocks)
 
 
 def dist_pairs(twarr, points):
-    return merge_list([[(i, j, text_dist_less_than(twarr[i]['temp'], twarr[j]['temp']))
-                        for j in range(i + 1, len(twarr))] for i in points])
+    return merge_array([[(i, j, text_dist_less_than(twarr[i]['temp'], twarr[j]['temp']))
+                         for j in range(i + 1, len(twarr))] for i in points])
 
 
 def text_dist_less_than(text1, text2, threshold=0.2):
@@ -152,7 +152,7 @@ re.findall(r'([a-zA-Z_-]+|\d+\.\d+|\d+)', s)
 from sklearn.feature_extraction.text import CountVectorizer as CV
 cv = CV(analyzer='word', token_pattern=r'([a-zA-Z_-]+|\d+\.\d+|\d+)',
         stop_words=stop_words, max_df=0.8, min_df=1e-5)
-cv.fit_transform(textarr)
+# cv.fit_transform(textarr)
 
 
 # 这一行的效果和直接运行cProfile.run("foo()")的显示效果是一样的
@@ -170,43 +170,9 @@ p = pstats.Stats("res")
 p.strip_dirs( ).sort_stats("cumulative").print_stats(50)
 
 
-内容 功能 效果 可视化
-
-
 import spacy
 nlp = spacy.load('en_core_web_lg')
 doc = nlp('Large parts of this manual originate from Travis E. Oliphant’s book Guide to NumPy (which generously entered Public Domain in August 2008). The reference documentation for many of the functions are written by numerous contributors and developers of NumPy, both prior to and during the NumPy Documentation Marathon.')
 [ent.label_ for ent in doc.ents]
 print([(t.text, t.ent_type_, t.tag_) for t in doc])
-
-
-import time
-
-a = 1
-s = time.time()
-count = 0
-for i in range(1 << 20):
-    count += 1
-
-print(time.time() -s)
-s = time.time()
-
-d = dict()
-count = 0
-for i in range(1 << 20):
-    count += 1
-
-print(time.time() -s)
-
-
-class AA:
-    def __init__(self):
-        self.a = 0
-    
-    def __call__(self, *args, **kwargs):
-        print('qwer')
-
-def f(asd = AA()()):
-    print('f')
-
 

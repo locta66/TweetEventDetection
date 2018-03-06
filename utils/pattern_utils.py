@@ -67,13 +67,13 @@ dupspace_pattern = PatternHolder([(r'\s\s+', ' '), ])
 nonascii_pattern = PatternHolder([(r'[^\x00-\x7f]', '.'), ])
 
 
-def find_pattern(pattern, string): return re.findall(pattern, string)
+def find_pattern(pattern, string, flags=re.I): return re.findall(pattern, string, flags)
 
 
-def search_pattern(pattern, string): return re.search(pattern, string)
+def search_pattern(pattern, string, flags=re.I): return re.search(pattern, string, flags)
 
 
-def sub_pattern(pattern, repl, string): return re.sub(pattern, repl, string)
+def sub_pattern(pattern, repl, string, flags=re.I): return re.sub(pattern, repl, string, flags)
 
 
 def remove_non_ascii(text): return nonascii_pattern.apply_patterns(text)

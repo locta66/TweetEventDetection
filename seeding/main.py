@@ -214,7 +214,6 @@ cntr_parser = CounterParser(cntr_queries, theme='Terrorist', description='Not Ev
 # ], theme='NaturalDisaster', description='Describes event of natural disaster events')
 
 
-@fu.sync_real_time_counter('main')
 def main(args):
     parse_query_list(getcfg().origin_path, '/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/',
                      seed_queries, n_process=20)

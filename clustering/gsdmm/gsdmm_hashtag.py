@@ -6,7 +6,7 @@ import utils.tweet_keys as tk
 import utils.array_utils as au
 import utils.function_utils as fu
 import utils.file_iterator as fi
-from clustering.cluster_service import ClusterService
+import clustering.cluster_service as cs
 
 import numpy as np
 import pandas as pd
@@ -54,46 +54,46 @@ class GSDMMHashtag:
             plt.grid(True, '-', color='#333333', lw=0.8)
             plt.savefig('./GSDMM_ht/GSDMM_ht_' + title + '.png')
         
-        top_ramk = 20
-        alpha_idx = 0
-        beta_idx = 1
-        gamma_idx = 2
-        K_idx = 3
-        tw_cluster_pred_idx = 6
-        nmi_idx = 8
-        table_idx = 9
-        recall_idx = 10
-        
-        event_cluster_label = [i for i in range(12)]
-        summary_list = [hyperparams[i] + res_list[i] +
-                        ClusterService.event_table_recall(label, res_list[i][2], event_cluster_label)
-                        for i in range(param_num)]
-        top_recall_summary_list = [summary_list[i] for i in
-                                   np.argsort([summary[recall_idx] for summary in summary_list])[::-1][
-                                   :top_ramk]]
-        top_nmi_summary_list = [summary_list[i] for i in
-                                np.argsort([summary[nmi_idx][-1] for summary in summary_list])[::-1][
-                                :top_ramk]]
-        
-        def dump_cluster_info(summary_list_, base_path):
-            for rank, summary in enumerate(summary_list_):
-                res_dir = base_path + '{}_recall_{:0<6}_nmi_{:0<6}_alpha_{:0<6}_beta_{:0<6}_gamma_{:0<6}_K_{}/'. \
-                    format(rank, round(summary[recall_idx], 6), round(summary[nmi_idx][-1], 6),
-                           summary[alpha_idx], summary[beta_idx], summary[gamma_idx], summary[K_idx])
-                fi.makedirs(res_dir)
-                tw_topic_arr = ClusterService.create_clusters_with_labels(twarr, summary[tw_cluster_pred_idx])
-                for i, _twarr in enumerate(tw_topic_arr):
-                    if not len(_twarr) == 0:
-                        fu.dump_array(res_dir + str(i) + '.txt', [tw[tk.key_text] for tw in _twarr])
-                table = summary[table_idx]
-                table.to_csv(res_dir + 'table.csv')
-        
-        top_recall_path = '/home/nfs/cdong/tw/testdata/cdong/GSDMM_ht/max_recalls/'
-        fi.rmtree(top_recall_path)
-        dump_cluster_info(top_recall_summary_list, top_recall_path)
-        top_nmi_path = '/home/nfs/cdong/tw/testdata/cdong/GSDMM_ht/max_nmis/'
-        fi.rmtree(top_nmi_path)
-        dump_cluster_info(top_nmi_summary_list, top_nmi_path)
+        # top_ramk = 20
+        # alpha_idx = 0
+        # beta_idx = 1
+        # gamma_idx = 2
+        # K_idx = 3
+        # tw_cluster_pred_idx = 6
+        # nmi_idx = 8
+        # table_idx = 9
+        # recall_idx = 10
+        #
+        # event_cluster_label = [i for i in range(12)]
+        # summary_list = [hyperparams[i] + res_list[i] +
+        #                 ClusterService.event_table_recall(label, res_list[i][2], event_cluster_label)
+        #                 for i in range(param_num)]
+        # top_recall_summary_list = [summary_list[i] for i in
+        #                            np.argsort([summary[recall_idx] for summary in summary_list])[::-1][
+        #                            :top_ramk]]
+        # top_nmi_summary_list = [summary_list[i] for i in
+        #                         np.argsort([summary[nmi_idx][-1] for summary in summary_list])[::-1][
+        #                         :top_ramk]]
+        #
+        # def dump_cluster_info(summary_list_, base_path):
+        #     for rank, summary in enumerate(summary_list_):
+        #         res_dir = base_path + '{}_recall_{:0<6}_nmi_{:0<6}_alpha_{:0<6}_beta_{:0<6}_gamma_{:0<6}_K_{}/'. \
+        #             format(rank, round(summary[recall_idx], 6), round(summary[nmi_idx][-1], 6),
+        #                    summary[alpha_idx], summary[beta_idx], summary[gamma_idx], summary[K_idx])
+        #         fi.makedirs(res_dir)
+        #         tw_topic_arr = ClusterService.create_clusters_with_labels(twarr, summary[tw_cluster_pred_idx])
+        #         for i, _twarr in enumerate(tw_topic_arr):
+        #             if not len(_twarr) == 0:
+        #                 fu.dump_array(res_dir + str(i) + '.txt', [tw[tk.key_text] for tw in _twarr])
+        #         table = summary[table_idx]
+        #         table.to_csv(res_dir + 'table.csv')
+        #
+        # top_recall_path = '/home/nfs/cdong/tw/testdata/cdong/GSDMM_ht/max_recalls/'
+        # fi.rmtree(top_recall_path)
+        # dump_cluster_info(top_recall_summary_list, top_recall_path)
+        # top_nmi_path = '/home/nfs/cdong/tw/testdata/cdong/GSDMM_ht/max_nmis/'
+        # fi.rmtree(top_nmi_path)
+        # dump_cluster_info(top_nmi_summary_list, top_nmi_path)
         return None, None
     
     @staticmethod
@@ -124,7 +124,7 @@ class GSDMMHashtag:
             wordlabels = tw[ner_pos_token]
             for i in range(len(wordlabels) - 1, -1, -1):
                 key = wordlabels[i][0] = wordlabels[i][0].lower().strip()  # hashtags are reserved here
-                if not ClusterService.is_valid_keyword(key):
+                if not cs.is_valid_keyword(key):
                     del wordlabels[i]
                 else:
                     if key.startswith('#'):

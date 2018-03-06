@@ -35,6 +35,7 @@ prop_dict, comm_dict, verb_dict, hstg_dict = [IfdGetter(post_file) for post_file
 
 if __name__ == '__main__':
     import utils.pattern_utils as pu
+    
     def word_remove(word, freq):
         if pu.search_pattern(r'!?<>.,&\'`\^*', word) is not None or freq < 10:
             return True

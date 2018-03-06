@@ -6,18 +6,9 @@ import utils.function_utils as fu
 import utils.file_iterator as fi
 import utils.tweet_keys as tk
 import utils.multiprocess_utils as mu
+import utils.ark_service_proxy as ark
 import utils.array_utils as au
-# import utils.spacy_utils as su
-
-
-def func1():
-    base = '/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/'
-    subs = fi.listchildren(base, fi.TYPE_FILE)
-    files = [base + sub for sub in subs]
-    file = files
-    res_list = mu.multi_process(multi, [(file, ) for file in files])
-    word_type = au.merge_list(res_list)
-    # fu.dump_array('word_type.txt', word_type)
+import re
 
 
 def multi(file):
@@ -37,17 +28,16 @@ def func2():
     twarr_blocks = fu.load_array(file)
     for tw in twarr_blocks[19]:
         print(tw[tk.key_text])
-    print()
-    print()
-    for tw in twarr_blocks[56]:
-        print(tw[tk.key_text])
-    print()
-    print()
-    for tw in twarr_blocks[70]:
-        print(tw[tk.key_text])
-    print()
-    print()
-    # print(len(twarr_blocks[19]), len(twarr_blocks[56]), len(twarr_blocks[70]), )
+    # print()
+    # print()
+    # for tw in twarr_blocks[56]:
+    #     print(tw[tk.key_text])
+    # print()
+    # print()
+    # for tw in twarr_blocks[70]:
+    #     print(tw[tk.key_text])
+    # print()
+    # print()
 
 
 def func3():
@@ -102,19 +92,42 @@ def func3():
     # print(clf.predict(feature))
 
 
+def identify_korea():
+    file = '/home/nfs/cdong/tw/seeding/NorthKorea/korea.json'
+    twarr_blocks = fu.load_array(file)
+    twarr = au.merge_array(twarr_blocks)
+    for tw in twarr:
+        text = tw[tk.key_text]
+        if not re.search('korea', text, flags=re.I):
+            print(text)
+
 
 if __name__ == '__main__':
+    func2()
+    exit()
     # from multiprocessing import Process, Value, Array
     # twarr = fu.load_array('/home/nfs/yangl/event_detection/testdata/event2012/sorted_relevant.json')[:10]
     
-    file = '/home/nfs/cdong/tw/src/clustering/data/events2012.txt'
-    file = '/home/nfs/cdong/tw/src/clustering/data/events.txt'
-    file = '/home/nfs/cdong/tw/src/clustering/data/events2016.txt'
+    # file = '/home/nfs/cdong/tw/src/clustering/data/events2012.txt'
+    # file = '/home/nfs/cdong/tw/src/clustering/data/events.txt'
+    # file = '/home/nfs/cdong/tw/src/clustering/data/events2016.txt'
     # print(len(au.merge_list(fu.load_array(file))))
-    file = '/home/nfs/cdong/tw/src/clustering/data/falseevents.txt'
-    print(len(fu.load_array(file)))
+    # file = '/home/nfs/cdong/tw/src/clustering/data/falseevents.txt'
+    # print(len(fu.load_array(file)))
+    
+    # process_korea()
+    identify_korea()
+    exit()
     
     # twarr = fu.load_array('/home/nfs/yangl/event_detection/testdata/event2012/sorted_relevant.json')
     # twarr = fu.load_array('/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_counter.sum')
     # print(len(twarr))
     # func2()
+    
+    from collections import Counter
+    from clustering.main2clusterer import create_korea_batches_through_time
+    
+    tw_batches, lb_batches = create_korea_batches_through_time(1000)
+    for lbb in lb_batches:
+        c = Counter(lbb)
+        print([(eid, c[eid]) for eid in sorted(c.keys())])

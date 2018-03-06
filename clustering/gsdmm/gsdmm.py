@@ -6,7 +6,7 @@ from config.configure import getcfg
 import utils.tweet_keys as tk
 import utils.array_utils as au
 import utils.function_utils as fu
-from clustering.cluster_service import ClusterService
+import clustering.cluster_service as cs
 
 import numpy as np
 import pandas as pd
@@ -71,7 +71,7 @@ class GSDMM:
             wordlabels = tw[ner_pos_token]
             for i in range(len(wordlabels) - 1, -1, -1):
                 wordlabels[i][0] = wordlabels[i][0].lower().strip('#').strip()
-                if not ClusterService.is_valid_keyword(wordlabels[i][0]):
+                if not cs.is_valid_keyword(wordlabels[i][0]):
                     del wordlabels[i]
             for wordlabel in wordlabels:
                 word = wordlabel[0]

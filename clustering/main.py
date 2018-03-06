@@ -67,42 +67,15 @@ test_parser_1 = TestParser([
     #  ['2016', '8', '7'], ['2016', '8', '10']],
     # [{'all_of': ['PKK', 'Turkey', ], 'any_of': ['attack', '\Wbomb', 'soldier', ]},
     #  ['2016', '8', '9'], ['2016', '8', '14']],
-
 ], theme='Terrorist', description='', outterid='1')
 
 
 def main(args):
-    import utils.file_iterator as fi
-    import utils.tweet_utils as tu
-    import utils.ark_service_proxy as ark
-    tu.start_ner_service()
-    base = '/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/'
-    subs = fi.listchildren(base, fi.TYPE_FILE)
-    twarr_list = []
-    for sub in subs:
-        twarr = fu.load_array(base + sub)
-        twarr = tu.twarr_ner(twarr)
-        twarr = ark.twarr_ark(twarr)
-        twarr_list.append(twarr)
-    fu.dump_array('/home/nfs/cdong/tw/seeding/Terrorist/queried/event2016.txt', twarr_list)
-    return
-    
     parser = test_parser_1
     for p in [seed_parser, test_parser_1]:
         p.set_base_path(getcfg().seed_path)
-    
-    # if args.query:
-    #     exec_query(args.summary_path, parser)
-    # if args.pred:
-    #     exec_classification(seed_parser, test_parser_1)
-    if args.ner:
-        exec_ner(parser)
-    if args.clu:
-        exec_cluster(parser)
     if args.temp:
         exec_temp(parser)
-    if args.anly:
-        exec_analyze(parser)
 
 
 def parse_args():
@@ -111,14 +84,7 @@ def parse_args():
                         help='Filtered tweets organized in days as file XX_XX_XX_XX.sum under this path.')
     parser.add_argument('--seed_path', nargs='?', default=getcfg().seed_path,
                         help='Path for queried seed instance, trained parameters and corresponding dict.')
-    
-    parser.add_argument('--test', action='store_true', default=False, help='If perform actions upon test data.')
-    parser.add_argument('--query', action='store_true', default=False, help='If query tweets from summarized tw files.')
-    parser.add_argument('--ner', action='store_true', default=False, help='If perform ner on queried file.')
-    parser.add_argument('--pred', action='store_true', default=False, help='If perform prediction on the test data.')
-    parser.add_argument('--clu', action='store_true', default=False, help='If perform clustering on some tweet stream.')
     parser.add_argument('--temp', action='store_true', default=False, help='Just a temp function, maybe for making data.')
-    parser.add_argument('--anly', action='store_true', default=False, help='analyze the clustering results.')
     return parser.parse_args()
 
 

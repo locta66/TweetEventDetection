@@ -1,8 +1,16 @@
 import numpy as np
 from sklearn import metrics
 from scipy import sparse
+from sklearn import preprocessing
 
 import utils.multiprocess_utils as mu
+
+
+def merge_array(array):
+    res_list = list()
+    for arr in array:
+        res_list.extend(arr)
+    return res_list
 
 
 def random_array_items(array, item_num, keep_order=True):
@@ -74,57 +82,48 @@ def choice(array):
     return np.random.choice(array)
 
 
-def cosine_similarity(x, y):
-    return metrics.pairwise.cosine_similarity(x, y)
+# def scale(x):
+#     return preprocessing.scale(x)
 
 
-def cosine_matrix_single(contract_mtx, x_y_pairs):
-    matrix = contract_mtx.todense()
-    for idx, (x, y) in enumerate(x_y_pairs):
-        vecx = matrix[x].reshape([1, -1])
-        vecy = matrix[y].reshape([1, -1])
-        x_y_pairs[idx].append(cosine_similarity(vecx, vecy)[0][0])
-    return x_y_pairs
+# def cosine_similarity(x, y):
+#     return metrics.pairwise.cosine_similarity(x, y)
+#
+#
+# def cosine_matrix_single(contract_mtx, x_y_pairs):
+#     matrix = contract_mtx.todense()
+#     for idx, (x, y) in enumerate(x_y_pairs):
+#         vecx = matrix[x].reshape([1, -1])
+#         vecy = matrix[y].reshape([1, -1])
+#         x_y_pairs[idx].append(cosine_similarity(vecx, vecy)[0][0])
+#     return x_y_pairs
 
 
-def cosine_matrix_multi(vec_matrix, process_num=8):
-    vec_num = len(vec_matrix)
-    x_y_pairs = [[i, j] for i in range(1, vec_num - 1) for j in range(i + 1, vec_num)]
-    pairs_block = array_partition(x_y_pairs, [1] * process_num, random=False)
-    contract_mtx = sparse.csr_matrix(vec_matrix)
-    res_list = mu.multi_process(cosine_matrix_single, [(contract_mtx, pairs) for pairs in pairs_block])
-    res_list = merge_list(res_list)
-    cosine_matrix = np.zeros([vec_num, vec_num])
-    for x, y, cos in res_list:
-        cosine_matrix[x][y] = cosine_matrix[y][x] = cos
-    return cosine_matrix
+def cosine_similarity(vecarr1, vecarr2=None):
+    return metrics.pairwise.cosine_similarity(vecarr1, vecarr2)
 
 
-if __name__ == '__main__':
-    matrix = [
-        [1, 0, 0],
-        [3, 1, 0],
-        [0, 0, 2],
-        [0, 4, 0],
-        [0, 8, 1],
-        [5, 4, 3],
-    ]
-    cosine_matrix_multi(matrix, process_num=2)
-    # print(cosine_similarity(np.array([1, 2, 5, 4]).reshape((1, -1)), [[1, 2, 3, 4.1], [5, 1.2, 5, 1.2]]))
+def cohesion_score(vecarr):
+    vecnum = len(vecarr)
+    if vecnum <= 1:
+        return None
+    cos_sim_mtx = cosine_similarity(vecarr)
+    cohesion_score = paircnt = 0
+    for i in range(0, vecnum - 1):
+        for j in range(i + 1, vecnum):
+            cohesion_score += cos_sim_mtx[i, j]
+            paircnt += 1
+    assert paircnt == vecnum * (vecnum-1) / 2
+    return cohesion_score / paircnt
 
 
-METHOD_EXTEND = 'extend'
-METHOD_APPEND = 'append'
-_SUPPORTED_MERGE_METHODS = {METHOD_EXTEND, METHOD_APPEND}
-
-
-def merge_list(array, method=METHOD_EXTEND):
-    if method not in _SUPPORTED_MERGE_METHODS:
-        raise ValueError('param method incorrect: {}'.format(method))
-    res = list()
-    for item in array:
-        if method == METHOD_EXTEND:
-            res.extend(item)
-        elif method == METHOD_APPEND:
-            res.append(item)
-    return res
+# if __name__ == '__main__':
+#     matrix = [
+#         [1, 0, 0],
+#         [3, 1, 0],
+#         [0, 0, 2],
+#         [0, 4, 0],
+#         [0, 8, 1],
+#         [5, 4, 3],
+#     ]
+#     cosine_similarity(matrix)

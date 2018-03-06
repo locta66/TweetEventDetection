@@ -5,7 +5,7 @@ default_name = 'main'
 check_points = dict()
 
 
-def check_time(name=default_name, print_func=lambda delta_t: print(delta_t)):
+def check_time(name=default_name, print_func=lambda dt: print('{} s from last check'.format(dt))):
     if name not in check_points:
         check_points[name] = time.time()
         return None

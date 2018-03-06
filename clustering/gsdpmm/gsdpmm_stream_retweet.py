@@ -134,14 +134,14 @@ class GSDPMMStreamRetweet:
         for i in range(iter_num):
             for setid, retwset in noclu_retwset.items():
                 assert retwset.cluster is not None
-                old_cluid = retwset.get_cluid()
+                old_cluid = retwset.get_cluidarr()
                 old_cluster = self.cludict[old_cluid]
                 retwset.set_cluster(None)
                 
                 if old_cluster.twnum == 0:
                     for twh in old_twharr + new_twharr:
                         if twh.retwset.cluster is not None:
-                            assert twh.get_cluid() != old_cluster
+                            assert twh.get_cluidarr() != old_cluster
                     self.cludict.pop(old_cluid)
                 
                 cluid = self.sample(retwset, D, using_max=(i >= iter_num - 1))
@@ -172,11 +172,11 @@ class GSDPMMStreamRetweet:
         #     if twh.retwset is None:
         #         raise ValueError('is None')
         
-        return [int(twh.get_cluid()) for twh in new_twharr]
+        return [int(twh.get_cluidarr()) for twh in new_twharr]
     
     def get_hyperparams_info(self): return 'GSDPMM,stream, alpha={:<5}, beta={:<5}'.format(self.alpha, self.beta)
     
-    def clusters_similarity(self): return ClusterService.cluster_inner_similarity(self.twarr, self.z)
+    # def clusters_similarity(self): return ClusterService.cluster_inner_similarity(self.twarr, self.z)
 
 
 class ClusterHolder:
@@ -271,7 +271,7 @@ class TweetHolder:
     def get_cluid(self):
         if self.retwset is None:
             raise ValueError('_retwset in twh should not be None when getting cluid')
-        return self.retwset.get_cluid()
+        return self.retwset.get_cluidarr()
     
     def tokenize(self):
         self.tokens = IdFreqDict()

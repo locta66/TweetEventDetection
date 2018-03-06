@@ -1,17 +1,17 @@
 import numpy as np
 
-import utils.multiprocess_utils as mu
 import utils.pattern_utils as pu
 import utils.spacy_utils as su
 import utils.array_utils as au
 import utils.tweet_keys as tk
 import utils.tweet_utils as tu
-import utils.timer_utils as tmu
 from utils.id_freq_dict import IdFreqDict
-from clustering.cluster_service import ClusterService
+import clustering.cluster_service as cs
 
 
 class GSDPMMStreamSemanticIFDDynamic:
+    """ Dynamic cluster number, stream, dynamic dictionary, semantic, using ifd """
+    
     def __init__(self, hold_batch_num):
         print(self.__class__.__name__)
         self.alpha = None
@@ -63,9 +63,9 @@ class GSDPMMStreamSemanticIFDDynamic:
     def get_z(self):
         z = list()
         for twh in self.twarr:
-            if twh.cluster is None or twh.get_cluid() not in self.cludict:
+            if twh.cluster is None or twh.get_cluidarr() not in self.cludict:
                 raise ValueError('wrong cluid for twh')
-            z.append(int(twh.get_cluid()))
+            z.append(int(twh.get_cluidarr()))
         return z
     
     def get_label(self):
@@ -179,7 +179,7 @@ class GSDPMMStreamSemanticIFDDynamic:
         valid_corpus_token_set.drop_words_by_condition()
         for old_twh in old_twharr:
             old_twh.validate_tokenize(valid_corpus_token_set)
-            old_cluid = old_twh.get_cluid()
+            old_cluid = old_twh.get_cluidarr()
             assert old_cluid in cludict
             old_twh.cluster = None
             old_twh.update_cluster(cludict[old_cluid])
@@ -205,7 +205,7 @@ class GSDPMMStreamSemanticIFDDynamic:
                     assert len(cluster.twhdict) == 0
                     cludict.pop(cluster.cluid)
                 
-                cluid = self.sample(twh, D, using_max=(i == iter_num-1))
+                cluid = self.sample(twh, D, using_max=(i == iter_num - 1))
                 if cluid > self.max_cluid:
                     self.max_cluid += 1
                     cludict[cluid] = ClusterHolder(self.max_cluid)
@@ -222,13 +222,10 @@ class GSDPMMStreamSemanticIFDDynamic:
         # print('clu twnum distrb:{}'.format([cluster.twnum for cluster in self.cludict.values()]))
         # print(sorted(self.cludict.keys()))
         # # print(self.cludict[0].tokens.word_freq_enumerate())
-        return [int(twh.get_cluid()) for twh in new_twharr]
+        return [int(twh.get_cluidarr()) for twh in new_twharr]
     
     def get_hyperparams_info(self):
         return 'GSDPMMStreamSemanticDynamic, alpha={:<5}, param dict={}'.format(self.alpha, self.p_dict)
-    
-    def clusters_similarity(self):
-        return ClusterService.cluster_inner_similarity(self.twarr, self.get_z())
     
     def clusters_tfidf_similarity(self, file_name):
         import pandas as pd
@@ -293,7 +290,7 @@ class GSDPMMStreamSemanticIFDDynamic:
                 clu_ifd = self.cludict[cluid].token_set.get(k_type)
                 for word, freq in clu_ifd.word_freq_enumerate():
                     clu_vec[valid_ifd.word2id(word)] = freq
-                type2vecarr[k_type] = np.concatenate([type2vecarr[k_type], clu_vec.reshape([1, -1])])\
+                type2vecarr[k_type] = np.concatenate([type2vecarr[k_type], clu_vec.reshape([1, -1])]) \
                     if type2vecarr[k_type] is not None else clu_vec.reshape([1, -1])
             print(k_type, type2vecarr[k_type].shape)
         """ a matrix per type """
@@ -302,7 +299,8 @@ class GSDPMMStreamSemanticIFDDynamic:
         for k_type in TokenSet.KEY_LIST:
             if 0 in type2vecarr[k_type].shape:
                 continue
-            cosmtx = au.cosine_matrix_multi([vec.reshape([-1]) for vec in type2vecarr[k_type]], process_num=16)
+            cosmtx = au.cosine_similarity([vec.reshape([-1]) for vec in type2vecarr[k_type]],
+                                          process_num=16)
             cosine_matrix += cosmtx * w_dict[k_type]
         
         """ ###  ### """
@@ -322,7 +320,7 @@ class GSDPMMStreamSemanticIFDDynamic:
         """ find representative label for every cluster """
         cluid2label = dict()
         rep_score = 0.7
-        df = ClusterService.cluid_label_table([int(i) for i in self.label], [int(i) for i in self.z])
+        df = cs.cluid_label_table([int(i) for i in self.label], [int(i) for i in self.z])
         for cluid, row in df.iterrows():
             clu_twnum = sum(row.values)
             assert clu_twnum == self.cludict[cluid].twnum
@@ -364,8 +362,6 @@ class GSDPMMStreamSemanticIFDDynamic:
         # tmu.check_time(print_func=lambda dt: print('verify top sim. and rep. label dt={}'.format(dt)))
     
     def clusters_semantic_similarity(self, file_name):
-        import pandas as pd
-        import utils.function_utils as fu
         """ one matrix per type """
         cluid_arr = sorted(self.cludict.keys())
         clu_num = len(cluid_arr)
@@ -389,13 +385,14 @@ class GSDPMMStreamSemanticIFDDynamic:
             if 0 in vecmtx.shape:
                 cosmtx = np.zeros([clu_num, clu_num])
             else:
-                cosmtx = au.cosine_matrix_multi(vecmtx, process_num=16)
+                cosmtx = au.cosine_similarity(vecmtx)
             print(cosmtx.shape)
             type2cosmtx[k_type] = cosmtx
         """ find representative label for every cluster """
         cluid2label = dict()
         rep_score = 0.7
-        df = ClusterService.cluid_label_table([int(i) for i in self.get_label()], [int(i) for i in self.get_z()])
+        df = cs.cluid_label_table([int(i) for i in self.get_label()],
+                                              [int(i) for i in self.get_z()])
         for cluid, row in df.iterrows():
             clu_twnum = sum(row.values)
             assert clu_twnum == self.cludict[cluid].twnum
@@ -419,11 +416,12 @@ class GSDPMMStreamSemanticIFDDynamic:
         for i in range(1, clu_num):
             cluid_i = cluid_arr[i]
             cluid_i_lb = cluid2label[cluid_i]
-            for j in range(i+1, clu_num):
+            for j in range(i + 1, clu_num):
                 cluid_j = cluid_arr[j]
                 cluid_j_lb = cluid2label[cluid_j]
                 cos_sim_ij = [type2cosmtx[k_type][cluid_i][cluid_j] for k_type in TokenSet.KEY_LIST]
-                print(cos_sim_ij, au.cosine_similarity(type2cluvecs[k_type][cluid_i], type2cluvecs[k_type][cluid_j]))
+                print(cos_sim_ij,
+                      au.cosine_similarity(type2cluvecs[k_type][cluid_i], type2cluvecs[k_type][cluid_j]))
                 print()
 
 
@@ -462,17 +460,23 @@ class TweetHolder:
         self.valid_token_set = TokenSet()
         self.orgn_token_set.categorize(self.tw[tk.key_spacy])
     
-    def __contains__(self, key): return key in self.tw
+    def __contains__(self, key):
+        return key in self.tw
     
-    def __getitem__(self, key): return self.get(key)
+    def __getitem__(self, key):
+        return self.get(key)
     
-    def __setitem__(self, key, value): self.setdefault(key, value)
+    def __setitem__(self, key, value):
+        self.setdefault(key, value)
     
-    def get(self, key): return self.tw.get(key, None)
+    def get(self, key):
+        return self.tw.get(key, None)
     
-    def setdefault(self, key, value): self.tw.setdefault(key, value)
+    def setdefault(self, key, value):
+        self.tw.setdefault(key, value)
     
-    def get_cluid(self): return self.cluster.cluid
+    def get_cluid(self):
+        return self.cluster.cluid
     
     def validate_tokenize(self, valid_corpus_token_set):
         self.valid_token_set.validate_from_tokensets(self.orgn_token_set, valid_corpus_token_set)
@@ -492,7 +496,8 @@ class TokenSet:
     def __init__(self):
         self.type_ifd_dict = dict([(k_type, IdFreqDict()) for k_type in TokenSet.KEY_LIST])
     
-    def get(self, k_type): return self.type_ifd_dict[k_type]
+    def get(self, k_type):
+        return self.type_ifd_dict[k_type]
     
     def reset_id(self):
         for k_type in TokenSet.KEY_LIST:

@@ -2,8 +2,7 @@ import numpy as np
 
 import utils.array_utils as au
 import utils.tweet_utils as tu
-from clustering.cluster_service import ClusterService
-from clustering.gsdmm_semantic import SemanticClusterer
+from clustering.gsdmm.gsdmm_semantic import SemanticClusterer
 
 
 class GSDMMSemanticStream(SemanticClusterer):
@@ -129,5 +128,5 @@ class GSDMMSemanticStream(SemanticClusterer):
         return 'GSDMM,semantic,stream, alpha={},etap={},etac={},etav={},etah={},K={}'.\
             format(self.alpha, self.etap, self.etac, self.etav, self.etah, self.K)
     
-    def clusters_similarity(self):
-        return ClusterService.cluster_inner_similarity(self.twarr, self.z)
+    # def clusters_similarity(self):
+    #     return ClusterService.cluster_inner_similarity(self.twarr, self.z)

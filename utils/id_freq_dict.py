@@ -90,15 +90,15 @@ class IdFreqDict:
             self._word_freq_enum = [(word, self._word2id[word][K_FREQ]) for word in self.vocabulary()]
         return self._word_freq_enum
     
-    def merge_freq_from(self, other_id_freq_dict):
+    def merge_freq_from(self, other_id_freq_dict, newest=True):
         pre_freq = self._freq_sum
-        for other_word, other_freq in other_id_freq_dict.word_freq_enumerate():
+        for other_word, other_freq in other_id_freq_dict.word_freq_enumerate(newest):
             self.count_word(other_word, other_freq)
         return self._freq_sum - pre_freq
     
-    def drop_freq_from(self, other_id_freq_dict):
+    def drop_freq_from(self, other_id_freq_dict, newest=True):
         pre_freq = self._freq_sum
-        for other_word, other_freq in other_id_freq_dict.word_freq_enumerate():
+        for other_word, other_freq in other_id_freq_dict.word_freq_enumerate(newest):
             self.uncount_word(other_word, other_freq)
         return pre_freq - self._freq_sum
     

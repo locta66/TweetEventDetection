@@ -21,7 +21,7 @@ def main(args):
     
     """ retweet chain """
     file ='/home/nfs/cdong/tw/seeding/Terrorist/queried/event2016.txt'
-    twarr = utils.array_utils.merge_list(fu.load_array(file))
+    twarr = utils.array_utils.merge_array(fu.load_array(file))
     rechain_dict = dict()
     for idx, tw in enumerate(twarr):
         twid, retwid = tw[tk.key_id], tu.in_reply_to(tw)

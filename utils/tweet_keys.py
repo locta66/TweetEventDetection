@@ -12,6 +12,9 @@ key_ner_pos = 'nerpos'
 key_spacy = 'spacy'
 key_in_reply_to_status_id = 'in_reply_to_status_id'
 
+key_event_label = 'event_label'
+key_event_cluid = 'event_cluid'
+
 
 # ######## 推文属性 ########
 # text

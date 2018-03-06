@@ -38,6 +38,8 @@ class Configure:
         self.post_comm_file = configreader.get(file_module_name, 'post_comm_file')
         self.post_verb_file = configreader.get(file_module_name, 'post_verb_file')
         self.post_hstg_file = configreader.get(file_module_name, 'post_hstg_file')
+        
+        self.ft_terror_model_file = configreader.get(file_module_name, 'ft_terror_model_file')
 
 
 _conf = Configure()

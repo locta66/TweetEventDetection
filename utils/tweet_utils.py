@@ -80,24 +80,16 @@ def weighted_doc_vec(doc):
 def twarr_nlp(twarr,
               do_nlp=lambda tw: tk.key_spacy not in tw,
               get_text=lambda tw: tw.get(tk.key_text),
-              set_doc=lambda tw, doc: tw.setdefault(tk.key_spacy, doc),
-              nlp=None):
+              set_doc=lambda tw, doc: tw.setdefault(tk.key_spacy, doc)):
     do_nlp_idx, textarr = list(), list()
     for twidx, tw in enumerate(twarr):
         if do_nlp(tw):
             do_nlp_idx.append(twidx)
             textarr.append(get_text(tw))
-    if nlp is None:
-        nlp = su.get_nlp()
-    docarr = su.textarr_nlp(textarr, nlp)
+    docarr = su.textarr_nlp(textarr)
     for docidx, twidx in enumerate(do_nlp_idx):
         set_doc(twarr[twidx], docarr[docidx])
     return twarr
-
-
-# doc = su.text_nlp(get_text(tw), nlp)
-# [(token.text, token.ent_type_, token.tag_) for token in doc]
-# [ent.label_ for ent in doc.ents]
 
 
 def cluster_similar_tweets(twarr):
@@ -136,12 +128,12 @@ def twarr_dist_pairs_multi(twarr):
     pairs_blocks = utils.multiprocess_utils.multi_process(dist_pairs, [(twarr, point) for point in point_lists])
     for tw in twarr:
         del tw['nouse']
-    return utils.array_utils.merge_list(pairs_blocks)
+    return utils.array_utils.merge_array(pairs_blocks)
 
 
 def dist_pairs(twarr, points):
-    return utils.array_utils.merge_list([[(i, j, text_dist_less_than(twarr[i]['nouse'], twarr[j]['nouse']))
-                                          for j in range(i + 1, len(twarr))] for i in points])
+    return utils.array_utils.merge_array([[(i, j, text_dist_less_than(twarr[i]['nouse'], twarr[j]['nouse']))
+                                           for j in range(i + 1, len(twarr))] for i in points])
 
 
 def text_dist_less_than(text1, text2, threshold=0.2):

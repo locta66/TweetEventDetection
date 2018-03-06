@@ -5,10 +5,12 @@ import numpy as np
 import utils.array_utils as au
 import utils.tweet_keys as tk
 import utils.tweet_utils as tu
-from clustering.cluster_service import ClusterService
+import clustering.cluster_service as cs
 
 
 class GSDPMMStream:
+    """ Dynamic cluster number, stream, dynamic dictionary, without ifd """
+    
     def __init__(self, hold_batch_num):
         print(self.__class__.__name__)
         self.alpha, self.beta = None, None
@@ -156,6 +158,7 @@ class GSDPMMStream:
     #     return new_z
     
     """ modified GSDPMM_twarr """
+    
     def GSDPMM_twarr(self, old_twarr, old_z, new_twarr, iter_num):
         pos_token = tk.key_ark
         twarr = old_twarr + new_twarr
@@ -165,11 +168,13 @@ class GSDPMMStream:
             tokens = tw[pos_token]
             for i in range(len(tokens) - 1, -1, -1):
                 tokens[i][0] = tokens[i][0].lower().strip('#').strip()
-                if not ClusterService.is_valid_keyword(tokens[i][0]): del tokens[i]
+                if not cs.is_valid_keyword(tokens[i][0]): del tokens[i]
             for wordlabel in tokens:
                 word = wordlabel[0]
-                if word in words: words[word]['freq'] += 1
-                else: words[word] = {'freq': 1, 'id': len(words.keys())}
+                if word in words:
+                    words[word]['freq'] += 1
+                else:
+                    words[word] = {'freq': 1, 'id': len(words.keys())}
         min_df = 3
         for w in list(words.keys()):
             if words[w]['freq'] < min_df: del words[w]
@@ -202,6 +207,7 @@ class GSDPMMStream:
                 n_z[new_cluid] += freq
                 n_zw[new_cluid][words[word]['id']] += freq
         """make sampling using current counting information"""
+        
         def sample_cluster(_tw, cur_iter=None):
             prob = {}
             tw_freq_dict = _tw['dup']
@@ -237,13 +243,13 @@ class GSDPMMStream:
                 for word, freq in freq_dict.items():
                     n_z[old_cluid] -= freq
                     n_zw[old_cluid][words[word]['id']] -= freq
-
+                
                 for _cluid in list(m_z.keys()):
                     if m_z[_cluid] == 0:
                         m_z.pop(_cluid), n_z.pop(_cluid), n_zw.pop(_cluid), K.remove(_cluid)
-
+                
                 new_cluid = sample_cluster(new_twarr[new_d], i)
-
+                
                 if new_cluid > self.max_cluid:
                     new_cluid = self.max_cluid = self.max_cluid + 1
                     m_z[self.max_cluid] = 0
@@ -260,6 +266,7 @@ class GSDPMMStream:
         return new_z
     
     """ with re-tweet chain """
+    
     # def GSDPMM_twarr(self, old_twarr, old_z, new_twarr, iter_num):
     #     pos_token = tk.key_ark
     #     twarr = old_twarr + new_twarr
@@ -389,5 +396,5 @@ class GSDPMMStream:
     def get_hyperparams_info(self):
         return 'GSDPMM,stream, alpha={:<5}, beta={:<5}'.format(self.alpha, self.beta)
     
-    def clusters_similarity(self):
-        return ClusterService.cluster_inner_similarity(self.twarr[:], self.z[:])
+    # def clusters_similarity(self):
+    #     return ClusterService.cluster_inner_similarity(self.twarr[:], self.z[:])

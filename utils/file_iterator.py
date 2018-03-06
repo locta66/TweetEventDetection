@@ -55,6 +55,12 @@ def make_dirs(dir_name):
         os.makedirs(dir_name)
 
 
+def concat_files(file_list, output_file):
+    input_files = ' '.join(file_list)
+    p = os.popen('cat {} > {}'.format(input_files, output_file))
+    p.close()
+
+
 TYPE_DIR = 'dir'
 TYPE_FILE = 'file'
 TYPE_ALL = 'all'
@@ -66,7 +72,8 @@ def listchildren(directory, children_type=TYPE_DIR, pattern=None):
         return None
     directory = add_sep_if_needed(directory)
     children = sorted(os.listdir(directory))
-    children = [c for c in children if pu.search_pattern(pattern, c) is not None] if pattern else children
+    if pattern is not None:
+        children = [c for c in children if pu.search_pattern(pattern, c) is not None]
     if children_type == TYPE_ALL:
         return children
     res = list()

@@ -52,10 +52,12 @@ def multi_process_batch(func, p_num=8, args_list=None, kwargs_list=None):
 class DaemonPool:
     def __init__(self):
         self.service_on = False
+        self.daemon_class = None
         self.daemon_pool = list()
         self._last_task_len = list()
         self._last_batch_len = list()
-        self.daemon_class = None
+    
+    def is_service_on(self): return self.service_on
     
     def start(self, func, pool_size):
         if self.service_on:
@@ -65,7 +67,7 @@ class DaemonPool:
             daemon.start()
             self.daemon_pool.append(daemon)
         self.service_on = True
-
+    
     def end(self):
         if not self.service_on:
             return
@@ -73,8 +75,6 @@ class DaemonPool:
             daeprocess.end()
         self.daemon_pool.clear()
         self.service_on = False
-    
-    def is_service_on(self): return self.service_on
 
 
 class DaemonProcess:
@@ -111,7 +111,7 @@ class CustomDaemonPool(DaemonPool):
     
     def set_batch_input(self, arg_list):
         dpnum = len(self.daemon_pool)
-        innum, count = 0, 0
+        innum = count = 0
         while innum < len(arg_list):
             self.set_input(arg_list[innum: innum + dpnum])
             innum += dpnum
@@ -128,11 +128,11 @@ class CustomDaemonPool(DaemonPool):
 
 
 class CustomDaemonProcess(DaemonProcess):
-    def __init__(self, func, pidx):
+    def __init__(self, func, pidx=0):
         DaemonProcess.__init__(self, func, pidx)
     
     def start(self):
-        self.process = mp.Process(target=self.func, args=(self.inq, self.outq, self.pidx))
+        self.process = mp.Process(target=self.func, args=(self.inq, self.outq))
         self.process.daemon = True
         self.process.start()
     
@@ -149,9 +149,8 @@ class ProxyDaemonPool(DaemonPool):
     def set_input(self, args_list, kwargs_list):
         arg_len = len(args_list)
         self._last_task_len.append(arg_len)
-        daemon_pool = self.daemon_pool
         for idx in range(arg_len):
-            daemon, args, kwargs = daemon_pool[idx], args_list[idx], kwargs_list[idx]
+            daemon, args, kwargs = self.daemon_pool[idx], args_list[idx], kwargs_list[idx]
             daemon.set_input(args, kwargs)
     
     def get_output(self):
@@ -162,9 +161,12 @@ class ProxyDaemonPool(DaemonPool):
             res_list.append(daemon.get_output())
         return res_list
     
-    def set_batch_input(self, args_list, kwargs_list):
+    def set_batch_input(self, args_list, kwargs_list=None):
+        arg_len = len(args_list)
+        if kwargs_list is None:
+            kwargs_list = [{} for _ in range(arg_len)]
         dpnum = len(self.daemon_pool)
-        innum, count = 0, 0
+        innum = count = 0
         while innum < len(args_list):
             self.set_input(args_list[innum: innum + dpnum], kwargs_list[innum: innum + dpnum])
             innum += dpnum
@@ -198,7 +200,8 @@ class ProxyDaemonProcess(DaemonProcess):
         if args is None:
             args = ()
         if kwargs is None:
-            kwargs = {'pidx': self.pidx}
+            # kwargs = {'pidx': self.pidx}
+            kwargs = {}
         self.inq.put(args)
         self.inq.put(kwargs)
     
@@ -214,20 +217,16 @@ class ProxyDaemonProcess(DaemonProcess):
                 break
             result = func(*args, **kwargs)
             outq.put(result)
-        print('noooo')
-
 
 
 import utils.function_utils as fu
 import utils.file_iterator as fi
 import utils.timer_utils as tmu
-def read(inq, outq, _):
+def read(inq, outq):
     while True:
         idx, file = inq.get()
         twarr = fu.load_array(file)
         outq.put([idx, len(twarr)])
-
-
 def read2(idx, file, nothing='p'):
     twarr = fu.load_array(file)
     return [idx, len(twarr)]
@@ -242,7 +241,7 @@ if __name__ == '__main__':
     base = '/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/'
     subs = fi.listchildren(base, children_type=fi.TYPE_FILE)
     files = [base + sub for sub in subs]
-
+    
     tmu.check_time()
     res = multi_process_batch(read2, args_list=[(idx, file) for idx, file in enumerate(files)])
     # dp.set_batch_input([(idx, file) for idx, file in enumerate(files)],
