@@ -89,8 +89,8 @@ class EventTrainer:
         return self.test_using_matrix(classifier, pos_feature_mtx, neg_feature_mtx)
     
     def test_using_matrix(self, classifier, pos_feature_mtx, neg_feature_mtx):
-        pos_preds = classifier.predict(pos_feature_mtx)
-        neg_preds = classifier.predict(neg_feature_mtx)
+        pos_preds = classifier.predict_proba(pos_feature_mtx)
+        neg_preds = classifier.predict_proba(neg_feature_mtx)
         lebels = [1 for _ in pos_preds] + [0 for _ in neg_preds]
         scores = [s1[0] for s1 in pos_preds] + [s2[0] for s2 in neg_preds]
         auc = metrics.roc_auc_score(lebels, scores)

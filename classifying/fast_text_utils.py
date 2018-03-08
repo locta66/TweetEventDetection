@@ -103,7 +103,7 @@ class FastText:
             return all_labels, np.array(all_probs, copy=False)
         else:
             text = check(text)
-            pairs = self.ftobj.predict(text, k, threshold)
+            pairs = self.ftobj.predict_proba(text, k, threshold)
             probs, labels = zip(*pairs)
             return labels, np.array(probs, copy=False)
     
@@ -360,7 +360,7 @@ def binary_predict(target, model, threshold):
         if pu.is_empty_string(text):
             return value_f
         else:
-            pred, score = model.predict(text, threshold=threshold)
+            pred, score = model.predict_proba(text, threshold=threshold)
             return binary_label2value[pred[0]], score[0]
     else:
         # multi-line text classification
@@ -372,7 +372,7 @@ def binary_predict(target, model, threshold):
                 ignore_idx_arr.append(idx)
             else:
                 text_arr.append(text)
-        pred_label_arr, score_arr = model.predict(text_arr, threshold=threshold)
+        pred_label_arr, score_arr = model.predict_proba(text_arr, threshold=threshold)
         assert len(pred_label_arr) == len(text_arr) and len(score_arr) == len(text_arr)
         for idx in range(len(text_arr)):
             pred = pred_label_arr[idx]

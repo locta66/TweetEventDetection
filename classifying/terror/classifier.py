@@ -85,7 +85,7 @@ def train_model(x, y, model):
 
 
 def test_model(x, y, model):
-    preds_0or1 = model.predict(x)
+    preds_0or1 = model.predict_proba(x)
     preds_score = [entry[1] for entry in model.predict_proba(x)]
     auc = au.score(y, preds_0or1, 'auc')
     print(auc)

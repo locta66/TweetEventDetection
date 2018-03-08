@@ -66,7 +66,7 @@ TYPE_FILE = 'file'
 TYPE_ALL = 'all'
 
 
-def listchildren(directory, children_type=TYPE_DIR, pattern=None):
+def listchildren(directory, children_type=TYPE_DIR, pattern=None, concat=False):
     if children_type not in [TYPE_DIR, TYPE_FILE, TYPE_ALL]:
         print('listchildren() : Incorrect children type')
         return None
@@ -74,20 +74,20 @@ def listchildren(directory, children_type=TYPE_DIR, pattern=None):
     children = sorted(os.listdir(directory))
     if pattern is not None:
         children = [c for c in children if pu.search_pattern(pattern, c) is not None]
-    if children_type == TYPE_ALL:
-        return children
-    res = list()
-    for child in children:
-        child_path = directory + child
-        if not os.path.exists(child_path):
-            print('listchildren() : Invalid path')
-            continue
-        _is_dir = os.path.isdir(child_path)
-        if children_type == TYPE_DIR and _is_dir:
-            res.append(child)
-        elif children_type == TYPE_FILE and not _is_dir:
-            res.append(child)
-    return res
+    if children_type != TYPE_ALL:
+        res_list = list()
+        for child in children:
+            child_full_path = directory + child
+            if not os.path.exists(child_full_path):
+                print('listchildren() : Invalid path')
+                continue
+            if children_type == TYPE_DIR and os.path.isdir(child_full_path) or \
+                    (children_type == TYPE_FILE and os.path.isfile(child_full_path)):
+                res_list.append(child)
+        children = res_list
+    if concat:
+        children = [directory + c for c in children]
+    return children
 
 
 def iterate_file_tree(root_path, func, *args, **kwargs):

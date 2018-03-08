@@ -13,6 +13,7 @@ import utils.date_utils as du
 import utils.spacy_utils as su
 import utils.array_utils as au
 import utils.tweet_utils as tu
+import utils.timer_utils as tmu
 import math
 
 
@@ -180,5 +181,24 @@ def parse_args():
     return parser.parse_args()
 
 
+def test_spacy():
+    import spacy
+    tmu.check_time()
+    nlp = spacy.load('en', vector=False)
+    base = '/home/nfs/cdong/tw/origin/{}'
+    sub_files = fi.listchildren(base.format(''), fi.TYPE_FILE)[:1]
+    for file in sub_files:
+        twarr = fu.load_array(base.format(file))
+        textarr = [tw[tk.key_text] for tw in twarr]
+        tmu.check_time(print_func=lambda dt: print('start nlp, len(textarr)={}'.format(len(textarr))))
+        docarr = [doc for doc in nlp.pipe(textarr, n_threads=4)]
+        tmu.check_time(print_func=lambda dt: print('nlp time elapsed {}'.format(dt)))
+        for idx, doc in enumerate(docarr):
+            print()
+            for ent in doc.ents:
+                print(ent.text, ent.label_)
+            print()
+
+
 if __name__ == '__main__':
-    main(parse_args())
+    test_spacy()

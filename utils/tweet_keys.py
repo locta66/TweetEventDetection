@@ -4,6 +4,12 @@ key_orgntext = 'orgn'
 key_text = 'text'
 key_lang = 'lang'
 
+# user attributes
+key_description = 'description'
+key_friends_count = 'friends_count'
+key_followers_count = 'followers_count'
+key_statuses_count = 'statuses_count'
+
 key_wordlabels = 'pos'
 key_created_at = 'created_at'
 key_ark = 'ark'

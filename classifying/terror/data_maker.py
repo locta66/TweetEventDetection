@@ -192,28 +192,9 @@ def test_train_pos_neg_portion():
     print('test {}/{}={}'.format(test_p, test_n, test_p/test_n))
 
 
-def f():
-    base_pattern = '/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/{}'
-    sub_files = fi.listchildren(base_pattern.format(''), fi.TYPE_FILE, 'txt$')
-    print(sub_files)
-    lb_map = {'__label__t': label_t, '__label__f': label_f}
-    for file in sub_files:
-        with open(base_pattern.format(file)) as fp:
-            lb_textarr = fp.readlines()
-        textarr = list()
-        for lb_text in lb_textarr:
-            sp = lb_text.split(' ')
-            sp[0] = lb_map[sp[0]]
-            textarr.append(' '.join(sp))
-        with open(base_pattern.format(file), 'w') as fp:
-            fp.writelines(textarr)
-
-
 if __name__ == '__main__':
     """ fasttext """
     make_negative_event()
     make_positive_event()
     make_train_test()
     # test_train_pos_neg_portion()
-    # f()
-    exit()

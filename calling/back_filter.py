@@ -26,12 +26,7 @@ def filter_twarr_text(twarr):
 def filter_twarr_attr(twarr):
     flt_twarr = list()
     for idx, tw in enumerate(twarr):
-        # text_orgn = tw.get(tk.key_text).strip()
-        # text_norm = pu.text_normalization(text_orgn)
-        # if pu.is_empty_string(text_norm):
-        #     continue
-        # tw.setdefault(tk.key_orgntext, text_orgn)
-        # tw.setdefault(tk.key_text, text_norm)
+        # TODO filter attributes for tweets
         flt_twarr.append(tw)
     return flt_twarr
 
@@ -46,18 +41,21 @@ def filter_twarr_fasttext(twarr, model, threshold):
     return twarr
 
 
+""" actual function units """
+
+
 def filter_and_classify(inq, outq):
     terror_model_file = getcfg().ft_terror_model_file
     ft_model = ftu.load_model(terror_model_file)
     while True:
         twarr = inq.get()
         # filter spam / ad / chat
-        len1 = len(twarr)
+        # len1 = len(twarr)
         twarr = filter_twarr_text(twarr)
-        len2 = len(twarr)
+        # len2 = len(twarr)
         twarr = filter_twarr_fasttext(twarr, ft_model, 0.4)
-        len3 = len(twarr)
-        print('{}->{}->{}'.format(len1, len2, len3))
+        # len3 = len(twarr)
+        # print('{}->{}->{}'.format(len1, len2, len3))
         outq.put(twarr)
 
 

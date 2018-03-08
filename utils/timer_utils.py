@@ -11,7 +11,7 @@ def check_time(name=default_name, print_func=lambda dt: print('{} s from last ch
         return None
     else:
         delta_t = time.time() - check_points[name]
-        if print_func:
+        if print_func is not None:
             print_func(delta_t)
         check_points[name] = time.time()
         return delta_t
