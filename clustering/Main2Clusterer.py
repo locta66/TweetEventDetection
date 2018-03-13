@@ -76,7 +76,7 @@ def order_twarr_through_time():
         from numpy import random
         def sample(prob):
             return random.rand() < prob
-
+        
         non_dest_item_idx = [idx for idx in range(len(item_arr)) if item_arr[idx] not in dest_item]
         dest_item_idx = [idx for idx in range(len(item_arr)) if item_arr[idx] in dest_item]
         non_dest_cnt = dest_cnt = 0
@@ -128,7 +128,7 @@ def make_tw_batches(batch_size):
 def get_tw_batches():
     tw_batches = fu.load_array('./data/batches.txt')
     twarr_info(au.merge_array(tw_batches))
-    return fu.load_array('./data/batches.txt')
+    return tw_batches
 
 
 def twarr_info(twarr):

@@ -1,9 +1,13 @@
+import os
 import re
+import sys
 import pickle
 import datetime
 import traceback
 
+import numpy as np
 import pandas as pd
+from sklearn import metrics
 
 from config.configure import getcfg
 from preprocess.filter.filter_utils import get_all_substrings
@@ -17,9 +21,11 @@ import utils.tweet_keys as tk
 import utils.timer_utils as tmu
 
 
+file_dir = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(file_dir)
+
 chat_filter_file = getcfg().chat_filter_file
 is_noise_dict_file = getcfg().is_noise_dict_file
-
 clf_model_file = getcfg().clf_model_file
 black_list_file = getcfg().black_list_file
 
@@ -50,25 +56,28 @@ class UseGSDMM:
 
 
 class EffectCheck:
-    def __init__(self):
+    def __init__(self, spam_word_file=black_list_file, classify_model_file=clf_model_file):
         self.gsdmm = UseGSDMM()
-        with open(black_list_file, 'r') as fp:
-            self.spam_words = set([line.strip() for line in fp.readlines()])
-
-    def filter(self, twarr):
-        vecarr = [self.get_features(json) for json in twarr]
-        try:
-            with open(clf_model_file, 'rb') as f:
-                clf = pickle.load(f)
-        except:
-            traceback.print_exc()
-            return
-        predict = clf.predict_proba(vecarr)
-        flt_twarr = list()
-        for idx, p in enumerate(predict):
-            if p:
-                flt_twarr.append(twarr[idx])
-        return flt_twarr
+        if spam_word_file is not None and classify_model_file is not None:
+            with open(spam_word_file, 'r') as fp:
+                self.spam_words = set([line.strip() for line in fp.readlines()])
+            with open(classify_model_file, 'rb') as f:
+                self.clf = pickle.load(f)
+    
+    def predict_proba(self, twarr):
+        featurearr = [self.get_features(json) for json in twarr]
+        probarr = self.clf.predict_proba(featurearr)[:, 1]
+        return list(probarr)
+    
+    def predict(self, twarr, threshold):
+        probarr = self.predict_proba(twarr)
+        predarr = [1 if prob > threshold else 0 for prob in probarr]
+        return predarr
+    
+    def filter(self, twarr, threshold):
+        predarr = self.predict(twarr, threshold)
+        filter_twarr = [tw for idx, tw in enumerate(twarr) if predarr[idx]]
+        return filter_twarr
     
     def get_features(self, json):
         user = json[tk.key_user]
@@ -79,7 +88,7 @@ class EffectCheck:
         FI = user[tk.key_friends_count]
         FE = user[tk.key_followers_count]
         num_tweet_posted = user[tk.key_statuses_count]
-
+        
         tw_time = json[tk.key_created_at]
         user_born_time = json[tk.key_user][tk.key_created_at]
         # TODO 有些推文时间字段有误，需要判断处理，比如缺了分秒信息
@@ -93,16 +102,17 @@ class EffectCheck:
         reputation = 0
         if (FI + FE) != 0:
             reputation = FE / float(FI + FE)
-
+        
         following_rate = FI / float(AU)
         tweets_per_day = num_tweet_posted / (AU / 24)
         tweets_per_week = num_tweet_posted / (AU / (24 * 7))
-
+        
         user_features = [l_profile_description, FI, FE, num_tweet_posted, AU, FE_FI_ratio,
                          reputation, following_rate, tweets_per_day, tweets_per_week]
         """ content features """
-        if tk.key_orgntext not in json:
-            json[tk.key_orgntext] = json[tk.key_text]
+        # if tk.key_orgntext not in json:
+        #     json[tk.key_orgntext] = json[tk.key_text]
+        #     json[tk.key_text] = pu.text_normalization(json[tk.key_orgntext])
         orgn = json[tk.key_orgntext]
         text = json[tk.key_text]
         words = text.split()
@@ -111,15 +121,14 @@ class EffectCheck:
         num_white_space = len(re.findall(r'(\s)', text))
         num_capitalization_word = len(re.findall(r'(\b[A-Z]([a-z])*\b)', text))
         num_capital_per_word = num_capitalization_word / num_words
-
+        
         max_word_length = 0
         mean_word_length = 0
-        assert (len(words) > 0)
+        # assert (len(words) > 0)
         for word in words:
             if len(word) > max_word_length:
                 max_word_length = len(word)
                 mean_word_length += len(word)
-
         mean_word_length /= len(words)
         num_exclamation_marks = orgn.count('!')
         num_question_marks = orgn.count('?')
@@ -129,7 +138,7 @@ class EffectCheck:
         num_hashtags_per_word = num_hashtags / num_words
         num_mentions = len(json['entities']['user_mentions'])
         num_mentions_per_word = num_mentions / num_words
-
+        
         substrings = get_all_substrings(text)
         num_spam_words = 0
         for sub in substrings:
@@ -152,13 +161,7 @@ class EffectCheck:
     
     def get_filter_res(self, twarr):
         data = [self.get_features(tw) for tw in twarr]
-        try:
-            with open(clf_model_file, 'rb') as fp:
-                clf = pickle.load(fp)
-        except:
-            traceback.print_exc()
-            return
-        predict = clf.predict(data)
+        predict = self.clf.predict(data)
         table = pd.DataFrame(index={"data"}, columns={'保留', '被过滤'}, data=0)
         for i in range(len(predict)):
             if predict[i] == 1:
@@ -169,24 +172,62 @@ class EffectCheck:
         print('总数：', len(predict), '过滤比例：', table.loc["data"]['被过滤'] / len(predict))
 
 
+def perfomance_analysis():
+    labal, proba = fu.load_array('label_proba')
+    print(len(labal), len(proba))
+    auc = au.score(labal, proba, 'auc')
+    print(auc)
+    precision, recall, thresholds = metrics.precision_recall_curve(labal, proba)
+    au.precision_recall_threshold(precision, recall, thresholds)
+
+
 if __name__ == '__main__':
+    my_filter = EffectCheck()
+    
+    sub_files = fi.listchildren('/home/nfs/cdong/tw/origin/', fi.TYPE_FILE, concat=True)[18:19]
+    twarr = au.merge_array([fu.load_array(file) for file in sub_files])
+    print(len(twarr))
+    tmu.check_time(print_func=None)
+    for idx, tw in enumerate(twarr[14000:15000]):
+        if (idx + 1) % 1000 == 0:
+            print(idx)
+        try:
+            my_filter.get_features(tw)
+        except:
+            # print(tw[tk.key_text])
+            # print(tw[tk.key_orgntext])
+            print('-', pu.text_normalization(tw[tk.key_orgntext]))
+    tmu.check_time(print_func=lambda dt: print('pos filter time elapsed {}s'.format(dt)))
+    
+    exit()
+    
     pos_base = '/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/'
     sub_files = fi.listchildren(pos_base, fi.TYPE_FILE, 'txt$', concat=True)
     pos_twarr = au.merge_array([fu.load_array(file) for file in sub_files])
-    print(type(pos_twarr), len(pos_twarr))
-    
-    neg_file = '/home/nfs/yying/data/crawlTwitter/Crawler1/test.json'
-    neg_twarr = fu.load_array(neg_file)
-    print(type(neg_twarr), len(neg_twarr))
-    
-    my_filter = EffectCheck()
-    
-    tmu.check_time()
-    my_filter.get_filter_res(pos_twarr)
+    print(len(pos_twarr))
+    tmu.check_time(print_func=None)
+    pos_proba = my_filter.predict_proba(pos_twarr)
     tmu.check_time(print_func=lambda dt: print('pos filter time elapsed {}s'.format(dt)))
     
-    # tmu.check_time()
-    # my_filter.get_filter_res(neg_twarr)
-    # tmu.check_time(print_func=lambda dt: print('neg filter time elapsed {}s'.format(dt)))
+    neg_files = [
+        '/home/nfs/yying/data/crawlTwitter/Crawler1/test.json',
+        '/home/nfs/yying/data/crawlTwitter/Crawler2/crawl2.json',
+        '/home/nfs/yying/data/crawlTwitter/Crawler3/crawl3.json',
+        '/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_counter.sum'
+    ]
+    neg_proba_list = list()
+    for neg_file in neg_files:
+        neg_twarr = fu.load_array(neg_file)
+        print(len(neg_twarr))
+        tmu.check_time(print_func=None)
+        neg_proba = my_filter.predict_proba(neg_twarr)
+        tmu.check_time(print_func=lambda dt: print('neg filter time elapsed {}s'.format(dt)))
+        neg_proba_list.append(neg_proba)
+    neg_probas = list(np.concatenate(neg_proba_list))
+    
+    labal = [1 for _ in pos_proba] + [0 for _ in neg_probas]
+    proba = pos_proba + neg_probas
+    fu.dump_array('label_proba', [labal, proba])
+    perfomance_analysis()
     
     # print(len(my_filter.filter(data)))

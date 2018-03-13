@@ -1,12 +1,3 @@
-# from ChatFilter import ChatFilter
-# c = ChatFilter()
-# c.set_twarr(twarr)                            # twarr = [{tweet1}, {tweet2}, ...]
-# c.set_hyperparams(0.9, 0.01, 60)              # 推荐超参，论文里用的是alpha=0.1 * len(twarr), beta=0.02
-# 各个聚类的词分布, 各条推文的预测聚类 = c.recluster_using_GSDMM()
-# 一条推文的预测聚类 = c.sample_cluster(tw)      # tw = {tweet}, 第二个参数不使用
-
-# 如果需要转化成表格，可以pandas
-# label = 各条推文的实际分
 import timeit
 from collections import Counter
 
@@ -19,6 +10,7 @@ import utils.tweet_keys as tk
 
 class ChatFilter:
     def __init__(self):
+        self.alpha = self.beta = self.iter_num = None
         self.twarr = self.words = None
         self.small_double = 1e-150
         self.large_double = 1e150

@@ -53,15 +53,15 @@ class LECMClusterer:
                 wordlabels[i][0] = wordlabels[i][0].lower().strip('#').strip()
                 if not ClusterService.is_valid_keyword(wordlabels[i][0]):
                     del wordlabels[i]
-            tw['geo'] = dict()
+            tw['geo_and_time'] = dict()
             tw['ent'] = dict()
             tw['key'] = dict()
             for wordlabel in wordlabels:
                 word = wordlabel[0]
                 ner = wordlabel[1]
-                if 'geo' in ner:
+                if 'geo_and_time' in ner:
                     word_count_id(geo_word_id_dict, word)
-                    word_count_freq(tw['geo'], word)
+                    word_count_freq(tw['geo_and_time'], word)
                 elif not ner.startswith('O'):
                     word_count_id(ent_word_id_dict, word)
                     word_count_freq(tw['ent'], word)
@@ -78,10 +78,10 @@ class LECMClusterer:
         """cluster level"""
         D = twarr.__len__()
         alpha0 = alpha * K
-        """geo level"""
+        """geo_and_time level"""
         L = geo_word_id_dict.__len__()
         eta0 = eta * L
-        """non geo level"""
+        """non geo_and_time level"""
         Y = ent_word_id_dict.__len__()
         beta0 = beta * Y
         """keyword level"""
@@ -105,7 +105,7 @@ class LECMClusterer:
             cluster = int(K * np.random.random())
             z[d] = cluster
             m_z[cluster] += 1
-            tw_geo_freq_dict = twarr[d]['geo']
+            tw_geo_freq_dict = twarr[d]['geo_and_time']
             tw_ent_freq_dict = twarr[d]['ent']
             tw_key_freq_dict = twarr[d]['key']
             for word in tw_geo_freq_dict.keys():
@@ -130,7 +130,7 @@ class LECMClusterer:
             return value
     
         def sample_cluster(tw):
-            geo_freq_dict = tw['geo']
+            geo_freq_dict = tw['geo_and_time']
             ent_freq_dict = tw['ent']
             key_freq_dict = tw['key']
             prob = [0] * K
@@ -184,7 +184,7 @@ class LECMClusterer:
                 print(str(i) + '\t' + str(m_z) + '\n' if i % int((iter_num + 1) / 10) == 0 else '', end='')
             for d in range(D):
                 tw = twarr[d]
-                tw_geo_freq_dict = tw['geo']
+                tw_geo_freq_dict = tw['geo_and_time']
                 tw_ent_freq_dict = tw['ent']
                 tw_key_freq_dict = tw['key']
     
@@ -232,7 +232,7 @@ class LECMClusterer:
             if len(twarr) == 0:
                 continue
             print('\ncluster', i, '\t\ttweet number', len(twarr))
-            print('-geo')
+            print('-geo_and_time')
             print_top_freq_word_in_dict(geo_word_id_dict, n_zw_geo, i)
             print('-ent')
             print_top_freq_word_in_dict(ent_word_id_dict, n_zw_ent, i)

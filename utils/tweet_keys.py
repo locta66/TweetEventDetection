@@ -3,6 +3,8 @@ key_user = 'user'
 key_orgntext = 'orgn'
 key_text = 'text'
 key_lang = 'lang'
+key_created_at = 'created_at'
+key_coordinates = 'coordinates'
 
 # user attributes
 key_description = 'description'
@@ -11,7 +13,6 @@ key_followers_count = 'followers_count'
 key_statuses_count = 'statuses_count'
 
 key_wordlabels = 'pos'
-key_created_at = 'created_at'
 key_ark = 'ark'
 key_ner_pos = 'nerpos'
 
@@ -28,7 +29,7 @@ key_event_cluid = 'event_cluid'
 # created_at
 # timestamp_ms
 # place
-# geo
+# geo_and_time
 # coordinates
 
 # lang

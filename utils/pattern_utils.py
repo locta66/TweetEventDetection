@@ -91,7 +91,7 @@ def remove_breakline(text): return brkline_pattern.apply_patterns(remove_endline
 def split_digit_arr(string): return re.findall('\d+', string)
 
 
-def has_azAZ(string): return re.search(r'^[a-zA-Z]+$', string.strip()) is not None
+def has_azAZ(string): return re.search(r'[a-zA-Z]+', string.strip()) is not None
 
 
 def is_empty_string(string): return len(string) == 0 or len(re.findall(r'^\s+$', string)) > 0

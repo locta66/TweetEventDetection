@@ -20,7 +20,7 @@ def multi_process(func, args_list=None, kwargs_list=None):
     :param kwargs_list:
     :return:
     """
-    process_num = len(args_list)
+    process_num = len(args_list) if args_list is not None else len(kwargs_list)
     pool = mp.Pool(processes=process_num)
     res_getter = list()
     for i in range(process_num):
@@ -35,17 +35,17 @@ def multi_process(func, args_list=None, kwargs_list=None):
     return results
 
 
-def multi_process_batch(func, p_num=8, args_list=None, kwargs_list=None):
+def multi_process_batch(func, batch_size=8, args_list=None, kwargs_list=None):
     total_num = len(args_list)
     if kwargs_list is None:
         kwargs_list = [{} for _ in range(total_num)]
     input_num = 0
     results = list()
     while input_num < total_num:
-        since, until = input_num, input_num + p_num
+        since, until = input_num, input_num + batch_size
         res_batch = multi_process(func, args_list[since: until], kwargs_list[since: until])
         results.extend(res_batch)
-        input_num += p_num
+        input_num += batch_size
     return results
 
 
@@ -122,23 +122,53 @@ class CustomDaemonPool(DaemonPool):
         batch_len = self._last_batch_len.pop(0)
         res_list = list()
         for i in range(batch_len):
-            res_batch = self.get_output()
-            res_list.extend(res_batch)
+            res_list.extend(self.get_output())
         return res_list
+    
+    """ state of the pool """
+    def has_unread_batch_output(self): return len(self._last_batch_len) > 0
+    
+    def get_unread_batch_output_num(self): return len(self._last_batch_len)
+    
+    def can_get_batch_output(self):
+        if not self.has_unread_batch_output():
+            return False
+        last_task_len, ready_list = self.get_ready_list()
+        return sum(ready_list) == last_task_len
+    
+    def get_ready_list(self):
+        last_task_len = self._last_task_len[0]
+        if not self.has_unread_batch_output():
+            return last_task_len, [False] * last_task_len
+        return last_task_len, [self.daemon_pool[i].outq_ready_number() > 0 for i in range(last_task_len)]
 
 
 class CustomDaemonProcess(DaemonProcess):
     def __init__(self, func, pidx=0):
         DaemonProcess.__init__(self, func, pidx)
+        """ unread_task_num states the number of unfinished tasks and cannot be replaced by inq.qsize() """
+        self.unread_task_num = 0
     
     def start(self):
         self.process = mp.Process(target=self.func, args=(self.inq, self.outq))
         self.process.daemon = True
         self.process.start()
     
-    def set_input(self, args): self.inq.put(args)
+    def end(self): self.process.terminate()
     
-    def get_output(self): return self.outq.get()
+    def set_input(self, args):
+        self.unread_task_num += 1
+        self.inq.put(args)
+    
+    def get_output(self):
+        self.unread_task_num -= 1
+        return self.outq.get()
+    
+    def get_unread_output_num(self): return self.unread_task_num
+    
+    def has_unread_output(self): return self.unread_task_num > 0
+    
+    def outq_ready_number(self): return self.outq.qsize()
 
 
 class ProxyDaemonPool(DaemonPool):

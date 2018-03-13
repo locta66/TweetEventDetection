@@ -63,6 +63,19 @@ def score(labels_true, labels_pred, score_type):
         return metrics.completeness_score(labels_true, labels_pred)
 
 
+def precision_recall_threshold(labelarr, probarr, thres_range=[i/10 for i in range(1, 10)]):
+    precision, recall, thresholds = metrics.precision_recall_curve(labelarr, probarr)
+    last_idx = 0
+    for thres in thres_range:
+        for idx in range(last_idx, len(thresholds)):
+            if thresholds[idx] >= thres:
+                print('threshold: {}, precision: {:7}, recall: {:7}'.format(
+                    round(thresholds[idx], 3), round(precision[idx], 5), round(recall[idx], 5)
+                ))
+                last_idx = idx
+                break
+
+
 def group_array_by_condition(array, item_key):
     dictionary = dict()
     for item in array:

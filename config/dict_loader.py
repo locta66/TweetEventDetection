@@ -24,13 +24,13 @@ class IfdGetter:
             self.ifd.load_dict(ifd_file)
 
 
-pre_dict_file = getcfg().pre_dict_file
+# pre_dict_file = getcfg().pre_dict_file
 post_dict_file = getcfg().post_dict_file
 token_dict = IfdGetter(post_dict_file)
 
-pre_list = [getcfg().pre_prop_file, getcfg().pre_comm_file, getcfg().pre_verb_file, getcfg().pre_hstg_file]
-post_list = [getcfg().post_prop_file, getcfg().post_comm_file, getcfg().post_verb_file, getcfg().post_hstg_file]
-prop_dict, comm_dict, verb_dict, hstg_dict = [IfdGetter(post_file) for post_file in post_list]
+# pre_list = [getcfg().pre_prop_file, getcfg().pre_comm_file, getcfg().pre_verb_file, getcfg().pre_hstg_file]
+# post_list = [getcfg().post_prop_file, getcfg().post_comm_file, getcfg().post_verb_file, getcfg().post_hstg_file]
+# prop_dict, comm_dict, verb_dict, hstg_dict = [IfdGetter(post_file) for post_file in post_list]
 
 
 if __name__ == '__main__':

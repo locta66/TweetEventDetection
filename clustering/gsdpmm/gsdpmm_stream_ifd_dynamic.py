@@ -155,21 +155,20 @@ class GSDPMMStreamIFDDynamic:
     
     def GSDPMM_twarr(self, old_twharr, new_twharr, iter_num):
         cludict = self.cludict
+        valid_dict = IdFreqDict()
         if len(old_twharr) > 0:
             for cluster in cludict.values():
                 cluster.clear()
         D = len(old_twharr) + len(new_twharr)
         """ recalculate the valid dictionary """
-        valid_dict = self.valid_dict
-        valid_dict.clear()
         for twh in old_twharr + new_twharr:
             valid_dict.merge_freq_from(twh.tokens, newest=False)
         valid_dict.drop_words_by_condition(3)
         """ reallocate & parameter """
         for old_twh in old_twharr:
+            if old_twh.get_cluid() not in cludict:
+                continue
             old_twh.validate(valid_dict)
-            old_cluid = old_twh.get_cluid()
-            assert old_cluid in cludict
             old_cluster = old_twh.cluster
             old_twh.cluster = None
             old_twh.update_cluster(old_cluster)
@@ -183,18 +182,18 @@ class GSDPMMStreamIFDDynamic:
         self.beta0 = self.beta * valid_dict.vocabulary_size()
         """ start iteration """
         for i in range(iter_num):
-            print('\r{}\r{}, clu num: {}'.format(' ' * 10, i, len(self.cludict)), end='')
+            # print('\r{}\r{}, clu num: {}'.format(' ' * 10, i, len(self.cludict)), end='')
+            print('{}, clu num: {}'.format(i, len(self.cludict)))
             for twh in new_twharr:
                 cluster = twh.cluster
                 twh.update_cluster(None)
                 if cluster.twnum == 0:
                     cludict.pop(cluster.cluid)
                 cluid = self.sample(twh, D, using_max=(i == iter_num - 1))
-                if cluid > self.max_cluid:
+                if cluid not in cludict:
                     self.max_cluid += 1
-                    cludict[cluid] = ClusterHolder(self.max_cluid)
-                    cluid = self.max_cluid
-                twh.update_cluster(cludict[cluid])
+                    cludict[self.max_cluid] = ClusterHolder(self.max_cluid)
+                twh.update_cluster(cludict[self.max_cluid])
         for twh in new_twharr:
             twh.update_tw_cluid()
         # """ verify """
@@ -229,7 +228,6 @@ class GSDPMMStreamIFDDynamic:
         assert clu_num >= 2
         vecarr = [cluid2vector[cluid] for cluid in cluid_arr]
         sim_matrix = au.cosine_similarity(vecarr)
-        
         pair_sim_arr = list()
         for i in range(0, clu_num - 1):
             for j in range(i + 1, clu_num):
@@ -246,11 +244,11 @@ class ClusterHolder:
         self.twnum = 0
     
     """ basic functions """
-    def get_twarr(self):
-        return [twh.tw for twh in self.twhdict.values()]
-    
     def get_twharr(self):
         return list(self.twhdict.values())
+    
+    def get_twarr(self):
+        return [twh.tw for twh in self.twhdict.values()]
     
     def get_lbarr(self):
         return [twh.label for twh in self.twhdict.values()]

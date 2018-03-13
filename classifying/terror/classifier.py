@@ -11,8 +11,8 @@ from sklearn import metrics
 
 np.random.seed(233)
 model_dict = dict()
-lr_model_file = '/home/nfs/cdong/tw/seeding/Terrorist/model/lr_model'
-svm_model_file = '/home/nfs/cdong/tw/seeding/Terrorist/model/svm_model'
+lr_model_file = '/home/nfs/cdong/tw/src/models/classify/lr_model'
+svm_model_file = '/home/nfs/cdong/tw/src/models/classify/svm_model'
 
 
 def get_model(model_key=lr_model_file):

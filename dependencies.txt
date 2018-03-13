@@ -14,18 +14,3 @@ pip3 install ..../en_core_web_lg-2.0.0.tar.gz
 # bzip2 -z FileName
 # for file in *.gz; do gunzip -xf $file; done
 # for file in *.json; do bzip2 -z $file; done
-
-
-* 数据预处理：
-    * 网络用语和不规范用语的规范化处理
-        * Lexical Normalisation for English Tweets—评测任务和相关文章汇总：
-            * https://noisy-text.github.io/norm-shared-task.html
-        * Twitter Text Normalization:
-            * https://github.com/gouwsmeister/TextCleanser
-    * 分词、词性标注、命名实体识别等：
-        * CMU的TweetNLP:
-            * http://www.cs.cmu.edu/~ark/TweetNLP/
-            * 提供了分词、词性标注、语法分析
-        * 华盛顿大学的Twitter_NLP：
-            * https://github.com/aritter/twitter_nlp
-            * 提供命名实体识别

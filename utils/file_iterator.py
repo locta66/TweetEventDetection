@@ -70,14 +70,13 @@ def listchildren(directory, children_type=TYPE_DIR, pattern=None, concat=False):
     if children_type not in [TYPE_DIR, TYPE_FILE, TYPE_ALL]:
         print('listchildren() : Incorrect children type')
         return None
-    directory = add_sep_if_needed(directory)
     children = sorted(os.listdir(directory))
     if pattern is not None:
         children = [c for c in children if pu.search_pattern(pattern, c) is not None]
     if children_type != TYPE_ALL:
         res_list = list()
         for child in children:
-            child_full_path = directory + child
+            child_full_path = os.path.join(directory, child)
             if not os.path.exists(child_full_path):
                 print('listchildren() : Invalid path')
                 continue
@@ -86,7 +85,7 @@ def listchildren(directory, children_type=TYPE_DIR, pattern=None, concat=False):
                 res_list.append(child)
         children = res_list
     if concat:
-        children = [directory + c for c in children]
+        children = [os.path.join(directory, c) for c in children]
     return children
 
 

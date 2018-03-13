@@ -1,20 +1,30 @@
 import numpy as np
 from sklearn import metrics
 from sklearn.externals import joblib
-from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
+from sklearn.linear_model import LogisticRegressionCV
 import spacy
 
+from config.configure import getcfg
 import classifying.fast_text_utils as ftu
 import utils.spacy_utils as su
 import utils.array_utils as au
+import utils.tweet_keys as tk
 import utils.timer_utils as tmu
 
 
+label2value = ftu.binary_label2value
+value_t, value_f = ftu.value_t, ftu.value_f
+ft_add_model_file = getcfg().ft_add_model_file
+lr_add_model_file = getcfg().lr_add_model_file
+# ft_add_model_file = '/home/nfs/cdong/tw/src/models/classify/ft_add_feature_model'
+# lr_add_model_file = '/home/nfs/cdong/tw/src/models/classify/lr_add_feature_model'
+
+
 class ClassifierAddFeature:
-    def __init__(self):
-        self.nlp = None
-        self.ft_model = None
-        self.lr_model = None
+    def __init__(self, ft_model_file=ft_add_model_file, lr_model_file=lr_add_model_file):
+        self.nlp = self.ft_model = self.lr_model = None
+        if ft_model_file is not None and lr_model_file is not None:
+            self.load_model(ft_model_file, lr_model_file)
     
     def get_nlp(self):
         if self.nlp is None:
@@ -66,24 +76,26 @@ class ClassifierAddFeature:
         for idx in range(len(textarr)):
             text, doc = textarr[idx], docarr[idx]
             ft_vec = self.get_fasttext_vector(text)
-            loc_feature = self.has_locate_feature(doc)
-            key_feature = self.has_keyword_feature(text)
-            ft_vec = np.append(ft_vec, loc_feature)
-            ft_vec = np.append(ft_vec, key_feature)
+            ft_vec = np.append(ft_vec, self.has_locate_feature(doc))
+            ft_vec = np.append(ft_vec, self.has_keyword_feature(text))
             vec_arr.append(ft_vec)
         return np.array(vec_arr)
     
     def predict_proba(self, textarr):
         featurearr = self.textarr2featurearr(textarr)
-        probaarr = self.lr_model.predict_proba(featurearr)[:, 1]
-        return probaarr
+        probarr = self.lr_model.predict_proba(featurearr)[:, 1]
+        return list(probarr)
     
-    def predict_filter(self, textarr, threshold):
-        probaarr = self.predict_proba(textarr)
-        for idx in range(len(textarr) - 1, -1, -1):
-            if probaarr[idx] < threshold:
-                textarr.pop(idx)
-        return textarr
+    def predict(self, textarr, threshold):
+        probarr = self.predict_proba(textarr)
+        predarr = [value_t if prob > threshold else value_f for prob in probarr]
+        return predarr
+    
+    def filter(self, twarr, threshold):
+        textarr = [tw.get(tk.key_text) for tw in twarr]
+        predarr = self.predict(textarr, threshold)
+        filter_twarr = [tw for idx, tw in enumerate(twarr) if predarr[idx]]
+        return filter_twarr
     
     def train(self, train_file, ft_args, lr_args):
         self.train_ft_model(train_file, **ft_args)
@@ -94,12 +106,10 @@ class ClassifierAddFeature:
     
     def test(self, test_file):
         textarr, labelarr = file2label_text_array(test_file)
-        scorearr = self.predict_proba(textarr)
-        auc = au.score(labelarr, scorearr, 'auc')
-        print(auc)
-
-
-label2value = ftu.binary_label2value
+        probarr = self.predict_proba(textarr)
+        
+        print(au.score(labelarr, probarr, 'auc'))
+        au.precision_recall_threshold(labelarr, probarr)
 
 
 def file2label_text_array(file):
@@ -118,15 +128,10 @@ def file2label_text_array(file):
     return textarr, labelarr
 
 
-ft_model_file = '/home/nfs/cdong/tw/seeding/Terrorist/model/ft_add_feature_model'
-lr_model_file = '/home/nfs/cdong/tw/seeding/Terrorist/model/lr_add_feature_model'
-
-
 if __name__ == '__main__':
     """ test on cdong data """
     test_file = '/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/test'
     c = ClassifierAddFeature()
-    c.load_model(ft_model_file, lr_model_file)
     tmu.check_time()
     c.test(test_file)
     tmu.check_time(print_func=lambda dt: print('test time: {}s'.format(dt)))
@@ -145,7 +150,7 @@ if __name__ == '__main__':
     c.train(train_file, ft_args, lr_args)
     tmu.check_time(print_func=lambda dt: print('train time: {}s'.format(dt)))
     
-    c.save_model(ft_model_file, lr_model_file)
+    c.save_model(ft_add_model_file, lr_add_model_file)
     
     tmu.check_time()
     c.test(test_file)
