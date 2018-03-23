@@ -42,8 +42,9 @@ pos_prop = 'PROPN'
 pos_comm = 'NOUN'
 pos_verb = 'VERB'
 pos_hstg = 'HSTG'
-# key_ent = 'ENT'
-# ent_glf = {'FAC', 'GPE', 'LOC'}
+
+LABEL_GPE = 'GPE'
+LABEL_IS_LOCATION = {'GPE', 'FAC', 'LOC'}
 target_pos_types = [pos_hstg, pos_prop, pos_comm, pos_hstg]
 target_pos_sets = set(target_pos_types)
 

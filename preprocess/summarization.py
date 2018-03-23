@@ -97,7 +97,7 @@ def get_tokens(file_list):
             real_tokens = list()
             for token in tokens:
                 if len(token) >= 16:
-                    real_tokens.extend(pu.word_segment(token))
+                    real_tokens.extend(pu.segment(token))
                 else:
                     real_tokens.append(token)
             for token in real_tokens:

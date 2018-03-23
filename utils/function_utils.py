@@ -23,7 +23,8 @@ def sync_real_time_counter(info):
     return time_counter
 
 
-def write_lines(file, lines, mode='w'):
+def write_lines(file, lines, mode='w', endline='\n'):
+    lines = [line.strip() + endline for line in lines]
     with open(file, mode) as fp:
         fp.writelines(lines)
 

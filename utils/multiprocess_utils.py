@@ -57,14 +57,15 @@ class DaemonPool:
         self._last_task_len = list()
         self._last_batch_len = list()
     
-    def is_service_on(self): return self.service_on
+    def is_service_on(self):
+        return self.service_on
     
     def start(self, func, pool_size):
         if self.service_on:
             return
         for i in range(pool_size):
-            daemon = self.daemon_class(func, i)
-            daemon.start()
+            daemon = self.daemon_class(i)
+            daemon.start(func)
             self.daemon_pool.append(daemon)
         self.service_on = True
     
@@ -80,12 +81,19 @@ class DaemonPool:
 class DaemonProcess:
     K_END = 'end_process'
     
-    def __init__(self, func, pidx):
+    def __init__(self, pidx=0):
         self.process = None
-        self.func = func
         self.pidx = pidx
         self.inq = mp.Queue()
         self.outq = mp.Queue()
+
+    def start(self, func):
+        self.process = mp.Process(target=func, args=(self.inq, self.outq))
+        self.process.daemon = True
+        self.process.start()
+
+    def end(self):
+        self.process.terminate()
 
 
 class CustomDaemonPool(DaemonPool):
@@ -110,6 +118,7 @@ class CustomDaemonPool(DaemonPool):
         return res_list
     
     def set_batch_input(self, arg_list):
+        # one item in arg_list corresponds to a process
         dpnum = len(self.daemon_pool)
         innum = count = 0
         while innum < len(arg_list):
@@ -140,21 +149,13 @@ class CustomDaemonPool(DaemonPool):
         last_task_len = self._last_task_len[0]
         if not self.has_unread_batch_output():
             return last_task_len, [False] * last_task_len
-        return last_task_len, [self.daemon_pool[i].outq_ready_number() > 0 for i in range(last_task_len)]
+        return last_task_len, [self.daemon_pool[i].outq_size() > 0 for i in range(last_task_len)]
 
 
 class CustomDaemonProcess(DaemonProcess):
-    def __init__(self, func, pidx=0):
-        DaemonProcess.__init__(self, func, pidx)
-        """ unread_task_num states the number of unfinished tasks and cannot be replaced by inq.qsize() """
+    def __init__(self, pidx=0):
+        DaemonProcess.__init__(self, pidx)
         self.unread_task_num = 0
-    
-    def start(self):
-        self.process = mp.Process(target=self.func, args=(self.inq, self.outq))
-        self.process.daemon = True
-        self.process.start()
-    
-    def end(self): self.process.terminate()
     
     def set_input(self, args):
         self.unread_task_num += 1
@@ -168,7 +169,7 @@ class CustomDaemonProcess(DaemonProcess):
     
     def has_unread_output(self): return self.unread_task_num > 0
     
-    def outq_ready_number(self): return self.outq.qsize()
+    def outq_size(self): return self.outq.qsize()
 
 
 class ProxyDaemonPool(DaemonPool):
@@ -213,11 +214,11 @@ class ProxyDaemonPool(DaemonPool):
 
 
 class ProxyDaemonProcess(DaemonProcess):
-    def __init__(self, func, pidx=0):
-        DaemonProcess.__init__(self, func, pidx)
+    def __init__(self, pidx=0):
+        DaemonProcess.__init__(self, pidx)
     
-    def start(self):
-        self.process = mp.Process(target=ProxyDaemonProcess.exec, args=(self.func, self.inq, self.outq))
+    def start(self, func):
+        self.process = mp.Process(target=ProxyDaemonProcess.exec, args=(func, self.inq, self.outq))
         self.process.daemon = True
         self.process.start()
     

@@ -1,13 +1,13 @@
 import numpy as np
-from sklearn import metrics
 from sklearn.externals import joblib
 from sklearn.linear_model import LogisticRegressionCV
 import spacy
 
 from config.configure import getcfg
-import classifying.fast_text_utils as ftu
-import utils.spacy_utils as su
 import utils.array_utils as au
+import classifying.fast_text_utils as ftu
+import utils.pattern_utils as pu
+import utils.spacy_utils as su
 import utils.tweet_keys as tk
 import utils.timer_utils as tmu
 
@@ -16,8 +16,11 @@ label2value = ftu.binary_label2value
 value_t, value_f = ftu.value_t, ftu.value_f
 ft_add_model_file = getcfg().ft_add_model_file
 lr_add_model_file = getcfg().lr_add_model_file
-# ft_add_model_file = '/home/nfs/cdong/tw/src/models/classify/ft_add_feature_model'
-# lr_add_model_file = '/home/nfs/cdong/tw/src/models/classify/lr_add_feature_model'
+
+
+sensitive_words = {'shooting', 'wounded', 'shots', 'attack', 'shooter', 'wounds', 'dead',
+                   'terrorist', 'hurt', 'terror', 'police', 'killed', 'gunman', 'weapon',
+                   'injured', 'attacked', 'bomb', 'bombed', 'attacker'}
 
 
 class ClassifierAddFeature:
@@ -28,7 +31,7 @@ class ClassifierAddFeature:
     
     def get_nlp(self):
         if self.nlp is None:
-            self.nlp = spacy.load('en', vector=False)
+            self.nlp = spacy.load('en_core_web_sm', vector=False)
         return self.nlp
     
     def save_model(self, ft_model_file, lr_model_file):
@@ -60,22 +63,24 @@ class ClassifierAddFeature:
     
     def has_keyword_feature(self, text):
         # TODO use re.search
-        sensitive_words = {'shooting', 'wounded', 'shots', 'attack', 'shooter', 'wounds', 'dead', 'terrorist',
-                           'hurt', 'terror', 'police', 'killed', 'gunman', 'weapon', 'injured', 'attacked',
-                           'bomb', 'bombed', 'attacker'}
         for word in text.lower().split():
             word = word.strip()
             if word in sensitive_words:
                 return 1
         return -1
     
-    def textarr2featurearr(self, textarr):
-        docarr = su.textarr_nlp(textarr, self.get_nlp())
+    def textarr2featurearr(self, textarr, docarr=None):
+        if docarr is None:
+            docarr = su.textarr_nlp(textarr, self.get_nlp())
         assert len(textarr) == len(docarr)
         vec_arr = list()
         for idx in range(len(textarr)):
             text, doc = textarr[idx], docarr[idx]
-            ft_vec = self.get_fasttext_vector(text)
+            try:
+                ft_vec = self.get_fasttext_vector(text)
+            except Exception as e:
+                text = pu.text_normalization(text)
+                ft_vec = self.get_fasttext_vector(text)
             ft_vec = np.append(ft_vec, self.has_locate_feature(doc))
             ft_vec = np.append(ft_vec, self.has_keyword_feature(text))
             vec_arr.append(ft_vec)
@@ -86,15 +91,15 @@ class ClassifierAddFeature:
         probarr = self.lr_model.predict_proba(featurearr)[:, 1]
         return list(probarr)
     
-    def predict(self, textarr, threshold):
-        probarr = self.predict_proba(textarr)
-        predarr = [value_t if prob > threshold else value_f for prob in probarr]
-        return predarr
+    # def predict(self, textarr, threshold):
+    #     probarr = self.predict_proba(textarr)
+    #     predarr = [(value_t if prob > threshold else value_f) for prob in probarr]
+    #     return predarr
     
     def filter(self, twarr, threshold):
         textarr = [tw.get(tk.key_text) for tw in twarr]
-        predarr = self.predict(textarr, threshold)
-        filter_twarr = [tw for idx, tw in enumerate(twarr) if predarr[idx]]
+        probarr = self.predict_proba(textarr)
+        filter_twarr = [tw for idx, tw in enumerate(twarr) if probarr[idx] >= threshold]
         return filter_twarr
     
     def train(self, train_file, ft_args, lr_args):
@@ -107,15 +112,12 @@ class ClassifierAddFeature:
     def test(self, test_file):
         textarr, labelarr = file2label_text_array(test_file)
         probarr = self.predict_proba(textarr)
-        
-        print(au.score(labelarr, probarr, 'auc'))
         au.precision_recall_threshold(labelarr, probarr)
 
 
 def file2label_text_array(file):
     with open(file) as fp:
         lines = fp.readlines()
-    print('file line number: {}'.format(len(lines)))
     textarr, labelarr = list(), list()
     for line in lines:
         try:
@@ -124,13 +126,13 @@ def file2label_text_array(file):
             continue
         textarr.append(text)
         labelarr.append(label2value[label])
-    print('train text length: {}'.format(len(textarr)))
+    print('total text length: {}'.format(len(textarr)))
     return textarr, labelarr
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     """ test on cdong data """
-    test_file = '/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/test'
+    test_file = "/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/test"
     c = ClassifierAddFeature()
     tmu.check_time()
     c.test(test_file)

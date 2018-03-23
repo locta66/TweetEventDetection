@@ -1,11 +1,25 @@
+import os
 import re
-from wordsegment import segment
-from nltk.corpus import stopwords
-stop_words = set(stopwords.words('english'))
+from wordsegment import load, segment
 
 
 K_PATTERN = 'ptn'
 K_SUB = 'sub'
+
+
+def load_stop_words():
+    stop_words_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), "stopwords.txt")
+    with open(stop_words_file) as fp:
+        lines = fp.readlines()
+    words = set([line.strip() for line in lines])
+    return words
+    # from nltk.corpus import stopwords
+    # stop_words = set(stopwords.words('english'))
+    # return stop_words
+
+
+load()
+stop_words = load_stop_words()
 
 
 class PatternHolder:
@@ -44,8 +58,8 @@ class PatternHolder:
 
 tw_rule_list = [(r'RT\s@?.*?:(\s|$)', ' '), (r'@\w+', ' '), (r'(#.+?)(\s|$)', ' \\1 '),
                 (r'https?:\W*/.*?(\s|$)|https?:(\s|$)', ' '), ]
-special_char_list = [('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&ndash;', ' '),
-                     ('&mdash;', ' '), ('[’‘]', '\''), ]
+special_char_list = [('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'),
+                     ('&ndash;', ' '), ('&mdash;', ' '), ('[’‘]', '\''), ]
 puctuation_list = [(r'[~`$^()\-_=\+\[\]{}"|:;]', ' '), ]
 word_rule_list = [('^[^A-Za-z0-9]+$', ''), ('^\W*', ''), ('\W*$', ''), ("'[sS]?\W*$", ''),
                   ('(.+?)\\1{3,}', '\\1'), ('^(.+?)\\1{3,}$', ''), ]
@@ -106,7 +120,7 @@ def is_char(string): return len(string) == 1
 def tokenize(pattern, string, flags=re.I): return re.findall(pattern, string, flags=flags)
 
 
-def word_segment(string): return segment(string)
+# def word_segment(string): return segment(string)
 
 
 def text_normalization(text):
@@ -115,6 +129,12 @@ def text_normalization(text):
     for pattern in pattern_list:
         text = pattern.apply_patterns(text)
     return text
+
+
+def capitalize(phrase):
+    words = [w for w in re.split('\W', phrase) if not is_empty_string(w)]
+    capitalize = [w.capitalize() for w in words]
+    return ' '.join(capitalize)
 
 
 def is_valid_keyword(word):

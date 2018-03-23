@@ -4,13 +4,12 @@ import utils.array_utils as au
 import utils.function_utils as fu
 import utils.pattern_utils as pu
 import utils.tweet_keys as tk
-import utils.multiprocess_utils as mu
 import utils.timer_utils as tmu
 
 import classifying.fast_text_make as ftm
 import classifying.fast_text_utils as ftu
 
-from classifying.terror.classifier import predict_proba
+from classifying.terror.classifier_fasttext_add_feature import ClassifierAddFeature
 
 import numpy as np
 
@@ -50,7 +49,7 @@ def textarr_normalization(textarr):
             continue
         norm_textarr.append(text)
     return norm_textarr
-    
+
 
 def twarr2matrix(twarr):
     return docarr2matrix(twarr2docarr(twarr))
@@ -86,42 +85,41 @@ def make_negative_matrix():
 
 
 def get_false_positive():
+    from calling.back_filter import filter_twarr_text
     """ make matrices """
-    twarr = list()
+    total_neg_twnum = 0
+    false_pos_twarr = list()
+    clf_filter = ClassifierAddFeature()
     for neg_file in neg_files:
         neg_twarr = fu.load_array(neg_file)
         print(len(neg_twarr))
         if len(neg_twarr) > 50000:
-            neg_twarr = au.random_array_items(neg_twarr, 80000)
-        twarr.extend(neg_twarr)
-    print('neg twarr load over')
-    tmu.check_time()
-    matrix = twarr2matrix(twarr)
-    tmu.check_time()
-    print('spacy over', len(twarr))
+            neg_twarr = au.random_array_items(neg_twarr, 100000)
+        n_twarr = filter_twarr_text(neg_twarr)
+        total_neg_twnum += len(n_twarr)
+        tmu.check_time(print_func=None)
+        fp_twarr = clf_filter.filter(n_twarr, 0.1)
+        tmu.check_time(print_func=lambda dt: print('time elapsed {}s'.format(dt)))
+        false_pos_twarr.extend(fp_twarr)
+    print('filtering over')
     
-    """ make predictions """
-    preds = predict_proba(matrix)
-    assert len(twarr) == len(preds)
-    false_pos_idx = list()
-    for idx in range(len(twarr)):
-        pred = preds[idx]
-        if pred > 0.4:
-            false_pos_idx.append(idx)
-    false_pos_twarr = [twarr[idx] for idx in false_pos_idx]
-    tw_attr_set = {tk.key_text, tk.key_id, tk.key_created_at, tk.key_orgntext,
-                   tk.key_in_reply_to_status_id, tk.key_user}
-    usr_attr_set = {"screen_name", "friends_count", "statuses_count", "description", "id"}
+    tw_bad_attr_set = {"in_reply_to_screen_name", "in_reply_to_status_id_str", "in_reply_to_user_id_str", }
+    usr_bas_attr_set = {
+        "profile_link_color", "profile_text_color", "profile_sidebar_fill_color",
+        "profile_background_color", "profile_sidebar_border_color", "default_profile_image",
+        "profile_image_url", "profile_image_url_https", "profile_background_tile",
+        "profile_use_background_image", "profile_background_image_url", "profile_background_image_url_https",
+    }
     for tw in false_pos_twarr:
         for tw_k in list(tw.keys()):
-            if tw_k not in tw_attr_set:
+            if tw_k in tw_bad_attr_set:
                 tw.pop(tw_k)
-            user = tw[tk.key_user]
-            for usr_k in list(user.keys()):
-                if usr_k not in usr_attr_set:
-                    user.pop(usr_k)
+        user = tw[tk.key_user]
+        for usr_k in list(user.keys()):
+            if usr_k in usr_bas_attr_set:
+                user.pop(usr_k)
         print(tw[tk.key_text])
-    print('fp rate: {}/{}'.format(len(false_pos_idx), len(twarr)))
+    print('fp rate: {}/{}'.format(len(false_pos_twarr), total_neg_twnum))
     fu.dump_array('/home/nfs/cdong/tw/src/clustering/data/false_pos_events.txt', false_pos_twarr)
 
 
@@ -186,15 +184,17 @@ def test_train_pos_neg_portion():
                 else:
                     print(idx)
         return p_cnt, n_cnt
+    
     train_p, train_n = portion_of_file('/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/train')
-    print('train {}/{}={}'.format(train_p, train_n, train_p/train_n))
+    print('train {}/{}={}'.format(train_p, train_n, train_p / train_n))
     test_p, test_n = portion_of_file('/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/test')
-    print('test {}/{}={}'.format(test_p, test_n, test_p/test_n))
+    print('test {}/{}={}'.format(test_p, test_n, test_p / test_n))
 
 
 if __name__ == '__main__':
     """ fasttext """
-    make_negative_event()
-    make_positive_event()
-    make_train_test()
+    # make_negative_event()
+    # make_positive_event()
+    # make_train_test()
     # test_train_pos_neg_portion()
+    get_false_positive()

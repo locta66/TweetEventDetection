@@ -1,3 +1,4 @@
+# twitter attributes
 key_id = 'id'
 key_user = 'user'
 key_orgntext = 'orgn'
@@ -5,19 +6,22 @@ key_text = 'text'
 key_lang = 'lang'
 key_created_at = 'created_at'
 key_coordinates = 'coordinates'
+key_is_quote_status = 'is_quote_status'
+key_in_reply_to_status_id = 'in_reply_to_status_id'
 
 # user attributes
 key_description = 'description'
 key_friends_count = 'friends_count'
 key_followers_count = 'followers_count'
 key_statuses_count = 'statuses_count'
+key_verified = 'verified'
 
+# tool assisted attributes
 key_wordlabels = 'pos'
 key_ark = 'ark'
 key_ner_pos = 'nerpos'
 
 key_spacy = 'spacy'
-key_in_reply_to_status_id = 'in_reply_to_status_id'
 
 key_event_label = 'event_label'
 key_event_cluid = 'event_cluid'

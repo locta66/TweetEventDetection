@@ -97,9 +97,9 @@ def iterate_file_tree(root_path, func, *args, **kwargs):
     :param args: Just to pass over outer params for func.
     :param kwargs: Just to pass over outer params for func.
     """
-    subdirs = listchildren(root_path, children_type='dir')
+    subdirs = listchildren(root_path, children_type=TYPE_DIR)
     if not subdirs:
         func(root_path, *args, **kwargs)
     else:
         for subdir in subdirs:
-            iterate_file_tree(root_path + subdir + os.path.sep, func, *args, **kwargs)
+            iterate_file_tree(os.path.join(root_path, subdir), func, *args, **kwargs)

@@ -7,8 +7,9 @@ class Configure:
         path_module = 'path'
         file_module = 'file'
         model_module = 'filter model'
-        file_dir = os.path.split(os.path.realpath(__file__))[0] + os.path.sep
-        config_file_name = file_dir + 'conf.ini'
+        # file_dir = os.path.abspath(os.path.dirname(__file__))
+        file_dir = os.path.split(os.path.realpath(__file__))[0]
+        config_file_name = os.path.join(file_dir, 'conf.ini')
         configreader = ConfigParser(interpolation=ExtendedInterpolation())
         configreader.read(config_file_name)
         
@@ -19,7 +20,7 @@ class Configure:
         self.origin_path = configreader.get(path_module, 'origin_path')
         
         self.ner_service_command = configreader.get(path_module, 'ner_service_command')
-        # self.ark_service_command = configreader.get(path_module_name, 'ark_service_command')
+        self.ark_service_command = configreader.get(path_module, 'ark_service_command')
         self.ark_service_command = '/home/nfs/cdong/tw/src/tools/ark-tweet-nlp-0.3.2.jar'
         
         # files

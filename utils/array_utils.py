@@ -1,9 +1,6 @@
 import numpy as np
 from sklearn import metrics
 from scipy import sparse
-from sklearn import preprocessing
-
-import utils.multiprocess_utils as mu
 
 
 def merge_array(array):
@@ -63,28 +60,34 @@ def score(labels_true, labels_pred, score_type):
         return metrics.completeness_score(labels_true, labels_pred)
 
 
-def precision_recall_threshold(labelarr, probarr, thres_range=[i/10 for i in range(1, 10)]):
-    precision, recall, thresholds = metrics.precision_recall_curve(labelarr, probarr)
+def precision_recall_threshold(labels_true, labels_pred, thres_range=[i / 10 for i in range(1, 10)]):
+    import pandas as pd
+    auc = score(labels_true, labels_pred, 'auc')
+    print("auc:", round(auc, 6))
+
+    precision, recall, thresholds = metrics.precision_recall_curve(labels_true, labels_pred)
     last_idx = 0
+    columns = ['threshold', 'precision', 'recall']
+    df = pd.DataFrame(columns=columns)
     for thres in thres_range:
         for idx in range(last_idx, len(thresholds)):
             if thresholds[idx] >= thres:
-                print('threshold: {}, precision: {:7}, recall: {:7}'.format(
-                    round(thresholds[idx], 3), round(precision[idx], 5), round(recall[idx], 5)
-                ))
+                data = [[round(thresholds[idx], 3), round(precision[idx], 4), round(recall[idx], 4)]]
+                df = df.append(pd.DataFrame(columns=columns, data=data), ignore_index=True)
                 last_idx = idx
                 break
+    print(df)
 
 
-def group_array_by_condition(array, item_key):
-    dictionary = dict()
-    for item in array:
-        item_key = item_key(item)
-        if item_key not in dictionary:
-            dictionary[item_key] = [item]
-        else:
-            dictionary[item_key].append(item)
-    return [dictionary[key] for key in sorted(dictionary.keys())]
+# def group_array_by_condition(array, item_key):
+#     dictionary = dict()
+#     for item in array:
+#         item_key = item_key(item)
+#         if item_key not in dictionary:
+#             dictionary[item_key] = [item]
+#         else:
+#             dictionary[item_key].append(item)
+#     return [dictionary[key] for key in sorted(dictionary.keys())]
 
 
 def sample_index(array):
@@ -93,23 +96,6 @@ def sample_index(array):
 
 def choice(array):
     return np.random.choice(array)
-
-
-# def scale(x):
-#     return preprocessing.scale(x)
-
-
-# def cosine_similarity(x, y):
-#     return metrics.pairwise.cosine_similarity(x, y)
-#
-#
-# def cosine_matrix_single(contract_mtx, x_y_pairs):
-#     matrix = contract_mtx.todense()
-#     for idx, (x, y) in enumerate(x_y_pairs):
-#         vecx = matrix[x].reshape([1, -1])
-#         vecy = matrix[y].reshape([1, -1])
-#         x_y_pairs[idx].append(cosine_similarity(vecx, vecy)[0][0])
-#     return x_y_pairs
 
 
 def cosine_similarity(vecarr1, vecarr2=None):
@@ -121,22 +107,9 @@ def cohesion_score(vecarr):
     if vecnum <= 1:
         return None
     cos_sim_mtx = cosine_similarity(vecarr)
-    cohesion_score = paircnt = 0
+    cohesion = pair_count = 0
     for i in range(0, vecnum - 1):
         for j in range(i + 1, vecnum):
-            cohesion_score += cos_sim_mtx[i, j]
-            paircnt += 1
-    assert paircnt == vecnum * (vecnum-1) / 2
-    return cohesion_score / paircnt
-
-
-# if __name__ == '__main__':
-#     matrix = [
-#         [1, 0, 0],
-#         [3, 1, 0],
-#         [0, 0, 2],
-#         [0, 4, 0],
-#         [0, 8, 1],
-#         [5, 4, 3],
-#     ]
-#     cosine_similarity(matrix)
+            cohesion += cos_sim_mtx[i, j]
+            pair_count += 1
+    return cohesion / pair_count

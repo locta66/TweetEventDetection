@@ -1,13 +1,28 @@
 ﻿# echo 1 > /proc/sys/vm/drop_caches
 
+
+pip3 install Cython
+pip3 install bz2file
+pip3 install numpy
+pip3 install scipy
+pip3 install sklearn
+pip3 install pandas
 pip3 install nltk
 pip3 install wordsegment
+pip3 install pybind11
 pip3 install python-Levenshtein
+
+cd fasttext-master
+./setup.py build
+./setup.py install
+
+
 # nltk_data	E:\DOWNLOADS\BaiduYun\nltk_data.tar.gz
 # http://python.jobbole.com/81675/
 
 pip3 install spacy
 pip3 install ..../en_core_web_lg-2.0.0.tar.gz
+pip3 install ..../en_core_web_sm-2.0.0.tar.gz
 (python -m spacy download en_core_web_lg) OR
 (https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.0.0/en_core_web_lg-2.0.0.tar.gz)
 

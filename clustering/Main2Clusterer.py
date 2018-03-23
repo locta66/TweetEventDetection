@@ -57,6 +57,9 @@ import preprocess.tweet_filter as tflt
 #     fu.dump_array('nonevents.txt', twarr_blocks)
 
 
+batch_file = './data/batches.txt'
+
+
 def lbarr_of_twarr(twarr):
     return [tw[tk.key_event_label] for tw in twarr]
 
@@ -109,24 +112,20 @@ def split_into_batches(twarr, batch_size):
     """ cutting twarr and label into batches of batch_size """
     max_len = len(twarr)
     batch_num = int(math.ceil(len(twarr) / batch_size))
-    tw_batches = [[twarr[j] for j in range(i*batch_size, min((i+1)*batch_size, max_len))] for i in range(batch_num)]
-    twarr_info(au.merge_array(tw_batches))
+    tw_batches = [[twarr[j] for j in range(i * batch_size, min((i + 1) * batch_size, max_len))]
+                  for i in range(batch_num)]
     return tw_batches
 
 
 def make_tw_batches(batch_size):
-    attr_set = {tk.key_text, tk.key_event_label, tk.key_id, tk.key_created_at}
     ordered_twarr = order_twarr_through_time()
-    for tw in ordered_twarr:
-        for k in list(tw.keys()):
-            if k not in attr_set:
-                tw.pop(k)
     tw_batches = split_into_batches(ordered_twarr, batch_size)
-    fu.dump_array('./data/batches.txt', tw_batches)
+    twarr_info(au.merge_array(tw_batches))
+    fu.dump_array(batch_file, tw_batches)
 
 
 def get_tw_batches():
-    tw_batches = fu.load_array('./data/batches.txt')
+    tw_batches = fu.load_array(batch_file)
     twarr_info(au.merge_array(tw_batches))
     return tw_batches
 
@@ -137,95 +136,6 @@ def twarr_info(twarr):
     for idx, cluid in enumerate(sorted(label_distrb.keys())):
         print('{:<3}:{:<6}'.format(cluid, label_distrb[cluid]), end='\n' if (idx + 1) % 10 == 0 else '')
     print('\nTopic num: {}, total tw: {}'.format(len(label_distrb), len(twarr)))
-
-
-# def create_batches_through_time(batch_size):
-#     print('data source : normal')
-#     event_blocks = fu.load_array('./data/events2016.txt')
-#     # false_event_twarr = fu.load_array('./data/falseevents.txt')[:200]
-#     # event_blocks = fu.load_array('./data/events.txt')
-#     false_event_twarr = fu.load_array('./data/falseevents.txt')
-#     event_blocks.append(false_event_twarr)
-#
-#     for block_idx, block in enumerate(event_blocks):
-#         for tw in block:
-#             tw.setdefault(tk.key_event_label, block_idx)
-#
-#     twarr = au.merge_array(event_blocks)
-#     lbarr = au.merge_array([[i for _ in range(len(event_blocks[i]))] for i in range(len(event_blocks))])
-#
-#     dup_idx_list = tflt.twarr_dup_id(twarr)
-#     for idx in range(len(dup_idx_list) - 1, -1, -1):
-#         twarr.pop(idx)
-#         lbarr.pop(idx)
-#     # twarr = [twarr[idx] for idx in range(len(twarr)) if idx not in dup_idx_list]
-#     # lbarr = [lbarr[idx] for idx in range(len(lbarr)) if idx not in dup_idx_list]
-#
-#     label_distrb = Counter(lbarr)
-#     for idx, cluid in enumerate(sorted(label_distrb.keys())):
-#         print('{:<3}:{:<6}'.format(cluid, label_distrb[cluid]), end='\n' if (idx + 1) % 10 == 0 else '')
-#     print('\nTopic num: {}, total tw: {}'.format(len(label_distrb), len(twarr)))
-#
-#     idx_time_order = tu.rearrange_idx_by_time(twarr)
-#     twarr = [twarr[idx] for idx in idx_time_order]
-#     lbarr = [lbarr[idx] for idx in idx_time_order]
-#
-#     # for idx in range(len(twarr) - 1):
-#     #     if du.get_timestamp_form_created_at(twarr[idx][TweetKeys.key_created_at].strip()) > \
-#     #             du.get_timestamp_form_created_at(twarr[idx + 1][TweetKeys.key_created_at].strip()):
-#     #         raise ValueError('wrong')
-#
-#     def random_idx_for_item(item_arr, dest_item):
-#         from numpy import random
-#         def sample(prob):
-#             return random.rand() < prob
-#         non_dest_item_idx = [idx for idx in range(len(item_arr)) if item_arr[idx] not in dest_item]
-#         dest_item_idx = [idx for idx in range(len(item_arr)) if item_arr[idx] in dest_item]
-#         non_dest_cnt = dest_cnt = 0
-#         res = list()
-#         while len(non_dest_item_idx) > non_dest_cnt and len(dest_item_idx) > dest_cnt:
-#             if sample((len(dest_item_idx) - dest_cnt) /
-#                       (len(dest_item_idx) - dest_cnt + len(non_dest_item_idx) - non_dest_cnt)):
-#                 res.append(dest_item_idx[dest_cnt])
-#                 dest_cnt += 1
-#             else:
-#                 res.append(non_dest_item_idx[non_dest_cnt])
-#                 non_dest_cnt += 1
-#         while len(non_dest_item_idx) > non_dest_cnt:
-#             res.append(non_dest_item_idx[non_dest_cnt])
-#             non_dest_cnt += 1
-#         while len(dest_item_idx) > dest_cnt:
-#             res.append(dest_item_idx[dest_cnt])
-#             dest_cnt += 1
-#         return res
-#
-#     idx_rearrange = random_idx_for_item(lbarr, {len(event_blocks) - 1})
-#     twarr = [twarr[idx] for idx in idx_rearrange]
-#     lbarr = [lbarr[idx] for idx in idx_rearrange]
-#     """ cutting twarr and label into batches of batch_size """
-#     # idx_parts = au.index_partition(twarr, [1] * int(len(twarr) / batch_size), random=False)
-#     # tw_batches = [[twarr[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
-#     # lb_batches = [[label[j] for j in idx_parts[i]] for i in range(len(idx_parts))]
-#
-#     full_idx = [i for i in range(len(twarr))]
-#     batch_num = int(math.ceil(len(twarr) / batch_size))
-#     tw_batches = [[twarr[j] for j in full_idx[i*batch_size: (i+1)*batch_size]] for i in range(batch_num)]
-#     lb_batches = [[lbarr[j] for j in full_idx[i*batch_size: (i+1)*batch_size]] for i in range(batch_num)]
-#     # label = fu.merge_list(lb_batches)
-#     # print(len(twarr), len(label))
-#     # label_distrb = Counter(label)
-#     # print('\n\nTopic num:{}, total tw:{}'.format(len(label_distrb), len(twarr)))
-#     # for idx, cluid in enumerate(sorted(label_distrb.keys())):
-#     #     print('{:<3}:{:<6}'.format(cluid, label_distrb[cluid]), end='\n' if (idx + 1) % 10 == 0 else '')
-#     # print()
-#     lbarr = au.merge_array(lb_batches)
-#     label_distrb = Counter(lbarr)
-#     for idx, cluid in enumerate(sorted(label_distrb.keys())):
-#         print('{:<3}:{:<6}'.format(cluid, label_distrb[cluid]), end='\n' if (idx + 1) % 10 == 0 else '')
-#     print('\nTopic num: {}, total tw: {}'.format(len(label_distrb), len(twarr)))
-#     exit()
-#
-#     return tw_batches, lb_batches
 
 
 # def create_korea_batches_through_time(batch_size):

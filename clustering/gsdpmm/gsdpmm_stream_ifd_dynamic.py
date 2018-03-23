@@ -1,6 +1,10 @@
+from collections import Counter
+
 import numpy as np
 
 import utils.array_utils as au
+import utils.pattern_utils as pu
+import utils.spacy_utils as su
 import utils.tweet_keys as tk
 import utils.tweet_utils as tu
 from utils.id_freq_dict import IdFreqDict
@@ -8,7 +12,6 @@ from config.dict_loader import token_dict
 import clustering.cluster_service as cs
 
 from classifying.terror.data_maker import docarr2matrix
-from classifying.terror import classifier as terror_c
 
 
 class GSDPMMStreamIFDDynamic:
@@ -20,7 +23,7 @@ class GSDPMMStreamIFDDynamic:
         self.state = 0
         self.max_cluid = 0
         self.hold_batch_num = None
-        self.twarr, self.tw_batches = list(), list()
+        self.twh_batches = list()
         self.cludict = {self.max_cluid: ClusterHolder(self.max_cluid)}
         self.valid_dict = IdFreqDict()
     
@@ -28,59 +31,30 @@ class GSDPMMStreamIFDDynamic:
         self.hold_batch_num = hold_batch_num
         self.alpha = alpha
         self.beta = beta
-
-    # def input_batch_with_label(self, tw_batch, lb_batch):
-    #     tw_batch = self.pre_process_twarr(tw_batch)
-    #     self.history_len.append(len(tw_batch))
-    #     if len(self.history_len) < self.hold_batch_num:
-    #         self.twarr.extend(tw_batch)
-    #         self.label.extend(lb_batch)
-    #         return None, None
-    #     elif not self.init_batch_ready:
-    #         self.init_batch_ready = True
-    #         self.twarr.extend(tw_batch)
-    #         self.z = self.GSDPMM_twarr(list(), self.twarr, iter_num=20)
-    #         self.label.extend(lb_batch)
-    #         return self.z, self.label[:]
-    #     else:
-    #         new_z = self.GSDPMM_twarr(self.twarr, tw_batch, iter_num=3)
-    #         self.label.extend(lb_batch)
-    #         self.twarr.extend(tw_batch)
-    #         self.z.extend(new_z)
-    #
-    #         oldest_len = self.history_len.pop(0)
-    #         for twh in self.twarr[0: oldest_len]:
-    #             twh.update_cluster(None)
-    #         self.twarr = self.twarr[oldest_len:]
-    #         self.z = self.z[oldest_len:]
-    #         if lb_batch is not None:
-    #             self.label = self.label[oldest_len:]
-    #         return self.z, self.label[:]
-
+    
     def input_batch(self, tw_batch):
         tw_batch = self.pre_process_twarr(tw_batch)
-        if len(self.tw_batches) < self.hold_batch_num:
-            self.tw_batches.append(tw_batch)
-            self.twarr = au.merge_array(self.tw_batches)
+        if len(self.twh_batches) < self.hold_batch_num:
+            self.twh_batches.append(tw_batch)
             return None
         elif self.state == 0:
             self.state = 1
-            self.tw_batches.append(tw_batch)
-            self.twarr = au.merge_array(self.tw_batches)
-            self.GSDPMM_twarr(list(), self.twarr, iter_num=30)
-            return self.get_cluid_batches(self.tw_batches)
+            self.twh_batches.append(tw_batch)
+            old_twarr = au.merge_array(self.twh_batches)
+            self.GSDPMM_twarr(list(), old_twarr, iter_num=20)
+            return self.get_cluid_batches(self.twh_batches)
         else:
-            self.GSDPMM_twarr(self.twarr, tw_batch, iter_num=3)
-            self.tw_batches.append(tw_batch)
-            oldest_twarr = self.tw_batches.pop(0)
-            self.twarr = au.merge_array(self.tw_batches)
+            old_twarr = au.merge_array(self.twh_batches)
+            self.GSDPMM_twarr(old_twarr, tw_batch, iter_num=3)
+            self.twh_batches.append(tw_batch)
+            oldest_twarr = self.twh_batches.pop(0)
             for twh in oldest_twarr:
                 twh.update_cluster(None)
             self.check_empty_cluster()
             return self.get_cluid_batches([tw_batch])
     
     def get_twarr(self):
-        return [twh.tw for twh in self.twarr]
+        return [twh.tw for twh in au.merge_array(self.twh_batches)]
     
     @staticmethod
     def get_cluid_batches(tw_batches):
@@ -88,13 +62,8 @@ class GSDPMMStreamIFDDynamic:
     
     @staticmethod
     def pre_process_twarr(twarr):
-        """ Assume that the twarr has been processed by spacy, which should be promised by caller """
-        twharr = list()
-        for idx in range(len(twarr)):
-            tw = twarr[idx]
-            twh = TweetHolder(tw)
-            twharr.append(twh)
-        return twharr
+        # Assume that the twarr has been processed by spacy
+        return [TweetHolder(tw) for tw in twarr]
     
     def check_empty_cluster(self):
         for cluid in list(self.cludict.keys()):
@@ -207,11 +176,8 @@ class GSDPMMStreamIFDDynamic:
     
     key2func = dict([
         ('twarr', lambda c: c.get_twarr()),
-        ('lbarr', lambda c: c.get_lbarr()),
         ('vecarr', lambda c: c.get_pos_vecarr()),
         ('vector', lambda c: c.get_pos_mean_vector()),
-        ('score', lambda c: c.get_event_score()),
-        ('cohesion', lambda c: c.get_cohesion_score()),
     ])
     
     def cluid2info(self, func):
@@ -240,7 +206,6 @@ class ClusterHolder:
         self.cluid = cluid
         self.twhdict = dict()
         self.tokens = IdFreqDict()
-        self.entifd = IdFreqDict()
         self.twnum = 0
     
     """ basic functions """
@@ -256,7 +221,6 @@ class ClusterHolder:
     def clear(self):
         self.twhdict.clear()
         self.tokens.clear()
-        self.entifd.clear()
         self.twnum = 0
     
     def update_by_twh(self, twh, factor):
@@ -271,14 +235,16 @@ class ClusterHolder:
             self.twhdict.pop(twh_id)
             self.twnum -= 1
     
+    def tansfer_twarr(self, cluster):
+        for twh in self.get_twharr():
+            twh.update_cluster(cluster)
+    
     """ extra functions """
-    def extract_ents(self):
-        self.entifd.clear()
-        for twh in self.twhdict.values():
-            doc = twh.get(tk.key_spacy)
-            for ent in doc.ents:
-                ent_text = ent.text.strip().lower()
-                self.entifd.count_word(ent_text)
+    def get_rep_label(self, rep_thres):
+        lb_count = Counter(self.get_lbarr())
+        max_label, max_lbnum = lb_count.most_common(1)[0]
+        rep_label = -1 if max_lbnum < self.twnum * rep_thres else max_label
+        return rep_label
     
     def get_pos_vecarr(self):
         assert len(self.twhdict) > 0
@@ -288,12 +254,36 @@ class ClusterHolder:
     def get_pos_mean_vector(self):
         return np.mean(self.get_pos_vecarr(), axis=0)
     
-    def get_event_score(self):
-        score = terror_c.predict_proba(self.get_pos_mean_vector().reshape([1, -1]))[0]
-        return float(score)
+    def extract_keywords(self):
+        pos_keys = {su.pos_prop, su.pos_comm, su.pos_verb}
+        self.ifds = keyifd, entifd = [IdFreqDict(), IdFreqDict()]
+        for twh in self.twhdict.values():
+            doc = twh.get(tk.key_spacy)
+            for token in doc:
+                word, pos = token.text.strip().lower(), token.pos_
+                if pos in pos_keys and word not in pu.stop_words:
+                    keyifd.count_word(word)
+            for ent in doc.ents:
+                if ent.label_ in su.LABEL_IS_LOCATION:
+                    entifd.count_word(ent.text.strip().lower())
     
-    def get_cohesion_score(self):
-        return au.cohesion_score(self.get_pos_vecarr())
+    def word_sim_vec_with_other(self, cluster):
+        def ifd_sim_vec(ifd1, ifd2):
+            v_size1, v_size2 = ifd1.vocabulary_size(), ifd2.vocabulary_size()
+            freq_sum1, freq_sum2 = ifd1.get_freq_sum(), ifd2.get_freq_sum()
+            common_words = set(ifd1.vocabulary()).intersection(set(ifd2.vocabulary()))
+            comm_word_num = len(common_words)
+            comm_freq_sum1 = sum([ifd1.freq_of_word(w) for w in common_words])
+            comm_freq_sum2 = sum([ifd2.freq_of_word(w) for w in common_words])
+            vec1 = [comm_freq_sum1, freq_sum1, v_size1]
+            vec2 = [comm_freq_sum2, freq_sum2, v_size2]
+            return vec1, vec2, [comm_word_num]
+        this_keyifd, this_entifd = self.ifds
+        that_keyifd, that_entifd = cluster.ifds
+        sim_vec_key = ifd_sim_vec(this_keyifd, that_keyifd)
+        sim_vec_ent = ifd_sim_vec(this_entifd, that_entifd)
+        sim_vec = np.concatenate([sim_vec_key, sim_vec_ent], axis=0)
+        return sim_vec
 
 
 class TweetHolder:
@@ -319,7 +309,8 @@ class TweetHolder:
     
     def get_cluid(self): return self.cluster.cluid
     
-    def update_tw_cluid(self): self.tw[tk.key_event_cluid] = self.cluster.cluid
+    def update_tw_cluid(self):
+        self.tw[tk.key_event_cluid] = self.cluster.cluid if self.cluster is not None else None
     
     def tokenize(self, using_ifd):
         self.tokens = IdFreqDict()

@@ -75,16 +75,16 @@ class LECMClusterer:
         # eta = 0.1
         # beta = 0.5
         # lambd = 0.3
-        """cluster level"""
+        """cluster hot_and_level"""
         D = twarr.__len__()
         alpha0 = alpha * K
-        """geo_and_time level"""
+        """geo_and_time hot_and_level"""
         L = geo_word_id_dict.__len__()
         eta0 = eta * L
-        """non geo_and_time level"""
+        """non geo_and_time hot_and_level"""
         Y = ent_word_id_dict.__len__()
         beta0 = beta * Y
-        """keyword level"""
+        """keyword hot_and_level"""
         V = key_word_id_dict.__len__()
         lambd0 = lambd * V
     

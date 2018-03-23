@@ -1,9 +1,8 @@
 import re
 
 import utils.array_utils
-import utils.function_utils as fu
 import utils.date_utils as du
-import utils.multiprocess_utils
+import utils.multiprocess_utils as mu
 import utils.tweet_keys as tk
 import utils.array_utils as au
 import utils.spacy_utils as su
@@ -13,6 +12,23 @@ from utils.ner_service_proxy import get_ner_service_pool
 import numpy as np
 from sklearn.cluster import dbscan
 import Levenshtein
+
+
+def twarr_operate(
+        twarr,
+        pre_condition=lambda tw: tw is not None,
+        operation=lambda tw: tw,
+        post_condition=lambda tw: tw is not None,
+):
+    res_twarr = list()
+    for tw in twarr:
+        if pre_condition is not None and not pre_condition(tw):
+            continue
+        new_tw = operation(tw)
+        if post_condition is not None and not post_condition(tw):
+            continue
+        res_twarr.append(new_tw)
+    return res_twarr
 
 
 def in_reply_to(tw):
@@ -53,8 +69,12 @@ def weighted_doc_vec(doc):
     ent_type_0 = {'NORP', 'FAC', 'GPE', 'LOC', 'ORG', }
     ent_type_1 = {'EVENT', 'PERSON', 'ORDINAL', 'CARDINAL', }
     ent_type_2 = {'DATE', 'TIME', 'PERCENT', }
-    ent_weight_dict = dict([(t, 8.0) for t in ent_type_0] + [(t, 2.0) for t in ent_type_1] + [(t, 1.0) for t in ent_type_2])
-    # ent_weight = dict([(t, 1.0) for t in ent_type_0] + [(t, 1.0) for t in ent_type_1] + [(t, 1.0) for t in ent_type_2])
+    ent_weight_dict = dict([(t, 8.0) for t in ent_type_0] +
+                           [(t, 2.0) for t in ent_type_1] +
+                           [(t, 1.0) for t in ent_type_2])
+    # ent_weight = dict([(t, 1.0) for t in ent_type_0] +
+    # [(t, 1.0) for t in ent_type_1] +
+    # [(t, 1.0) for t in ent_type_2])
     tag_type_0 = {'NN', 'NNP', 'NNS', 'NNPS', 'VB', 'VBD', 'VBN', 'VBP', 'VBX', }
     tag_type_1 = {'IN', 'JJ', 'JJR', 'JJS', 'MD', 'RB', 'RBR', 'RBS', 'RP', }
     tag_weight_dict = dict([(t, 8.0) for t in tag_type_0] + [(t, 1.0) for t in tag_type_1])
@@ -125,7 +145,7 @@ def twarr_dist_pairs_multi(twarr):
     process_num = 16
     point_lists = [[i + 16 * j for j in range(int(total / process_num) + 1)
                     if (i + process_num * j) < total] for i in range(process_num)]
-    pairs_blocks = utils.multiprocess_utils.multi_process(dist_pairs, [(twarr, point) for point in point_lists])
+    pairs_blocks = mu.multi_process(dist_pairs, [(twarr, point) for point in point_lists])
     for tw in twarr:
         del tw['nouse']
     return utils.array_utils.merge_array(pairs_blocks)
@@ -151,6 +171,9 @@ def twarr_timestamp_array(twarr):
 
 def rearrange_idx_by_time(twarr):
     return np.argsort([du.get_timestamp_form_created_at(tw[tk.key_created_at].strip()) for tw in twarr])
+
+
+""" NER service interfaces """
 
 
 def start_ner_service(pool_size=8, classify=True, pos=True):

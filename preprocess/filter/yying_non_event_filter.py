@@ -21,8 +21,7 @@ import utils.tweet_keys as tk
 import utils.timer_utils as tmu
 
 
-file_dir = os.path.abspath(os.path.dirname(__file__))
-sys.path.append(file_dir)
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 chat_filter_file = getcfg().chat_filter_file
 is_noise_dict_file = getcfg().is_noise_dict_file
@@ -175,10 +174,7 @@ class EffectCheck:
 def perfomance_analysis():
     labal, proba = fu.load_array('label_proba')
     print(len(labal), len(proba))
-    auc = au.score(labal, proba, 'auc')
-    print(auc)
-    precision, recall, thresholds = metrics.precision_recall_curve(labal, proba)
-    au.precision_recall_threshold(precision, recall, thresholds)
+    au.precision_recall_threshold(labal, proba)
 
 
 if __name__ == '__main__':

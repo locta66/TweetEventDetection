@@ -19,6 +19,7 @@ from clustering.gsdpmm.gsdpmm_stream_semantic_ifd_dynamic import GSDPMMStreamSem
 
 
 np.random.seed(2333)
+cluid_evo_file = './cluid_evo.txt'
 
 
 def stream_cluster_with_label(tw_batches, hold_batch_num):
@@ -36,7 +37,6 @@ def stream_cluster_with_label(tw_batches, hold_batch_num):
         print('\r{}\r{}/{} batch, {} tws done'.format(
             ' ' * 30, batch_idx + 1, len(tw_batches), sum([len(t) for t in tw_batches[:batch_idx + 1]])),
             end='', flush=True)
-        
         cluid_iter = g.input_batch(tw_batch)
         if not cluid_iter:
             continue
@@ -45,7 +45,7 @@ def stream_cluster_with_label(tw_batches, hold_batch_num):
     
     assert len(cluid_batches) == len(tw_batches)
     assert len(au.merge_array(cluid_batches)) == len(au.merge_array(tw_batches))
-    fu.dump_array('cluid_evo.txt', cluid_batches)
+    fu.dump_array(cluid_evo_file, cluid_batches)
 
 
 # def stream_cluster_with_label(tw_batches, lb_batches, hold_batch_num):
@@ -89,114 +89,114 @@ def stream_cluster_with_label(tw_batches, hold_batch_num):
 #     analyze_stream_score_and_vector(*results)
 
 
-def string_key2int_key(dic):
-    for key in list(dic.keys()):
-        if type(key) is str:
-            dic[int(key)] = dic.pop(key)
-    return dic
-
-
-def analyze_stream_score_and_vector(z_evo=None, l_evo=None, s_evo=None, vs_evo=None, rep_score=0.7):
-    """ evaluate the clustering results """
-    if not z_evo or not l_evo or not s_evo or not vs_evo:
-        z_evo, l_evo, s_evo, vs_evo = fu.load_array('evolution.txt')
-        for s in s_evo:
-            string_key2int_key(s)
-    all_z = set(au.merge_array(z_evo))
-    print('\nrecorded cluster number {}'.format(len(all_z)))
-    
-    all_lb = set(au.merge_array(l_evo))
-    ne_lb = int(max(all_lb))
-    evo = pd.DataFrame(dtype=int)
-    for idx in range(len(z_evo)):
-        z_batch, lb_batch, s_batch = z_evo[idx], l_evo[idx], s_evo[idx]
-        df = cs.cluid_label_table(z_batch, lb_batch)
-        
-        for cluid, row in df.iterrows():
-            row_max_idx, row_sum = np.argmax(row.values), sum(row.values)
-            rep_cluid = int(row.index[row_max_idx])  # which cluster is the representative
-            rep_twnum = int(row[rep_cluid])
-            is_k_score = round(s_batch[cluid], 3)
-            if row.loc[rep_cluid] == 0 or row.loc[rep_cluid] < row_sum * rep_score or rep_cluid == ne_lb:
-                fill_cluid = ne_lb
-            else:
-                fill_cluid = rep_cluid
-            evo.loc[idx, cluid] = '{: <4},{:0<5},{}'.format(fill_cluid, is_k_score, rep_twnum)
-    
-    evo.fillna('', inplace=True)
-    effective_cluids = list()
-    for info in au.merge_array(evo.values.tolist()):
-        if info == '':
-            continue
-        fill_cluid, is_k_score, rep_twnum = info.split(',')
-        fill_cluid = int(fill_cluid)
-        if info != '' and fill_cluid != ne_lb:
-            effective_cluids.append(fill_cluid)
-    detected_e_number = Counter(effective_cluids)
-    detected_e_id = sorted(detected_e_number.keys())
-    num_detected = len(detected_e_id)
-    event_id_corpus = sorted(all_lb.difference({ne_lb}))
-    num_corpus = len(event_id_corpus)
-    
-    first_col = evo.columns[0]
-    evo.loc['detectedid', first_col] = str(detected_e_id)
-    evo.loc['totalevent', first_col] = str(event_id_corpus)
-    evo.loc['recall', first_col] = '{}/{}={}'.format(num_detected, num_corpus, num_detected / num_corpus)
-    evo.to_csv('table.csv')
-    print(detected_e_id, num_detected, num_corpus, num_detected / num_corpus)
-
-
-def analyze_stream(z_evo=None, l_evo=None, s_evo=None, rep_score=0.7):
-    """ evaluate the clustering results """
-    if not z_evo or not l_evo or not s_evo:
-        z_evo, l_evo, s_evo = fu.load_array('evolution.txt')
-    
-    history_z = set([z for z in au.merge_array(z_evo)])
-    print('\nhistory_z {}, effective cluster number {}'.format(sorted(history_z), len(history_z)))
-    
-    all_labels = au.merge_array(l_evo)
-    ne_cluid = int(max(all_labels))
-    evo = pd.DataFrame(dtype=int)
-    for batch_id in range(len(z_evo)):
-        # s_batch is the similarity of every predicted cluster in an iteration
-        z_batch, lb_batch, s_batch = z_evo[batch_id], l_evo[batch_id], s_evo[batch_id]
-        for k in list(s_batch.keys()):
-            if type(k) is str:
-                s_batch[int(k)] = s_batch[k]
-                s_batch.pop(k)
-        df = cs.cluid_label_table(z_batch, lb_batch)
-        for pred_cluid, row in df.iterrows():
-            row_max_idx, row_sum = np.argmax(row.values), sum(row.values)
-            rep_cluid = int(row.index[row_max_idx])
-            rep_twnum = int(row[rep_cluid])
-            similarity = round(s_batch[pred_cluid], 3)
-            if row.loc[rep_cluid] == 0 or row.loc[rep_cluid] < row_sum * rep_score or rep_cluid == ne_cluid:
-                evo.loc[batch_id, pred_cluid] = '{: <4},{:0<5},{}'.format(ne_cluid, similarity, rep_twnum)
-            else:
-                evo.loc[batch_id, pred_cluid] = '{: <4},{:0<3},{}'.format(rep_cluid, similarity, rep_twnum)
-    
-    evo.fillna('', inplace=True)
-    real_event_ids = au.merge_array(l_evo)
-    real_event_num = Counter(real_event_ids)
-    detected_event_ids = [int(item.split(',')[0]) for item in au.merge_array(evo.values.tolist())
-                          if item != '' and int(item.split(',')[0]) != ne_cluid]
-    detected_event_num = Counter(detected_event_ids)
-    detected_event_id = [d for d in sorted(set(detected_event_ids))]
-    num_detected = len(detected_event_id)
-    event_id_corpus = sorted(set(all_labels).difference({ne_cluid}))
-    num_corpus = len(event_id_corpus)
-    
-    first_col = evo.columns[0]
-    evo.loc['eventdistrb', first_col] = '  '.join(['{}:{}'.format(eventid, detected_event_num[eventid])
-                                                   for eventid in sorted(detected_event_num.keys())])
-    evo.loc['realdistrb', first_col] = '  '.join(['{}:{}'.format(eventid, real_event_num[eventid])
-                                                  for eventid in sorted(real_event_num.keys())])
-    evo.loc['detectedid', first_col] = str(detected_event_id)
-    evo.loc['totalevent', first_col] = str(event_id_corpus)
-    evo.loc['recall', first_col] = '{}/{}={}'.format(num_detected, num_corpus, num_detected / num_corpus)
-    evo.fillna('', inplace=True)
-    evo.to_csv('table.csv')
-    print(detected_event_id, num_detected, num_corpus, num_detected / num_corpus)
+# def string_key2int_key(dic):
+#     for key in list(dic.keys()):
+#         if type(key) is str:
+#             dic[int(key)] = dic.pop(key)
+#     return dic
+#
+#
+# def analyze_stream_score_and_vector(z_evo=None, l_evo=None, s_evo=None, vs_evo=None, rep_score=0.7):
+#     """ evaluate the clustering results """
+#     if not z_evo or not l_evo or not s_evo or not vs_evo:
+#         z_evo, l_evo, s_evo, vs_evo = fu.load_array('evolution.txt')
+#         for s in s_evo:
+#             string_key2int_key(s)
+#     all_z = set(au.merge_array(z_evo))
+#     print('\nrecorded cluster number {}'.format(len(all_z)))
+#
+#     all_lb = set(au.merge_array(l_evo))
+#     ne_lb = int(max(all_lb))
+#     evo = pd.DataFrame(dtype=int)
+#     for idx in range(len(z_evo)):
+#         z_batch, lb_batch, s_batch = z_evo[idx], l_evo[idx], s_evo[idx]
+#         df = cs.cluid_label_table(z_batch, lb_batch)
+#
+#         for cluid, row in df.iterrows():
+#             row_max_idx, row_sum = np.argmax(row.values), sum(row.values)
+#             rep_cluid = int(row.index[row_max_idx])  # which cluster is the representative
+#             rep_twnum = int(row[rep_cluid])
+#             is_k_score = round(s_batch[cluid], 3)
+#             if row.loc[rep_cluid] == 0 or row.loc[rep_cluid] < row_sum * rep_score or rep_cluid == ne_lb:
+#                 fill_cluid = ne_lb
+#             else:
+#                 fill_cluid = rep_cluid
+#             evo.loc[idx, cluid] = '{: <4},{:0<5},{}'.format(fill_cluid, is_k_score, rep_twnum)
+#
+#     evo.fillna('', inplace=True)
+#     effective_cluids = list()
+#     for info in au.merge_array(evo.values.tolist()):
+#         if info == '':
+#             continue
+#         fill_cluid, is_k_score, rep_twnum = info.split(',')
+#         fill_cluid = int(fill_cluid)
+#         if info != '' and fill_cluid != ne_lb:
+#             effective_cluids.append(fill_cluid)
+#     detected_e_number = Counter(effective_cluids)
+#     detected_e_id = sorted(detected_e_number.keys())
+#     num_detected = len(detected_e_id)
+#     event_id_corpus = sorted(all_lb.difference({ne_lb}))
+#     num_corpus = len(event_id_corpus)
+#
+#     first_col = evo.columns[0]
+#     evo.loc['detectedid', first_col] = str(detected_e_id)
+#     evo.loc['totalevent', first_col] = str(event_id_corpus)
+#     evo.loc['recall', first_col] = '{}/{}={}'.format(num_detected, num_corpus, num_detected / num_corpus)
+#     evo.to_csv('table.csv')
+#     print(detected_e_id, num_detected, num_corpus, num_detected / num_corpus)
+#
+#
+# def analyze_stream(z_evo=None, l_evo=None, s_evo=None, rep_score=0.7):
+#     """ evaluate the clustering results """
+#     if not z_evo or not l_evo or not s_evo:
+#         z_evo, l_evo, s_evo = fu.load_array('evolution.txt')
+#
+#     history_z = set([z for z in au.merge_array(z_evo)])
+#     print('\nhistory_z {}, effective cluster number {}'.format(sorted(history_z), len(history_z)))
+#
+#     all_labels = au.merge_array(l_evo)
+#     ne_cluid = int(max(all_labels))
+#     evo = pd.DataFrame(dtype=int)
+#     for batch_id in range(len(z_evo)):
+#         # s_batch is the similarity of every predicted cluster in an iteration
+#         z_batch, lb_batch, s_batch = z_evo[batch_id], l_evo[batch_id], s_evo[batch_id]
+#         for k in list(s_batch.keys()):
+#             if type(k) is str:
+#                 s_batch[int(k)] = s_batch[k]
+#                 s_batch.pop(k)
+#         df = cs.cluid_label_table(z_batch, lb_batch)
+#         for pred_cluid, row in df.iterrows():
+#             row_max_idx, row_sum = np.argmax(row.values), sum(row.values)
+#             rep_cluid = int(row.index[row_max_idx])
+#             rep_twnum = int(row[rep_cluid])
+#             similarity = round(s_batch[pred_cluid], 3)
+#             if row.loc[rep_cluid] == 0 or row.loc[rep_cluid] < row_sum * rep_score or rep_cluid == ne_cluid:
+#                 evo.loc[batch_id, pred_cluid] = '{: <4},{:0<5},{}'.format(ne_cluid, similarity, rep_twnum)
+#             else:
+#                 evo.loc[batch_id, pred_cluid] = '{: <4},{:0<3},{}'.format(rep_cluid, similarity, rep_twnum)
+#
+#     evo.fillna('', inplace=True)
+#     real_event_ids = au.merge_array(l_evo)
+#     real_event_num = Counter(real_event_ids)
+#     detected_event_ids = [int(item.split(',')[0]) for item in au.merge_array(evo.values.tolist())
+#                           if item != '' and int(item.split(',')[0]) != ne_cluid]
+#     detected_event_num = Counter(detected_event_ids)
+#     detected_event_id = [d for d in sorted(set(detected_event_ids))]
+#     num_detected = len(detected_event_id)
+#     event_id_corpus = sorted(set(all_labels).difference({ne_cluid}))
+#     num_corpus = len(event_id_corpus)
+#
+#     first_col = evo.columns[0]
+#     evo.loc['eventdistrb', first_col] = '  '.join(['{}:{}'.format(eventid, detected_event_num[eventid])
+#                                                    for eventid in sorted(detected_event_num.keys())])
+#     evo.loc['realdistrb', first_col] = '  '.join(['{}:{}'.format(eventid, real_event_num[eventid])
+#                                                   for eventid in sorted(real_event_num.keys())])
+#     evo.loc['detectedid', first_col] = str(detected_event_id)
+#     evo.loc['totalevent', first_col] = str(event_id_corpus)
+#     evo.loc['recall', first_col] = '{}/{}={}'.format(num_detected, num_corpus, num_detected / num_corpus)
+#     evo.fillna('', inplace=True)
+#     evo.to_csv('table.csv')
+#     print(detected_event_id, num_detected, num_corpus, num_detected / num_corpus)
 
 
 # def analyze_stream_k(z_evo=None, l_evo=None, s_evo=None, rep_score=0.7):
@@ -384,11 +384,4 @@ if __name__ == '__main__':
     """ read tw data """
     # make_tw_batches(batch_size)
     tw_batches = get_tw_batches()
-    
-    if args.a:
-        print('only analyze')
-        # analyze_stream_score_and_vector()
-        exit()
-    else:
-        print('single test')
-        stream_cluster_with_label(tw_batches, hold_batch_num)
+    stream_cluster_with_label(tw_batches, hold_batch_num)

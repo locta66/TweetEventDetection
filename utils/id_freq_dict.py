@@ -13,13 +13,13 @@ class IdFreqDict:
         self._freq_sum = 0
         self._word_freq_enum = None
     
-    def __contains__(self, word): return self.has_word(word)
-    
     def clear(self):
         self._word2id.clear()
         self._id2word.clear()
         self._freq_sum = 0
         self._word_freq_enum = None
+    
+    def __contains__(self, word): return self.has_word(word)
     
     def has_word(self, word): return word in self._word2id
     
@@ -90,15 +90,20 @@ class IdFreqDict:
             self._word_freq_enum = [(word, self._word2id[word][K_FREQ]) for word in self.vocabulary()]
         return self._word_freq_enum
     
-    def merge_freq_from(self, other_id_freq_dict, newest=True):
+    def most_common(self, k=None, newest=True):
+        word_freq_enum = self.word_freq_enumerate(newest)
+        word_freq_enum = sorted(word_freq_enum, key=lambda item: item[1], reverse=True)
+        return word_freq_enum[:k] if k is not None else word_freq_enum
+    
+    def merge_freq_from(self, other_ifd, newest=True):
         pre_freq = self._freq_sum
-        for other_word, other_freq in other_id_freq_dict.word_freq_enumerate(newest):
+        for other_word, other_freq in other_ifd.word_freq_enumerate(newest):
             self.count_word(other_word, other_freq)
         return self._freq_sum - pre_freq
     
-    def drop_freq_from(self, other_id_freq_dict, newest=True):
+    def drop_freq_from(self, other_ifd, newest=True):
         pre_freq = self._freq_sum
-        for other_word, other_freq in other_id_freq_dict.word_freq_enumerate(newest):
+        for other_word, other_freq in other_ifd.word_freq_enumerate(newest):
             self.uncount_word(other_word, other_freq)
         return pre_freq - self._freq_sum
     

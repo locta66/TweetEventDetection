@@ -28,16 +28,17 @@ class HotDegree:
         average_hot = (self.weight_user * user_influence + self.w_propagation * propagation_influence) / \
                       (len(twarr) * 1.0)
         return average_hot
-
-    # TODO 'followers_count'等写到utils.tweet_keys里
+    
     def user_influence(self, user):
-        user_i_influence = math.log(user['followers_count'] + 2) * math.log(user['statuses_count'] + 2) * \
-                           (1.5 if user['verified'] == 'True' else 1.0)
-        return user_i_influence
+        followers_influence = math.log(user[tk.key_followers_count] + 2)
+        statuses_influence = math.log(user[tk.key_statuses_count] + 2)
+        verified_influence = 1.5 if user[tk.key_verified] == 'True' else 1.0
+        return followers_influence * statuses_influence * verified_influence
     
     def tw_propagation(self, tw):
-        propagation_i_influence = (0.5 if tw['is_quote_status'] == 'True' else 0) * (tw['retweet_count'] ** 0.5) * 1.0
-        return propagation_i_influence
+        quote_influence = 0.5 if tw['is_quote_status'] == 'True' else 0
+        retweet_influence = tw['retweet_count'] ** 0.5
+        return quote_influence * retweet_influence
     
     def duration(self, twarr):
         max_distance_hours = 0
@@ -64,28 +65,3 @@ class HotDegree:
 class AttackHot(HotDegree):
     def __int__(self):
         HotDegree.__init__(self)
-
-
-# TODO 弃用这个函数
-def get_every_tweet_status(twarr):
-    status_dict = dict()
-    for idx, tw in enumerate(twarr):
-        status_dict[idx] = {
-            'followers_count': tw['user']['followers_count'],
-            'statuses_count': tw['user']['statuses_count'],
-            'verified': tw['user']['verified'],
-            'reply_count': tw['reply_count'] if 'reply_count' in tw else 0,
-            'retweet_count': tw['retweet_count'],
-            'is_quote_status': tw['is_quote_status'],
-            'created_at': tw['created_at']
-        }
-    return status_dict
-
-
-if __name__ == '__main__':
-    event_files = fi.listchildren('/home/nfs/yangl/event_detection/testdata/event_corpus/', fi.TYPE_FILE,
-                                  pattern='.txt$', concat=True)
-    model = AttackHot()
-    for file in event_files:
-        twarr = fu.load_array(file)
-        print(model.hot_degree(twarr))

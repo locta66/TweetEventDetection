@@ -12,19 +12,20 @@ batch_size = 100
 
 
 def cluster_and_extract(inq, outq):
-    hyperparams = inq.get()
     g = GSDPMMStreamIFDDynamic()
+    hyperparams = inq.get()
     g.set_hyperparams(*hyperparams)
+    twarr_pool = list()
+    
     gsdpmm_batch_num = 0
     histroy_len = 0
-    twarr_pool = list()
     while True:
         command = inq.get()
         if command == CMD_INPUT_TWARR:
             twarr = inq.get()
+            histroy_len += len(twarr)
             tu.twarr_nlp(twarr)
             twarr_pool.extend(twarr)
-            histroy_len += len(twarr)
             print('{} received new {} tweets, current pool size: {}, total input len: {}'.
                   format(gsdpmm_batch_num, len(twarr), len(twarr_pool), histroy_len))
             while len(twarr_pool) >= batch_size:
@@ -37,12 +38,12 @@ def cluster_and_extract(inq, outq):
             # TODO
             print(file)
         elif command == CMD_END_PROCESS:
-            outq.put('ready to end the process')
+            outq.put('ready to end')
             return
 
 
-cluster_daemon = CustomDaemonProcess(cluster_and_extract)
-cluster_daemon.start()
+cluster_daemon = CustomDaemonProcess()
+cluster_daemon.start(cluster_and_extract)
 cluster_daemon.set_input((hold_batch_num, 30, 0.01))
 
 
