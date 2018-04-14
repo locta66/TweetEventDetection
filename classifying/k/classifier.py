@@ -1,17 +1,27 @@
+from config.configure import config
 import classifying.fast_text_utils as ftu
 
 import utils.array_utils as au
 
 
 label2value = ftu.binary_label2value
-value_f = ftu.value_f
-korea_model_file = '/home/nfs/cdong/tw/seeding/NorthKorea/model/model'
+korea_model_file = config.korea_ft_model_file
 
 
-def predict(target, threshold=0.5):
+class ClassifyK:
+    def __init__(self, ft_model_file):
+        self.ft_model = None
+        if ft_model_file is not None:
+            self.load_fasttext_model(ft_model_file)
+        
+    def load_fasttext_model(self, ft_model_file):
+        self.ft_model = ftu.load_model(ft_model_file)
+
+
+def predict(textarr, threshold=0.5):
     """ returns value/value array given input text/text array; value(s) are dependent on the threshold """
     model = ftu.get_model(korea_model_file)
-    pred_value_arr = ftu.binary_predict(target, model, threshold)
+    pred_value_arr = ftu.binary_predict(textarr, model, threshold)
     return pred_value_arr
 
 

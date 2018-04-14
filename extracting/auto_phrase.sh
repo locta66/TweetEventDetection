@@ -1,47 +1,34 @@
 #!/bin/bash
 
+# RAW_TRAIN is the input of AutoPhrase, where each line is a single document.
 read RAW_TRAIN
 read MODEL
-# RAW_TRAIN="/home/nfs/cdong/tw/src/models/autophrase/raw_train.txt"
-# MODEL="/home/nfs/cdong/tw/src/models/autophrase/default/"
-# RAW_TRAIN is the input of AutoPhrase, where each line is a single document.
+read MIN_SUP
 
 # When FIRST_RUN is set to 1, AutoPhrase will run all preprocessing.
 # Otherwise, AutoPhrase directly starts from the current preprocessed data in the tmp/ folder.
 FIRST_RUN=${FIRST_RUN:- 1}
+
 # When ENABLE_POS_TAGGING is set to 1, AutoPhrase will utilize the POS tagging in the phrase mining. 
 # Otherwise, a simple length penalty mode as the same as SegPhrase will be used.
 ENABLE_POS_TAGGING=${ENABLE_POS_TAGGING:- 1}
-# A hard threshold of raw frequency is specified for frequent phrase mining, which will generate a candidate set.
-MIN_SUP=${MIN_SUP:- 10}
-# You can also specify how many threads can be used for AutoPhrase
+
+# A hard threshold of raw frequency for frequent phrase mining, which will generate a candidate set.
+# MIN_SUP=${MIN_SUP:- 10}
+# How many threads can be used for AutoPhrase
 THREAD=${THREAD:- 10}
+
 
 ### Begin: Suggested Parameters ###
 MAX_POSITIVES=-1
 LABEL_METHOD=DPDN
 RAW_LABEL_FILE=${RAW_LABEL_FILE:-""}
-### End: Suggested Parameters ###
 
 
 green=`tput setaf 2`
 reset=`tput sgr0`
-
-echo ${green}===Compilation===${reset}
-COMPILE=${COMPILE:- 1}
-if [ $COMPILE -eq 1 ]; then
-    bash compile.sh
-fi
-
 mkdir -p tmp
 mkdir -p ${MODEL}
-
-if [ $RAW_TRAIN == "data/DBLP.txt" ] && [ ! -e data/DBLP.txt ]; then
-    echo ${green}===Downloading Toy Dataset===${reset}
-    curl http://dmserv2.cs.illinois.edu/data/DBLP.txt.gz --output data/DBLP.txt.gz
-    gzip -d data/DBLP.txt.gz -f
-fi
-### END Compilation###
 
 
 echo ${green}===Tokenization===${reset}
@@ -53,8 +40,7 @@ if [ $FIRST_RUN -eq 1 ]; then
     echo -ne "Current step: Tokenizing input file...\033[0K\r"
     time java $TOKENIZER -m train -i $RAW_TRAIN -o $TOKENIZED_TRAIN -t $TOKEN_MAPPING -c N -thread $THREAD
 fi
-LANGUAGE=`cat tmp/language.txt`
-echo -ne "Detected Language: $LANGUAGE\033[0K\n"
+LANGUAGE='EN'
 TOKENIZED_STOPWORDS=tmp/tokenized_stopwords.txt
 TOKENIZED_ALL=tmp/tokenized_all.txt
 TOKENIZED_QUALITY=tmp/tokenized_quality.txt
@@ -87,7 +73,6 @@ if [ ! $LANGUAGE == "JA" ] && [ ! $LANGUAGE == "CN" ]  && [ ! $LANGUAGE == "OTHE
     bash ./tools/treetagger/pos_tag.sh
     mv tmp/pos_tags.txt tmp/pos_tags_tokenized_train.txt
 fi
-### END Part-Of-Speech Tagging ###
 
 
 echo ${green}===AutoPhrasing===${reset}
@@ -111,15 +96,14 @@ fi
 
 
 echo ${green}===Saving Model and Results===${reset}
-cp tmp/segmentation.model ${MODEL}/segmentation.model
-cp tmp/token_mapping.txt ${MODEL}/token_mapping.txt
-cp tmp/language.txt ${MODEL}/language.txt
+#cp $tmp/segmentation.model ${MODEL}/segmentation.model
+#cp $tmp/token_mapping.txt ${MODEL}/token_mapping.txt
+#cp $tmp/language.txt ${MODEL}/language.txt
 
 ### END AutoPhrasing ###
 
 
 echo ${green}===Generating Output===${reset}
-java $TOKENIZER -m translate -i tmp/final_quality_multi-words.txt -o ${MODEL}/AutoPhrase_multi-words.txt -t $TOKEN_MAPPING -c N -thread $THREAD
-java $TOKENIZER -m translate -i tmp/final_quality_unigrams.txt -o ${MODEL}/AutoPhrase_single-word.txt -t $TOKEN_MAPPING -c N -thread $THREAD
+#java $TOKENIZER -m translate -i tmp/final_quality_multi-words.txt -o ${MODEL}/AutoPhrase_multi-words.txt -t $TOKEN_MAPPING -c N -thread $THREAD
+#java $TOKENIZER -m translate -i tmp/final_quality_unigrams.txt -o ${MODEL}/AutoPhrase_single-word.txt -t $TOKEN_MAPPING -c N -thread $THREAD
 java $TOKENIZER -m translate -i tmp/final_quality_salient.txt -o ${MODEL}/AutoPhrase.txt -t $TOKEN_MAPPING -c N -thread $THREAD
-

@@ -1,7 +1,7 @@
 import os
 
-import Levenshtein
-from sklearn import metrics
+# import Levenshtein
+# from sklearn import metrics
 
 import utils.multiprocess_utils as mu
 from preprocess.tweet_filter import filter_twarr
@@ -11,28 +11,32 @@ import utils.function_utils as fu
 import utils.tweet_utils as tu
 import utils.tweet_keys as tk
 from config.configure import getcfg
-from seeding.event_trainer import EventTrainer
+# from seeding.event_trainer import EventTrainer
 from seeding.seed_query import SeedQuery
 
 
-def parse_query_list(from_path, into_path, query_list, n_process=20):
+def parse_query_list(from_path, into_path, query_list, n_process):
     from_path = fi.add_sep_if_needed(from_path)
     into_path = fi.add_sep_if_needed(into_path)
     all_sub_files = [file for file in fi.listchildren(from_path, children_type=fi.TYPE_FILE, pattern='.sum$')]
     tw_num_sum = 0
     for query in query_list:
         query = SeedQuery(*query)
-        query_sub_files = [(from_path + file) for file in all_sub_files
-                           if query.is_time_desired(tw_ymd=query.time_of_tweet(file, source='filename'))]
-        print('{} files from {} to {}'.format(len(query_sub_files),
-                                              query_sub_files[0][query_sub_files[0].rfind('/')+1:],
-                                              query_sub_files[-1][query_sub_files[-1].rfind('/')+1:], ))
-        
+        query_sub_files = [os.path.join(from_path, f) for f in all_sub_files
+                           if query.is_time_desired(tw_ymd=query.time_of_tweet(f, source='filename'))]
+        print('{} files from {} to {}'.format(
+            len(query_sub_files), query_sub_files[0][query_sub_files[0].rfind('/')+1:],
+            query_sub_files[-1][query_sub_files[-1].rfind('/')+1:], ))
         twarr = query_from_files_multi(query_sub_files, query, n_process)
         tw_num_sum += len(twarr)
-        file_name = query.to_string() + '.txt'
-        print('file_name{}\n'.format(file_name))
-        fu.dump_array(into_path + file_name, twarr)
+        file_name = query.to_string() + '.json'
+        if len(twarr) > 20:
+            print('file {} written\n'.format(file_name))
+            fu.dump_array(os.path.join(into_path, file_name), twarr)
+        else:
+            print('twarr not long enough')
+        for tw in twarr:
+            print(tw[tk.key_text], '\n')
     print('total tweet number: {}'.format(tw_num_sum))
 
 
@@ -372,4 +376,17 @@ def merge_events_2016():
 
 
 if __name__ == '__main__':
-    merge_events_2016()
+    # merge_events_2016()
+    import utils.pattern_utils as pu
+    base = "/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/"
+    files = fi.listchildren(base, fi.TYPE_FILE, concat=True)
+    for file in files:
+        twarr = fu.load_array(file)
+        len_pre = len(twarr)
+        for idx in range(len(twarr) - 1, -1, -1):
+            text = twarr[idx][tk.key_text]
+            if not pu.has_enough_alpha(text, 0.6):
+                print(text)
+                twarr.pop(idx)
+        print(len_pre, '->', len(twarr), '\n\n')
+        # fu.dump_array(file, twarr)

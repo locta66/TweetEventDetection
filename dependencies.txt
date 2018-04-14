@@ -6,12 +6,20 @@ pip3 install bz2file
 pip3 install numpy
 pip3 install scipy
 pip3 install sklearn
+pip3 install gensim
 pip3 install pandas
 pip3 install nltk
 pip3 install wordsegment
-pip3 install pybind11
-pip3 install python-Levenshtein
+pip3 install xmltodict
 
+pip3 install python-Levenshtein
+pip3 install timezonefinder
+pip3 install pytz
+pip3 install sutime
+pip3 install CoreNlp
+pip3 install geocoder
+
+pip3 install pybind11
 cd fasttext-master
 ./setup.py build
 ./setup.py install
@@ -21,8 +29,8 @@ cd fasttext-master
 # http://python.jobbole.com/81675/
 
 pip3 install spacy
-pip3 install ..../en_core_web_lg-2.0.0.tar.gz
-pip3 install ..../en_core_web_sm-2.0.0.tar.gz
+pip3 install XXX/en_core_web_lg-2.0.0.tar.gz
+pip3 install XXX/en_core_web_sm-2.0.0.tar.gz
 (python -m spacy download en_core_web_lg) OR
 (https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.0.0/en_core_web_lg-2.0.0.tar.gz)
 

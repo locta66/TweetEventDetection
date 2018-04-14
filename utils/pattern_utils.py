@@ -3,10 +3,6 @@ import re
 from wordsegment import load, segment
 
 
-K_PATTERN = 'ptn'
-K_SUB = 'sub'
-
-
 def load_stop_words():
     stop_words_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), "stopwords.txt")
     with open(stop_words_file) as fp:
@@ -23,12 +19,9 @@ stop_words = load_stop_words()
 
 
 class PatternHolder:
-    def __init__(self, exp_sub_list=None):
-        """processing text with reg may require particular order"""
-        self.cache_dict = dict()
+    def __init__(self, exp_sub_list):
         self.exp_list = list()
-        if exp_sub_list:
-            self.update_pattern_dict(exp_sub_list)
+        self.update_pattern_dict(exp_sub_list)
     
     def update_pattern_dict(self, exp_sub_list):
         for exp_sub in exp_sub_list:
@@ -38,20 +31,11 @@ class PatternHolder:
                 (exp, sub), cap_ignore = exp_sub, True
             else:
                 raise ValueError('wrong format ' + str(exp_sub))
-            if exp not in self.cache_dict:
-                self.exp_list.append(exp)
             flags = re.I if cap_ignore else 0
-            self.cache_dict[exp] = dict()
-            self.cache_dict[exp][K_PATTERN] = re.compile(exp, flags=flags)
-            self.cache_dict[exp][K_SUB] = sub
+            self.exp_list.append([exp, re.compile(exp, flags=flags), sub])
     
     def apply_patterns(self, text):
-        if len(self.exp_list) == 1:
-            exp = self.exp_list[0]
-            return self.cache_dict[exp][K_PATTERN].sub(self.cache_dict[exp][K_SUB], text)
-        for exp in self.exp_list:
-            pattern = self.cache_dict[exp][K_PATTERN]
-            sub = self.cache_dict[exp][K_SUB]
+        for exp, pattern, sub in self.exp_list:
             text = pattern.sub(sub, text)
         return text
 
@@ -117,10 +101,16 @@ def is_stop_word(string): return string.strip().lower() in stop_words
 def is_char(string): return len(string) == 1
 
 
+# r'[\_\w\-]{2,}'
 def tokenize(pattern, string, flags=re.I): return re.findall(pattern, string, flags=flags)
 
 
-# def word_segment(string): return segment(string)
+def has_enough_alpha(string, threshold):
+    string = re.sub('\s', '', string)
+    if len(string) == 0:
+        return False
+    alphas = re.findall('[a-zA-Z]', string)
+    return len(alphas) / len(string) >= threshold
 
 
 def text_normalization(text):
@@ -141,7 +131,7 @@ def is_valid_keyword(word):
     if not word:
         return False
     startswithchar = re.search('^[^a-zA-Z#]', word) is None
-    notsinglechar = not is_char(word)
+    notsinglechar = len(word) > 1
     notstopword = word not in stop_words
     return startswithchar and notsinglechar and notstopword
 

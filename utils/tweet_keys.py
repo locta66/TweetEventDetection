@@ -8,6 +8,7 @@ key_created_at = 'created_at'
 key_coordinates = 'coordinates'
 key_is_quote_status = 'is_quote_status'
 key_in_reply_to_status_id = 'in_reply_to_status_id'
+key_utc_offset = 'utc_offset'
 
 # user attributes
 key_description = 'description'

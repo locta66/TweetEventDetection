@@ -2,37 +2,58 @@ import json
 import operator
 from collections import Counter
 
-import utils.tweet_keys as tk
+import utils.spacy_utils as su
 import utils.pattern_utils as pu
-
+import utils.tweet_keys as tk
 import sqlite3
 from geocoder.google import GoogleResult
 
 
-conn = sqlite3.connect('/home/nfs/cdong/tw/src/models/geo/geo_location')
+conn = sqlite3.connect("/home/nfs/cdong/tw/src/models/geo/geo_location")
 c = conn.cursor()
 
 
-def extract_sorted_readable_geo(twarr, docarr):
-    coordinates = get_coordinates(twarr)
+def get_readable_from_geo_freq_list(geo_freq_list):
+    readable_info = list()
+    # type(geo) is GoogleResult
+    for geo, freq in geo_freq_list:
+        if geo.quality == 'country':
+            info = [geo.quality, geo.address, geo.country_long, geo.bbox, freq]
+        elif geo.quality == 'locality':
+            info = [geo.quality, geo.city, geo.country_long, geo.bbox, freq]
+        else:
+            info = [geo.quality, geo.address, geo.country_long, geo.bbox, freq]
+        readable_info.append(info)
+    return readable_info
+
+
+def extract_sorted_geo_freq_list(twarr, docarr):
+    coord_list = get_coordinates(twarr)
     loc_freq_list = get_loc_freq_list(docarr)
-    geo_freq_list = get_geo_freq_list(loc_freq_list, coordinates)
-    readable_info_list = extract_info_from_geo_freq_list(geo_freq_list)
-    return readable_info_list
+    geo_freq_list = get_geo_freq_list(loc_freq_list, coord_list)
+    return geo_freq_list
+
+
+def get_coordinates(twarr):
+    k_coord = tk.key_coordinates
+    coord_list = list()
+    for tw in twarr:
+        if (k_coord in tw) and (tw[k_coord] is not None) and (k_coord in tw[k_coord]):
+            coord_list.append(tw[k_coord][k_coord])
+    return coord_list
 
 
 def get_loc_freq_list(docarr):
     loc_freq_counter = Counter()
     for doc in docarr:
-        ents = [pu.capitalize(e.text) for e in doc.ents if (e.label_ == 'GPE' and len(e.text) > 1)]
+        ents = [pu.capitalize(e.text) for e in doc.ents if (e.label_ in su.LABEL_LOCATION and len(e.text) > 1)]
         loc_freq_counter += Counter(ents)
     if len(loc_freq_counter) == 0:
         return list()
     loc_freq_list = loc_freq_counter.most_common()
     top_loc, top_freq = loc_freq_list[0]
     geo_valid_num = sum([freq >= top_freq / 4 for loc, freq in loc_freq_list[1:]]) + 1
-    loc_freq_list = loc_freq_list[:geo_valid_num]
-    return loc_freq_list
+    return loc_freq_list[:geo_valid_num]
 
 
 def get_geo_freq_list(loc_freq_list, coordinates):
@@ -42,43 +63,20 @@ def get_geo_freq_list(loc_freq_list, coordinates):
     return geo_freq_list
 
 
-def extract_info_from_geo_freq_list(geo_freq_list):
-    geo_info = list()
-    for geo, freq in geo_freq_list:
-        if geo.quality == 'country':
-            info = [geo.quality, geo.address, geo.country_long, geo.bbox, freq]
-        elif geo.quality == 'locality':
-            info = [geo.quality, geo.city, geo.country_long, geo.bbox, freq]
-        else:
-            info = [geo.quality, geo.address, geo.country_long, geo.bbox, freq]
-        geo_info.append(info)
-    return geo_info
-
-
-def get_coordinates(twarr):
-    k_coord = tk.key_coordinates
-    return [tw[k_coord][k_coord] for tw in twarr if (k_coord in tw and tw[k_coord] is not None)]
-
-
 def _get_geo_freq_list(loc_freq_list):
     geo_list = list()
     for loc, freq in loc_freq_list:
         geo = get_geo_by_loc_name(loc)
-        if geo is None:
-            continue
-        else:
+        if geo:
             geo_list.append((geo, freq))
     return geo_list
 
 
 def get_geo_by_loc_name(loc_name):
-    c.execute("SELECT i2g.GEO FROM nameToId AS n2i, idToGeo AS i2g WHERE n2i.NAME=:place AND n2i.ID=i2g.ID",
-              {"place": loc_name})
+    query = "SELECT i2g.GEO FROM nameToId AS n2i, idToGeo AS i2g WHERE n2i.NAME=:place AND n2i.ID=i2g.ID"
+    c.execute(query, {"place": loc_name})
     geo_result = c.fetchone()
-    if geo_result is None:
-        return None
-    else:
-        return GoogleResult(json.loads(geo_result[0]))
+    return None if not geo_result else GoogleResult(json.loads(geo_result[0]))
 
 
 def _reevaluate_with_coordinates(geo_freq_list, coordinate_list):
@@ -124,6 +122,13 @@ def _determine_index_order(geo_list, index1=0, index2=1):
 
 
 if __name__ == '__main__':
+    # loc_name = "US"
+    # query = "SELECT i2g.GEO FROM nameToId AS n2i, idToGeo AS i2g WHERE n2i.NAME=:place AND n2i.ID=i2g.ID"
+    # c.execute(query, {"place": loc_name})
+    # geo_result = GoogleResult(json.loads(c.fetchone()[0]))
+    # print(geo_result.raw)
+    # print(geo_result.fieldnames)
+    # exit()
     sql_create_table_name_to_id = """ CREATE TABLE IF NOT EXISTS nameToId (NAME text PRIMARY KEY,ID text);"""
     sql_create_table_id_to_Geo = """ CREATE TABLE IF NOT EXISTS idToGeo (ID text PRIMARY KEY,GEO text NOT NULL); """
     if conn:

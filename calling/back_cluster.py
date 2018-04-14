@@ -12,8 +12,8 @@ batch_size = 100
 
 
 def cluster_and_extract(inq, outq):
-    g = GSDPMMStreamIFDDynamic()
     hyperparams = inq.get()
+    g = GSDPMMStreamIFDDynamic()
     g.set_hyperparams(*hyperparams)
     twarr_pool = list()
     
@@ -35,8 +35,8 @@ def cluster_and_extract(inq, outq):
                 twarr_pool = twarr_pool[batch_size:]
         elif command == CMD_WRITE_CLUSTER:
             file = inq.get()
-            # TODO
             print(file)
+            # outq.put(out_file_name)
         elif command == CMD_END_PROCESS:
             outq.put('ready to end')
             return

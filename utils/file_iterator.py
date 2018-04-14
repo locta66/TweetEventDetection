@@ -1,12 +1,13 @@
 import os
 import shutil
 import utils.pattern_utils as pu
+from pathlib import Path
 
 
 def add_sep_if_needed(path): return path if path.endswith(os.path.sep) else path + os.path.sep
 
 
-def pwd(): return os.getcwd()
+def getcwd(): return os.getcwd()
 
 
 def base_name(abspath): return os.path.basename(abspath)
@@ -21,10 +22,7 @@ def is_dir(path): return os.path.isdir(path)
 def is_file(file): return os.path.isfile(file)
 
 
-def exists(path_or_file): return os.path.exists(path_or_file)
-
-
-def makedirs(path): os.makedirs(path)
+def exists(path): return os.path.exists(path)
 
 
 def rmtree(path):
@@ -48,45 +46,56 @@ def remove_files(files):
         raise TypeError("File descriptor array not an expected type")
 
 
-def make_dirs(dir_name):
-    if not type(dir_name) is str:
-        raise ValueError('Not valid directory description token')
-    if not os.path.exists(dir_name):
-        os.makedirs(dir_name)
-
-
 def concat_files(file_list, output_file):
     input_files = ' '.join(file_list)
     p = os.popen('cat {} > {}'.format(input_files, output_file))
     p.close()
 
 
-TYPE_DIR = 'dir'
-TYPE_FILE = 'file'
-TYPE_ALL = 'all'
+def mkdir(dir_name):
+    if not exists(dir_name):
+        os.makedirs(dir_name)
 
 
-def listchildren(directory, children_type=TYPE_DIR, pattern=None, concat=False):
-    if children_type not in [TYPE_DIR, TYPE_FILE, TYPE_ALL]:
-        print('listchildren() : Incorrect children type')
-        return None
-    children = sorted(os.listdir(directory))
-    if pattern is not None:
-        children = [c for c in children if pu.search_pattern(pattern, c) is not None]
-    if children_type != TYPE_ALL:
-        res_list = list()
-        for child in children:
-            child_full_path = os.path.join(directory, child)
-            if not os.path.exists(child_full_path):
-                print('listchildren() : Invalid path')
-                continue
-            if children_type == TYPE_DIR and os.path.isdir(child_full_path) or \
-                    (children_type == TYPE_FILE and os.path.isfile(child_full_path)):
-                res_list.append(child)
-        children = res_list
-    if concat:
-        children = [os.path.join(directory, c) for c in children]
-    return children
+def join(*args): return os.path.join(*args)
+
+
+TYPE_DIR = 0
+TYPE_FILE = 1
+TYPE_ALL = 2
+
+
+def listchildren(directory, children_type=TYPE_FILE, pattern=None, concat=False):
+    path = Path(directory)
+    children = list()
+    for child in path.iterdir():
+        if children_type == TYPE_ALL or (child.is_file() and children_type == TYPE_FILE) or\
+                (child.is_dir() and children_type == TYPE_DIR):
+            children.append(child)
+    if pattern is not None and type(pattern) is str:
+        children = [c for c in children if pu.search_pattern(pattern, c.name) is not None]
+    children = [str(c) if concat else c.name for c in children]
+    return sorted(children)
+    # if children_type not in {TYPE_DIR, TYPE_FILE, TYPE_ALL}:
+    #     print('listchildren() : Incorrect children type')
+    #     return None
+    # children = sorted(os.listdir(directory))
+    # if pattern is not None:
+    #     children = [c for c in children if pu.search_pattern(pattern, c) is not None]
+    # if children_type != TYPE_ALL:
+    #     res_list = list()
+    #     for child in children:
+    #         child_full_path = os.path.join(directory, child)
+    #         if not os.path.exists(child_full_path):
+    #             print('listchildren() : Invalid path')
+    #             continue
+    #         if children_type == TYPE_DIR and os.path.isdir(child_full_path) or \
+    #                 (children_type == TYPE_FILE and os.path.isfile(child_full_path)):
+    #             res_list.append(child)
+    #     children = res_list
+    # if concat:
+    #     children = [os.path.join(directory, c) for c in children]
+    # return children
 
 
 def iterate_file_tree(root_path, func, *args, **kwargs):

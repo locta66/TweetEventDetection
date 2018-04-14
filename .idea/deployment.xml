@@ -2,23 +2,6 @@
 <project version="4">
   <component name="PublishConfigData" serverName="cdong@cpu">
     <serverData>
-      <paths name="Copy of project-level server 'cdong@cpu'">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/src" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-          <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/query_results" />
-            <excludedPath local="true" path="$PROJECT_DIR$/utils/synset.json" />
-            <excludedPath local="true" path="$PROJECT_DIR$/dependencies.txt" />
-            <excludedPath local="true" path="$PROJECT_DIR$/config/ChatFilter.py" />
-            <excludedPath local="true" path="$PROJECT_DIR$/preprocess/abbrs.txt" />
-            <excludedPath local="true" path="$PROJECT_DIR$/preprocess/emoticons.txt" />
-            <excludedPath local="true" path="$PROJECT_DIR$/seeding/posdict.txt" />
-            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
-          </excludedPaths>
-        </serverdata>
-      </paths>
       <paths name="cdong@cpu">
         <serverdata>
           <mappings>

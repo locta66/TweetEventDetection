@@ -1,5 +1,4 @@
 import os
-import time
 import json
 from json import JSONDecodeError
 import bz2file
@@ -13,19 +12,26 @@ def slash_appender(func):
     return decorator
 
 
-def sync_real_time_counter(info):
-    def time_counter(func):
-        def decorator(*args, **kwargs):
-            start_time = time.time()
-            func(*args, **kwargs)
-            print('function name:', func.__name__, ',', info, 'time elapsed:', time.time() - start_time, 's')
-        return decorator
-    return time_counter
+# def sync_real_time_counter(info):
+#     def time_counter(func):
+#         def decorator(*args, **kwargs):
+#             start_time = time.time()
+#             func(*args, **kwargs)
+#             print('function name:', func.__name__, ',', info, 'time elapsed:', time.time() - start_time, 's')
+#         return decorator
+#     return time_counter
 
 
-def write_lines(file, lines, mode='w', endline='\n'):
-    lines = [line.strip() + endline for line in lines]
-    with open(file, mode) as fp:
+def read_lines(file, mode='r', newline='\n'):
+    with open(file, mode=mode, newline=newline) as fp:
+        lines = fp.readlines()
+    lines = [line.strip(newline) for line in lines]
+    return lines
+
+
+def write_lines(file, lines, mode='w', newline='\n'):
+    lines = [line.strip(newline) + newline for line in lines]
+    with open(file, mode=mode) as fp:
         fp.writelines(lines)
 
 

@@ -81,7 +81,7 @@ class SeedQuery:
     
     def to_string(self):
         return '_'.join([
-            '-'.join(self.since),
+            '-'.join(["{:0>2}".format(t) for t in self.since]),
             '-'.join(self.any[0].strip('\W').split(' ')),
             '-'.join(self.all[0].strip('\W').split(' ')),
         ])

@@ -1,15 +1,16 @@
+from config.configure import getcfg
 import classifying.fast_text_utils as ftu
 from collections import Counter
 import utils.array_utils as au
 
 
 label2value = ftu.binary_label2value
-terror_model_file = '/home/nfs/cdong/tw/seeding/Terrorist/model/fasttext_model'
+model_file = getcfg().ft_add_model_file
 
 
 def predict(target, threshold=0.5):
     """ returns value/value array given input text/text array; value(s) are dependent on the threshold """
-    model = ftu.get_model(terror_model_file)
+    model = ftu.get_model(model_file)
     pred_value_arr, score_arr = ftu.binary_predict(target, model, threshold)
     return pred_value_arr, score_arr
 
@@ -47,5 +48,5 @@ if __name__ == '__main__':
     train_file = '/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/train'
     test_file = '/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/test'
     
-    train(train_file, terror_model_file)
-    test(test_file, terror_model_file)
+    train(train_file, model_file)
+    test(test_file, model_file)

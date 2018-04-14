@@ -77,7 +77,7 @@ class WordFreqCounter:
                 if word in added_word_dict:
                     continue
                 added_word_dict[word] = True
-                # "word" is now neither entity nor invalid keyword or duplicated word by now
+                # "word" is now neither entity nor invalid keyword_info or duplicated word by now
                 self.worddict.expand_dict_from_word(word)
                 if 'df' not in self.worddict.dictionary[word]:
                     self.worddict.dictionary[word]['df'] = 1

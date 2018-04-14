@@ -6,27 +6,17 @@ import utils.pattern_utils as pu
 
 
 def filter_twarr_text(twarr):
+    """ This function only suits for tweets that are not processed """
     flt_twarr = list()
     for tw in twarr:
-        text_orgn = tw.get(tk.key_text).strip()
+        text_orgn = tw.get(tk.key_text, '').strip()
         text_norm = pu.text_normalization(text_orgn).strip()
-        if pu.is_empty_string(text_norm) or not pu.has_azAZ(text_norm):
+        if pu.is_empty_string(text_norm) or not pu.has_enough_alpha(text_norm, 0.65):
             continue
         tw[tk.key_orgntext] = text_orgn
         tw[tk.key_text] = text_norm
         flt_twarr.append(tw)
     return flt_twarr
-
-
-def filter_twarr_attr(twarr):
-    flt_twarr = list()
-    for idx, tw in enumerate(twarr):
-        # TODO filter attributes for tweets
-        flt_twarr.append(tw)
-    return flt_twarr
-
-
-""" actual function units """
 
 
 def filter_and_classify(inq, outq):
@@ -36,19 +26,25 @@ def filter_and_classify(inq, outq):
         twarr = inq.get()
         len1 = len(twarr)
         twarr = filter_twarr_text(twarr)
-        # len2 = len(twarr)
         twarr = ne_filter.filter(twarr, 0.4)
-        # len3 = len(twarr)
         twarr = clf_filter.filter(twarr, 0.1)
         len4 = len(twarr)
         print('{}->{}'.format(len1, len4))
         outq.put(twarr)
 
 
-pool_size = 5
+pool_size = 15
 flt_clf_pool = CustomDaemonPool()
 flt_clf_pool.start(filter_and_classify, pool_size)
 
 
-if __name__ == '__main__':
-    EffectCheck()
+def set_batch_input(tw_batches):
+    flt_clf_pool.set_batch_input(tw_batches)
+
+
+def get_batch_output():
+    return flt_clf_pool.get_batch_output()
+
+
+def is_workload_num_over(workload_num):
+    return flt_clf_pool.get_unread_batch_output_num() > workload_num

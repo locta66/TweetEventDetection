@@ -153,7 +153,7 @@ class GSDMMHashtag:
         V = len(key_dict)
         H = len(ht_dict)
         alpha0 = K * alpha
-        beta0 = V * beta  # hyperparam for keyword
+        beta0 = V * beta  # hyperparam for keyword_info
         gamma0 = H * gamma  # hyperparam for hashtag
         
         z = [0] * D

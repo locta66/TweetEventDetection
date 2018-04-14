@@ -1,9 +1,10 @@
-from preprocess.filter.filter_effect_check import EffectCheck
-from preprocess.filter.filter_utils import readFilesAsJsonList
+from utils.utils_loader import *
+from preprocess.filter.yying_non_event_filter import EffectCheck
 
 
-filter_res = '/home/nfs/cdong/tw/src/models/filter/data/Terrorist.sum'
+base = "/home/nfs/cdong/tw/origin/"
+files = fi.listchildren(base, fi.TYPE_FILE, concat=True)
+file = files[571]
 my_filter = EffectCheck()
-my_filter.get_filter_res(filter_res)
-data = readFilesAsJsonList(filter_res)
-print(len(my_filter.filter(data)))
+twarr = fu.load_array(file)
+print(len(twarr), '->', len(my_filter.filter(twarr, 0.4)))

@@ -49,22 +49,22 @@ def shuffle(array, inplace=True):
     return array
 
 
-def score(labels_true, labels_pred, score_type):
+def score(y_true, y_score, score_type):
     if score_type == 'auc':
-        return metrics.roc_auc_score(labels_true, labels_pred)
+        return metrics.roc_auc_score(y_true, y_score)
     elif score_type == 'nmi':
-        return metrics.normalized_mutual_info_score(labels_true, labels_pred)
+        return metrics.normalized_mutual_info_score(y_true, y_score)
     elif score_type == 'homo':
-        return metrics.homogeneity_score(labels_true, labels_pred)
+        return metrics.homogeneity_score(y_true, y_score)
     elif score_type == 'cmplt':
-        return metrics.completeness_score(labels_true, labels_pred)
+        return metrics.completeness_score(y_true, y_score)
 
 
 def precision_recall_threshold(labels_true, labels_pred, thres_range=[i / 10 for i in range(1, 10)]):
     import pandas as pd
     auc = score(labels_true, labels_pred, 'auc')
     print("auc:", round(auc, 6))
-
+    
     precision, recall, thresholds = metrics.precision_recall_curve(labels_true, labels_pred)
     last_idx = 0
     columns = ['threshold', 'precision', 'recall']

@@ -84,7 +84,7 @@ class LECMClusterer:
         """non geo_and_time hot_and_level"""
         Y = ent_word_id_dict.__len__()
         beta0 = beta * Y
-        """keyword hot_and_level"""
+        """keyword_info hot_and_level"""
         V = key_word_id_dict.__len__()
         lambd0 = lambd * V
     

@@ -134,6 +134,28 @@ seed_queries = [
     #   'all_of': ['\WUri\W', ], }, ['2016', '9', '17'], ['2016', '9', '22']],
     # [{'any_of': ['rocket', 'kill ', 'Daesh', 'wound', ],
     #   'all_of': ['Kilis', ], }, ['2016', '9', '21'], ['2016', '9', '26']],
+    
+    # [{'any_of': ['shoot', 'gunman', '\Wfire', 'school', 'attack', '\Wshot', 'death', 'kill\W'],
+    #   'all_of': ['Mosul', ], }, ['2016', '11', '1'], ['2016', '11', '6']],
+    # [{'any_of': ['bombing', 'explode', 'explosion', 'attack', 'death', 'car bombing'],
+    #   'all_of': ['Diyarbakir', ], }, ['2016', '11', '3'], ['2016', '11', '8']],
+    # [{'any_of': ['bombing', 'explode', 'explosion', 'attack', 'death', 'airfield', 'suicide bomber', 'kill\W'],
+    #   'all_of': ['Bagram', ], }, ['2016', '11', '11'], ['2016', '11', '16']],
+    # [{'any_of': ['suicide bomb', 'death', 'mosque', '\Wkill\W', '\Winjure'],
+    #   'all_of': ['Kabul', ], }, ['2016', '11', '20'], ['2016', '11', '25']],
+    # [{'any_of': ['suicide bomb', 'car bomb', 'death', '\Wkill', '\Winjure', '\Wwound'],
+    #   'all_of': ['Mogadishu', ], }, ['2016', '11', '25'], ['2016', '11', '30']],
+    
+    # [{'any_of': ['suicide bomb', '\Wbomb', 'death', '\Wkill', '\Winjure', '\Wwound'],
+    #   'all_of': ['Madagali', ], }, ['2016', '12', '8'], ['2016', '12', '13']],
+    # [{'any_of': ['suicide bomb', 'car bomb', 'death', '\Wkill', '\Winjure', '\Wwound'],
+    #   'all_of': ['Istanbul', ], }, ['2016', '12', '9'], ['2016', '12', '14']],
+    # [{'any_of': ['cathedral', 'explode', 'explosion', 'death', '\Wkill', '\Winjure', '\Wwound'],
+    #   'all_of': ['Cairo', ], }, ['2016', '12', '10'], ['2016', '12', '15']],
+    # [{'any_of': ['suicide bomb', 'explode', 'explosion', 'death', '\Wkill', '\Winjure', '\Wwound'],
+    #   'all_of': ['\WAden', ], }, ['2016', '12', '17'], ['2016', '12', '22']],
+    [{'any_of': ['death', '\Wkill', '\Winjure', 'shooting'],
+      'all_of': ['\WKarak', ], }, ['2016', '12', '17'], ['2016', '12', '22']],
 ]
 seed_parser = SeedParser(seed_queries, theme='Terrorist', description='Describes event of terrorist attack')
 
@@ -215,36 +237,40 @@ cntr_parser = CounterParser(cntr_queries, theme='Terrorist', description='Not Ev
 
 
 def main(args):
-    parse_query_list(getcfg().origin_path, '/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/',
-                     seed_queries, n_process=20)
+    input_base = getcfg().origin_path
+    output_base = '/home/nfs/cdong/tw/seeding/Terrorist/queried/positive/'
+    import utils.timer_utils as tmu
+    tmu.check_time()
+    parse_query_list(input_base, output_base, seed_queries, n_process=15)
+    tmu.check_time()
     return
     
-    if args.unlb:
-        args.ner = False
-        query_func = exec_query_unlabelled
-        parser = unlb_parser
-    elif args.cntr:
-        query_func = exec_query_counter
-        parser = cntr_parser
-    else:
-        query_func = exec_query
-        parser = seed_parser
-    for p in [seed_parser, unlb_parser, cntr_parser]:
-        p.set_base_path(args.seed_path)
-    
-    if args.query:
-        query_func(args.summary_path, parser)
-    if args.ner:
-        exec_ner(parser)
-    if args.train:
-        exec_train_with_outer(seed_parser, unlb_parser, cntr_parser)
-    if args.temp:
-        temp(cntr_parser)
-    if args.matrix:
-        construct_feature_matrix(seed_parser, unlb_parser, cntr_parser)
-    
-    if args.pre_test:
-        exec_pre_test(args.test_data_path)
+    # if args.unlb:
+    #     args.ner = False
+    #     query_func = exec_query_unlabelled
+    #     parser = unlb_parser
+    # elif args.cntr:
+    #     query_func = exec_query_counter
+    #     parser = cntr_parser
+    # else:
+    #     query_func = exec_query
+    #     parser = seed_parser
+    # for p in [seed_parser, unlb_parser, cntr_parser]:
+    #     p.set_base_path(args.seed_path)
+    #
+    # if args.query:
+    #     query_func(args.summary_path, parser)
+    # if args.ner:
+    #     exec_ner(parser)
+    # if args.train:
+    #     exec_train_with_outer(seed_parser, unlb_parser, cntr_parser)
+    # if args.temp:
+    #     temp(cntr_parser)
+    # if args.matrix:
+    #     construct_feature_matrix(seed_parser, unlb_parser, cntr_parser)
+    #
+    # if args.pre_test:
+    #     exec_pre_test(args.test_data_path)
 
 
 def parse_args():
@@ -259,21 +285,21 @@ def parse_args():
     parser.add_argument('--cntr', action='store_true', default=False,
                         help='If query is performed for counter tweets.')
     
-    parser.add_argument('--query', action='store_true', default=False,
-                        help='If query tweets from summarized tw files.')
-    parser.add_argument('--ner', action='store_true', default=False,
-                        help='If perform ner on queried file.')
-    parser.add_argument('--train', action='store_true', default=False,
-                        help='If train the model according to the queried tweets, with internal logic.')
-    parser.add_argument('--temp', action='store_true', default=False,
-                        help='Just a temp function.')
-    parser.add_argument('--matrix', action='store_true', default=False,
-                        help='To obtain the matrix for both train and test twarr.')
-    
-    parser.add_argument('--test_data_path', default=getcfg().test_data_path,
-                        help='Path for test data from dzs.')
-    parser.add_argument('--pre_test', action='store_true', default=False,
-                        help='Just a temp function to preprocess data from dzs.')
+    # parser.add_argument('--query', action='store_true', default=False,
+    #                     help='If query tweets from summarized tw files.')
+    # parser.add_argument('--ner', action='store_true', default=False,
+    #                     help='If perform ner on queried file.')
+    # parser.add_argument('--train', action='store_true', default=False,
+    #                     help='If train the model according to the queried tweets, with internal logic.')
+    # parser.add_argument('--temp', action='store_true', default=False,
+    #                     help='Just a temp function.')
+    # parser.add_argument('--matrix', action='store_true', default=False,
+    #                     help='To obtain the matrix for both train and test twarr.')
+    #
+    # parser.add_argument('--test_data_path', default=getcfg().test_data_path,
+    #                     help='Path for test data from dzs.')
+    # parser.add_argument('--pre_test', action='store_true', default=False,
+    #                     help='Just a temp function to preprocess data from dzs.')
     return parser.parse_args()
 
 

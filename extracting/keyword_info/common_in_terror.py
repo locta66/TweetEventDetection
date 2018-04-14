@@ -1,5 +1,5 @@
 from utils.utils_loader import *
-from extracting.keyword.my_keyword import valid_tokens_of_text, construct_n_grams
+from extracting.keyword_info.my_keyword import valid_tokens_of_text, construct_n_grams
 
 
 def grams_of_textarr(textarr):

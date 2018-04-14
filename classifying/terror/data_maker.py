@@ -1,200 +1,174 @@
-import utils.file_iterator as fi
-import utils.spacy_utils as su
+from pathlib import Path
+
 import utils.array_utils as au
+import utils.file_iterator as fi
 import utils.function_utils as fu
+import utils.multiprocess_utils as mu
 import utils.pattern_utils as pu
+import utils.spacy_utils as su
 import utils.tweet_keys as tk
 import utils.timer_utils as tmu
 
-import classifying.fast_text_make as ftm
 import classifying.fast_text_utils as ftu
-
-from classifying.terror.classifier_fasttext_add_feature import ClassifierAddFeature
-
-import numpy as np
-
-
-def docarr2matrix(docarr):
-    vecarr = list()
-    for doc in docarr:
-        docvec = np.concatenate(su.get_doc_pos_vectors(doc))
-        vecarr.append(docvec)
-    return np.array(vecarr)
-
-
-def twarr2docarr(twarr):
-    textarr = list()
-    for tw in twarr:
-        text = tw.get(tk.key_text).strip()
-        if not pu.is_empty_string(text):
-            textarr.append(text)
-    return su.textarr_nlp(textarr)
 
 
 def twarr2textarr(twarr):
     textarr = list()
     for tw in twarr:
         text = tw.get(tk.key_text).strip()
+        if tk.key_orgntext not in tw:
+            text = pu.text_normalization(text)
         if pu.is_empty_string(text):
             continue
         textarr.append(text)
     return textarr
 
 
-def textarr_normalization(textarr):
-    norm_textarr = list()
-    for text in textarr:
-        text = pu.text_normalization(text)
-        if pu.is_empty_string(text):
-            continue
-        norm_textarr.append(text)
-    return norm_textarr
+def split_train_test(array):
+    split = int(len(array) * 0.8)
+    return array[:split], array[split:]
 
 
-def twarr2matrix(twarr):
-    return docarr2matrix(twarr2docarr(twarr))
-
-
-""" -------- for sklearn -------- """
-
-pos_event_pattern = '/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/{}'
-neg_files = ['/home/nfs/yying/data/crawlTwitter/Crawler1/test.json',
-             '/home/nfs/yying/data/crawlTwitter/Crawler2/crawl2.json',
-             '/home/nfs/yying/data/crawlTwitter/Crawler3/crawl3.json',
-             '/home/nfs/cdong/tw/seeding/Terrorist/queried/Terrorist_counter.sum']
-
-
-def make_positive_matrix():
-    base_pattern = pos_event_pattern
-    pos_pattern = '/home/nfs/cdong/tw/seeding/Terrorist/data/pos_{:0>2}_mtx'
-    pos_files = fi.listchildren(base_pattern.format(''), fi.TYPE_FILE)
-    for file_idx, file in enumerate(pos_files):
-        matrix = twarr2matrix(fu.load_array(base_pattern.format(file)))
-        print(file, matrix.shape)
-        pos_file_name = pos_pattern.format(file_idx)
-        np.save(pos_file_name, matrix)
-
-
-def make_negative_matrix():
-    neg_pattern = '/home/nfs/cdong/tw/seeding/Terrorist/data/neg_{:0>2}_mtx'
-    for file_idx, file in enumerate(neg_files):
-        matrix = twarr2matrix(fu.load_array(file))
-        print(file, matrix.shape)
-        pos_file_name = neg_pattern.format(file_idx)
-        np.save(pos_file_name, matrix)
-
-
-def get_false_positive():
-    from calling.back_filter import filter_twarr_text
-    """ make matrices """
-    total_neg_twnum = 0
-    false_pos_twarr = list()
-    clf_filter = ClassifierAddFeature()
-    for neg_file in neg_files:
-        neg_twarr = fu.load_array(neg_file)
-        print(len(neg_twarr))
-        if len(neg_twarr) > 50000:
-            neg_twarr = au.random_array_items(neg_twarr, 100000)
-        n_twarr = filter_twarr_text(neg_twarr)
-        total_neg_twnum += len(n_twarr)
-        tmu.check_time(print_func=None)
-        fp_twarr = clf_filter.filter(n_twarr, 0.1)
-        tmu.check_time(print_func=lambda dt: print('time elapsed {}s'.format(dt)))
-        false_pos_twarr.extend(fp_twarr)
-    print('filtering over')
-    
-    tw_bad_attr_set = {"in_reply_to_screen_name", "in_reply_to_status_id_str", "in_reply_to_user_id_str", }
-    usr_bas_attr_set = {
-        "profile_link_color", "profile_text_color", "profile_sidebar_fill_color",
-        "profile_background_color", "profile_sidebar_border_color", "default_profile_image",
-        "profile_image_url", "profile_image_url_https", "profile_background_tile",
-        "profile_use_background_image", "profile_background_image_url", "profile_background_image_url_https",
-    }
-    for tw in false_pos_twarr:
-        for tw_k in list(tw.keys()):
-            if tw_k in tw_bad_attr_set:
-                tw.pop(tw_k)
-        user = tw[tk.key_user]
-        for usr_k in list(user.keys()):
-            if usr_k in usr_bas_attr_set:
-                user.pop(usr_k)
-        print(tw[tk.key_text])
-    print('fp rate: {}/{}'.format(len(false_pos_twarr), total_neg_twnum))
-    fu.dump_array('/home/nfs/cdong/tw/src/clustering/data/false_pos_events.txt', false_pos_twarr)
+pos_event_pattern = '/home/nfs/cdong/tw/seeding/Terrorist/queried/positive/{}'
+neg_event_pattern = '/home/nfs/cdong/tw/seeding/Terrorist/queried/negative/{}'
+pos_files = fi.listchildren(pos_event_pattern.format(''), fi.TYPE_FILE, concat=True)
+neg_files = fi.listchildren(neg_event_pattern.format(''), fi.TYPE_FILE, concat=True)
 
 
 """ -------- for fasttext -------- """
 label_t, label_f = ftu.label_t, ftu.label_f
+ft_data_pattern = "/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/{}"
+fasttext_train = ft_data_pattern.format("train")
+fasttext_test = ft_data_pattern.format("test")
+
+neg_2012_full_pattern = "/home/nfs/cdong/tw/seeding/Terrorist/queried/negative/neg_2012_full_1/{}"
+neg_2012_full_files = fi.listchildren(neg_2012_full_pattern.format(''), concat=True)
 
 
-def make_negative_event():
-    neg_twarr_blocks = [fu.load_array(file) for file in neg_files]
-    print([len(a) for a in neg_twarr_blocks], sum([len(a) for a in neg_twarr_blocks]))
-    neg_textarr_blocks = [twarr2textarr(twarr) for twarr in neg_twarr_blocks]
-    neg_textarr_blocks = [textarr_normalization(textarr) for textarr in neg_textarr_blocks]
-    neg_label_blocks = [ftm.prefix_textarr_with_label(label_f, textarr) for textarr in neg_textarr_blocks]
-    
-    blocks = list()
-    for label_textarr in neg_label_blocks:
-        partition = au.array_partition(label_textarr, [1] * 5, random=False)
-        blocks.extend(partition)
-    print([len(a) for a in blocks], sum([len(a) for a in blocks]))
-    
-    neg_pattern = '/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/neg_{:0>2}.txt'
-    for idx, label_textarr in enumerate(blocks):
-        ftm.dump_textarr(neg_pattern.format(idx), label_textarr)
-
-
-def make_positive_event():
-    pos_files = fi.listchildren(pos_event_pattern.format(''), fi.TYPE_FILE)
-    pos_twarr_blocks = [fu.load_array(pos_event_pattern.format(file)) for file in pos_files]
-    pos_textarr_blocks = [twarr2textarr(twarr) for twarr in pos_twarr_blocks]
-    pos_label_blocks = [ftm.prefix_textarr_with_label(label_t, textarr) for textarr in pos_textarr_blocks]
-    
-    blocks = pos_label_blocks
-    print([len(a) for a in blocks], sum([len(a) for a in blocks]))
-    pos_pattern = '/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/pos_{:0>2}.txt'
-    for idx, label_textarr in enumerate(blocks):
-        ftm.dump_textarr(pos_pattern.format(idx), label_textarr)
+def prefix_textarr(label, textarr):
+    label_text_arr = list()
+    for text in textarr:
+        if pu.is_empty_string(text):
+            continue
+        label_text_arr.append('{} {}'.format(label, text.strip()))
+    return label_text_arr
 
 
 def make_train_test():
-    base_pattern = '/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/{}'
-    p_files = fi.listchildren(base_pattern.format(''), fi.TYPE_FILE, pattern='pos')
-    p_files = [base_pattern.format(file) for file in p_files]
-    n_files = fi.listchildren(base_pattern.format(''), fi.TYPE_FILE, pattern='neg')
-    n_files = [base_pattern.format(file) for file in n_files]
-    print(len(p_files), len(n_files))
-    train_file = base_pattern.format('train')
-    test_file = base_pattern.format('test')
-    fi.concat_files(p_files[:47] * 10 + n_files[:10] + n_files[12:15], train_file)
-    fi.concat_files(p_files[47:] + n_files[10:12] + n_files[15:], test_file)
+    p_file = ft_data_pattern.format("pos_2016.txt")
+    n_bad_files = fi.listchildren(ft_data_pattern.format(''), fi.TYPE_FILE, concat=True, pattern='2016_bad')
+    n_2012_files = fi.listchildren(ft_data_pattern.format(''), fi.TYPE_FILE, concat=True, pattern='2012_part')
+    # n_2012_fulls = fi.listchildren(ft_data_pattern.format(''), fi.TYPE_FILE, concat=True, pattern='2012_full')[:12]
+    n_2012_fulls = fi.listchildren(ft_data_pattern.format(''), fi.TYPE_FILE, concat=True, pattern='2012_full')
+    n_2016_files = fi.listchildren(ft_data_pattern.format(''), fi.TYPE_FILE, concat=True, pattern='2016_queried')
+    print(len(n_bad_files), len(n_2012_files), len(n_2012_fulls), len(n_2016_files))
+    
+    n_files = n_bad_files + n_2012_files + n_2012_fulls + n_2016_files
+    
+    p_txtarr = fu.read_lines(p_file)
+    p_prefix_txtarr = prefix_textarr(label_t, p_txtarr)
+    n_txtarr_blocks = [fu.read_lines(file) for file in n_files]
+    n_prefix_txtarr_blocks = [prefix_textarr(label_f, txtarr) for txtarr in n_txtarr_blocks]
+    
+    train_test = list()
+    bad = len(n_bad_files)
+    bad_blocks, n_blocks = n_prefix_txtarr_blocks[:bad], n_prefix_txtarr_blocks[bad:]
+    train_test.append(split_train_test(p_prefix_txtarr))
+    train_test.extend([split_train_test(block) for block in n_blocks])
+    print("len(train_test)", len(train_test))
+    train_list, test_list = zip(*train_test)
+    train_list = list(train_list) + bad_blocks
+    
+    train_txtarr = au.merge_array(train_list)
+    test_txtarr = au.merge_array(test_list)
+    fu.write_lines(fasttext_train, train_txtarr)
+    fu.write_lines(fasttext_test, test_txtarr)
+    print("len(train_list)", len(train_list), "len(train_txtarr)", len(train_txtarr),
+          "len(test_txtarr)", len(test_txtarr))
+
+
+def make_text_files():
+    for idx, file in enumerate(neg_2012_full_files):
+        twarr = fu.load_array(file)
+        txtarr = list()
+        for tw in twarr:
+            text = pu.text_normalization(tw[tk.key_text])
+            if pu.is_empty_string(text) or len(text) < 20:
+                continue
+            txtarr.append(text)
+        print('len delta', len(twarr) - len(txtarr))
+        path = Path(file)
+        out_file_name = '_'.join([path.parent.name, path.name]).replace('json', 'txt')
+        out_file = ft_data_pattern.format(out_file_name)
+        print(out_file)
+        fu.write_lines(out_file, txtarr)
+    return
+    p_twarr_blocks = map(fu.load_array, pos_files)
+    p_txtarr_blocks = map(twarr2textarr, p_twarr_blocks)
+    p_txtarr = au.merge_array(list(p_txtarr_blocks))
+    p_out_file = ft_data_pattern.format('pos_2016.txt')
+    fu.write_lines(p_out_file, p_txtarr)
+    
+    for f in neg_files:
+        in_file = neg_event_pattern.format(f)
+        out_file = ft_data_pattern.format(f.replace("json", "txt"))
+        twarr = fu.load_array(in_file)
+        txtarr = twarr2textarr(twarr)
+        print(len(twarr), '->', len(txtarr), len(twarr) - len(txtarr))
+        fu.write_lines(out_file, txtarr)
 
 
 def test_train_pos_neg_portion():
     def portion_of_file(file):
         p_cnt = n_cnt = 0
-        with open(file, 'r') as fp:
-            for idx, line in enumerate(fp.readlines()):
-                label = line.split(' ', 1)[0]
-                if label == label_t:
-                    p_cnt += 1
-                elif label == label_f:
-                    n_cnt += 1
-                else:
-                    print(idx)
-        return p_cnt, n_cnt
-    
-    train_p, train_n = portion_of_file('/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/train')
-    print('train {}/{}={}'.format(train_p, train_n, train_p / train_n))
-    test_p, test_n = portion_of_file('/home/nfs/cdong/tw/seeding/Terrorist/data/fasttext/test')
-    print('test {}/{}={}'.format(test_p, test_n, test_p / test_n))
+        with open(file) as fp:
+            lines = fp.readlines()
+        for idx, line in enumerate(lines):
+            label = line.split(' ', 1)[0]
+            if label == label_t:
+                p_cnt += 1
+            elif label == label_f:
+                n_cnt += 1
+            else:
+                print(idx)
+        return p_cnt, n_cnt, len(lines)
+    train_p, train_n, total_train = portion_of_file(fasttext_train)
+    print('train {}/{}={}'.format(train_p, train_n, round(train_p / train_n, 4)))
+    test_p, test_n, total_test = portion_of_file(fasttext_test)
+    print('test {}/{}={}'.format(test_p, test_n, round(test_p / test_n, 4)))
+
+
+""" not for anyone """
+
+
+def make_neg_event_bad_text_2016():
+    files = fi.listchildren("/home/nfs/cdong/tw/origin/", fi.TYPE_FILE, concat=True)
+    files_blocks = mu.split_multi_format(files, 4)
+    output_file = neg_event_pattern.format("neg_2016_bad_text_{}.json")
+    args_list = [(block, output_file.format(idx)) for idx, block in enumerate(files_blocks)]
+    res_list = mu.multi_process(extract_bad_tweets_into, args_list)
+    n_num_list, tw_num_list = zip(*res_list)
+    total_n, total_tw = sum(n_num_list), sum(tw_num_list)
+    print(n_num_list, tw_num_list, total_n, total_tw, round(total_n / total_tw, 6))
+
+
+def extract_bad_tweets_into(files, output_file):
+    total_tw_num = 0
+    neg_twarr = list()
+    for file in files:
+        twarr = fu.load_array(file)
+        total_tw_num += len(twarr)
+        for tw in twarr:
+            text = tw[tk.key_text]
+            if len(text) < 20 or not pu.has_enough_alpha(text, 0.6):
+                neg_twarr.append(tw)
+    fu.dump_array(output_file, neg_twarr)
+    return len(neg_twarr), total_tw_num
 
 
 if __name__ == '__main__':
     """ fasttext """
-    # make_negative_event()
-    # make_positive_event()
-    # make_train_test()
-    # test_train_pos_neg_portion()
-    get_false_positive()
+    tmu.check_time()
+    make_train_test()
+    test_train_pos_neg_portion()
+    tmu.check_time()

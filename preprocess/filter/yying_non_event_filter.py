@@ -63,21 +63,6 @@ class EffectCheck:
             with open(classify_model_file, 'rb') as f:
                 self.clf = pickle.load(f)
     
-    def predict_proba(self, twarr):
-        featurearr = [self.get_features(json) for json in twarr]
-        probarr = self.clf.predict_proba(featurearr)[:, 1]
-        return list(probarr)
-    
-    def predict(self, twarr, threshold):
-        probarr = self.predict_proba(twarr)
-        predarr = [1 if prob > threshold else 0 for prob in probarr]
-        return predarr
-    
-    def filter(self, twarr, threshold):
-        predarr = self.predict(twarr, threshold)
-        filter_twarr = [tw for idx, tw in enumerate(twarr) if predarr[idx]]
-        return filter_twarr
-    
     def get_features(self, json):
         user = json[tk.key_user]
         if tk.key_description in user and user[tk.key_description] is not None:
@@ -157,6 +142,30 @@ class EffectCheck:
         total_features.append(sentiment_frature)
         total_features.append(chat_feature)
         return total_features
+    
+    # def predict(self, twarr, threshold):
+    #     probarr = self.predict_proba(twarr)
+    #     predarr = [1 if prob > threshold else 0 for prob in probarr]
+    #     return predarr
+    
+    def predict_proba(self, twarr):
+        featurearr, ignore_idx = list(), list()
+        for idx, tw in enumerate(twarr):
+            try:
+                featurearr.append(self.get_features(tw))
+            except Exception as e:
+                ignore_idx.append(idx)
+        probarr = list(self.clf.predict_proba(featurearr)[:, 1])
+        for idx in ignore_idx:
+            probarr.insert(idx, 0)
+        for idx in ignore_idx:
+            print('invalid tw with text:{} ,label:{}'.format(twarr[idx].get(tk.key_text), probarr[idx]))
+        return probarr
+    
+    def filter(self, twarr, threshold):
+        probarr = self.predict_proba(twarr)
+        filter_twarr = [tw for idx, tw in enumerate(twarr) if probarr[idx] >= threshold]
+        return filter_twarr
     
     def get_filter_res(self, twarr):
         data = [self.get_features(tw) for tw in twarr]

@@ -42,7 +42,7 @@ class SeedParser:
     def set_base_path(self, base_path):
         self.base_path = fi.add_sep_if_needed(base_path)
         for path in [self.get_base_path(), self.get_theme_path(), self.get_queried_path(), self.get_param_path(), ]:
-            fi.make_dirs(path)
+            fi.mkdir(path)
     
     @slash_appender
     def get_base_path(self): return self.base_path
