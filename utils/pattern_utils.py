@@ -3,8 +3,11 @@ import re
 from wordsegment import load, segment
 
 
+file_path = os.path.abspath(os.path.dirname(__file__))
+
+
 def load_stop_words():
-    stop_words_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), "stopwords.txt")
+    stop_words_file = os.path.join(file_path, "stopwords.txt")
     with open(stop_words_file) as fp:
         lines = fp.readlines()
     words = set([line.strip() for line in lines])
@@ -14,8 +17,26 @@ def load_stop_words():
     # return stop_words
 
 
+def load_abbr_words():
+    abbr_words_file = os.path.join(file_path, "abbrs.txt")
+    with open(abbr_words_file) as fp:
+        lines = fp.readlines()
+    words = set([tuple(line.strip().split('\t')) for line in lines])
+    return words
+
+
+def load_emoticon_words():
+    emot_words_file = os.path.join(file_path, "emoticons.txt")
+    with open(emot_words_file) as fp:
+        lines = fp.readlines()
+    words = set([line.strip() for line in lines])
+    return words
+
+
 load()
 stop_words = load_stop_words()
+abbr_words = load_abbr_words()
+emot_words = load_emoticon_words()
 
 
 class PatternHolder:
@@ -57,15 +78,28 @@ tw_rule_patterns = PatternHolder(tw_rule_list)
 special_patterns = PatternHolder(special_char_list)
 word_patterns = PatternHolder(word_rule_list)
 contraction_patterns = PatternHolder(contraction_list)
-punc_pattern = PatternHolder(puctuation_list)
+punc_patterns = PatternHolder(puctuation_list)
 
 endline_pattern = PatternHolder([(r'[\n\r]+$', ''), ])
 brkline_pattern = PatternHolder([(r'[\n\r]+', '.'), ])
 dupspace_pattern = PatternHolder([(r'\s\s+', ' '), ])
 nonascii_pattern = PatternHolder([(r'[^\x00-\x7f]', '.'), ])
 
+abbr_list = [w for w in abbr_words]
+abbr_patterns = PatternHolder(abbr_list)
 
-def find_pattern(pattern, string, flags=re.I): return re.findall(pattern, string, flags)
+
+def emoticon_normalization(text):
+    for emot_word in emot_words:
+        text = text.replace(emot_word, ' ')
+    return text
+
+
+# r"[a-zA-Z0-9]+(?:['_-][a-zA-Z0-9]+)*"
+tokenize_pattern = r"[a-zA-Z0-9]+(?:['_-][a-zA-Z0-9]+)*"
+
+
+def findall(pattern, string, flags=re.I): return re.findall(pattern, string, flags)
 
 
 def search_pattern(pattern, string, flags=re.I): return re.search(pattern, string, flags)
@@ -101,10 +135,6 @@ def is_stop_word(string): return string.strip().lower() in stop_words
 def is_char(string): return len(string) == 1
 
 
-# r'[\_\w\-]{2,}'
-def tokenize(pattern, string, flags=re.I): return re.findall(pattern, string, flags=flags)
-
-
 def has_enough_alpha(string, threshold):
     string = re.sub('\s', '', string)
     if len(string) == 0:
@@ -115,6 +145,14 @@ def has_enough_alpha(string, threshold):
 
 def text_normalization(text):
     pattern_list = [special_patterns, nonascii_pattern, endline_pattern, brkline_pattern,
+                    tw_rule_patterns, contraction_patterns, dupspace_pattern, ]
+    for pattern in pattern_list:
+        text = pattern.apply_patterns(text)
+    return text
+
+
+def temporal_text_normalization(text):
+    pattern_list = [nonascii_pattern, endline_pattern, brkline_pattern,
                     tw_rule_patterns, contraction_patterns, dupspace_pattern, ]
     for pattern in pattern_list:
         text = pattern.apply_patterns(text)
@@ -137,6 +175,9 @@ def is_valid_keyword(word):
 
 
 if __name__ == '__main__':
+    # print(emoticon_list)
+    # print(abbr_list)
+    print(emoticon_normalization('-_-,=_=qwuerT_T)&(*ESPNUIYNWA'))
     # s = 'Bahrain bans all protests in new crackdown. http://t.co/l0AQNtmB'
     # ss = re.sub(r'https?:\W*/.*?(\s|$)|https?:(\s|$)', ' ', s)
     # print(ss)

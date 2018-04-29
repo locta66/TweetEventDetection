@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn import metrics
-from scipy import sparse
+import utils.multiprocess_utils as mu
+import Levenshtein
 
 
 def merge_array(array):
@@ -60,7 +61,7 @@ def score(y_true, y_score, score_type):
         return metrics.completeness_score(y_true, y_score)
 
 
-def precision_recall_threshold(labels_true, labels_pred, thres_range=[i / 10 for i in range(1, 10)]):
+def precision_recall_threshold(labels_true, labels_pred, thres_range=[i/10 for i in range(1, 10)], file=None):
     import pandas as pd
     auc = score(labels_true, labels_pred, 'auc')
     print("auc:", round(auc, 6))
@@ -72,11 +73,13 @@ def precision_recall_threshold(labels_true, labels_pred, thres_range=[i / 10 for
     for thres in thres_range:
         for idx in range(last_idx, len(thresholds)):
             if thresholds[idx] >= thres:
-                data = [[round(thresholds[idx], 3), round(precision[idx], 4), round(recall[idx], 4)]]
+                data = [[round(thresholds[idx], 2), round(precision[idx], 4), round(recall[idx], 4)]]
                 df = df.append(pd.DataFrame(columns=columns, data=data), ignore_index=True)
                 last_idx = idx
                 break
     print(df)
+    if file:
+        df.to_csv(file)
 
 
 # def group_array_by_condition(array, item_key):
@@ -107,9 +110,60 @@ def cohesion_score(vecarr):
     if vecnum <= 1:
         return None
     cos_sim_mtx = cosine_similarity(vecarr)
-    cohesion = pair_count = 0
+    cohesion = 0
     for i in range(0, vecnum - 1):
         for j in range(i + 1, vecnum):
             cohesion += cos_sim_mtx[i, j]
-            pair_count += 1
+    pair_count = (vecnum - 1) * vecnum / 2
     return cohesion / pair_count
+
+
+def text_dist_proportion(text1, text2):
+    edit_dist = Levenshtein.distance(text1, text2)
+    return edit_dist / max(len(text1) + 1, len(text2) + 1)
+
+
+def group_and_reduce(array, dist_thres, process_num, pair_func=text_dist_proportion):
+    idx_groups, item_groups = group_similar_items(array, dist_thres, process_num, pair_func)
+    idx_reduce, item_reduce = [g[0] for g in idx_groups], [g[0] for g in item_groups]
+    return idx_reduce, item_reduce
+
+
+def group_similar_items(array, score_thres, process_num, pair_func=text_dist_proportion):
+    idx_pair_score_list = pairwise_score_multi(array, process_num, pair_func)
+    total = len(array)
+    union_find_set = [idx for idx in range(total)]
+    def find_root(num):
+        while union_find_set[num] != num:
+            num = union_find_set[num]
+        return num
+    for (x, y), s in idx_pair_score_list:
+        if s < score_thres:
+            union_find_set[y] = find_root(x)
+    groups = [[] for _ in range(total)]
+    for idx, root in enumerate(union_find_set):
+        groups[root].append(idx)
+    idx_groups = [idx_group for idx_group in groups if idx_group]
+    item_groups = [[array[idx] for idx in idx_group] for idx_group in idx_groups]
+    return idx_groups, item_groups
+
+
+def pairwise_score_multi(array, process_num, pair_func):
+    total = len(array)
+    pairs = [(i, j) for i in range(total - 1) for j in range(i + 1, total)]
+    if process_num <= 1 or total < 50:
+        idx_pair_score_list = pairwise_score(array, pairs, pair_func)
+    else:
+        pair_blocks = mu.split_multi_format(pairs, process_num)
+        arg_list = [(array, idx_pairs, pair_func) for idx_pairs in pair_blocks]
+        score_pairs_blocks = mu.multi_process(pairwise_score, arg_list)
+        idx_pair_score_list = merge_array(score_pairs_blocks)
+    return idx_pair_score_list
+
+
+def pairwise_score(array, idx_pairs, pair_func):
+    idx_pairs_score_list = list()
+    for x, y in idx_pairs:
+        s = pair_func(array[x], array[y])
+        idx_pairs_score_list.append(((x, y), s))
+    return idx_pairs_score_list

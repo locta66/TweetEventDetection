@@ -115,7 +115,6 @@ dense_mtx = read_contract_mtx.todense()
 print(np.sum(np.matrix(mtx) - np.matrix(dense_mtx)))
 
 
-
 from seeding.main2parser import parse_query_list
 query_list = [
     [{'any_of': ['shoot', 'gunman', 'fire', '\Wpub\W', 'attack', 'shot', 'death', 'kill\W'],

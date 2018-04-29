@@ -19,6 +19,7 @@ def get_nlp_disable_for_ner(model_key=default_model_name):
 
 
 def new_nlp(model):
+    print("reading model {}".format(model))
     return spacy.load(model)
 
 

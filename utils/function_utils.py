@@ -22,6 +22,18 @@ def slash_appender(func):
 #     return time_counter
 
 
+# def read_lines():
+#     lines = sys.stdin.getlines()
+#     twarr = list()
+#     for line in lines:
+#         try:
+#             tw = json.loads(line, encoding='utf8')
+#             twarr.append(tw)
+#         except:
+#             continue
+#     return twarr
+
+
 def read_lines(file, mode='r', newline='\n'):
     with open(file, mode=mode, newline=newline) as fp:
         lines = fp.readlines()
@@ -31,16 +43,16 @@ def read_lines(file, mode='r', newline='\n'):
 
 def write_lines(file, lines, mode='w', newline='\n'):
     lines = [line.strip(newline) + newline for line in lines]
-    with open(file, mode=mode) as fp:
+    with open(file, mode=mode, encoding='utf8') as fp:
         fp.writelines(lines)
 
 
 def dump_array(file, array, overwrite=True, sort_keys=False):
-    if type(array) is not list:
+    if type(array) not in {list, tuple}:
         raise TypeError("Input should be a list.")
     lines = list()
-    for element in array:
-        lines.append(json.dumps(element, sort_keys=sort_keys) + '\n')
+    for item in array:
+        lines.append(json.dumps(item, sort_keys=sort_keys) + '\n')
     with open(file, 'w' if overwrite else 'a') as fp:
         fp.writelines(lines)
 

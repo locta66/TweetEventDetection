@@ -125,7 +125,7 @@ class Analyzer:
         scoreinfo_pattern = '/home/nfs/cdong/tw/src/clustering/iteration/20180302/{:0>3}_scoreinfo.txt'
         batch_window = list()
 
-        clf = ClassifierAddFeature()
+        clf = ClassifierTerror()
         similarity_data = list()
         for batch_idx, twharr in enumerate(self.tw_batches):
             print('\r{}\rbatch {}/{}'.format(' ' * 20, batch_idx, len(self.tw_batches)), end='', flush=True)
@@ -136,7 +136,7 @@ class Analyzer:
                 continue
             valid_cludict = dict([(cluid, clu) for cluid, clu in cludict.items() if is_valid_cluster(clu)])
             
-            from extracting.keyword_info.my_keyword import get_keywords
+            from extracting.keyword_info.n_gram_keyword import get_textarr_n_grams_list
             def print_cluster_info():
                 for cluid, cluster in valid_cludict.items():
                     cluster.extract_keywords()

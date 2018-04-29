@@ -1,5 +1,6 @@
 import math
 import multiprocessing as mp
+from collections import Counter
 
 
 def split_multi_format(array, process_num):
@@ -79,19 +80,17 @@ class DaemonPool:
 
 
 class DaemonProcess:
-    K_END = 'end_process'
-    
     def __init__(self, pidx=0):
         self.process = None
         self.pidx = pidx
         self.inq = mp.Queue()
         self.outq = mp.Queue()
-
+    
     def start(self, func):
         self.process = mp.Process(target=func, args=(self.inq, self.outq))
         self.process.daemon = True
         self.process.start()
-
+    
     def end(self):
         self.process.terminate()
 
@@ -118,7 +117,7 @@ class CustomDaemonPool(DaemonPool):
         return res_list
     
     def set_batch_input(self, arg_list):
-        # one item in arg_list corresponds to a process
+        # one item in arg_list will be input to a process
         dpnum = len(self.daemon_pool)
         innum = count = 0
         while innum < len(arg_list):
@@ -135,129 +134,142 @@ class CustomDaemonPool(DaemonPool):
         return res_list
     
     """ state of the pool """
-    def has_unread_batch_output(self): return len(self._last_batch_len) > 0
+    def has_unread_batch_output(self):
+        return len(self._last_batch_len) > 0
     
-    def get_unread_batch_output_num(self): return len(self._last_batch_len)
+    def get_unread_batch_output_num(self):
+        return len(self._last_batch_len)
     
-    def can_get_batch_output(self):
+    def last_batch_task_num_requirement(self):
+        p2require = Counter()
+        last_batch_size = self._last_batch_len[0]
+        for task_idx in range(last_batch_size):
+            task_num = self._last_task_len[task_idx]
+            for pidx in range(task_num):
+                p2require[pidx] += 1
+        return p2require
+    
+    def process_outq_ready_size(self):
+        p2qsize = dict([(pidx, daemon.outq.qsize()) for pidx, daemon in enumerate(self.daemon_pool)])
+        return p2qsize
+    
+    def can_read_batch_output(self):
         if not self.has_unread_batch_output():
             return False
-        last_task_len, ready_list = self.get_ready_list()
-        return sum(ready_list) == last_task_len
-    
-    def get_ready_list(self):
-        last_task_len = self._last_task_len[0]
-        if not self.has_unread_batch_output():
-            return last_task_len, [False] * last_task_len
-        return last_task_len, [self.daemon_pool[i].outq_size() > 0 for i in range(last_task_len)]
+        p2require = self.last_batch_task_num_requirement()
+        p2qsize = self.process_outq_ready_size()
+        # print(p2require)
+        # print(p2qsize)
+        for pidx in p2require.keys():
+            ready_size, requirement = p2qsize[pidx], p2require[pidx]
+            if ready_size < requirement:
+                # print('cannot output batch')
+                return False
+        # print('output batch')
+        return True
 
 
 class CustomDaemonProcess(DaemonProcess):
     def __init__(self, pidx=0):
         DaemonProcess.__init__(self, pidx)
-        self.unread_task_num = 0
     
     def set_input(self, args):
-        self.unread_task_num += 1
         self.inq.put(args)
     
     def get_output(self):
-        self.unread_task_num -= 1
         return self.outq.get()
-    
-    def get_unread_output_num(self): return self.unread_task_num
-    
-    def has_unread_output(self): return self.unread_task_num > 0
-    
-    def outq_size(self): return self.outq.qsize()
 
 
-class ProxyDaemonPool(DaemonPool):
-    def __init__(self):
-        DaemonPool.__init__(self)
-        self.daemon_class = ProxyDaemonProcess
-    
-    def set_input(self, args_list, kwargs_list):
-        arg_len = len(args_list)
-        self._last_task_len.append(arg_len)
-        for idx in range(arg_len):
-            daemon, args, kwargs = self.daemon_pool[idx], args_list[idx], kwargs_list[idx]
-            daemon.set_input(args, kwargs)
-    
-    def get_output(self):
-        arg_len = self._last_task_len.pop(0)
-        res_list = list()
-        for idx in range(arg_len):
-            daemon = self.daemon_pool[idx]
-            res_list.append(daemon.get_output())
-        return res_list
-    
-    def set_batch_input(self, args_list, kwargs_list=None):
-        arg_len = len(args_list)
-        if kwargs_list is None:
-            kwargs_list = [{} for _ in range(arg_len)]
-        dpnum = len(self.daemon_pool)
-        innum = count = 0
-        while innum < len(args_list):
-            self.set_input(args_list[innum: innum + dpnum], kwargs_list[innum: innum + dpnum])
-            innum += dpnum
-            count += 1
-        self._last_batch_len.append(count)
-    
-    def get_batch_output(self):
-        batch_len = self._last_batch_len.pop(0)
-        res_list = list()
-        for i in range(batch_len):
-            res_batch = self.get_output()
-            res_list.extend(res_batch)
-        return res_list
-
-
-class ProxyDaemonProcess(DaemonProcess):
-    def __init__(self, pidx=0):
-        DaemonProcess.__init__(self, pidx)
-    
-    def start(self, func):
-        self.process = mp.Process(target=ProxyDaemonProcess.exec, args=(func, self.inq, self.outq))
-        self.process.daemon = True
-        self.process.start()
-    
-    def end(self):
-        self.set_input(DaemonProcess.K_END, DaemonProcess.K_END)
-        self.process.join()
-        self.process.terminate()
-    
-    def set_input(self, args=None, kwargs=None):
-        if args is None:
-            args = ()
-        if kwargs is None:
-            # kwargs = {'pidx': self.pidx}
-            kwargs = {}
-        self.inq.put(args)
-        self.inq.put(kwargs)
-    
-    def get_output(self):
-        return self.outq.get()
-    
-    @staticmethod
-    def exec(func, inq, outq):
-        while True:
-            args = inq.get()
-            kwargs = inq.get()
-            if args == DaemonProcess.K_END and kwargs == DaemonProcess.K_END:
-                break
-            result = func(*args, **kwargs)
-            outq.put(result)
+# class ProxyDaemonPool(DaemonPool):
+#     def __init__(self):
+#         DaemonPool.__init__(self)
+#         self.daemon_class = ProxyDaemonProcess
+#
+#     def set_input(self, args_list, kwargs_list):
+#         arg_len = len(args_list)
+#         self._last_task_len.append(arg_len)
+#         for idx in range(arg_len):
+#             daemon, args, kwargs = self.daemon_pool[idx], args_list[idx], kwargs_list[idx]
+#             daemon.set_input(args, kwargs)
+#
+#     def get_output(self):
+#         arg_len = self._last_task_len.pop(0)
+#         res_list = list()
+#         for idx in range(arg_len):
+#             daemon = self.daemon_pool[idx]
+#             res_list.append(daemon.get_output())
+#         return res_list
+#
+#     def set_batch_input(self, args_list, kwargs_list=None):
+#         arg_len = len(args_list)
+#         if kwargs_list is None:
+#             kwargs_list = [{} for _ in range(arg_len)]
+#         dpnum = len(self.daemon_pool)
+#         innum = count = 0
+#         while innum < len(args_list):
+#             self.set_input(args_list[innum: innum + dpnum], kwargs_list[innum: innum + dpnum])
+#             innum += dpnum
+#             count += 1
+#         self._last_batch_len.append(count)
+#
+#     def get_batch_output(self):
+#         batch_len = self._last_batch_len.pop(0)
+#         res_list = list()
+#         for i in range(batch_len):
+#             res_batch = self.get_output()
+#             res_list.extend(res_batch)
+#         return res_list
+#
+#
+# class ProxyDaemonProcess(DaemonProcess):
+#     def __init__(self, pidx=0):
+#         DaemonProcess.__init__(self, pidx)
+#
+#     def start(self, func):
+#         self.process = mp.Process(target=ProxyDaemonProcess.exec, args=(func, self.inq, self.outq))
+#         self.process.daemon = True
+#         self.process.start()
+#
+#     def end(self):
+#         self.set_input(DaemonProcess.K_END, DaemonProcess.K_END)
+#         self.process.join()
+#         self.process.terminate()
+#
+#     def set_input(self, args=None, kwargs=None):
+#         if args is None:
+#             args = ()
+#         if kwargs is None:
+#             # kwargs = {'pidx': self.pidx}
+#             kwargs = {}
+#         self.inq.put(args)
+#         self.inq.put(kwargs)
+#
+#     def get_output(self):
+#         return self.outq.get()
+#
+#     @staticmethod
+#     def exec(func, inq, outq):
+#         while True:
+#             args = inq.get()
+#             kwargs = inq.get()
+#             if args == DaemonProcess.K_END and kwargs == DaemonProcess.K_END:
+#                 break
+#             result = func(*args, **kwargs)
+#             outq.put(result)
 
 
 import utils.function_utils as fu
 import utils.file_iterator as fi
 import utils.timer_utils as tmu
+
+
 def read(inq, outq):
     while True:
         idx, file = inq.get()
         twarr = fu.load_array(file)
         outq.put([idx, len(twarr)])
+
+
 def read2(idx, file, nothing='p'):
     twarr = fu.load_array(file)
     return [idx, len(twarr)]
@@ -265,8 +277,8 @@ def read2(idx, file, nothing='p'):
 
 if __name__ == '__main__':
     # dp = CustomDaemonPool()
-    dp = ProxyDaemonPool()
-    dp.start(read2, 8)
+    # dp = ProxyDaemonPool()
+    # dp.set_parameters(read2, 8)
     # base = '/home/nfs/cdong/tw/testdata/yying/2016_04/'
     # files = [base + sub for sub in subs][:40]
     base = '/home/nfs/cdong/tw/seeding/Terrorist/queried/event_corpus/'

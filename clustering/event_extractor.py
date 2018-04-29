@@ -7,7 +7,7 @@ def stream_cluster_with_label(tw_batches, hold_batch_num):
     print('batch size={}, batch num={}'.format(len(tw_batches[0]), len(tw_batches)))
     g = GSDPMMStreamIFDDynamic()
     g.set_hyperparams(hold_batch_num, 30, 0.01)
-
+    
     twid_cluid_batches = list()
     for batch_idx, tw_batch in enumerate(tw_batches):
         print('\r{}\r{}/{} batch, {} tws done'.format(
@@ -198,6 +198,11 @@ if __name__ == '__main__':
     parser.add_argument('-g', action='store_true', default=False)
     parser.add_argument('-t', nargs='?', default='None')
     args = parser.parse_args()
+    
+    file = "/home/nfs/cdong/tw/src/clustering/data/events2016.txt"
+    twarr_batches = fu.load_array(file)
+    print(len(twarr_batches), len(au.merge_array(twarr_batches)))
+    exit()
     
     tmu.check_time()
     _tw_batches = info_set.load_tw_batches(load_cluid_arr=False)

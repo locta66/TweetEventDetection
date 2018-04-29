@@ -1,15 +1,21 @@
 from preprocess.filter.yying_non_event_filter import EffectCheck
-from classifying.terror.classifier_fasttext_add_feature import ClassifierAddFeature
+from classifying.terror.classifier_terror import ClassifierTerror
 from utils.multiprocess_utils import CustomDaemonPool
 import utils.tweet_keys as tk
 import utils.pattern_utils as pu
+
+
+flt_clf_pool = CustomDaemonPool()
 
 
 def filter_twarr_text(twarr):
     """ This function only suits for tweets that are not processed """
     flt_twarr = list()
     for tw in twarr:
-        text_orgn = tw.get(tk.key_text, '').strip()
+        # TODO text_orgn = tw.get(tk.key_text, '').strip()
+        text_orgn = tw.get(tk.key_orgntext, tw.get(tk.key_text, None)).strip()
+        if not text_orgn:
+            continue
         text_norm = pu.text_normalization(text_orgn).strip()
         if pu.is_empty_string(text_norm) or not pu.has_enough_alpha(text_norm, 0.65):
             continue
@@ -20,30 +26,39 @@ def filter_twarr_text(twarr):
 
 
 def filter_and_classify(inq, outq):
+    idx, ne_threshold, clf_threshold = inq.get()
+    outq.put(idx)
     ne_filter = EffectCheck()
-    clf_filter = ClassifierAddFeature()
+    clf_filter = ClassifierTerror()
     while True:
         twarr = inq.get()
-        len1 = len(twarr)
+        # len1 = len(twarr)
         twarr = filter_twarr_text(twarr)
-        twarr = ne_filter.filter(twarr, 0.4)
-        twarr = clf_filter.filter(twarr, 0.1)
-        len4 = len(twarr)
-        print('{}->{}'.format(len1, len4))
-        outq.put(twarr)
+        flt_twarr = ne_filter.filter(twarr, ne_threshold)
+        flt_twarr = clf_filter.filter(flt_twarr, clf_threshold)
+        # len4 = len(twarr)
+        # print('{}->{}'.format(len1, len4))
+        outq.put(flt_twarr)
 
 
-pool_size = 15
-flt_clf_pool = CustomDaemonPool()
-flt_clf_pool.start(filter_and_classify, pool_size)
+def start_pool(pool_size, ne_threshold, clf_threshold):
+    flt_clf_pool.start(filter_and_classify, pool_size)
+    flt_clf_pool.set_batch_input([(idx, ne_threshold, clf_threshold) for idx in range(pool_size)])
+    flt_clf_pool.get_batch_output()
 
 
-def set_batch_input(tw_batches):
-    flt_clf_pool.set_batch_input(tw_batches)
+def input_twarr_batch(tw_batches):
+    if tw_batches:
+        flt_clf_pool.set_batch_input(tw_batches)
 
 
 def get_batch_output():
+    # Block until can get batch output
     return flt_clf_pool.get_batch_output()
+
+
+def can_read_batch_output():
+    return flt_clf_pool.can_read_batch_output()
 
 
 def is_workload_num_over(workload_num):

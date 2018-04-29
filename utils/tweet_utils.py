@@ -1,16 +1,12 @@
-import re
-
 import utils.date_utils as du
 import utils.multiprocess_utils as mu
 import utils.tweet_keys as tk
 import utils.array_utils as au
 import utils.spacy_utils as su
 import utils.pattern_utils as pu
-from utils.ner_service_proxy import get_ner_service_pool
+# from utils.ner_service_proxy import get_ner_service_pool
 
 import numpy as np
-from sklearn.cluster import dbscan
-import Levenshtein
 
 
 def twarr_operate(
@@ -99,7 +95,9 @@ def in_reply_to(tw):
 def twarr_nlp(twarr,
               do_nlp=lambda tw: tk.key_spacy not in tw,
               get_text=lambda tw: tw.get(tk.key_text),
-              set_doc=lambda tw, doc: tw.setdefault(tk.key_spacy, doc)):
+              set_doc=lambda tw, doc: tw.setdefault(tk.key_spacy, doc),
+              nlp=None,
+):
     # do_nlp_idx, textarr = list(), list()
     # for twidx, tw in enumerate(twarr):
     #     if do_nlp(tw):
@@ -109,64 +107,15 @@ def twarr_nlp(twarr,
     # for docidx, twidx in enumerate(do_nlp_idx):
     #     set_doc(twarr[twidx], docarr[docidx])
     do_nlp_twarr = list()
-    for tw in enumerate(twarr):
+    for tw in twarr:
         if do_nlp(tw):
             do_nlp_twarr.append(tw)
     txtarr = [get_text(tw) for tw in do_nlp_twarr]
-    docarr = su.textarr_nlp(txtarr)
+    docarr = su.textarr_nlp(txtarr, nlp)
     for idx in range(len(do_nlp_twarr)):
-        set_doc(do_nlp_twarr[idx], docarr[idx])
+        tw, doc = do_nlp_twarr[idx], docarr[idx]
+        set_doc(tw, doc)
     return twarr
-
-
-def cluster_similar_tweets(twarr):
-    if not twarr:
-        return twarr
-    twarr_length = len(twarr)
-    mat = np.ones([twarr_length, twarr_length])
-    pairs = twarr_dist_pairs(twarr) if len(twarr) <= 128 else twarr_dist_pairs_multi(twarr)
-    for p in pairs:
-        mat[p[0]][p[1]] = mat[p[1]][p[0]] = p[2]
-    label, cluster = dbscan(mat, 0.5, 2, metric='precomputed')
-    sort_by_cluster = sorted([(cluster[i], label[i]) for i in range(len(label))])
-    return [twarr[sort_by_cluster[i][1]] for i in range(len(sort_by_cluster))]
-
-
-def twarr_dist_pairs(twarr):
-    textarr = [tw[tk.key_text].lower() for tw in twarr]
-    ndim = len(twarr)
-    pairs = list()
-    for i in range(ndim - 1):
-        for j in range(i + 1, ndim):
-            istr, jstr = textarr[i], textarr[j]
-            dist = Levenshtein.distance(istr, jstr) + 1
-            if max(len(istr), len(jstr)) / dist <= 0.2:
-                pairs.append((i, j, 0))
-    return pairs
-
-
-def twarr_dist_pairs_multi(twarr, process_num=16):
-    textarr = [tw[tk.key_text].lower() for tw in twarr]
-    total = len(textarr) - 1
-    pairs = [(i, j) for i in range(total) for j in range(i + 1, total)]
-    pair_blocks = mu.split_multi_format(pairs, process_num)
-    arg_list = [(textarr, pair_list) for pair_list in pair_blocks]
-    dist_pairs_blocks = mu.multi_process(dist_pairs, arg_list)
-    return au.merge_array(dist_pairs_blocks)
-
-
-def dist_pairs(textarr, idx_pairs):
-    dist_list = list()
-    for x, y in idx_pairs:
-        text1, text2 = textarr[x], textarr[y]
-        dist = text_dist_proportion(text1, text2)
-        dist_list.append(((x, y), dist))
-    return dist_list
-
-
-def text_dist_proportion(text1, text2):
-    edit_dist = Levenshtein.distance(text1, text2)
-    return edit_dist / max(len(text1) + 1, len(text2) + 1)
 
 
 def twarr_timestamp_array(twarr):
@@ -260,3 +209,19 @@ def rearrange_idx_by_time(twarr):
 #         if re.search('^[^a-zA-Z0-9]+$', wordlabel[0]) is not None:
 #             del wordlabels[idx]
 #     return wordlabels
+
+
+if __name__ == '__main__':
+    import utils.function_utils as fu
+    import utils.timer_utils as tmu
+    file = "/home/nfs/cdong/tw/seeding/Terrorist/queried/positive/2016-12-09_suicide-bomb_Istanbul.json"
+    twarr = fu.load_array(file)
+    textarr = [tw[tk.key_text].lower() for tw in twarr]
+    tmu.check_time()
+    # groups = group_textarr_similar_index(textarr, 0.2)
+    # tmu.check_time()
+    # print(groups, len(twarr), len((au.merge_array(groups))))
+    # for g in groups:
+    #     for idx in g:
+    #         print(twarr[idx][tk.key_text])
+    #     print('\n')

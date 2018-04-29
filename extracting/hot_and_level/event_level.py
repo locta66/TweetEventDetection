@@ -1,7 +1,9 @@
-import utils.function_utils as fu
 import utils.tweet_keys as tk
-import utils.file_iterator as fi
+from collections import Counter
 import re
+
+
+NOT_NUM = 'no'
 
 
 class Level:
@@ -9,87 +11,75 @@ class Level:
         self.injured_word = {'seriously', 'wounded', 'injured', 'critical', 'hurt', 'injuring', 'casualties',
                              'moderately', 'wounding', 'wounds', 'civilians', 'wound', 'missing', 'least',
                              'people'}
-        self.death_word = {'kills', 'killing', 'kill', 'dead', 'killed', 'martyrs'}
-    
-    def get_single_tweet_injured_death(self, tweet):
-        word_list = tweet.lower().split()
-        injured_number = death_number = 0
-        for i in range(1, len(word_list) - 1):
-            if word_list[i] in self.injured_word:
-                try:
-                    injured_number = self.spoken_word_to_number(word_list[i - 1])
-                except AssertionError:
-                    try:
-                        injured_number = self.spoken_word_to_number(word_list[i + 1])
-                    except AssertionError:
-                        injured_number = 0
-            if word_list[i] in self.death_word:
-                try:
-                    death_number = self.spoken_word_to_number(word_list[i - 1])
-                except AssertionError:
-                    try:
-                        death_number = self.spoken_word_to_number(word_list[i + 1])
-                    except AssertionError:
-                        death_number = 0
-            death_number_match = re.match('\d*\d$', str(death_number))
-            death_number = int(death_number_match.group()) if death_number_match else 0
-            injured_number_match = re.match('\d*\d$', str(injured_number))
-            injured_number = int(injured_number_match.group()) if death_number_match else 0
-            if injured_number == death_number:
-                death_number = 0
-        return {'death': death_number, 'injured': injured_number}
-    
-    def get_all(self, twarr):
-        injured_dict = dict()
-        death_dict = dict()
-        for tweet in twarr:
-            text = tweet[tk.key_text]
-            single_tweet_injured_death = self.get_single_tweet_injured_death(text)
-            injured_num = single_tweet_injured_death['injured']
-            death_num = single_tweet_injured_death['death']
-            if injured_num not in injured_dict:
-                injured_dict.update({injured_num: 0})
-            else:
-                injured_dict[injured_num] += 1
-            if death_num not in death_dict:
-                death_dict.update({death_num: 0})
-            else:
-                death_dict[death_num] += 1
-        if 0 in death_dict:
-            del death_dict[0]
-        if 0 in injured_dict:
-            del injured_dict[0]
-        injured_number = death_number = 0
-        if death_dict:
-            death_number = max(death_dict.items(), key=lambda x: x[1])[0]
-        if injured_dict:
-            injured_number = max(injured_dict.items(), key=lambda x: x[1])[0]
-        return {'injured': injured_number, 'death': death_number}
+        self.death_word = {'kill', 'kills', 'killed', 'killing', 'dead', 'death', 'martyrs'}
     
     def get_level(self, twarr):
-        ret = self.get_all(twarr)
-        injured_num = ret['injured']
-        death_num = ret['death']
-        if injured_num == death_num:
-            count = death_num
-        else:
-            count = death_num + injured_num
+        death_num, injured_num = self.get_max_death_injure(twarr)
+        count = death_num + injured_num
         if count < 30:
             level = '一般事件'
-        elif 30 < count < 100:
+        elif 30 <= count < 100:
             level = '较大事件'
-        elif 100 < count < 300:
+        elif 100 <= count < 300:
             level = '重大事件'
         else:
             level = '特别重大事件'
-        if level == '':
-            level = 'Cannot calculate hot_and_level'
         return level
     
-    def spoken_word_to_number(self, n):
-        number = re.match('\d*\d', n)
+    def get_max_death_injure(self, twarr):
+        death_dict, injured_dict = Counter(), Counter()
+        textarr = [tw.get(tk.key_text) for tw in twarr]
+        for text in textarr:
+            try:
+                death_num, injured_num = self.get_single_tweet_injured_death(text)
+            except:
+                death_num = injured_num = 0
+            if injured_num > 0:
+                injured_dict[injured_num] += 1
+            if death_num > 0:
+                death_dict[death_num] += 1
+        death_number = self.get_max_key_with_max_count(death_dict.most_common())
+        injured_number = self.get_max_key_with_max_count(injured_dict.most_common())
+        return death_number, injured_number
+    
+    def get_max_key_with_max_count(self, key_count_list):
+        # print(key_count_list)
+        if not key_count_list:
+            return 0
+        max_key, max_cnt = key_count_list[0]
+        for key, cnt in key_count_list[1:]:
+            if cnt < max_cnt:
+                break
+            else:
+                if key > max_key:
+                    max_key = key
+        return max_key
+    
+    def get_single_tweet_injured_death(self, text):
+        word_list = text.lower().split()
+        injured_number = death_number = 0
+        for i in range(1, len(word_list) - 1):
+            if word_list[i] in self.injured_word:
+                prev_n = self.spoken_word_to_number(word_list[i - 1])
+                next_n = self.spoken_word_to_number(word_list[i + 1])
+                if type(prev_n) is int and prev_n > 0:
+                    injured_number = prev_n
+                elif type(next_n) is int and next_n > 0:
+                    injured_number = next_n
+            if word_list[i] in self.death_word:
+                prev_n = self.spoken_word_to_number(word_list[i - 1])
+                next_n = self.spoken_word_to_number(word_list[i + 1])
+                if type(prev_n) is int and prev_n > 0:
+                    death_number = prev_n
+                elif type(next_n) is int and next_n > 0:
+                    death_number = next_n
+        return death_number, injured_number
+    
+    def spoken_word_to_number(self, w):
+        w = w.lower().strip()
+        number = re.findall('\d+', w)
         if number:
-            return number.group()
+            return int(number[0])
         _known = {
             'zero': 0, 'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6,
             'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12,
@@ -97,12 +87,12 @@ class Level:
             'eighteen': 18, 'nineteen': 19, 'twenty': 20, 'thirty': 30, 'forty': 40,
             'fifty': 50, 'sixty': 60, 'seventy': 70, 'eighty': 80, 'ninety': 90
         }
-        n = n.lower().strip()
-        if n in _known:
-            return _known[n]
+        if w in _known:
+            return _known[w]
         else:
-            inputWordArr = re.split('[ -]', n)
-        assert len(inputWordArr) > 1  # all single words are known
+            inputWordArr = re.split('-', w)
+        if len(inputWordArr) <= 1:
+            return NOT_NUM
         # Check the pathological case where hundred is at the end or thousand is at end
         if inputWordArr[-1] == 'hundred':
             inputWordArr.append('zero')
@@ -115,10 +105,13 @@ class Level:
             inputWordArr.insert(0, 'one')
         if inputWordArr[0] == 'thousand':
             inputWordArr.insert(0, 'one')
-        inputWordArr = [word for word in inputWordArr if word not in ['and', 'minus', 'negative']]
-        currentPosition = 'unit'
-        prevPosition = None
+        inputWordArr = [word for word in inputWordArr if word not in {'and', 'minus', 'negative'}]
+        for word in inputWordArr:
+            if word not in _known:
+                return NOT_NUM
+                # return 0
         output = 0
+        currentPosition = 'unit'
         for word in reversed(inputWordArr):
             if currentPosition == 'unit':
                 number = _known[word]
@@ -145,15 +138,24 @@ class Level:
                 else:
                     currentPosition = 'hundred'
             elif currentPosition == 'thousand':
-                assert word != 'hundred'
                 if word != 'thousand':
                     number = _known[word]
                     output += number * 1000
-            else:
-                assert "Can't be here" is None
         return output
 
 
 class AttackLevel(Level):
     def __int__(self):
         Level.__init__(self)
+
+
+if __name__ == '__main__':
+    import utils.file_iterator as fi
+    import utils.function_utils as fu
+    from pathlib import Path
+    base = "/home/nfs/cdong/tw/seeding/Terrorist/queried/positive"
+    files = fi.listchildren(base, concat=True)
+    h = Level()
+    for f in files:
+        _twarr = fu.load_array(f)
+        print(Path(f).name, h.get_level(_twarr), '\n\n')

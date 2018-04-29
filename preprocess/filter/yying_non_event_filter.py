@@ -94,10 +94,9 @@ class EffectCheck:
         user_features = [l_profile_description, FI, FE, num_tweet_posted, AU, FE_FI_ratio,
                          reputation, following_rate, tweets_per_day, tweets_per_week]
         """ content features """
-        # if tk.key_orgntext not in json:
-        #     json[tk.key_orgntext] = json[tk.key_text]
-        #     json[tk.key_text] = pu.text_normalization(json[tk.key_orgntext])
-        orgn = json[tk.key_orgntext]
+        if tk.key_orgntext not in json:
+            orgn_text = json[tk.key_orgntext] = json[tk.key_text]
+            json[tk.key_text] = pu.text_normalization(orgn_text)
         text = json[tk.key_text]
         words = text.split()
         num_words = len(words)
@@ -108,12 +107,13 @@ class EffectCheck:
         
         max_word_length = 0
         mean_word_length = 0
-        # assert (len(words) > 0)
         for word in words:
             if len(word) > max_word_length:
                 max_word_length = len(word)
                 mean_word_length += len(word)
         mean_word_length /= len(words)
+        
+        orgn = json[tk.key_orgntext]
         num_exclamation_marks = orgn.count('!')
         num_question_marks = orgn.count('?')
         num_urls = len(json['entities']['urls'])
@@ -143,22 +143,17 @@ class EffectCheck:
         total_features.append(chat_feature)
         return total_features
     
-    # def predict(self, twarr, threshold):
-    #     probarr = self.predict_proba(twarr)
-    #     predarr = [1 if prob > threshold else 0 for prob in probarr]
-    #     return predarr
-    
     def predict_proba(self, twarr):
         featurearr, ignore_idx = list(), list()
         for idx, tw in enumerate(twarr):
-            try:
-                featurearr.append(self.get_features(tw))
-            except Exception as e:
-                ignore_idx.append(idx)
+            featurearr.append(self.get_features(tw))
+            # try:
+            #     pass
+            # except:
+            #     ignore_idx.append(idx)
         probarr = list(self.clf.predict_proba(featurearr)[:, 1])
         for idx in ignore_idx:
             probarr.insert(idx, 0)
-        for idx in ignore_idx:
             print('invalid tw with text:{} ,label:{}'.format(twarr[idx].get(tk.key_text), probarr[idx]))
         return probarr
     
@@ -167,17 +162,17 @@ class EffectCheck:
         filter_twarr = [tw for idx, tw in enumerate(twarr) if probarr[idx] >= threshold]
         return filter_twarr
     
-    def get_filter_res(self, twarr):
-        data = [self.get_features(tw) for tw in twarr]
-        predict = self.clf.predict(data)
-        table = pd.DataFrame(index={"data"}, columns={'保留', '被过滤'}, data=0)
-        for i in range(len(predict)):
-            if predict[i] == 1:
-                table.loc["data", '保留'] += 1
-            else:
-                table.loc["data", '被过滤'] += 1
-        print(table)
-        print('总数：', len(predict), '过滤比例：', table.loc["data"]['被过滤'] / len(predict))
+    # def get_filter_res(self, twarr):
+    #     data = [self.get_features(tw) for tw in twarr]
+    #     predict = self.clf.predict(data)
+    #     table = pd.DataFrame(index={"data"}, columns={'保留', '被过滤'}, data=0)
+    #     for i in range(len(predict)):
+    #         if predict[i] == 1:
+    #             table.loc["data", '保留'] += 1
+    #         else:
+    #             table.loc["data", '被过滤'] += 1
+    #     print(table)
+    #     print('总数：', len(predict), '过滤比例：', table.loc["data"]['被过滤'] / len(predict))
 
 
 def perfomance_analysis():
@@ -187,7 +182,49 @@ def perfomance_analysis():
 
 
 if __name__ == '__main__':
+    from calling.back_filter import filter_twarr_text
+    # from classifying.terror.classifier_terror import file2label_text_array
+    # textarr, labelarr = file2label_text_array("/home/nfs/cdong/tw/seeding/Terrorist/data/test")
+    pos_base = "/home/nfs/cdong/tw/seeding/Terrorist/queried/positive"
+    neg_base = "/home/nfs/cdong/tw/seeding/Terrorist/queried/negative"
+    pos_files, neg_files = fi.listchildren(pos_base, concat=True), fi.listchildren(neg_base, concat=True, pattern='2012')
+    
+    base = "/home/nfs/yangl/event_detection/testdata/event2012/relevant"
+    pos_files = fi.listchildren(base, concat=True)
+    print(len(pos_files))
+    print(sum([len(fu.read_lines(f)) for f in pos_files]))
+    exit()
+    
     my_filter = EffectCheck()
+    pos_probarr, neg_probarr = list(), list()
+    tmu.check_time()
+    for file in neg_files:
+        twarr = filter_twarr_text(fu.load_array(file))
+        probarr = my_filter.predict_proba(twarr)
+        neg_probarr.extend(probarr)
+    tmu.check_time()
+    for file in pos_files:
+        probarr = my_filter.predict_proba(fu.load_array(file))
+        pos_probarr.extend(probarr)
+        # post_twarr = list()
+    
+        # for idx in range(len(probarr)):
+        #     if probarr[idx] >= 0.35:
+        #         post_twarr.append(twarr[idx])
+        #     else:
+        #         print(twarr[idx][tk.key_text])
+        # post_twarr = [tw for idx, tw in enumerate(twarr) if probarr[idx] >= 0.4]
+        # post_total_len += len(post_twarr)
+        # print(len(post_twarr) / len(twarr), '\n\n\n')
+    tmu.check_time()
+    lblarr = [1 for _ in range(len(pos_probarr))] + [0 for _ in range(len(neg_probarr))]
+    prbarr = pos_probarr + neg_probarr
+    fu.dump_array("prb_lbl_arr.txt", (lblarr, prbarr))
+    lblarr, prbarr = fu.load_array("prb_lbl_arr.txt")
+    au.precision_recall_threshold(lblarr, prbarr)
+    # print('total portion = {} / {} = {}'.format(post_total_len, pre_total_len, post_total_len / pre_total_len))
+    tmu.check_time()
+    exit()
     
     sub_files = fi.listchildren('/home/nfs/cdong/tw/origin/', fi.TYPE_FILE, concat=True)[18:19]
     twarr = au.merge_array([fu.load_array(file) for file in sub_files])

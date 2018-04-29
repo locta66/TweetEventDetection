@@ -1,5 +1,5 @@
 from utils.utils_loader import *
-from extracting.keyword_info.my_keyword import valid_tokens_of_text, construct_n_grams
+from extracting.keyword_info.n_gram_keyword import valid_tokens_of_text, tokens2n_grams
 
 
 def grams_of_textarr(textarr):
@@ -7,9 +7,9 @@ def grams_of_textarr(textarr):
     for text in textarr:
         text = text.lower().strip()
         tokens = valid_tokens_of_text(text)
-        grams.extend(construct_n_grams(tokens, 1))
-        grams.extend(construct_n_grams(tokens, 2))
-        grams.extend(construct_n_grams(tokens, 3))
+        grams.extend(tokens2n_grams(tokens, 1))
+        grams.extend(tokens2n_grams(tokens, 2))
+        grams.extend(tokens2n_grams(tokens, 3))
     return Counter(grams)
 
 

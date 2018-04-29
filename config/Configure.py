@@ -38,8 +38,8 @@ class Configure:
         self.is_noise_dict_file = configreader.get(model_module, 'is_noise_dict_file')
         self.orgn_predict_label_file = configreader.get(model_module, 'orgn_predict_label_file')
         
-        self.terror_ft_add_model_file = configreader.get(model_module, 'terror_ft_add_model_file')
-        self.terror_lr_add_model_file = configreader.get(model_module, 'terror_lr_add_model_file')
+        self.terror_ft_model_file = configreader.get(model_module, 'terror_ft_model_file')
+        self.terror_lr_model_file = configreader.get(model_module, 'terror_lr_model_file')
         self.korea_ft_model_file = configreader.get(model_module, 'korea_ft_model_fiel')
 
 

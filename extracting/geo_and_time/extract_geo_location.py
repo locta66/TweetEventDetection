@@ -9,25 +9,19 @@ import sqlite3
 from geocoder.google import GoogleResult
 
 
-conn = sqlite3.connect("/home/nfs/cdong/tw/src/models/geo/geo_location")
-c = conn.cursor()
+class CursorFactory:
+    cursor = None
+    
+    @staticmethod
+    def get_cursor():
+        if CursorFactory.cursor is None:
+            print('making connection to database')
+            conn = sqlite3.connect("/home/nfs/cdong/tw/src/models/geo/geo_location")
+            CursorFactory.cursor = conn.cursor()
+        return CursorFactory.cursor
 
 
-def get_readable_from_geo_freq_list(geo_freq_list):
-    readable_info = list()
-    # type(geo) is GoogleResult
-    for geo, freq in geo_freq_list:
-        if geo.quality == 'country':
-            info = [geo.quality, geo.address, geo.country_long, geo.bbox, freq]
-        elif geo.quality == 'locality':
-            info = [geo.quality, geo.city, geo.country_long, geo.bbox, freq]
-        else:
-            info = [geo.quality, geo.address, geo.country_long, geo.bbox, freq]
-        readable_info.append(info)
-    return readable_info
-
-
-def extract_sorted_geo_freq_list(twarr, docarr):
+def extract_geo_freq_list(twarr, docarr):
     coord_list = get_coordinates(twarr)
     loc_freq_list = get_loc_freq_list(docarr)
     geo_freq_list = get_geo_freq_list(loc_freq_list, coord_list)
@@ -52,8 +46,8 @@ def get_loc_freq_list(docarr):
         return list()
     loc_freq_list = loc_freq_counter.most_common()
     top_loc, top_freq = loc_freq_list[0]
-    geo_valid_num = sum([freq >= top_freq / 4 for loc, freq in loc_freq_list[1:]]) + 1
-    return loc_freq_list[:geo_valid_num]
+    v_loc_freq_list = [(loc, freq) for loc, freq in loc_freq_list if freq >= (top_freq / 4)]
+    return v_loc_freq_list
 
 
 def get_geo_freq_list(loc_freq_list, coordinates):
@@ -64,18 +58,19 @@ def get_geo_freq_list(loc_freq_list, coordinates):
 
 
 def _get_geo_freq_list(loc_freq_list):
-    geo_list = list()
+    geo_freq_list = list()
     for loc, freq in loc_freq_list:
         geo = get_geo_by_loc_name(loc)
         if geo:
-            geo_list.append((geo, freq))
-    return geo_list
+            geo_freq_list.append((geo, freq))
+    return geo_freq_list
 
 
 def get_geo_by_loc_name(loc_name):
+    cursor = CursorFactory.get_cursor()
     query = "SELECT i2g.GEO FROM nameToId AS n2i, idToGeo AS i2g WHERE n2i.NAME=:place AND n2i.ID=i2g.ID"
-    c.execute(query, {"place": loc_name})
-    geo_result = c.fetchone()
+    cursor.execute(query, {"place": loc_name})
+    geo_result = cursor.fetchone()
     return None if not geo_result else GoogleResult(json.loads(geo_result[0]))
 
 
@@ -98,9 +93,10 @@ def _reevaluate_with_coordinates(geo_freq_list, coordinate_list):
     for idx, (geo, freq) in enumerate(geo_freq_list):
         # 0.42 is approximately 3/7
         new_freq = freq + 0.42 * origin_max_match * coordinates_match[idx] / coord_max_match
-        new_geo_list.append((geo, new_freq))
-    new_geo_list = sorted(new_geo_list, key=operator.itemgetter(1), reverse=True)
-    return new_geo_list
+        new_geo_list.append((geo, freq, new_freq))
+    new_geo_list = sorted(new_geo_list, key=operator.itemgetter(2), reverse=True)
+    new_geo_freq_list = [(geo, freq) for geo, freq, new_freq in new_geo_list]
+    return new_geo_freq_list
 
 
 def _determine_index_order(geo_list, index1=0, index2=1):
@@ -122,13 +118,19 @@ def _determine_index_order(geo_list, index1=0, index2=1):
 
 
 if __name__ == '__main__':
-    # loc_name = "US"
-    # query = "SELECT i2g.GEO FROM nameToId AS n2i, idToGeo AS i2g WHERE n2i.NAME=:place AND n2i.ID=i2g.ID"
-    # c.execute(query, {"place": loc_name})
-    # geo_result = GoogleResult(json.loads(c.fetchone()[0]))
+    cursor = CursorFactory.get_cursor()
+    loc_name = "Gaziantep"
+    query = "SELECT i2g.GEO FROM nameToId AS n2i, idToGeo AS i2g WHERE n2i.NAME=:place AND n2i.ID=i2g.ID"
+    cursor.execute(query, {"place": loc_name})
+    geo_result = GoogleResult(json.loads(c.fetchone()[0]))
+    print(geo_result.quality)
+    print(geo_result.city)
+    print(geo_result.country_long)
+    print(geo_result.bbox)
     # print(geo_result.raw)
     # print(geo_result.fieldnames)
-    # exit()
+    exit()
+    
     sql_create_table_name_to_id = """ CREATE TABLE IF NOT EXISTS nameToId (NAME text PRIMARY KEY,ID text);"""
     sql_create_table_id_to_Geo = """ CREATE TABLE IF NOT EXISTS idToGeo (ID text PRIMARY KEY,GEO text NOT NULL); """
     if conn:

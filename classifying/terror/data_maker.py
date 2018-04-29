@@ -57,13 +57,13 @@ def prefix_textarr(label, textarr):
 def make_train_test():
     p_file = ft_data_pattern.format("pos_2016.txt")
     n_bad_files = fi.listchildren(ft_data_pattern.format(''), fi.TYPE_FILE, concat=True, pattern='2016_bad')
-    n_2012_files = fi.listchildren(ft_data_pattern.format(''), fi.TYPE_FILE, concat=True, pattern='2012_part')
+    n_2017_files = fi.listchildren(ft_data_pattern.format(''), fi.TYPE_FILE, concat=True, pattern='2017')
     # n_2012_fulls = fi.listchildren(ft_data_pattern.format(''), fi.TYPE_FILE, concat=True, pattern='2012_full')[:12]
     n_2012_fulls = fi.listchildren(ft_data_pattern.format(''), fi.TYPE_FILE, concat=True, pattern='2012_full')
     n_2016_files = fi.listchildren(ft_data_pattern.format(''), fi.TYPE_FILE, concat=True, pattern='2016_queried')
-    print(len(n_bad_files), len(n_2012_files), len(n_2012_fulls), len(n_2016_files))
+    print(len(n_bad_files), len(n_2017_files), len(n_2012_fulls), len(n_2016_files))
     
-    n_files = n_bad_files + n_2012_files + n_2012_fulls + n_2016_files
+    n_files = n_bad_files + n_2017_files + n_2012_fulls + n_2016_files
     
     p_txtarr = fu.read_lines(p_file)
     p_prefix_txtarr = prefix_textarr(label_t, p_txtarr)
@@ -118,7 +118,7 @@ def make_text_files():
         fu.write_lines(out_file, txtarr)
 
 
-def test_train_pos_neg_portion():
+def test_train_pos_neg_portion(train_file, test_file):
     def portion_of_file(file):
         p_cnt = n_cnt = 0
         with open(file) as fp:
@@ -132,9 +132,9 @@ def test_train_pos_neg_portion():
             else:
                 print(idx)
         return p_cnt, n_cnt, len(lines)
-    train_p, train_n, total_train = portion_of_file(fasttext_train)
+    train_p, train_n, total_train = portion_of_file(train_file)
     print('train {}/{}={}'.format(train_p, train_n, round(train_p / train_n, 4)))
-    test_p, test_n, total_test = portion_of_file(fasttext_test)
+    test_p, test_n, total_test = portion_of_file(test_file)
     print('test {}/{}={}'.format(test_p, test_n, round(test_p / test_n, 4)))
 
 
@@ -169,6 +169,6 @@ def extract_bad_tweets_into(files, output_file):
 if __name__ == '__main__':
     """ fasttext """
     tmu.check_time()
-    make_train_test()
-    test_train_pos_neg_portion()
+    # make_train_test()
+    test_train_pos_neg_portion(fasttext_train, fasttext_test)
     tmu.check_time()

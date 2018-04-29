@@ -78,11 +78,14 @@ def dump_xml_string(output_file, xml_str, mode='w'):
 
 
 if __name__ == '__main__':
+    infile = "/home/nfs/cdong/tw/output/5472"
     out_file = "test_out.xml"
-    # clu_d = parse_cluster_to_ordereddict(None, None)
-    # dump_dict(out_file, clu_d)
-    d = parse_xml_string_to_dict(open(out_file).read().encode())
-    # pprint(d)
-    import json
-    print(json.dumps(d))
-    exit()
+    json_obj = json.load(open(infile, 'r'))
+    print(type(json_obj))
+    dump_dict(out_file, {"root": json_obj})
+    # # clu_d = parse_cluster_to_ordereddict(None, None)
+    # d = parse_xml_string_to_dict(open(out_file).read().encode())
+    # # pprint(d)
+    # import json
+    # print(json.dumps(d))
+    # exit()

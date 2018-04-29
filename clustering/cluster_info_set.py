@@ -1,7 +1,7 @@
 from os import path
 from collections import Counter
 
-from classifying.terror.classifier_fasttext_add_feature import ClassifierAddFeature
+from classifying.terror.classifier_terror import ClassifierTerror
 
 import utils.array_utils as au
 import utils.file_iterator as fi
@@ -65,7 +65,7 @@ def refilter_twarr(in_file, out_file):
     twarr = fu.load_array(in_file)[:200000]
     origin_len = len(twarr)
     print(origin_len)
-    clf_filter = ClassifierAddFeature()
+    clf_filter = ClassifierTerror()
     
     # for idx in range(len(twarr) - 1, -1, -1):
     #     text = twarr[idx][tk.key_text]

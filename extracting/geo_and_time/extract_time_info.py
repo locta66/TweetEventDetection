@@ -35,8 +35,7 @@ text_times: [(推测时间，推文文本，时间词，推文创建时间，utc
 
 
 def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
-    if sutime_obj is None:
-        sutime_obj = get_sutime()
+    # sutime_obj = get_sutime()
     geo_timezone = get_geo_timezone(relevant_geo)
     text_times, dates, times = list(), list(), list()
     for tw in twarr:
@@ -64,7 +63,7 @@ def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
                 if time_type == 'TIME':
                     if len(value) > 5 and value[-3] == ':' and value[-6] == 'T':
                         parse_datetime = parser.parse(value)
-                        print("template T:1400", parse_datetime)
+                        # print("template T:1400", parse_datetime)
                     elif len(value) > 3 and value[-3:].isalpha():
                         indicate_word = value[-3:]
                         # night time TNI TAF TEV
@@ -84,8 +83,8 @@ def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
                             if 'am' not in time_text_lower and 'pm' not in time_text_lower:
                                 if ':' in time_text:
                                     try:
-                                        tweet_time = datetime.datetime.strptime(
-                                            tw_created_at, '%a %b %d %H:%M:%S %z %Y')
+                                        # tweet_time = datetime.datetime.strptime(
+                                        #     tw_created_at, '%a %b %d %H:%M:%S %z %Y')
                                         tmp_datetime = parse_datetime + datetime.timedelta(hours=12)
                                         bear_margin = 60 * 60
                                         if -bear_margin < \
@@ -110,7 +109,7 @@ def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
                     elif len(value) > 7:
                         parse_datetime = parser.parse(value)
                 if parse_datetime:
-                    print("extract_time_info line 98", parse_datetime)
+                    # print("extract_time_info line 112", parse_datetime)
                     local_time = geo_timezone.localize(parse_datetime.replace(tzinfo=None))
                     utc_time = local_time.astimezone(tz=datetime.timezone.utc)
                     text_times.append(
@@ -215,10 +214,10 @@ def get_geo_timezone(geo):
     geo_lat, geo_lng = geo.lat, geo.lng
     timezone_str = tf.certain_timezone_at(lat=geo_lat, lng=geo_lng)
     if not timezone_str:
-        print("get_geo_timezone Could not determine the time zone")
+        # print("get_geo_timezone Could not determine the time zone")
         timezone = utc
     else:
-        print("get_geo_timezone", timezone_str)
+        # print("get_geo_timezone", timezone_str)
         timezone = pytz.timezone(timezone_str)
     return timezone
 
@@ -238,12 +237,6 @@ def get_event_time(twarr):
         except:
             # traceback.print_exc()
             continue
-    
-    # now = datetime.datetime.now(tz=datetime.timezone.utc)
-    # if earliest_time is None:
-    #     earliest_time = now
-    # if latest_time is None:
-    #     latest_time = now
     return earliest_time, latest_time
 
 
@@ -254,7 +247,7 @@ if __name__ == '__main__':
     import utils.function_utils as fu
     twarr = fu.load_array("/home/nfs/cdong/tw/seeding/Terrorist/queried/positive/2016-01-01_shoot_Aviv.json")
     
-    text_times, utc_time = get_text_time(twarr)
+    text_times, utc_time = get_text_time(twarr, sutime_obj=get_sutime())
     earliest_time, latest_time = get_event_time(twarr)
     
     print(earliest_time.isoformat())

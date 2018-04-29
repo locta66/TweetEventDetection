@@ -10,6 +10,9 @@ def add_sep_if_needed(path): return path if path.endswith(os.path.sep) else path
 def getcwd(): return os.getcwd()
 
 
+def get_name(path): return Path(path).name
+
+
 def base_name(abspath): return os.path.basename(abspath)
 
 
@@ -52,12 +55,17 @@ def concat_files(file_list, output_file):
     p.close()
 
 
-def mkdir(dir_name):
+def mkdir(dir_name, remove_previous=False):
+    if remove_previous:
+        rmtree(dir_name)
+        print('remove dir {}'.format(dir_name))
     if not exists(dir_name):
         os.makedirs(dir_name)
 
 
-def join(*args): return os.path.join(*args)
+def join(*args):
+    args = [str(arg) for arg in args]
+    return os.path.join(*args)
 
 
 TYPE_DIR = 0
