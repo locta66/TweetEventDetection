@@ -1,17 +1,12 @@
-import traceback
 from collections import Counter
-
 import random
-
 import pytz
 import timezonefinder
 from sutime import SUTime
 import datetime
 from dateutil import parser
-
 import utils.tweet_keys as tk
 from prettytable import PrettyTable
-
 
 tf = timezonefinder.TimezoneFinder()
 jar_path = "/home/nfs/cdong/tw/src/tools/CoreNLP/"
@@ -35,9 +30,10 @@ text_times: [(推测时间，推文文本，时间词，推文创建时间，utc
 
 
 def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
-    # sutime_obj = get_sutime()
+    if sutime_obj is None:
+        sutime_obj = get_sutime()
     geo_timezone = get_geo_timezone(relevant_geo)
-    text_times, dates, times = list(), list(), list()
+    text_times, extract_times = list(), list()
     for tw in twarr:
         tw_created_at, tw_text = tw[tk.key_created_at], tw[tk.key_text]
         try:
@@ -63,7 +59,7 @@ def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
                 if time_type == 'TIME':
                     if len(value) > 5 and value[-3] == ':' and value[-6] == 'T':
                         parse_datetime = parser.parse(value)
-                        # print("template T:1400", parse_datetime)
+                        print("template T:1400", parse_datetime)
                     elif len(value) > 3 and value[-3:].isalpha():
                         indicate_word = value[-3:]
                         # night time TNI TAF TEV
@@ -89,7 +85,7 @@ def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
                                         bear_margin = 60 * 60
                                         if -bear_margin < \
                                                 (geo_timezone.localize(tmp_datetime.replace(tzinfo=None)).
-                                                         astimezone(datetime.timezone.utc) - tweet_time).\
+                                                         astimezone(datetime.timezone.utc) - tweet_time). \
                                                         total_seconds() \
                                                 < bear_margin:
                                             parse_datetime = tmp_datetime
@@ -109,29 +105,29 @@ def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
                     elif len(value) > 7:
                         parse_datetime = parser.parse(value)
                 if parse_datetime:
-                    # print("extract_time_info line 112", parse_datetime)
+                    print("extract_time_info line 98", parse_datetime)
                     local_time = geo_timezone.localize(parse_datetime.replace(tzinfo=None))
                     utc_time = local_time.astimezone(tz=datetime.timezone.utc)
                     text_times.append(
-                        (utc_time, tw_text, time_text, tweet_time, utc_offset/3600 if utc_offset else 'None'))
-                    if time_type == 'DATE':
-                        dates.append((parse_datetime, parsed_time, tw))
-                    elif time_type == 'TIME':
-                        times.append((parse_datetime, parsed_time, tw))
+                        (utc_time, tw_text, time_text, tweet_time, utc_offset / 3600 if utc_offset else 'None'))
+                    extract_times.append((parse_datetime, parsed_time, tweet_time))
+
         except:
             # traceback.print_exc()
             continue
-    dt = predict_most_common(dates, times)
+    dt = predict_most_common(extract_times)
     if dt:
         local_time = geo_timezone.localize(dt.replace(tzinfo=None))
         utc_time = local_time.astimezone(tz=datetime.timezone.utc)
     else:
-        discarded, utc_time = get_event_time(twarr)
+        discarded, utc_time = get_earlist_latest_post_time(twarr)
     return text_times, utc_time
 
 
-def predict_most_common(dates, times):
+def predict_most_common(extract_times):
     # dates=[(parse_datetime, time_phase, tweet), (parse_datetime, time_phase, tweet), ...]
+    dates = [time_tuple for time_tuple in extract_times if time_tuple[1]['type'] == 'DATE']
+    times = [time_tuple for time_tuple in extract_times if time_tuple[1]['type'] == 'TIME']
     date_counter = Counter()
     for date in dates:
         parse_datetime, time_phase = date[0], date[1]
@@ -146,12 +142,12 @@ def predict_most_common(dates, times):
         time_counter[tm] += 1
     date_list = date_counter.most_common()
     time_list = time_counter.most_common()
-    
+
     if len(date_list) > 0:
         case = 1 if len(time_list) > 0 else 2
     else:
         case = 3 if len(time_list) > 0 else 4
-    
+
     if case == 1:
         # date_list non-empty, time_list non-empty, and fetch both top
         date = date_list[0][0]
@@ -165,8 +161,7 @@ def predict_most_common(dates, times):
         earliest_time = None
         for d_date in dates:
             try:
-                parse_datetime, tweet = d_date[0], d_date[2]
-                tw_created_at = tweet[tk.key_created_at]
+                parse_datetime, tw_created_at = d_date[0], d_date[0]
                 if parse_datetime.date() == date:
                     if earliest_time:
                         tmp_time = parser.parse(tw_created_at)
@@ -214,15 +209,19 @@ def get_geo_timezone(geo):
     geo_lat, geo_lng = geo.lat, geo.lng
     timezone_str = tf.certain_timezone_at(lat=geo_lat, lng=geo_lng)
     if not timezone_str:
-        # print("get_geo_timezone Could not determine the time zone")
+        print("get_geo_timezone Could not determine the time zone")
         timezone = utc
     else:
-        # print("get_geo_timezone", timezone_str)
-        timezone = pytz.timezone(timezone_str)
+        print("get_geo_timezone", timezone_str)
+        from pytz import UnknownTimeZoneError
+        try:
+            timezone = pytz.timezone(timezone_str)
+        except UnknownTimeZoneError:
+            return utc
     return timezone
 
 
-def get_event_time(twarr):
+def get_earlist_latest_post_time(twarr):
     if not twarr:
         return None, None
     earliest_time = latest_time = None
@@ -237,6 +236,12 @@ def get_event_time(twarr):
         except:
             # traceback.print_exc()
             continue
+
+    # now = datetime.datetime.now(tz=datetime.timezone.utc)
+    # if earliest_time is None:
+    #     earliest_time = now
+    # if latest_time is None:
+    #     latest_time = now
     return earliest_time, latest_time
 
 
@@ -245,15 +250,16 @@ def get_event_time(twarr):
 #     print(json.dumps(sutime.parse(test_case), sort_keys=True, indent=4))
 if __name__ == '__main__':
     import utils.function_utils as fu
+
     twarr = fu.load_array("/home/nfs/cdong/tw/seeding/Terrorist/queried/positive/2016-01-01_shoot_Aviv.json")
-    
-    text_times, utc_time = get_text_time(twarr, sutime_obj=get_sutime())
-    earliest_time, latest_time = get_event_time(twarr)
-    
+
+    text_times, utc_time = get_text_time(twarr)
+    earliest_time, latest_time = get_earlist_latest_post_time(twarr)
+
     print(earliest_time.isoformat())
     print(latest_time.isoformat())
     print(utc_time.isoformat())
-    
+
     table = PrettyTable(["推测时间", "推文文本", "时间词", "推文创建时间", "utc_offset"])
     table.padding_width = 1
     for time in text_times:

@@ -1,6 +1,6 @@
 from extracting.geo_and_time.extract_time_info import get_sutime
 from extracting.geo_and_time.extract_geo_location import extract_geo_freq_list
-from extracting.geo_and_time.extract_time_info import get_text_time, get_event_time
+from extracting.geo_and_time.extract_time_info import get_text_time, get_earlist_latest_post_time
 from extracting.hot_and_level.event_hot import HotDegree, AttackHot
 from extracting.hot_and_level.event_level import AttackLevel
 from extracting.keyword_info.autophrase_multiprocess import get_quality_autophrase
@@ -41,7 +41,7 @@ class ClusterInfoGetter:
         """ time info """
         top_geo, top_freq = geo_freq_list[0] if len(geo_freq_list) > 0 else (None, None)
         text_times, utc_time = get_text_time(twarr, top_geo, self.sutime_obj)
-        earliest_time, latest_time = get_event_time(twarr)
+        earliest_time, latest_time = get_earlist_latest_post_time(twarr)
         most_time_str = utc_time.isoformat()
         earliest_time_str = earliest_time.isoformat()
         latest_time_str = latest_time.isoformat()
