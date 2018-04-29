@@ -168,48 +168,60 @@ def predict_most_common(extract_times):
 
     if case == 1:
         # date_list non-empty, time_list non-empty, and fetch both top
-        date = date_list[0][0]
-        time = time_list[0][0]
-        return datetime.datetime(
-            year=date.year, month=date.month, day=date.day, hour=time.hour, minute=time.minute,
-            second=time.second, microsecond=time.microsecond, tzinfo=time.tzinfo)
+        return _predict_with_date_and_time(date_list=date_list, time_list=time_list)
     elif case == 2:
         # date_list non-empty, time_list empty
-        date = date_list[0][0]
-        earliest_time = None
-        for d_date in dates:
-            try:
-                parse_datetime, tw_created_at = d_date[0], d_date[0]
-                if parse_datetime.date() == date:
-                    if earliest_time:
-                        tmp_time = parser.parse(tw_created_at)
-                        if (tmp_time - earliest_time).total_seconds() < 0:
-                            earliest_time = tmp_time
-                    else:
-                        earliest_time = parser.parse(tw_created_at)
-            except:
-                # traceback.print_exc()
-                continue
-        time = earliest_time.time()
-        return datetime.datetime(
-            year=date.year, month=date.month, day=date.day, hour=time.hour, minute=time.minute,
-            second=time.second, microsecond=time.microsecond, tzinfo=time.tzinfo)
+        return _predict_with_date_no_time(date_list=date_list, dates= dates)
     elif case == 3:
         # date_list empty, time_list non-empty
-        time = time_list[0][0]
-        find_date = Counter()
-        for d_time in times:
-            parse_datetime = d_time[0]
-            if _get_time_in_intervals(parse_datetime).time() == time:
-                tmp_date = parse_datetime.date()
-                find_date[tmp_date] += 1
-        find_date_list = find_date.most_common()
-        date = find_date_list[0][0]
-        return datetime.datetime(
-            year=date.year, month=date.month, day=date.day, hour=time.hour, minute=time.minute,
-            second=time.second, microsecond=time.microsecond, tzinfo=time.tzinfo)
+        return _predict_no_date_with_time(time_list=time_list, times= times)
     elif case == 4:
         return None
+
+
+def _predict_with_date_and_time(date_list, time_list):
+    date = date_list[0][0]
+    time = time_list[0][0]
+    return datetime.datetime(
+        year=date.year, month=date.month, day=date.day, hour=time.hour, minute=time.minute,
+        second=time.second, microsecond=time.microsecond, tzinfo=time.tzinfo)
+
+
+def _predict_with_date_no_time(date_list, dates):
+    date = date_list[0][0]
+    earliest_time = None
+    for d_date in dates:
+        try:
+            parse_datetime, tw_created_at = d_date[0], d_date[0]
+            if parse_datetime.date() == date:
+                if earliest_time:
+                    tmp_time = parser.parse(tw_created_at)
+                    if (tmp_time - earliest_time).total_seconds() < 0:
+                        earliest_time = tmp_time
+                else:
+                    earliest_time = parser.parse(tw_created_at)
+        except:
+            # traceback.print_exc()
+            continue
+    time = earliest_time.time()
+    return datetime.datetime(
+        year=date.year, month=date.month, day=date.day, hour=time.hour, minute=time.minute,
+        second=time.second, microsecond=time.microsecond, tzinfo=time.tzinfo)
+
+
+def _predict_no_date_with_time(time_list, times):
+    time = time_list[0][0]
+    find_date = Counter()
+    for d_time in times:
+        parse_datetime = d_time[0]
+        if _get_time_in_intervals(parse_datetime).time() == time:
+            tmp_date = parse_datetime.date()
+            find_date[tmp_date] += 1
+    find_date_list = find_date.most_common()
+    date = find_date_list[0][0]
+    return datetime.datetime(
+        year=date.year, month=date.month, day=date.day, hour=time.hour, minute=time.minute,
+        second=time.second, microsecond=time.microsecond, tzinfo=time.tzinfo)
 
 
 def _get_time_in_intervals(dtime):
