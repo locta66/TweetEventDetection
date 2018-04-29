@@ -1,12 +1,14 @@
-from collections import Counter
+import datetime
 import random
+from collections import Counter
+
 import pytz
 import timezonefinder
-from sutime import SUTime
-import datetime
 from dateutil import parser
-import utils.tweet_keys as tk
 from prettytable import PrettyTable
+from sutime import SUTime
+
+import utils.tweet_keys as tk
 
 tf = timezonefinder.TimezoneFinder()
 jar_path = "/home/nfs/cdong/tw/src/tools/CoreNLP/"
@@ -40,7 +42,6 @@ def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
             tweet_time = datetime.datetime.strptime(tw_created_at, '%a %b %d %H:%M:%S %z %Y')
             parsed_time_list = sutime_obj.parse(tw_text, reference_date=tweet_time.date().isoformat())
         except:
-            # traceback.print_exc()
             continue
         if not parsed_time_list:
             continue
@@ -53,63 +54,15 @@ def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
         ''' time zone: get utc_offset from user object in tweet metadata to: 文本中的时区 '''
         try:
             for parsed_time in parsed_time_list:
-                parse_datetime = None
-                time_type, value, time_text = parsed_time['type'], parsed_time['value'], parsed_time['text']
-                time_text_lower = time_text.lower()
-                if time_type == 'TIME':
-                    if len(value) > 5 and value[-3] == ':' and value[-6] == 'T':
-                        parse_datetime = parser.parse(value)
-                        print("template T:1400", parse_datetime)
-                    elif len(value) > 3 and value[-3:].isalpha():
-                        indicate_word = value[-3:]
-                        # night time TNI TAF TEV
-                        random_minute = random.randint(0, 59)
-                        if indicate_word == 'TNI':
-                            random_hour = random.randint(22, 23)
-                            parse_datetime = parser.parse(value[:-3] + ' {}:{}'.format(random_hour, random_minute))
-                        elif indicate_word == 'TAF':
-                            random_hour = random.randint(13, 15)
-                            parse_datetime = parser.parse(value[:-3] + ' {}:{}'.format(random_hour, random_minute))
-                        elif indicate_word == 'TEV':
-                            random_hour = random.randint(19, 21)
-                            parse_datetime = parser.parse(value[:-3] + ' {}:{}'.format(random_hour, random_minute))
-                    # 处理没有 am pm 的情况
-                    if parse_datetime:
-                        if 0 < parse_datetime.hour <= 12:
-                            if 'am' not in time_text_lower and 'pm' not in time_text_lower:
-                                if ':' in time_text:
-                                    try:
-                                        # tweet_time = datetime.datetime.strptime(
-                                        #     tw_created_at, '%a %b %d %H:%M:%S %z %Y')
-                                        tmp_datetime = parse_datetime + datetime.timedelta(hours=12)
-                                        bear_margin = 60 * 60
-                                        if -bear_margin < \
-                                                (geo_timezone.localize(tmp_datetime.replace(tzinfo=None)).
-                                                         astimezone(datetime.timezone.utc) - tweet_time). \
-                                                        total_seconds() \
-                                                < bear_margin:
-                                            parse_datetime = tmp_datetime
-                                    except:
-                                        # traceback.print_exc()
-                                        pass
-                elif time_type == 'DATE':
-                    if 'w' in value.lower() or value == 'FUTURE_REF':
-                        # week weekend & FUTURE_REF not in consideration
-                        continue
-                    # present_ref use as date or time ??
-                    if value == "PRESENT_REF":
-                        if time_text_lower == 'now':
-                            # word "Now" usually dose not mean the current time
-                            continue
-                        parse_datetime = tweet_time
-                    elif len(value) > 7:
-                        parse_datetime = parser.parse(value)
+
+                parse_datetime = _get_parsed_datetime(parsed_time, tweet_time, geo_timezone)
                 if parse_datetime:
                     print("extract_time_info line 98", parse_datetime)
                     local_time = geo_timezone.localize(parse_datetime.replace(tzinfo=None))
                     utc_time = local_time.astimezone(tz=datetime.timezone.utc)
                     text_times.append(
-                        (utc_time, tw_text, time_text, tweet_time, utc_offset / 3600 if utc_offset else 'None'))
+                        (utc_time, tw_text, parsed_time['text'], tweet_time,
+                         utc_offset / 3600 if utc_offset else 'None'))
                     extract_times.append((parse_datetime, parsed_time, tweet_time))
 
         except:
@@ -122,6 +75,71 @@ def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
     else:
         discarded, utc_time = get_earlist_latest_post_time(twarr)
     return text_times, utc_time
+
+
+'''
+从timex3 value 提取 datetime
+能提取到则返回 datetime类型
+不能提取到则返回 None 
+'''
+
+
+def _get_parsed_datetime(parsed_time, tweet_time, geo_timezone):
+    time_type, value, time_text = parsed_time['type'], parsed_time['value'], parsed_time['text']
+    time_text_lower = time_text.lower()
+    '''
+    handle case: time type is 'Time'
+    '''
+    if time_type == 'TIME':
+        if len(value) > 5 and value[-3] == ':' and value[-6] == 'T':
+            parse_datetime = parser.parse(value)
+            print("template T:1400", parse_datetime)
+        elif len(value) > 3 and value[-3:].isalpha():
+            indicate_word = value[-3:]
+            # night time TNI TAF TEV
+            random_minute = random.randint(0, 59)
+            if indicate_word == 'TNI':
+                random_hour = random.randint(22, 23)
+                parse_datetime = parser.parse(value[:-3] + ' {}:{}'.format(random_hour, random_minute))
+            elif indicate_word == 'TAF':
+                random_hour = random.randint(13, 15)
+                parse_datetime = parser.parse(value[:-3] + ' {}:{}'.format(random_hour, random_minute))
+            elif indicate_word == 'TEV':
+                random_hour = random.randint(19, 21)
+                parse_datetime = parser.parse(value[:-3] + ' {}:{}'.format(random_hour, random_minute))
+        # 处理没有 am pm 的情况
+        if parse_datetime:
+            if 0 < parse_datetime.hour <= 12:
+                if 'am' not in time_text_lower and 'pm' not in time_text_lower:
+                    if ':' in time_text:
+                        try:
+                            # tweet_time = datetime.datetime.strptime(
+                            #     tw_created_at, '%a %b %d %H:%M:%S %z %Y')
+                            tmp_datetime = parse_datetime + datetime.timedelta(hours=12)
+                            bear_margin = 60 * 60
+                            if -bear_margin < \
+                                    (geo_timezone.localize(tmp_datetime.replace(tzinfo=None)).
+                                             astimezone(datetime.timezone.utc) - tweet_time). \
+                                            total_seconds() \
+                                    < bear_margin:
+                                parse_datetime = tmp_datetime
+                        except:
+                            # traceback.print_exc()
+                            pass
+    elif time_type == 'DATE':
+        if 'w' in value.lower() or value == 'FUTURE_REF':
+            # week weekend & FUTURE_REF not in consideration
+            return None
+        # present_ref use as date or time ??
+        if value == "PRESENT_REF":
+            if time_text_lower == 'now':
+                # word "Now" usually dose not mean the current time
+                return None
+            parse_datetime = tweet_time
+        elif len(value) > 7:
+            parse_datetime = parser.parse(value)
+
+    return parse_datetime
 
 
 def predict_most_common(extract_times):
