@@ -1,5 +1,6 @@
 import datetime
 import random
+import traceback
 from collections import Counter
 
 import pytz
@@ -87,6 +88,7 @@ def get_text_time(twarr, relevant_geo=None, sutime_obj=None):
 def _get_parsed_datetime(parsed_time, tweet_time, geo_timezone):
     time_type, value, time_text = parsed_time['type'], parsed_time['value'], parsed_time['text']
     time_text_lower = time_text.lower()
+    parse_datetime = None
     '''
     handle case: time type is 'Time'
     '''
@@ -171,10 +173,10 @@ def predict_most_common(extract_times):
         return _predict_with_date_and_time(date_list=date_list, time_list=time_list)
     elif case == 2:
         # date_list non-empty, time_list empty
-        return _predict_with_date_no_time(date_list=date_list, dates= dates)
+        return _predict_with_date_no_time(date_list=date_list, dates=dates)
     elif case == 3:
         # date_list empty, time_list non-empty
-        return _predict_no_date_with_time(time_list=time_list, times= times)
+        return _predict_no_date_with_time(time_list=time_list, times=times)
     elif case == 4:
         return None
 
@@ -195,15 +197,16 @@ def _predict_with_date_no_time(date_list, dates):
             parse_datetime, tw_created_at = d_date[0], d_date[0]
             if parse_datetime.date() == date:
                 if earliest_time:
-                    tmp_time = parser.parse(tw_created_at)
+                    tmp_time = tw_created_at
                     if (tmp_time - earliest_time).total_seconds() < 0:
                         earliest_time = tmp_time
                 else:
-                    earliest_time = parser.parse(tw_created_at)
+                    earliest_time = tw_created_at
         except:
-            # traceback.print_exc()
+            traceback.print_exc()
             continue
     time = earliest_time.time()
+
     return datetime.datetime(
         year=date.year, month=date.month, day=date.day, hour=time.hour, minute=time.minute,
         second=time.second, microsecond=time.microsecond, tzinfo=time.tzinfo)
@@ -280,18 +283,22 @@ def get_earlist_latest_post_time(twarr):
 #     print(json.dumps(sutime.parse(test_case), sort_keys=True, indent=4))
 if __name__ == '__main__':
     import utils.function_utils as fu
+    import utils.file_iterator as fi
 
-    twarr = fu.load_array("/home/nfs/cdong/tw/seeding/Terrorist/queried/positive/2016-01-01_shoot_Aviv.json")
+    base = '/home/nfs/cdong/tw/seeding/Terrorist/queried/positive'
+    pos_files = fi.listchildren(base, concat=True)
+    for file in pos_files:
+        twarr = fu.load_array(file)
 
-    text_times, utc_time = get_text_time(twarr)
-    earliest_time, latest_time = get_earlist_latest_post_time(twarr)
+        text_times, utc_time = get_text_time(twarr)
+        earliest_time, latest_time = get_earlist_latest_post_time(twarr)
 
-    print(earliest_time.isoformat())
-    print(latest_time.isoformat())
-    print(utc_time.isoformat())
+        print(earliest_time.isoformat())
+        print(latest_time.isoformat())
+        print(utc_time.isoformat())
 
-    table = PrettyTable(["推测时间", "推文文本", "时间词", "推文创建时间", "utc_offset"])
-    table.padding_width = 1
-    for time in text_times:
-        table.add_row(time)
-    print(table)
+        table = PrettyTable(["推测时间", "推文文本", "时间词", "推文创建时间", "utc_offset"])
+        table.padding_width = 1
+        for time in text_times:
+            table.add_row(time)
+        print(table)
